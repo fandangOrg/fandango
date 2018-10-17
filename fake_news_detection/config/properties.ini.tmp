@@ -1,0 +1,17 @@
+[default]  #sezione
+log_folder = /home/camila/progetti/fake-news-detection
+
+
+#variabile sez. Vedere getLovelevel
+log_level = INFO
+fileLastDate = None
+
+[elasticsearch]
+
+#url = http://94.23.7.153:9200
+url = http://localhost:9200
+index_refugees = news_crawler
+username = elastic
+password = RjuSUIk4hFlL46fvTf5z
+indexfakenews = indexfakenews
+doctype = _doc

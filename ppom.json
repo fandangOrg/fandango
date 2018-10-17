@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "tasks": {
+    "build": {
+      "upload": {
+        "repository": "xxxxx"
+      }
+    },
+    "docker-build": {
+      "company": "livetech",
+      "build-args": {
+        "user": "",
+        "password": ""
+      }
+    }
+  }
+}

@@ -1,0 +1,296 @@
+{
+  "settings": {
+    "index": {
+      "number_of_shards": "5",
+      "number_of_replicas": "1"
+    },
+    "analysis": {
+      "filter": {
+        "english_stop": {
+          "type": "stop",
+          "stopwords": "_english_"
+        },
+        "english_stemmer": {
+          "type": "stemmer",
+          "language": "english"
+        },
+        "english_possessive_stemmer": {
+          "type": "stemmer",
+          "language": "possessive_english"
+        },
+        "dutch_stop": {
+          "type": "stop",
+          "stopwords": "_dutch_"
+        },
+        "dutch_stemmer": {
+          "type": "stemmer",
+          "language": "dutch"
+        },
+        "dutch_override": {
+          "type": "stemmer_override",
+          "rules": [
+            "fiets=>fiets",
+            "bromfiets=>bromfiets",
+            "ei=>eier",
+            "kind=>kinder"
+          ]
+        },
+        "greek_stop": {
+          "type": "stop",
+          "stopwords": "_greek_"
+        },
+        "greek_lowercase": {
+          "type": "lowercase",
+          "language": "greek"
+        },
+        "greek_stemmer": {
+          "type": "stemmer",
+          "language": "greek"
+        },
+        "italian_elision": {
+          "type": "elision",
+          "articles": [
+            "c",
+            "l",
+            "all",
+            "dall",
+            "dell",
+            "nell",
+            "sull",
+            "coll",
+            "pell",
+            "gl",
+            "agl",
+            "dagl",
+            "degl",
+            "negl",
+            "sugl",
+            "un",
+            "m",
+            "t",
+            "s",
+            "v",
+            "d"
+          ],
+          "articles_case": true
+        },
+        "italian_stop": {
+          "type": "stop",
+          "stopwords": "_italian_"
+        },
+        "italian_stemmer": {
+          "type": "stemmer",
+          "language": "light_italian"
+        }
+      },
+      "analyzer": {
+        "rebuilt_english": {
+          "tokenizer": "standard",
+          "filter": [
+            "english_possessive_stemmer",
+            "lowercase",
+            "english_stop",
+            "english_stemmer",
+            "type_as_payload"
+          ]
+        },
+        "rebuilt_dutch": {
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "dutch_stop",
+            "dutch_override",
+            "dutch_stemmer",
+            "type_as_payload"
+          ]
+        },
+        "rebuilt_greek": {
+          "tokenizer": "standard",
+          "filter": [
+            "greek_lowercase",
+            "greek_stop",
+            "greek_stemmer",
+            "type_as_payload"
+          ]
+        },
+        "rebuilt_italian": {
+          "tokenizer": "standard",
+          "filter": [
+            "italian_elision",
+            "lowercase",
+            "italian_stop",
+            "italian_stemmer",
+            "type_as_payload"
+          ]
+        }
+      }
+    }
+  },
+  "mappings": {
+    "article": {
+      "properties": {
+        "ancestor": {
+          "type": "text"
+        },
+        "authors": {
+          "type": "text"
+        },
+        "date_download": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        "date_modify": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        "date_publish": {
+          "type": "date",
+          "format": "yyyy-MM-dd HH:mm:ss"
+        },
+        "descendant": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "text"
+        },
+        "fakeness": {
+          "type": "keyword"
+        },
+        "filename": {
+          "type": "text",
+          "index": false
+        },
+        "images": {
+          "type": "text"
+        },
+        "keywords": {
+          "type": "keyword"
+        },
+        "language": {
+          "type": "keyword"
+        },
+        "localpath": {
+          "type": "text",
+          "index": false
+        },
+        "source_domain": {
+          "type": "keyword"
+        },
+        "summary": {
+          "type": "text"
+        },
+        "text_en": {
+          "type": "text",
+          "term_vector": "with_positions_offsets_payloads",
+          "analyzer": "rebuilt_english",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        },
+        "text_el": {
+          "type": "text",
+          "term_vector": "with_positions_offsets_payloads",
+          "analyzer": "rebuilt_greek",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        },
+        "text_it": {
+          "type": "text",
+          "term_vector": "with_positions_offsets_payloads",
+          "analyzer": "rebuilt_italian",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        },
+        "text_nl": {
+          "type": "text",
+          "term_vector": "with_positions_offsets_payloads",
+          "analyzer": "rebuilt_dutch",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        },
+        "texthash": {
+          "type": "keyword",
+          "index": false
+        },
+        "title_en": {
+          "type": "text",
+          "term_vector": "with_positions_offsets_payloads",
+          "analyzer": "rebuilt_english",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        },
+        "title_el": {
+          "type": "text",
+          "term_vector": "with_positions_offsets_payloads",
+          "analyzer": "rebuilt_greek",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        },
+        "title_it": {
+          "type": "text",
+          "term_vector": "with_positions_offsets_payloads",
+          "analyzer": "rebuilt_italian",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        },
+        "title_nl": {
+          "type": "text",
+          "term_vector": "with_positions_offsets_payloads",
+          "analyzer": "rebuilt_dutch",
+          "fields": {
+            "raw": {
+              "type": "keyword"
+            }
+          }
+        },
+        "top_image": {
+          "type": "text"
+        },
+        "url": {
+          "type": "keyword"
+        },
+        "version": {
+          "type": "long"
+        },
+        "videos": {
+          "type": "text"
+        },
+        "pos_tag": {
+          "type": "nested",
+          "dynamic": "strict",
+          "properties": {
+            "word": {
+              "type": "keyword"
+            },
+            "pos": {
+              "type": "keyword"
+            },
+            "lemma": {
+              "type": "keyword"
+            }
+          }
+        }
+      }
+    }
+  }
+}
