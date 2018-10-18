@@ -77,7 +77,7 @@ class Model(object):
      
     def RFclassifier(self, tfidf_train,tfidf_test,y_train,y_test):
         '''Train'''
-        rlf = RandomForestClassifier(n_jobs=2, random_state=1234,n_estimators=1000,max_depth=100)
+        rlf = RandomForestClassifier(n_jobs=-1, random_state=1234,n_estimators=1000,max_depth=100)
     
         rlf.fit(tfidf_train, y_train)
         pred = rlf.predict(tfidf_test)
@@ -86,10 +86,6 @@ class Model(object):
         cm = metrics.confusion_matrix(y_test, pred, labels=['FAKE', 'REAL'])
         self.plot_confusion_matrix(cm, classes=['FAKE', 'REAL'])
         
-
-    
-    
-    
     
     def RFclassifier_(self, tfidf_train,y_train):
         
