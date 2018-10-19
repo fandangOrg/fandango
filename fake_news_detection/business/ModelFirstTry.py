@@ -12,6 +12,7 @@ import numpy as np
 #import re
 import itertools
 from sklearn.feature_extraction.text import TfidfVectorizer
+import pickle
 
 
 
@@ -92,7 +93,7 @@ class Model(object):
         '''Train'''
         rlf = RandomForestClassifier(n_jobs=2, random_state=1234,n_estimators=1000,max_depth=100)
     
-        rlf_fitted = rlf.fit(tfidf_train, y_train)
+        rlf_fitted = rlf.fits(tfidf_train, y_train)
         
         return rlf_fitted
         

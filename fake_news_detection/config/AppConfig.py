@@ -47,5 +47,6 @@ mapping = os.environ.get("MAPPING_ELASTIC") or config.get("elasticsearch", "mapp
 new_mapped_index = os.environ.get("NEW_MAPPED_INDEX") or config.get("elasticsearch", "new_mapped_index")
 #dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")
 dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "fake_or_real_news.csv")# @UndefinedVariable
+picklepath = os.environ.get("picklepath") or config.get("default", "picklepath")
     
     
