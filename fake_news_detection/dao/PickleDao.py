@@ -14,27 +14,30 @@ class ModelDao(object):
     '''
 
 
-    def __init__(self, params):
+    def __init__(self):
         '''
         Constructor
         '''
         self.accepted_answers = set(["y", "n"])
     
-    def Save(self, modello, nome=None):
-        if nome == None:
-            print("Please enter a name for the model")
-            nome = input()
+    def save(self, modello, nome,force=True):
+        #=======================================================================
+        # if nome == None:
+        #     print("Please enter a name for the model")
+        #     nome = input()
+        #=======================================================================
         output_path = picklepath + str(nome) + ".p"
-        self.checkPath(nome, modello, output_path)
+        self.checkPath(nome, modello, output_path,force)
         
         
-    def checkPath(self, nome, modello, output_path):    
+    def checkPath(self, nome, modello, output_path,force):    
         if os.path.exists(output_path):
-            print("The name you have chosen {name} already exists. Would you like to owerwrite it? y/n".format(name =nome))
-            typed = input()
-            self.checkTyped(typed, modello, output_path)
+            if force:
+                pickle.dump( modello , open( output_path, "wb" ) )
+            else:
+                print("modello esistente, usare force = True per sovrascriverlo")
         else:
-            return pickle.dump( modello , open( output_path, "wb" ) )
+            pickle.dump( modello , open( output_path, "wb" ) )
             
             
             
@@ -54,16 +57,15 @@ class ModelDao(object):
             self.checkPath(nome, modello, output_path)
             
             
-    def load(self,file):
-        
-        if os.path.exists(file):
-            return(pickle.load(file,'r'))
-        else:
-            response = "file not found {file}".format(file = file)
-            self.log.error(response)
-            raise Exception(response)
             
-            
+    def load(self,nome):
+        path=picklepath + str(nome) + ".p"
+        try:
+            with open(path, 'rb') as handle:
+                return pickle.load(handle)
+        except FileNotFoundError:
+            print("File not found "+path)
+    
         
         
         

@@ -16,7 +16,7 @@ import numpy
 import scipy.sparse as sp
 from fake_news_detection.dao.PickleDao import ModelDao
  
-
+  
 class SklearnModel:
     def __init__(self,model,name):
         self.model = model
@@ -25,7 +25,7 @@ class SklearnModel:
         self.name=name
         #=======================================================================
         # self.pipeline = Pipeline([
-        # ('vect', CountVectorizer()),
+        # ('vect', CountVectorizer()), 
         # ('tfidf', TfidfVectorizer()),
         # ('clf',  self.model),
         # ])
@@ -41,9 +41,7 @@ class SklearnModel:
 
         matrix=self._concatenate_csc_matrices_by_columns(matrix,matrix_title)
         print(matrix.shape)
-        
-
-        return self.model.fit(matrix, y_train)
+        self.model.fit(matrix, y_train)
         
         
         
@@ -65,7 +63,7 @@ class SklearnModel:
         
         
     def save(self):
-        pass
+        ModelDao
         
         
         
@@ -73,13 +71,14 @@ class SklearnModel:
 
 if __name__ == '__main__':
     #clf = MultinomialNB(alpha= 0.05)
-    oo = ModelDao
-    clf = RandomForestClassifier(n_jobs=-1, random_state=1234,n_estimators=100,max_depth=100)
+    oo = ModelDao()
+    clf = RandomForestClassifier(n_jobs=-1, random_state=1234,n_estimators=10,max_depth=100)
     model=SklearnModel(clf,'test')
     training_set= pd.read_csv(dataset_beta) # dataset
     print(training_set.shape)
-    modello = model.train(training_set['title'],training_set['text'], training_set['label'])
-    oo.save(modello)
+    model.train(training_set['title'],training_set['text'], training_set['label'])
+    oo.save(model,model.name)
+    model = oo.load('test')
     print(model.predict("GOOGLE IS NOW","""Google Pinterest Digg Linkedin Reddit Stumbleupon Print Delicious Pocket Tumblr 
 There are two fundamental truths in this world: Paul Ryan desperately wants to be president. And Paul Ryan will never be president. Today proved it. 
 In a particularly staggering example of political cowardice, Paul Ryan re-re-re-reversed course and announced that he was back on the Trump Train after all. This was an aboutface from where he was a few weeks ago. He had previously declared he would not be supporting or defending Trump after a tape was made public in which Trump bragged about assaulting women. Suddenly, Ryan was appearing at a pro-Trump rally and boldly declaring that he already sent in his vote to make him President of the United States. It was a surreal moment. The figurehead of the Republican Party dosed himself in gasoline, got up on a stage on a chilly afternoon in Wisconsin, and lit a match. . @SpeakerRyan says he voted for @realDonaldTrump : “Republicans, it is time to come home” https://t.co/VyTT49YvoE pic.twitter.com/wCvSCg4a5I 
