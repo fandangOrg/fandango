@@ -15,3 +15,6 @@ username = elastic
 password = RjuSUIk4hFlL46fvTf5z
 indexfakenews = indexfakenews
 doctype = _doc
+
+[service]
+url = http://0.0.0.0:9800/

@@ -39,6 +39,8 @@ def getEsConnector():
     return esConnector
 
 
+BASEURL=os.environ.get("BASEURL_SERVICE") or config["service"]["url"]
+
 
 index_name= os.environ.get("INDEX_ELASTIC") or config.get("elasticsearch", "indexfakenews")
 docType = os.environ.get("INDEX_ELASTIC") or config.get("elasticsearch", "doctype")
