@@ -13,7 +13,7 @@ import numpy as np
 import itertools
 from sklearn.feature_extraction.text import TfidfVectorizer
 import pickle
-
+ 
 
 
 class Model(object):

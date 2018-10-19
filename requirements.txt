@@ -1,9 +1,17 @@
 certifi==2018.8.24
 chardet==3.0.4
+click==6.7
 cycler==0.10.0
+ds4biz-flask==0.0.3
 elasticsearch==6.3.1
+Flask==1.0.2
+Flask-Cors==3.0.6
+flask-swagger-ui==3.6.0
 idna==2.7
+itsdangerous==0.24
+Jinja2==2.10
 kiwisolver==1.0.1
+MarkupSafe==1.0
 matplotlib==3.0.0
 nltk==3.3
 numpy==1.15.2
@@ -12,6 +20,7 @@ pkg-resources==0.0.0
 pyparsing==2.2.2
 python-dateutil==2.7.3
 pytz==2018.5
+PyYAML==3.13
 requests==2.19.1
 scikit-learn==0.20.0
 scipy==1.1.0
@@ -19,3 +28,4 @@ six==1.11.0
 sklearn==0.0
 treetaggerwrapper==2.2.7
 urllib3==1.23
+Werkzeug==0.14.1

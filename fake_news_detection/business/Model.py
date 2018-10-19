@@ -15,7 +15,7 @@ from scipy import hstack
 import numpy
 import scipy.sparse as sp
 from fake_news_detection.dao.PickleDao import ModelDao
-
+ 
 
 class SklearnModel:
     def __init__(self,model,name):
