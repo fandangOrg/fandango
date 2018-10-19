@@ -32,7 +32,7 @@
                                 <h3 class="mb-0">Article Checker</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a href="#!" class="btn btn-sm btn-success">Fakeness</a>
+                                <a href="" ng-click="send()" class="btn btn-sm btn-success">Fakeness</a>
                             </div>
                         </div>
                     </div>
@@ -42,40 +42,44 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input class="form-control form-control-alternative"
-                                               ng-value="'URL : '+value" type="text" disabled>
+                                               ng-value="'URL : www.google.it/prova'" type="text" disabled>
                                     </div>
                                 </div>
                             </div>
                             <hr class="my-4"/>
                             <div class="form-group">
-                                <label class="form-control-label">Title</label>
-                                <input class="form-control form-control-alternative"
-                                       ng-value="'URL : '+value" type="text" disabled>
-                                <textarea class="form-control form-control-alternative">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, orci quis convallis laoreet, diam risus accumsan ex, ut sollicitudin nunc ipsum vitae ligula. Etiam ipsum diam, placerat at malesuada non, commodo a elit. Etiam imperdiet vulputate posuere. Morbi rhoncus interdum arcu, eu tempor ex vehicula a. Sed et dui purus. Maecenas erat diam, tempor vitae turpis nec, mollis tempor massa. Sed venenatis efficitur tortor, id sagittis orci facilisis volutpat. Quisque hendrerit massa at venenatis tristique.
-
-Sed ac ipsum finibus, tincidunt dolor ac, consectetur orci. Donec eu enim sapien. Proin lobortis quis ante et posuere. Phasellus dictum quam eu sapien sodales, vitae finibus leo auctor. Sed in metus mauris. Ut ipsum leo, suscipit a mattis id, tempor in urna. Mauris neque dui, ultrices non aliquam ac, tincidunt ac lectus. Cras cursus sem quis lectus bibendum faucibus. Vivamus tempus nibh id vulputate sodales. Praesent rhoncus elementum pharetra. In accumsan risus bibendum magna eleifend, ac tristique nisl fermentum. Nullam commodo feugiat est vitae gravida. Pellentesque hendrerit elit vitae convallis maximus.
-
-Duis eget sapien ac neque aliquet volutpat. Mauris finibus ac dui a mollis. Pellentesque velit nisi, vulputate sed vehicula sagittis, finibus in odio. Etiam vitae leo ullamcorper, rhoncus justo sit amet, volutpat felis. Quisque vel orci feugiat, rhoncus lacus eu, venenatis diam. Donec in ornare nulla. Vivamus et urna malesuada, pulvinar sem vitae, feugiat magna. Nam et pulvinar metus. Fusce id lacus leo. Etiam et libero rutrum, bibendum nisl ut, elementum tortor. Donec nibh dolor, lobortis ac auctor eu, sagittis at mauris. Curabitur lectus lorem, scelerisque a suscipit fringilla, auctor tempor quam. Phasellus non scelerisque dolor, eu tincidunt felis. Suspendisse est purus, egestas non erat quis, tempor accumsan orci. Aliquam ac sagittis lorem, a dignissim sapien. Suspendisse vitae sollicitudin quam.
-
-Donec tellus lacus, laoreet vel iaculis ac, aliquet vitae metus. Aliquam eget lectus tincidunt, aliquam ipsum sed, condimentum ipsum. Donec ullamcorper dolor et porta tempus. Morbi placerat a justo eu condimentum. Vivamus commodo felis eget tortor pellentesque hendrerit. Sed viverra, felis ut laoreet fringilla, nibh diam elementum elit, eget tempor nisi nibh ullamcorper erat. Maecenas ullamcorper hendrerit enim, quis dictum sapien auctor nec. Nullam venenatis finibus lectus, id condimentum mi. Maecenas bibendum dui ligula, id facilisis risus luctus a. Donec massa nisl, dapibus molestie massa egestas, tincidunt pellentesque dolor. Integer rhoncus facilisis nisi, a bibendum nibh auctor et. Quisque massa tortor, faucibus quis ante ut, venenatis ultrices eros.
-
-Pellentesque vitae posuere nibh. Donec eu ex laoreet, rhoncus justo quis, vestibulum dolor. Quisque quis turpis vulputate, feugiat nibh at, ullamcorper nunc. Vivamus ullamcorper congue massa, in tempus tellus convallis ut. Proin venenatis lobortis turpis, et facilisis leo sollicitudin vel. Aenean elit mauris, aliquet vitae tempor at, pharetra vel ante. Cras nunc urna, blandit et elit non, semper faucibus enim. Aenean laoreet ante ac varius dapibus. Quisque aliquam rhoncus blandit. Sed cursus risus eget nisl posuere, sit amet hendrerit lacus ultrices. Nam eget lorem vitae ex pharetra consequat in ac mi. Fusce rhoncus et sem sit amet scelerisque. Nunc in dui laoreet, eleifend ligula sit amet, iaculis turpis. Cras quis mi nec ante egestas lacinia.</textarea>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-first-name">Title</label>
+                                            <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="Insert a title" ng-model="title">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-last-name">Source</label>
+                                            <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Example : ANSA.it" ng-model="source">
+                                        </div>
+                                    </div>
+                                </div>
+                                <textarea ng-model="text" class="form-control form-control-alternative"></textarea>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-xs-12">
+            <div class="col-md-4 col-xs-12" style="padding-left: 0">
                 <div class="col-xs-12">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">Example</h3>
+                                    <h3 class="mb-0">Fakeness</h3>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body" style="height: 300px">
+                        <div class="card-body" style="padding: 0;height: 300px">
+                            <div id='myChart' style="height: 300px"></div>
                         </div>
                     </div>
                 </div>
@@ -97,11 +101,12 @@ Pellentesque vitae posuere nibh. Donec eu ex laoreet, rhoncus justo quis, vestib
         </div>
     </div>
 </div>
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<script src="node_modules/angular/angular.min.js"></script>
-<script src="js/module/module.js"></script>
+<script src="js/vendors/jquery.min.js"></script>
+<script src="js/vendors/angular.min.js"></script>
+<script src="/module.js"></script>
 <script src="js/controller/indexController.js"></script>
 <script src="js/directive/indexDirective.js"></script>
 <script src="js/factory/indexFactory.js"></script>
+<script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
 </body>
 </html>
