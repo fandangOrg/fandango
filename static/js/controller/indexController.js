@@ -1,5 +1,11 @@
 app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call) {
 
+    $scope.fakenessDone = false;
+
+    angular.element(function () {
+        $scope.loading = false;
+    });
+
     $scope.send = function () {
 
         var to_send = {
@@ -8,11 +14,9 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call)
             'source':''
         };
 
-        console.log(to_send);
 
         call.getCall(to_send).then(function (response) {
             $scope.value = response.data[0];
-            console.log($scope.value);
             $scope.fakeValue = parseInt($scope.value.FAKE * 100);
             $scope.realValue = parseInt($scope.value.REAL * 100);
 
@@ -54,12 +58,17 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call)
                     "labels":["0 %","20 %","40 %","60 %","80 %","100 %"],  //Scale Labels
                     "item":{  //Scale Label Styling
                         "font-color":"purple",
-                        "font-family":"Georgia, serif",
+                        "font-family":"Open Sans, serif",
                         "font-size":12,
                         "font-weight":"bold",   //or "normal"
                         "font-style":"normal",   //or "italic"
                         "offset-r":0,
                         "angle":"auto"
+                    }
+                },
+                gui : {
+                    contextMenu : {
+                        empty : true
                     }
                 },
                 "plot":{
@@ -79,7 +88,10 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call)
                 width: "100%"
             });
 
+            $scope.fakenessDone = true;
+
         }, function (response) {
+            $scope.fakenessDone = false;
             console.log(response)
         });
     }

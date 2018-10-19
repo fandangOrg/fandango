@@ -5,12 +5,15 @@
     <title>Fandango Fake news</title>
     <link href="assets/img/favicon.png" rel="icon" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <!--<link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">-->
+    <!--<link href="node_modules/bootstrap/dist/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="css/bootstrap.min.css">
     <link type="text/css" href="css/argon.css" rel="stylesheet">
 </head>
 
 <body ng-controller="indexCtrl">
+<div ng-if="loading === true" id="preloader"></div>
 <nav class="navbar navbar-vertical fixed-left navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid">
         <a class="navbar-brand pt-0">
@@ -42,7 +45,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input class="form-control form-control-alternative"
-                                               ng-value="'URL : www.google.it/prova'" type="text" disabled>
+                                               value="URL : theguardian.com/britiain-ignored-child-refugees-amendment ( available in the next release )" type="text" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -62,14 +65,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <textarea ng-model="text" class="form-control form-control-alternative"></textarea>
+                                <textarea ng-model="text" class="form-control form-control-alternative" placeholder="Copy and paste or write an article"></textarea>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-xs-12" style="padding-left: 0">
-                <div class="col-xs-12">
+            <div class="col-md-4 col-xs-12 mb-2" style="padding-left: 0">
+                <div ng-if="fakenessDone == true" class="col-xs-12 animated fadeInDown">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
@@ -83,12 +86,25 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xs-12">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-8">
+                                    <h3 class="mb-0">Current selection</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 300px">
+                        </div>
+                    </div>
+                </div>
                 <div class="col-xs-12 mt-2">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-8">
-                                    <h3 class="mb-0">Example</h3>
+                                    <h3 class="mb-0">Related claims</h3>
                                 </div>
                             </div>
                         </div>
@@ -103,8 +119,8 @@
 </div>
 <script src="js/vendors/jquery.min.js"></script>
 <script src="js/vendors/angular.min.js"></script>
-<!-- <script src="js/module/module.js"></script>  -->
-<script src="/module.js"></script> 
+ <!--<script src="js/module/module.js"></script>-->
+<script src="/module.js"></script>
 <script src="js/controller/indexController.js"></script>
 <script src="js/directive/indexDirective.js"></script>
 <script src="js/factory/indexFactory.js"></script>
