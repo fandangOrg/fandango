@@ -54,7 +54,18 @@ class ModelDao(object):
             self.checkPath(nome, modello, output_path)
             
             
-    def load(self,nome):
+    def load(self,file):
+        
+        if os.path.exists(file):
+            return(pickle.load(file,'r'))
+        else:
+            response = "file not found {file}".format(file = file)
+            self.log.error(response)
+            raise Exception(response)
+            
+            
+        
+        
         
     
                     
