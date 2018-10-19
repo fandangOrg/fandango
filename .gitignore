@@ -7,3 +7,5 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.pyc
+/static/node_modules
+/node_modules
