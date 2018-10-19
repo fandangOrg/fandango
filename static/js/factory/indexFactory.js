@@ -1,4 +1,4 @@
-angular.module('app').factory('errorCode',function () {
+app.factory('errorCode',function () {
     return {
         errorCode: function(code) {
             switch (code) {
@@ -14,3 +14,11 @@ angular.module('app').factory('errorCode',function () {
         }
     };
 });
+
+app.factory('call',['$http', function ($http) {
+    return {
+        getCall: function (to_send) {
+            return $http.post(base + "/analyzer",to_send);
+        }
+    };
+}]);

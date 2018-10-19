@@ -11,7 +11,16 @@
 </head>
 
 <body ng-controller="indexCtrl">
-<app-navbar></app-navbar>
+<nav class="navbar navbar-vertical fixed-left navbar-light bg-white" id="sidenav-main">
+    <div class="container-fluid">
+        <a class="navbar-brand pt-0">
+            <img src="assets/img/Logo.png" class="navbar-brand-img">
+        </a>
+        <a class="navbar-brand pt-0">
+            <img src="assets/img/fandango.png" class="navbar-brand-img">
+        </a>
+    </div>
+</nav>
 <div class="main-content">
     <div class="col-md-12 pt-3 pb-3">
         <div class="row">
@@ -33,15 +42,16 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input class="form-control form-control-alternative"
-                                               value="URL : http://google.it" type="text" disabled>
+                                               ng-value="'URL : '+value" type="text" disabled>
                                     </div>
                                 </div>
                             </div>
                             <hr class="my-4"/>
                             <div class="form-group">
-                                <label>Title</label>
-                                <textarea class="form-control form-control-alternative disabled-no-opacity"
-                                          disabled>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, orci quis convallis laoreet, diam risus accumsan ex, ut sollicitudin nunc ipsum vitae ligula. Etiam ipsum diam, placerat at malesuada non, commodo a elit. Etiam imperdiet vulputate posuere. Morbi rhoncus interdum arcu, eu tempor ex vehicula a. Sed et dui purus. Maecenas erat diam, tempor vitae turpis nec, mollis tempor massa. Sed venenatis efficitur tortor, id sagittis orci facilisis volutpat. Quisque hendrerit massa at venenatis tristique.
+                                <label class="form-control-label">Title</label>
+                                <input class="form-control form-control-alternative"
+                                       ng-value="'URL : '+value" type="text" disabled>
+                                <textarea class="form-control form-control-alternative">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, orci quis convallis laoreet, diam risus accumsan ex, ut sollicitudin nunc ipsum vitae ligula. Etiam ipsum diam, placerat at malesuada non, commodo a elit. Etiam imperdiet vulputate posuere. Morbi rhoncus interdum arcu, eu tempor ex vehicula a. Sed et dui purus. Maecenas erat diam, tempor vitae turpis nec, mollis tempor massa. Sed venenatis efficitur tortor, id sagittis orci facilisis volutpat. Quisque hendrerit massa at venenatis tristique.
 
 Sed ac ipsum finibus, tincidunt dolor ac, consectetur orci. Donec eu enim sapien. Proin lobortis quis ante et posuere. Phasellus dictum quam eu sapien sodales, vitae finibus leo auctor. Sed in metus mauris. Ut ipsum leo, suscipit a mattis id, tempor in urna. Mauris neque dui, ultrices non aliquam ac, tincidunt ac lectus. Cras cursus sem quis lectus bibendum faucibus. Vivamus tempus nibh id vulputate sodales. Praesent rhoncus elementum pharetra. In accumsan risus bibendum magna eleifend, ac tristique nisl fermentum. Nullam commodo feugiat est vitae gravida. Pellentesque hendrerit elit vitae convallis maximus.
 
