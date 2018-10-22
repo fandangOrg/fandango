@@ -1,9 +1,9 @@
 {
     "name": "@creative-tim-official/argon-dashboard-free",
     "version": "1.0.0",
-    "description": "A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.",
+    "description": "Fandango fake news",
     "main": "gulpfile.js",
-    "author": "Creative Tim",
+    "author": "LiveTech",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
@@ -41,12 +41,9 @@
         "jquery": "^3.3.1"
     },
     "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/creativetimofficial/argon-dashboard/issues"
-    },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/creativetimofficial/argon-dashboard.git"
+        "url": ""
     },
-    "homepage": "https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"
+    "homepage": ""
 }

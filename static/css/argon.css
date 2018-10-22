@@ -585,8 +585,14 @@ mark,
     z-index: 99999;
     width: 100%;
     height: 100%;
-    overflow: visible;
+    overflow: hidden;
     background: white url("../assets/img/fandango.png") no-repeat center center;
+}
+
+@media (max-width: 767.98px) {
+    #preloader {
+        background-size: 90%;
+    }
 }
 
 .list-unstyled
@@ -2370,7 +2376,7 @@ pre code
 }
 
 .disabled-no-opacity {
-    background-color: transparent !important;
+    background-color: #d3d7da !important;
 }
 .form-control:disabled,
 .form-control[readonly]
@@ -16892,12 +16898,12 @@ a.text-lighter:focus
 
 .btn-icon .btn-inner--text:not(:first-child)
 {
-    margin-left: .75em;
+    margin-left: .50em;
 }
 
 .btn-icon .btn-inner--text:not(:last-child)
 {
-    margin-right: .75em;
+    margin-right: .50em;
 }
 
 .btn-icon-only
@@ -20663,300 +20669,6 @@ article h5 + figure
     margin-top: 0;
 }
 
-.datepicker
-{
-    border-radius: .375rem;
-
-    direction: ltr;
-}
-.datepicker-inline
-{
-    width: 220px;
-}
-.datepicker-rtl
-{
-    direction: rtl;
-}
-.datepicker-rtl.dropdown-menu
-{
-    left: auto;
-}
-.datepicker-rtl table tr td span
-{
-    float: right;
-}
-.datepicker-dropdown
-{
-    top: 0;
-    left: 0;
-
-    padding: 20px 22px;
-
-    box-shadow: 0 50px 100px rgba(50, 50, 93, .1), 0 15px 35px rgba(50, 50, 93, .15), 0 5px 15px rgba(0, 0, 0, .1);
-}
-.datepicker-dropdown.datepicker-orient-left:before
-{
-    left: 6px;
-}
-.datepicker-dropdown.datepicker-orient-left:after
-{
-    left: 7px;
-}
-.datepicker-dropdown.datepicker-orient-right:before
-{
-    right: 6px;
-}
-.datepicker-dropdown.datepicker-orient-right:after
-{
-    right: 7px;
-}
-.datepicker-dropdown.datepicker-orient-bottom:before
-{
-    top: -7px;
-}
-.datepicker-dropdown.datepicker-orient-bottom:after
-{
-    top: -6px;
-}
-.datepicker-dropdown.datepicker-orient-top:before
-{
-    bottom: -7px;
-
-    border-top: 7px solid white; 
-    border-bottom: 0;
-}
-.datepicker-dropdown.datepicker-orient-top:after
-{
-    bottom: -6px;
-
-    border-top: 6px solid #fff; 
-    border-bottom: 0;
-}
-.datepicker table
-{
-    margin: 0;
-
-    -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none; 
-
-    -webkit-touch-callout: none;
-}
-.datepicker table tr td
-{
-    border-radius: 50%;
-}
-.datepicker table tr th
-{
-    font-weight: 500; 
-
-    border-radius: .375rem;
-}
-.datepicker table tr td,
-.datepicker table tr th
-{
-    font-size: .875rem; 
-
-    width: 36px;
-    height: 36px;
-
-    transition: all .15s ease;
-    text-align: center;
-
-    border: none;
-}
-.table-striped .datepicker table tr td,
-.table-striped .datepicker table tr th
-{
-    background-color: transparent;
-}
-.datepicker table tr td.old,
-.datepicker table tr td.new
-{
-    color: #adb5bd;
-}
-.datepicker table tr td.day:hover,
-.datepicker table tr td.focused
-{
-    cursor: pointer; 
-
-    background: white;
-}
-.datepicker table tr td.disabled,
-.datepicker table tr td.disabled:hover
-{
-    cursor: default; 
-
-    color: #dee2e6;
-    background: none;
-}
-.datepicker table tr td.highlighted
-{
-    border-radius: 0;
-}
-.datepicker table tr td.highlighted.focused
-{
-    background: #5e72e4;
-}
-.datepicker table tr td.highlighted.disabled,
-.datepicker table tr td.highlighted.disabled:active
-{
-    color: #ced4da; 
-    background: #5e72e4;
-}
-.datepicker table tr td.today
-{
-    background: white;
-}
-.datepicker table tr td.today.focused
-{
-    background: white;
-}
-.datepicker table tr td.today.disabled,
-.datepicker table tr td.today.disabled:active
-{
-    color: #8898aa; 
-    background: white;
-}
-.datepicker table tr td.range
-{
-    color: #fff;
-    border-radius: 0; 
-    background: #5e72e4;
-}
-.datepicker table tr td.range.focused
-{
-    background: #3b53de;
-}
-.datepicker table tr td.range.disabled,
-.datepicker table tr td.range.disabled:active,
-.datepicker table tr td.range.day.disabled:hover
-{
-    color: #8a98eb; 
-    background: #324cdd;
-}
-.datepicker table tr td.range.highlighted.focused
-{
-    background: #cbd3da;
-}
-.datepicker table tr td.range.highlighted.disabled,
-.datepicker table tr td.range.highlighted.disabled:active
-{
-    color: #dee2e6; 
-    background: #e9ecef;
-}
-.datepicker table tr td.range.today.disabled,
-.datepicker table tr td.range.today.disabled:active
-{
-    color: #fff; 
-    background: #5e72e4;
-}
-.datepicker table tr td.day.range-start
-{
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-.datepicker table tr td.day.range-end
-{
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-.datepicker table tr td.day.range-start.range-end
-{
-    border-radius: 50%;
-}
-.datepicker table tr td.selected,
-.datepicker table tr td.selected.highlighted,
-.datepicker table tr td.selected:hover,
-.datepicker table tr td.selected.highlighted:hover,
-.datepicker table tr td.day.range:hover
-{
-    color: #fff; 
-    background: #5e72e4;
-}
-.datepicker table tr td.active,
-.datepicker table tr td.active.highlighted,
-.datepicker table tr td.active:hover,
-.datepicker table tr td.active.highlighted:hover
-{
-    color: #fff;
-    background: #5e72e4;
-    box-shadow: none;
-}
-.datepicker table tr td span
-{
-    line-height: 54px;
-
-    display: block;
-    float: left;
-
-    width: 23%;
-    height: 54px;
-    margin: 1%;
-
-    cursor: pointer;
-
-    border-radius: 4px;
-}
-.datepicker table tr td span:hover,
-.datepicker table tr td span.focused
-{
-    background: #e9ecef;
-}
-.datepicker table tr td span.disabled,
-.datepicker table tr td span.disabled:hover
-{
-    cursor: default; 
-
-    color: #dee2e6;
-    background: none;
-}
-.datepicker table tr td span.active,
-.datepicker table tr td span.active:hover,
-.datepicker table tr td span.active.disabled,
-.datepicker table tr td span.active.disabled:hover
-{
-    text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
-}
-.datepicker table tr td span.old,
-.datepicker table tr td span.new
-{
-    color: #8898aa;
-}
-.datepicker .datepicker-switch
-{
-    width: 145px;
-}
-.datepicker .datepicker-switch,
-.datepicker .prev,
-.datepicker .next,
-.datepicker tfoot tr th
-{
-    cursor: pointer;
-}
-.datepicker .datepicker-switch:hover,
-.datepicker .prev:hover,
-.datepicker .next:hover,
-.datepicker tfoot tr th:hover
-{
-    background: #e9ecef;
-}
-.datepicker .prev.disabled,
-.datepicker .next.disabled
-{
-    visibility: hidden;
-}
-.datepicker .cw
-{
-    font-size: 10px;
-
-    width: 12px;
-    padding: 0 2px 0 5px;
-
-    vertical-align: middle;
-}
-
 .noUi-target,
 .noUi-target *
 {
@@ -21368,105 +21080,4 @@ html:not([dir='rtl']) .noUi-horizontal .noUi-handle
 [disabled].noUi-origin
 {
     cursor: not-allowed;
-}
-
-/* Range slider value labels */
-.range-slider-value
-{
-    font-size: .75rem;
-    font-weight: 500;
-
-    padding: .4em .8em .3em .85em; 
-
-    color: #fff;
-    border-radius: 10px;
-    background-color: rgba(33, 37, 41, .7);
-}
-
-.range-slider-wrapper .upper-info
-{
-    font-weight: 400;
-
-    margin-bottom: 5px;
-}
-
-.input-slider-value-output
-{
-    font-size: 11px;
-
-    position: relative;
-    top: 12px;
-
-    padding: 4px 8px;
-
-    color: #fff;
-    border-radius: 2px; 
-    background: #333;
-}
-
-.input-slider-value-output:after
-{
-    position: absolute;
-    bottom: 100%;
-    left: 10px;
-
-    width: 0;
-    height: 0;
-    margin-left: -4px; 
-
-    content: ' ';
-    pointer-events: none;
-
-    border: solid transparent;
-    border-width: 4px;
-    border-color: rgba(136, 183, 213, 0);
-    border-bottom-color: #333;
-}
-
-.input-slider-value-output.left:after
-{
-    right: auto; 
-    left: 10px;
-}
-
-.input-slider-value-output.right:after
-{
-    right: 10px;
-    left: auto;
-}
-
-.scrollbar-inner
-{
-    height: 100%;
-}
-.scrollbar-inner:not(:hover) .scroll-element
-{
-    opacity: 0;
-}
-.scrollbar-inner .scroll-element
-{
-    margin-right: 2px; 
-
-    transition: opacity 300ms;
-}
-.scrollbar-inner .scroll-element .scroll-bar,
-.scrollbar-inner .scroll-element .scroll-element_track
-{
-    transition: background-color 300ms;
-}
-.scrollbar-inner .scroll-element .scroll-element_track
-{
-    background-color: transparent;
-}
-.scrollbar-inner .scroll-element.scroll-y
-{
-    right: 0; 
-
-    width: 3px;
-}
-.scrollbar-inner .scroll-element.scroll-x
-{
-    bottom: 0; 
-
-    height: 3px;
 }

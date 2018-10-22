@@ -7,7 +7,8 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <!--<link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">-->
     <!--<link href="node_modules/bootstrap/dist/css/bootstrap.min.css">-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="css/bootstrap.min.css">
     <link type="text/css" href="css/argon.css" rel="stylesheet">
 </head>
@@ -25,17 +26,22 @@
     </div>
 </nav>
 <div class="main-content">
-    <div class="col-md-12 pt-3 pb-3">
+    <div class="col-12 pt-3 pb-3">
         <div class="row">
             <div class="col-lg-8 col-sm-12">
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <div class="col-8">
+                            <div class="col-6">
                                 <h3 class="mb-0">Article Checker</h3>
                             </div>
-                            <div class="col-4 text-right">
-                                <a href="" ng-click="send()" class="btn btn-sm btn-success">Fakeness</a>
+                            <div class="col-6 text-right">
+                                <btn data-ng-attr-title="{{!title || !source || !text ? 'Fill all the fields': 'Check Fakeness'}}" ng-click="send()" class="btn btn-sm btn-icon btn-success" ng-class="{'disabled': !title || !source || !text}">
+                                <span class="btn-inner--icon">
+                                    <img src="assets/img/verify.png">
+                                </span>
+                                <span class="btn-inner--text">Check Fakeness</span>
+                                </btn>
                             </div>
                         </div>
                     </div>
@@ -45,7 +51,8 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input class="form-control form-control-alternative"
-                                               value="URL : theguardian.com/britiain-ignored-child-refugees-amendment ( available in the next release )" type="text" disabled>
+                                               value="URL : theguardian.com/britiain-ignored-child-refugees-amendment ( available in next release )"
+                                               type="text" disabled>
                                     </div>
                                 </div>
                             </div>
@@ -55,47 +62,39 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-first-name">Title</label>
-                                            <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="Insert a title" ng-model="title">
+                                            <input type="text" id="input-first-name"
+                                                   class="form-control form-control-alternative"
+                                                   placeholder="Insert a title" ng-model="title">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label class="form-control-label" for="input-last-name">Source</label>
-                                            <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Example : ANSA.it" ng-model="source">
+                                            <input type="text" id="input-last-name"
+                                                   class="form-control form-control-alternative"
+                                                   placeholder="Example : ANSA.it" ng-model="source">
                                         </div>
                                     </div>
                                 </div>
-                                <textarea ng-model="text" class="form-control form-control-alternative" placeholder="Copy and paste or write an article"></textarea>
+                                <textarea ng-model="text" class="form-control form-control-alternative"
+                                          placeholder="Copy and paste or write an article"></textarea>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-xs-12 mb-2" style="padding-left: 0">
-                <div ng-if="fakenessDone == true" class="col-xs-12 animated fadeInDown">
-                    <div class="card bg-secondary shadow">
-                        <div class="card-header bg-white border-0">
-                            <div class="row align-items-center">
-                                <div class="col-8">
-                                    <h3 class="mb-0">Fakeness</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body" style="padding: 0;height: 300px">
-                            <div id='myChart' style="height: 300px"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-lg-4 col-sm-12" style="padding-left: 0">
                 <div class="col-xs-12">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
-                                <div class="col-8">
-                                    <h3 class="mb-0">Current selection</h3>
+                                <div class="col-12">
+                                    <h3 class="mb-0">Fakeness</h3>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body" style="height: 300px">
+                        <div class="card-body" style="padding: 0;height: auto;">
+                            <div id='gaugeFakeness' style="height: 300px"></div>
                         </div>
                     </div>
                 </div>
@@ -103,27 +102,40 @@
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
-                                <div class="col-8">
-                                    <h3 class="mb-0">Related claims</h3>
+                                <div class="col-12">
+                                    <h3 class="mb-0">Current selection ( Not available )</h3>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body" style="height: 300px">
+                        <div class="card-body disabled-no-opacity" style="height: 300px">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 mt-2">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <h3 class="mb-0">Related claims ( Not available )</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body disabled-no-opacity" style="height: 300px">
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-8"></div>
+            <div class="col-lg-8 hidden-md hidden-sm hidden-xs"></div>
         </div>
     </div>
 </div>
 <script src="js/vendors/jquery.min.js"></script>
 <script src="js/vendors/angular.min.js"></script>
- <!--<script src="js/module/module.js"></script>-->
-<script src="/module.js"></script>
+<script src="js/module/module.js"></script>
+<!--<script src="/module.js"></script>-->
 <script src="js/controller/indexController.js"></script>
 <script src="js/directive/indexDirective.js"></script>
 <script src="js/factory/indexFactory.js"></script>
-<script src= "https://cdn.zingchart.com/zingchart.min.js"></script>
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 </body>
 </html>
