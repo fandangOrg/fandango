@@ -7,11 +7,17 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call)
     });
 
     $scope.send = function () {
+
+        if(!$scope.title || !$scope.source || !$scope.text)
+            return false;
+
         var to_send = {
             'title':$scope.title,
             'text':$scope.text,
             'source':''
         };
+
+        $scope.loading = true;
 
         call.getCall(to_send).then(function (response) {
             $scope.value = response.data[0];
@@ -26,8 +32,10 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call)
             });
 
             $scope.fakenessDone = true;
+            $scope.loading = true;
 
         }, function (response) {
+            $scope.loading = true;
             $scope.fakenessDone = false;
             console.log(response)
         });

@@ -35,14 +35,14 @@
                             <div class="col-6">
                                 <h3 class="mb-0">Article Checker</h3>
                             </div>
-                            <div class="col-6 text-right">
-                                <btn data-ng-attr-title="{{!title || !source || !text ? 'Fill all the fields': 'Check Fakeness'}}" ng-click="send()" class="btn btn-sm btn-icon btn-success" ng-class="{'disabled': !title || !source || !text}">
-                                <span class="btn-inner--icon">
-                                    <img src="assets/img/verify.png">
-                                </span>
-                                <span class="btn-inner--text">Check Fakeness</span>
-                                </btn>
-                            </div>
+                            <!--<div class="col-6 text-right">-->
+                            <!--<btn data-ng-attr-title="{{!title || !source || !text ? 'Fill all the fields': 'Check Fakeness'}}" ng-click="send()" class="btn btn-sm btn-icon btn-success" ng-class="{'disabled': !title || !source || !text}">-->
+                            <!--<span class="btn-inner&#45;&#45;icon">-->
+                            <!--<img src="assets/img/verify.png">-->
+                            <!--</span>-->
+                            <!--<span class="btn-inner&#45;&#45;text">Check Fakeness</span>-->
+                            <!--</btn>-->
+                            <!--</div>-->
                         </div>
                     </div>
                     <div class="card-body">
@@ -72,7 +72,7 @@
                                             <label class="form-control-label" for="input-last-name">Source</label>
                                             <input type="text" id="input-last-name"
                                                    class="form-control form-control-alternative"
-                                                   placeholder="Example : ANSA.it" ng-model="source">
+                                                   placeholder="Insert a source  ( E.g : ANSA.it )" ng-model="source">
                                         </div>
                                     </div>
                                 </div>
@@ -93,8 +93,29 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body" style="padding: 0;height: auto;">
-                            <div id='gaugeFakeness' style="height: 300px"></div>
+                        <div class="card-body" style="padding: 0;min-height: 265px;">
+                            <div ng-if="fakenessDone === false">
+                                <p class="col-12 mt-2">To show "Fakeness" of an article fill the follow fields :</p>
+                                <ul class="list-unstyled">
+                                    <li>- Title<i ng-if="title"
+                                                  class="animated fadeIn fas fa-check ml-2 text-green"></i></li>
+                                    <li>- Source<i ng-if="source"
+                                                   class="animated fadeIn fas fa-check ml-2 text-green"></i></li>
+                                    <li>- Article body text<i ng-if="text"
+                                                              class="animated fadeIn fas fa-check ml-2 text-green"></i>
+                                    </li>
+                                </ul>
+                                <p class="text-center">Then click "Check Fakeness"</p>
+                                <div class="col-12 text-center">
+                                    <btn ng-click="send()" ng-if="loading === false" class="btn btn-lg btn-icon btn-success" ng-class="{'disabled': !title || !source || !text}">
+                                        <span class="btn-inner--icon"><img src="assets/img/verify.png"></span>
+                                        <span class="btn-inner--text">Check Fakeness</span>
+                                    </btn>
+                                    <div ng-if="loading === true" class="lds-hourglass"></div>
+                                </div>
+                            </div>
+                            <div class="animated fadeIn" ng-if="fakenessDone === true" id='gaugeFakeness'
+                                 style="height: 265px"></div>
                         </div>
                     </div>
                 </div>
