@@ -1,5 +1,5 @@
 [default]  #sezione
-log_folder = /home/camila/progetti/fake-news-detection
+#log_folder = /home/camila/progetti/fake-news-detection
 picklepath = /home/camila/
 
 #variabile sez. Vedere getLovelevel

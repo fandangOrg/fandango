@@ -3,14 +3,14 @@
   "tasks": {
     "build": {
       "upload": {
-        "repository": "xxxxx"
+        "repository": "fandango-fake-news"
       }
     },
     "docker-build": {
       "company": "livetech",
       "build-args": {
-        "user": "",
-        "password": ""
+        "user": "piplivetech",
+        "password": "pip2018"
       }
     }
   }
