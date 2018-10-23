@@ -29,9 +29,10 @@ config = getConfig()
 # logging.basicConfig(format=FORMAT, filename=self.config.get("default", "log_file"), level=logging.DEBUG)
         
 
-
-log_folder = os.environ.get("LOG_FOLDER") or config["default"]["log_folder"]  or  pkg_resources.resource_filename("fake_news_detection.resources.log", "")# @UndefinedVariable
+log_folder = os.environ.get("LOG_FOLDER") or config["default"].get("log_folder",None)  or  pkg_resources.resource_filename("fake_news_detection.resources.log", "")# @UndefinedVariable
 BASEURL = os.environ.get("BASEURL_SERVICE") or config["service"]["url"]
+BASEPORT= os.environ.get("BASEPORT_SERVICE") or config["service"]["port"]
+
 picklepath = pkg_resources.resource_filename("fake_news_detection.model", "")  # @UndefinedVariable
 dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "fake_or_real_news.csv")  # @UndefinedVariable
 

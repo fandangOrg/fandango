@@ -35,11 +35,13 @@ app.name="FANDANGO"
 app.add_service("analyzer",analyzer, method='POST')
 CORS(app)
 
+
 @app.route( '/module.js' )
 def baseurl():
+    url = AppConfig.BASEURL+":"+AppConfig.BASEPORT
     return '''var app = angular.module('app', []);
                 var base = "%s/fandango/v0.1/fakeness";
-                '''%AppConfig.BASEURL
+                '''%url
  
-app.run(host="0.0.0.0", port="9800",debug=True)
-
+print("RUN ON ",AppConfig.BASEURL,AppConfig.BASEPORT)
+app.run(host="0.0.0.0", port=AppConfig.BASEPORT,debug=True)
