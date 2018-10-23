@@ -300,7 +300,7 @@ textarea
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    resize: none;
+    resize: vertical;
     margin: 0;
     overflow: auto;
 }
@@ -1933,6 +1933,17 @@ pre code
     {
         margin-left: 91.66667%;
     }
+}
+
+
+.col-lg-4, .box {
+    padding-left: 0;
+}
+
+
+.col-sm-12, .box {
+    margin-top: .5rem;
+    padding-left: 15px;
 }
 
 .table
