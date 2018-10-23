@@ -64,7 +64,7 @@
                                             <label class="form-control-label" for="input-first-name">Title</label>
                                             <input type="text" id="input-first-name"
                                                    class="form-control form-control-alternative"
-                                                   placeholder="Insert a title" ng-model="title">
+                                                   placeholder="Insert a title" ng-model="title" ng-minlength="10">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -72,12 +72,12 @@
                                             <label class="form-control-label" for="input-last-name">Source</label>
                                             <input type="text" id="input-last-name"
                                                    class="form-control form-control-alternative"
-                                                   placeholder="Insert a source  ( E.g : ANSA.it )" ng-model="source">
+                                                   value="E.g : ANSA.it ( not analyzed)" disabled>
                                         </div>
                                     </div>
                                 </div>
                                 <textarea ng-model="text" class="form-control form-control-alternative"
-                                          placeholder="Copy and paste or write an article"></textarea>
+                                          placeholder="Copy and paste or write an article" ng-minlength="50"></textarea>
                             </div>
                         </form>
                     </div>
@@ -97,17 +97,16 @@
                             <div>
                                 <p class="col-12 mt-2">To show "Fakeness" of an article fill the follow fields :</p>
                                 <ul class="list-unstyled">
-                                    <li>- Title<i ng-if="title"
+                                    <li>- Title ( Min 10 chars )<i ng-if="title"
                                                   class="animated fadeIn fas fa-check ml-2 text-green"></i></li>
-                                    <li>- Source<i ng-if="source"
-                                                   class="animated fadeIn fas fa-check ml-2 text-green"></i></li>
-                                    <li>- Article body text<i ng-if="text"
+                                    <li class="text-gray">- Source ( not analyzed )</li>
+                                    <li>- Article body text ( Min 50 chars )<i ng-if="text"
                                                               class="animated fadeIn fas fa-check ml-2 text-green"></i>
                                     </li>
                                 </ul>
                                 <p class="text-center">Then click "Check Fakeness"</p>
                                 <div class="col-12 text-center">
-                                    <btn ng-click="send()" ng-if="loadingFakeness === false" class="btn btn-lg btn-icon btn-success" ng-class="{'disabled': !title || !source || !text}">
+                                    <btn ng-click="send()" ng-if="loadingFakeness === false" class="btn btn-lg btn-icon btn-success" ng-class="{'disabled': !title || !text}">
                                         <span class="btn-inner--icon"><img src="assets/img/verify.png"></span>
                                         <span class="btn-inner--text">Check Fakeness</span>
                                     </btn>
