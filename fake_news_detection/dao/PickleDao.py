@@ -60,6 +60,7 @@ class ModelDao(object):
             
     def load(self,nome):
         path=picklepath +"/"+ str(nome) + ".p"
+        print(path)
         try:
             with open(path, 'rb') as handle:
                 return pickle.load(handle)

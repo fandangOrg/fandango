@@ -66,7 +66,7 @@ if __name__ == '__main__':
     oo = ModelDao()
     clf = RandomForestClassifier(n_jobs=-1, random_state=1234,n_estimators=500,max_depth=80)
     model=SklearnModel(clf,'test')
-    training_set= pd.read_csv(dataset_beta) # dataset
+    training_set= pd.read_csv(dataset_beta+"/fake_or_real_news.csv") # dataset
     print(training_set.shape)
     model.train(training_set['title'],training_set['text'], training_set['label'])
     oo.save(model,model.name)

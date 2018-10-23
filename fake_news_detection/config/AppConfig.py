@@ -33,8 +33,9 @@ log_folder = os.environ.get("LOG_FOLDER") or config["default"].get("log_folder",
 BASEURL = os.environ.get("BASEURL_SERVICE") or config["service"]["url"]
 BASEPORT= os.environ.get("BASEPORT_SERVICE") or config["service"]["port"]
 
-picklepath = pkg_resources.resource_filename("fake_news_detection.model", "")  # @UndefinedVariable
-dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "fake_or_real_news.csv")  # @UndefinedVariable
+picklepath = pkg_resources.resource_filename("fake_news_detection.resources.model", "")  # @UndefinedVariable
+dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
+static_folder = pkg_resources.resource_filename("static", "")  # @UndefinedVariable
 
 # SOLO PER TEST
 #===============================================================================
@@ -54,9 +55,8 @@ dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", 
 # mapping = os.environ.get("MAPPING_ELASTIC") or config.get("elasticsearch", "mapping")
 # new_mapped_index = os.environ.get("NEW_MAPPED_INDEX") or config.get("elasticsearch", "new_mapped_index")
 #===============================================================================
-
+if __name__ == '__main__':
+    print(static_folder)
 
 # dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")
-if __name__ == '__main__':
-    print(pkg_resources.resource_filename("fake_news_detection.model", ""))
     
