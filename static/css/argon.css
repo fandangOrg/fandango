@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+#gaugeFakeness-license-text {
+    display: none !important;
+}
+
 html
 {
     font-family: sans-serif;
