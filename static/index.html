@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         <div class="card-body" style="padding: 0;min-height: 265px;">
-                            <div ng-if="fakenessDone === false">
+                            <div>
                                 <p class="col-12 mt-2">To show "Fakeness" of an article fill the follow fields :</p>
                                 <ul class="list-unstyled">
                                     <li>- Title<i ng-if="title"
@@ -107,15 +107,28 @@
                                 </ul>
                                 <p class="text-center">Then click "Check Fakeness"</p>
                                 <div class="col-12 text-center">
-                                    <btn ng-click="send()" ng-if="loading === false" class="btn btn-lg btn-icon btn-success" ng-class="{'disabled': !title || !source || !text}">
+                                    <btn ng-click="send()" ng-if="loadingFakeness === false" class="btn btn-lg btn-icon btn-success" ng-class="{'disabled': !title || !source || !text}">
                                         <span class="btn-inner--icon"><img src="assets/img/verify.png"></span>
                                         <span class="btn-inner--text">Check Fakeness</span>
                                     </btn>
-                                    <div ng-if="loading === true" class="lds-hourglass"></div>
+                                    <div ng-if="loadingFakeness === true" class="lds-hourglass"></div>
                                 </div>
                             </div>
-                            <div class="animated fadeIn" ng-if="fakenessDone === true" id='gaugeFakeness'
-                                 style="height: 265px"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 mt-2">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <h3 class="mb-0">Fakeness Graph</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 300px;padding: 0">
+                            <div id='gaugeFakeness'
+                                 style="height: 300px"></div>
                         </div>
                     </div>
                 </div>
