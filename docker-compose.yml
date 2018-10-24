@@ -1,0 +1,11 @@
+fandango:
+  image: livetech/fandango-fake-news:0.0.3
+  environment:
+    - BASEURL_SERVICE= http://0.0.0.0
+    - BASEPORT_SERVICE=9800
+  ports:
+    - 9800:9800
+    
+  
+
+ 
