@@ -6,6 +6,10 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call)
         $scope.loading = false;
     });
 
+    $(".gaugeBox").on("contextmenu",function(){
+        return false;
+    });
+
     $scope.send = function () {
 
         $('#gaugeFakeness').removeClass('animated fadeIn');
