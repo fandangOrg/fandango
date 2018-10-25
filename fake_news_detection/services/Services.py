@@ -10,6 +10,7 @@ from fake_news_detection.business.Model import SklearnModel
 from flask_cors.extension import CORS
 import json
 from fake_news_detection.config import AppConfig
+from fake_news_detection.config.AppConfig import static_folder
 
  
 oo = ModelDao()
@@ -29,17 +30,19 @@ def analyzer(info:InterfaceInputModel)->str:
     return json.loads(prest.to_json(orient='records'))
 
 
-app=DS4BizFlask(__name__,static_folder="/home/daniele/progetti/fandango-fake-news/static/",static_url_path="/web")
+app=DS4BizFlask(__name__,static_folder=static_folder+"/",static_url_path="/web")
 app.root="/fandango/v0.1/fakeness"
 app.name="FANDANGO"
 app.add_service("analyzer",analyzer, method='POST')
 CORS(app)
 
-@app.route( '/module.js' )
+
+@app.route( '/web/module.js' )
 def baseurl():
+    url = AppConfig.BASEURL+":"+AppConfig.BASEPORT
     return '''var app = angular.module('app', []);
                 var base = "%s/fandango/v0.1/fakeness";
-                '''%AppConfig.BASEURL
+                '''%url
  
-app.run(host="0.0.0.0", port="9800",debug=True)
-
+print("RUN ON ",AppConfig.BASEURL,AppConfig.BASEPORT)
+app.run(host="0.0.0.0", port=AppConfig.BASEPORT,debug=False)

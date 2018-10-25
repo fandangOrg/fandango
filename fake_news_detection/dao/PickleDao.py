@@ -26,7 +26,7 @@ class ModelDao(object):
         #     print("Please enter a name for the model")
         #     nome = input()
         #=======================================================================
-        output_path = picklepath + str(nome) + ".p"
+        output_path = picklepath +"/"+ str(nome) + ".p"
         self.checkPath(nome, modello, output_path,force)
         
         
@@ -53,13 +53,14 @@ class ModelDao(object):
         elif typed.lower() == "n":
             print("Please enter a name for the model")
             nome = input()
-            output_path = picklepath + str(nome) + ".p"
+            output_path = picklepath +"/"+ str(nome) + ".p"
             self.checkPath(nome, modello, output_path)
             
             
             
     def load(self,nome):
-        path=picklepath + str(nome) + ".p"
+        path=picklepath +"/"+ str(nome) + ".p"
+        print(path)
         try:
             with open(path, 'rb') as handle:
                 return pickle.load(handle)
