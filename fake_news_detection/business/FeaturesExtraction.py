@@ -10,7 +10,7 @@ import numpy as np
 
 from sklearn.base import BaseEstimator, TransformerMixin
 import math
-
+ 
 class DataFrameColumnExtracter(TransformerMixin):
 
     def __init__(self, column):
@@ -61,7 +61,7 @@ def features_extraction_JJ(df,column):
 
     
 def _add_feature(df,column,name,funct):
-    df["new_f_"+column+"_"+name]=df[column].swifter.apply(funct)
+    df["new_f_"+column+"_"+name]=df[column].apply(funct)
     return df
 
 def count_no_alfanumber(text):

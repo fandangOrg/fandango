@@ -21,9 +21,7 @@ from fake_news_detection.business.FeaturesExtraction import features_extraction,
     DataFrameColumnExtracter
 from sklearn.model_selection._split import train_test_split
 from sklearn import metrics
-from dask.dataframe.core import DataFrame
 from fake_news_detection.utils.Analyzer import display_scores
-from sklearn.preprocessing._function_transformer import FunctionTransformer
  
   
 class SklearnModel:

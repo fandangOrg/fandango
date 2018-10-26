@@ -8,7 +8,6 @@ import logging
 import configparser
 import os
 import pkg_resources 
-from elasticsearch import Elasticsearch
 from configparser import ConfigParser, RawConfigParser
 
   

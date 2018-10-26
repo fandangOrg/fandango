@@ -15,7 +15,7 @@ from fake_news_detection.config.AppConfig import static_folder
 from fake_news_detection.utils.Crawler import crawler_news
 
  
-oo = ModelDao()
+oo = ModelDao() 
 model = oo.load('test')
     
     

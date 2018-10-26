@@ -4,8 +4,7 @@ Created on Oct 24, 2018
 @author: daniele
 '''
 import pandas as pd
-from fake_news_detection.utils.DataPrep import clean_text
-import swifter
+
 def get_train_dataset():
     from fake_news_detection.config.AppConfig import dataset_beta
     training_set= pd.read_csv(dataset_beta+"/"+"fake.csv") # dataset
