@@ -32,6 +32,7 @@ def analyzer(info:InterfaceInputModel)->str:
     return json.loads(prest.to_json(orient='records'))
 
 def crawler(url:str)->str:
+    print(url)
     return crawler_news(url)
 
 app=DS4BizFlask(__name__,static_folder=static_folder+"/",static_url_path="/web")
