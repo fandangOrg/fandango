@@ -32,7 +32,7 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <div class="col-6">
+                            <div class="col-12">
                                 <h3 class="mb-0">Article Checker</h3>
                             </div>
                             <!--<div class="col-6 text-right">-->
@@ -48,12 +48,11 @@
                     <div class="card-body">
                         <form>
                             <div class="row">
-                                <div class="col-md-11 col-xs-12" style="padding-right: 0">
+                                <div class="col-md-11 col-xs-12 urlContainer" style="padding-right: 0">
                                     <div class="form-group">
                                         <input class="form-control form-control-alternative"
                                                ng-model="url" placeholder="Enter a URL to analyze"
                                                type="text">
-
                                     </div>
                                 </div>
                                 <!--<div class="text-right">-->
@@ -140,20 +139,24 @@
                             <div id='gaugeFakeness' class="animated fadeIn"
                                  style="height: 300px">
                             </div>
-                            <div class="col-sm-12" ng-if="fakenessDone === true">
+                            <div id="feedback" class="col-sm-12" ng-if="fakenessDone === true">
                                 <div class="row">
-                                    <div class="col-sm-8">
-                                        <label class="form-control-label">Do you agree our valutation?</label>
+                                    <div class="col-7">
+                                        <label class="form-control-label">Real or fake?</label>
                                     </div>
-                                    <div class="col-sm-4 text-right">
-                                        <i ng-click="sendFeedback('yes')" id="ciao"
-                                           class="fas text-green fa-thumbs-up pointer animated bounceIn delay-1s mr-2"
+                                    <div class="col-5 text-right" id="feedbackCol">
+                                        <i title="Real" ng-click="sendFeedback('REAL')"
+                                           class="fas fa-thumbs-up pointer animated text-green bounceIn delay-1s mr-4"
                                            style="font-size: 22px"></i>
-                                        <i ng-click="sendFeedback('no')"
-                                           class="fas text-red fa-thumbs-down pointer animated bounceIn delay-1s"
+                                        <i title="Fake" ng-click="sendFeedback('FAKE')"
+                                           class="fas fa-thumbs-down pointer animated text-red bounceIn delay-1s"
                                            style="font-size: 22px"></i>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div ng-if="feedbackSelected === true" class="alert alert-success" role="alert" id="alert" style="margin-bottom: 0">
+                                <strong>Thank you for the feedback!</strong> Click again on 'Check Fakeness' to see the change.
                             </div>
                         </div>
                     </div>
@@ -190,6 +193,7 @@
     </div>
 </div>
 <script src="js/vendors/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/vendors/angular.min.js"></script>
 <script src="js/module/module.js"></script>
 <!-- <script src="web/module.js"></script> -->
