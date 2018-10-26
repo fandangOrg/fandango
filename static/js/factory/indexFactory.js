@@ -15,10 +15,18 @@ app.factory('errorCode',function () {
     };
 });
 
-app.factory('call',['$http', function ($http) {
+app.factory('fakeness',['$http', function ($http) {
     return {
-        getCall: function (to_send) {
+        getFakeness: function (to_send) {
             return $http.post(base + "/analyzer",to_send);
+        }
+    };
+}]);
+
+app.factory('url',['$http', function ($http) {
+    return {
+        analyzeUrl: function (to_send) {
+            return $http.post(base + "/cr_url",to_send);
         }
     };
 }]);

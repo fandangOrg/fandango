@@ -1,4 +1,4 @@
-app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call) {
+app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, fakeness) {
 
     $scope.fakenessDone = false;
     $scope.loadingFakeness = false;
@@ -15,8 +15,14 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call)
     $scope.analyzeUrl = function () {
         if (!$scope.url)
             return false;
-
         $scope.loadingAnalyzeUrl = true;
+        var to_send = $scope.url;
+        url.analyzeUrl(to_send).then(function (response) {
+            $scope.page = response.data;
+            $scope.loadingAnalyzeUrl = false;
+        }, function (response) {
+            $scope.loadingAnalyzeUrl = false;
+        });
     };
 
     $scope.send = function () {
@@ -35,7 +41,7 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call)
 
         $scope.loadingFakeness = true;
 
-        call.getCall(to_send).then(function (response) {
+        fakeness.getFakeness(to_send).then(function (response) {
             $scope.value = response.data[0];
             $scope.fakeValue = parseInt($scope.value.FAKE * 100);
             $scope.realValue = parseInt($scope.value.REAL * 100);
