@@ -134,6 +134,9 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
                         }
                     },
                     "plot": {
+                        tooltip:{
+                            visible:false
+                        },
                         "csize": "5%",
                         "size": "100%",
                         "background-color": "#000000"
