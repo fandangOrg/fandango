@@ -9,6 +9,7 @@ import treetaggerwrapper
 import numpy as np
 
 from sklearn.base import BaseEstimator, TransformerMixin
+import math
 
 class DataFrameColumnExtracter(TransformerMixin):
 
@@ -65,10 +66,13 @@ def _add_feature(df,column,name,funct):
 
 def count_no_alfanumber(text):
     line = re.sub(r"[a-z0-9\s]", "", text.lower())
-    return len(line)
+    l=len(line)
+    if l<1:
+        l=1
+    return math.log(l)
 
 def len_words(text):
-    return len(set(text.split(" ")))
+    return math.log(len(set(text.split(" "))))
 
 def len_sentences(text):
     return len(sent_tokenize(text))
@@ -108,3 +112,5 @@ def count_ADJ(ss):
             if len(items)==3 and "JJ" in items[1] :
                 app.append(items[1])
         yield len(app)
+if __name__ == '__main__':
+    print(math.log(10))

@@ -31,8 +31,8 @@ class SklearnModel:
         self.model = model
         self.vect  = TfidfVectorizer(stop_words='english',ngram_range=(2,3))
         self.vect_title  = TfidfVectorizer(stop_words='english',ngram_range=(1,2))
-        self.vects_features_title=[]
-        self.vects_features_text=[]
+        self.vects_features_title=[len]
+        self.vects_features_text=[len,count_no_alfanumber]
         self.name=name
         
        
