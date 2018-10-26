@@ -1,0 +1,86 @@
+'''
+Created on Oct 25, 2018
+
+@author: daniele
+'''
+import re
+from nltk.tokenize import sent_tokenize
+import treetaggerwrapper
+import swifter
+
+from sklearn.base import BaseEstimator, TransformerMixin
+
+class SampleExtractor(BaseEstimator, TransformerMixin):
+
+    def __init__(self, name_columns):
+        self.name_columns = name_columns  # e.g. pass in a column name to extract
+
+    def transform(self, df, y=None):
+        return df[self.name_columns]
+
+    def fit(self, X, y=None):
+        return self  # generally does nothing
+    
+def features_extraction(df,features,column):
+    if type(features)==list:
+        for f in features:
+            print(f.__name__)
+            df = _add_feature(df,column,f.__name__,f)
+            print(df.columns) 
+            
+    return df
+    
+
+def features_extraction_JJ(df,column):
+    df['new_f_ADJ']= list(count_ADJ(df['text']))
+
+    
+def _add_feature(df,column,name,funct):
+    df["new_f_"+name]=df[column].swifter.apply(funct)
+    return df
+
+def count_no_alfanumber(text):
+    line = re.sub(r"[a-z0-9\s]", "", text.lower())
+    return len(line)
+
+def len_words(text):
+    return len(set(text.split(" ")))
+
+def len_sentences(text):
+    return len(sent_tokenize(text))
+
+
+
+def tag(s,lang="en",numlines=True):
+    app=list()
+    print("start ... ")
+
+    tagger = treetaggerwrapper.TreeTagger(TAGLANG=lang)
+    for el in tagger.tag_text(s,numlines=numlines):
+       
+        yield el.split("\t")
+        #if len(items)==3 and "JJ" in items[1] :
+        #    app.append(items[1])
+    #return len(app)
+
+def multitag(ss,lang="en"):
+    ss=".\n".join([re.sub("\\s+"," ",x) for x in ss])
+    print(len(ss))
+    temp=[]
+    for el in tag(ss,lang):
+        if el[0].startswith("<ttpw:"):
+            if temp:
+                yield temp[:]
+                temp=[]
+        else:
+            temp.append(el)
+    if temp:
+        yield temp[:]
+
+def count_ADJ(ss):
+    for f in multitag(ss):
+        app=list()
+        for items in f:
+            if len(items)==3 and "JJ" in items[1] :
+                app.append(items[1])
+        yield len(app)

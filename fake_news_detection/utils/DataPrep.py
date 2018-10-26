@@ -95,6 +95,7 @@ class DataPrep(object):
 def clean_text(text):
     
     text = text.lower()
+    text = text.replace("\n"," ")
     text = re.sub(r"what's", "what is ", text)
     text = re.sub(r"\'s", " ", text)
     text = re.sub(r"\'ve", " have ", text)
