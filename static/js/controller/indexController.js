@@ -2,13 +2,22 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, call)
 
     $scope.fakenessDone = false;
     $scope.loadingFakeness = false;
+    $scope.loadingAnalyzeUrl = false;
     angular.element(function () {
         $scope.loading = false;
     });
 
-    $(".gaugeBox").on("contextmenu",function(){
+    $(".gaugeBox").on("contextmenu", function () {
         return false;
     });
+
+
+    $scope.analyzeUrl = function () {
+        if (!$scope.url)
+            return false;
+
+        $scope.loadingAnalyzeUrl = true;
+    };
 
     $scope.send = function () {
 

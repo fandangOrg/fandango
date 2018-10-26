@@ -241,6 +241,12 @@ th {
     text-align: inherit;
 }
 
+.url_analyze {
+    margin: 0 auto;
+    float: none;
+    text-align: center;
+}
+
 label {
     display: inline-block;
 
@@ -365,6 +371,10 @@ output {
 summary {
     display: list-item;
 
+    cursor: pointer;
+}
+
+.pointer {
     cursor: pointer;
 }
 
@@ -503,6 +513,40 @@ mark,
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
+}
+
+.lds-hourglass-white {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.lds-hourglass-white:after {
+    content: " ";
+    display: block;
+    border-radius: 50%;
+    width: 0;
+    height: 0;
+    margin: 6px;
+    box-sizing: border-box;
+    border: 14px solid #fff;
+    border-color: white transparent white transparent;
+    animation: lds-hourglass 1.2s infinite;
+}
+
+@keyframes lds-hourglass-white {
+    0% {
+        transform: rotate(0);
+        animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    }
+    50% {
+        transform: rotate(900deg);
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+    100% {
+        transform: rotate(1800deg);
+    }
 }
 
 .lds-hourglass {
@@ -2857,15 +2901,15 @@ fieldset:disabled a.btn {
 
 .btn-success {
     color: #fff;
-    border-color: #179757;
-    background-color: #179757;
+    border-color: #2dce89;
+    background-color: #2dce89;
     box-shadow: 0 4px 6px rgba(50, 50, 93, .11), 0 1px 3px rgba(0, 0, 0, .08);
 }
 
 .btn-success:hover {
     color: #fff;
-    border-color: #179757;
-    background-color: #179757;
+    border-color: #28b174;
+    background-color: #28b174;
 }
 
 .btn-success:focus,
@@ -16293,7 +16337,7 @@ a.btn-icon-only {
 }
 
 .form-control-label {
-    font-size: .875rem;
+    font-size: .950rem;
     font-weight: 600;
 
     color: #525f7f;
