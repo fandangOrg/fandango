@@ -21,8 +21,8 @@ def get_train_dataset():
     df=df.append(df_app)
     #df=df_app
     df=df.dropna(subset = ['title','text','label'])
-    df['text'].swifter.apply(clean_text)
-    df['title'].swifter.apply(clean_text)
+    #df['text']=df['text'].swifter.apply(clean_text)
+    #df['title'].swifter.apply(clean_text)
     print(df.groupby(['label']).agg(['count']))
     return df
 

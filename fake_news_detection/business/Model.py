@@ -100,7 +100,18 @@ class SklearnModel:
         print(self.model.predict(matrix))
         return pd.DataFrame(self.model.predict_proba(matrix), columns=self.model.classes_)
         
-
+    def partial_fit(self,title,text,label):
+        print("PARTIAL")
+        print("title:",title)
+        print("text:",text)
+        print("label:",label)
+        matrix = self.vect.transform([text])
+        matrix_title = self.vect_title.transform([title])
+        matrix=self._concatenate_csc_matrices_by_columns(matrix,matrix_title)
+        print(self.model.partial_fit(matrix,[label]))
+        ModelDao().save(self,self.name)
+        
+        
     def most_informative_feature_for_binary_classification(self, n=100):  
         class_labels = self.model.classes_
         feature_names = self.vect .get_feature_names()

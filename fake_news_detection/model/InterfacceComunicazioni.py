@@ -13,4 +13,11 @@ class InterfaceInputModel:
         self.text = text
         self.source = source
         
-       
+
+class InterfaceInputFeedBack:
+    
+    def __init__(self,title:str,text:str,label:str):
+        self.title = title
+        self.text = text
+        self.label = label
+        
