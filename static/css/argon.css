@@ -562,9 +562,12 @@ mark,
     background: white url("../assets/img/fandango.png") no-repeat center center;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 768px) {
     #preloader {
         background-size: 90%;
+    }
+    .urlContainer {
+        padding-right: 15px !important;
     }
 }
 
