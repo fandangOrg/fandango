@@ -140,20 +140,24 @@
                             <div id='gaugeFakeness' class="animated fadeIn"
                                  style="height: 300px">
                             </div>
-                            <div class="col-sm-12" ng-if="fakenessDone === true">
+                            <div id="feedback" class="col-sm-12" ng-if="fakenessDone === true">
                                 <div class="row">
-                                    <div class="col-sm-8">
-                                        <label class="form-control-label">Do you agree our valutation?</label>
+                                    <div class="col-sm-7">
+                                        <label class="form-control-label">Real or fake?</label>
                                     </div>
-                                    <div class="col-sm-4 text-right">
-                                        <i ng-click="sendFeedback('yes')" id="ciao"
-                                           class="fas text-green fa-thumbs-up pointer animated bounceIn delay-1s mr-2"
+                                    <div class="col-sm-5 text-right" id="feedbackCol">
+                                        <i title="Real" ng-click="sendFeedback('REAL')"
+                                           class="fas fa-thumbs-up pointer animated text-green bounceIn delay-1s mr-4"
                                            style="font-size: 22px"></i>
-                                        <i ng-click="sendFeedback('no')"
-                                           class="fas text-red fa-thumbs-down pointer animated bounceIn delay-1s"
+                                        <i title="Fake" ng-click="sendFeedback('FAKE')"
+                                           class="fas fa-thumbs-down pointer animated text-red bounceIn delay-1s"
                                            style="font-size: 22px"></i>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div ng-if="feedbackSelected === true" class="alert alert-success" role="alert" id="alert" style="margin-bottom: 0">
+                                <strong>Thank you for the feedback!</strong> Click again on 'Check Fakeness' to see the change.
                             </div>
                         </div>
                     </div>
@@ -190,6 +194,7 @@
     </div>
 </div>
 <script src="js/vendors/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/vendors/angular.min.js"></script>
 <script src="js/module/module.js"></script>
 <!-- <script src="web/module.js"></script> -->

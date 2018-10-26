@@ -1959,6 +1959,10 @@ pre code {
     background-color: #febeb1;
 }
 
+.fas {
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
 .table-danger,
 .table-danger > th,
 .table-danger > td {
@@ -15230,6 +15234,11 @@ a.text-red:focus {
     color: #ec0c38 !important;
 }
 
+i.text-red:hover,
+i.text-red:focus {
+    color: red !important;
+}
+
 .text-orange {
     color: #fb6340 !important;
 }
@@ -15255,6 +15264,11 @@ a.text-yellow:focus {
 a.text-green:hover,
 a.text-green:focus {
     color: #24a46d !important;
+}
+
+i.text-green:hover,
+i.text-green:focus {
+    color: #28b174 !important;
 }
 
 .text-teal {
@@ -23093,4 +23107,17 @@ html:not([dir='rtl']) .noUi-horizontal .noUi-handle {
         -webkit-transition: none !important;
         transition: none !important;
     }
+}
+
+.fas {
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.fa-thumbs-up:hover {
+    color:#2dce89;
+}
+
+.fa-thumbs-down:hover {
+    color:#f5365c;
 }

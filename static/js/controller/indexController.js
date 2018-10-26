@@ -3,8 +3,10 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
     $scope.fakenessDone = false;
     $scope.loadingFakeness = false;
     $scope.loadingAnalyzeUrl = false;
+    $scope.feedbackSelected = false;
     angular.element(function () {
         $scope.loading = false;
+        $('[data-toggle="tooltip"]').tooltip();
     });
 
     $("#gaugeFakeness").on("contextmenu", function () {
@@ -13,19 +15,15 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
 
     $scope.sendFeedback = function (value) {
 
-        if (value === true) {
-            var to_send = {
-                'title': $scope.title,
-                'text': $scope.text,
-                'label': checkfeedback(value)
-            }
-        }
-        else {
-            var to_send = {
-                'title': $scope.title,
-                'text': $scope.text,
-                'label': checkfeedback(value)
-            }
+        $scope.feedbackSelected = true;
+
+        $("#alert").fadeIn();
+        $("#feedback").fadeOut();
+
+        var to_send = {
+            'title': $scope.title,
+            'text': $scope.text,
+            'label': value
         }
 
         console.log(to_send)
@@ -35,22 +33,6 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
         }, function (response) {
         });
     };
-
-    function checkfeedback (value) {
-        if ($scope.fakeValue > $scope.realValue) {
-            $scope.max = 'FAKE';
-            $scope.min = 'REAL';
-        }
-        else {
-            $scope.max = 'REAL';
-            $scope.min = 'FAKE';
-        }
-
-        if(value === 'yes')
-            return $scope.max
-        else
-            return $scope.min
-    }
 
     $scope.analyzeUrl = function () {
         if (!$scope.url)
@@ -71,6 +53,7 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
     };
 
     $scope.send = function () {
+        $scope.feedbackSelected = false;
         $scope.fakenessDone = false;
         $('#gaugeFakeness').removeClass('animated fadeIn');
         zingchart.exec('gaugeFakeness', 'destroy');
@@ -96,8 +79,18 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
                     "type": "gauge",
                     "background-color": "#f7fafc",
                     "scale-r": {
+                        "markers":[
+                            {
+                                "type":"line",
+                                "range":[50],
+                                "line-color":"grey",
+                                "line-width":2,
+                                "line-style":"dashed",
+                                "alpha":1
+                            }
+                        ],
                         "aperture": 200,
-                        "values": "0:100:20",
+                        "values": "0:100:25",
                         "center": {
                             "size": 5,
                             "background-color": "#66CCFF #FFCCFF",
@@ -107,32 +100,28 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
                             "size": 10,
                             "rules": [
                                 {
-                                    "rule": "%v >= 0 && %v <= 20",
-                                    "background-color": "blue"
-                                },
-                                {
-                                    "rule": "%v >= 20 && %v <= 40",
+                                    "rule": "%v >= 0 && %v <= 25",
                                     "background-color": "green"
                                 },
                                 {
-                                    "rule": "%v >= 40 && %v <= 60",
+                                    "rule": "%v >= 25 && %v <= 50",
                                     "background-color": "yellow"
                                 },
                                 {
-                                    "rule": "%v >= 60 && %v <= 80",
+                                    "rule": "%v >= 50 && %v <= 75",
                                     "background-color": "orange"
                                 },
                                 {
-                                    "rule": "%v >= 80 && %v <=100",
+                                    "rule": "%v >= 75 && %v <=100",
                                     "background-color": "red"
                                 }
                             ]
                         },
-                        "labels": ["0 %", "20 %", "40 %", "60 %", "80 %", "100 %"],  //Scale Labels
+                        "labels": ["REAL", "", "", "", "FAKE"],  //Scale Labels
                         "item": {  //Scale Label Styling
                             "font-color": "black",
                             "font-family": "Open Sans, serif",
-                            "font-size": 12,
+                            "font-size": 13,
                             "font-weight": "bold",   //or "normal"
                             "font-style": "normal",   //or "italic"
                             "offset-r": 0,
