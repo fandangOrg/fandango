@@ -57,13 +57,17 @@
                                     </div>
                                 </div>
                                 <!--<div class="text-right">-->
-                                    <!--<btn ng-click="send()" ng-if="loadingFakeness === false" class="btn btn-icon btn-success" ng-class="{'disabled': !url}">-->
-                                        <!--<span class="btn-inner&#45;&#45;icon"><img src="assets/img/url_analyze.png"></span>-->
-                                    <!--</btn>-->
+                                <!--<btn ng-click="send()" ng-if="loadingFakeness === false" class="btn btn-icon btn-success" ng-class="{'disabled': !url}">-->
+                                <!--<span class="btn-inner&#45;&#45;icon"><img src="assets/img/url_analyze.png"></span>-->
+                                <!--</btn>-->
                                 <!--</div>-->
                                 <div class="col-md-1 col-xs-12 url_analyze">
-                                    <div ng-click="analyzeUrl()" class="icon bg-gray icon-shape text-white rounded-circle shadow" ng-class="{'bg-gradient-green pointer': url || !url == 'bg-gray'}">
-                                        <span class="btn-inner--icon"><img ng-if="loadingAnalyzeUrl === false" title="URL Analyze" src="assets/img/url_analyze.png">
+                                    <div ng-click="analyzeUrl()"
+                                         class="icon bg-gray icon-shape text-white rounded-circle shadow"
+                                         ng-class="{'bg-gradient-green pointer': url || !url == 'bg-gray'}">
+                                        <span class="btn-inner--icon"><img ng-if="loadingAnalyzeUrl === false"
+                                                                           title="URL Analyze"
+                                                                           src="assets/img/url_analyze.png">
                                             <div ng-if="loadingAnalyzeUrl === true" class="lds-hourglass-white"></div>
                                         </span>
                                     </div>
@@ -101,8 +105,8 @@
                         <div class="card-body" style="padding: 5;min-height: auto;">
                             <div class="mt-2 mb-2">
                                 <ul class="list-unstyled">
-                                    <li>- Author : </li>
-                                    <li>- Publisher :</li>
+                                    <li>- Author : <strong>{{page.author}}</strong></li>
+                                    <li>- Publisher : <strong>{{page.publisher}}</strong></li>
                                     <li>- Related Article Pubblication
                                         <ul class="list-unstyled">
                                             <li ng-repeat="article in pubblication"></li>
@@ -111,7 +115,9 @@
                                     </li>
                                 </ul>
                                 <div class="col-12 text-center">
-                                    <btn ng-click="send()" ng-if="loadingFakeness === false" class="btn btn-lg btn-icon btn-success" ng-class="{'disabled': !title || !text}">
+                                    <btn ng-click="send()" ng-if="loadingFakeness === false"
+                                         class="btn btn-lg btn-icon btn-success"
+                                         ng-class="{'disabled': !title || !text}">
                                         <span class="btn-inner--icon"><img src="assets/img/verify.png"></span>
                                         <span class="btn-inner--text">Check Fakeness</span>
                                     </btn>
@@ -130,9 +136,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body gaugeBox" style="height: 300px;padding: 0">
-                            <div id='gaugeFakeness'
-                                 style="height: 300px"></div>
+                        <div class="card-body gaugeBox" style="height: auto;padding: 0">
+                            <div id='gaugeFakeness' class="animated fadeIn"
+                                 style="height: 300px">
+                            </div>
+                            <div class="col-sm-12" ng-if="fakenessDone === true">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <label class="form-control-label">You agree our valutation?</label>
+                                    </div>
+                                    <div class="col-sm-4 text-right">
+                                        <i ng-click="sendFeedback('yes')" id="ciao"
+                                           class="fas text-green fa-thumbs-up pointer animated bounceIn delay-1s mr-2"
+                                           style="font-size: 22px"></i>
+                                        <i ng-click="sendFeedback('no')"
+                                           class="fas text-red fa-thumbs-down pointer animated bounceIn delay-1s"
+                                           style="font-size: 22px"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -169,7 +191,7 @@
 </div>
 <script src="js/vendors/jquery.min.js"></script>
 <script src="js/vendors/angular.min.js"></script>
-<script src="js/module/module.js"></script>  
+<script src="js/module/module.js"></script>
 <!-- <script src="web/module.js"></script> -->
 <script src="js/controller/indexController.js"></script>
 <script src="js/directive/indexDirective.js"></script>

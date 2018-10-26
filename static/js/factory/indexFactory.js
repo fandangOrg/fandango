@@ -30,3 +30,11 @@ app.factory('url',['$http', function ($http) {
         }
     };
 }]);
+
+app.factory('feedback',['$http', function ($http) {
+    return {
+        sendFb: function (to_send) {
+            return $http.post(base + "/feedback", to_send);
+        }
+    };
+}]);
