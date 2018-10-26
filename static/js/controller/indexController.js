@@ -17,14 +17,14 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
             var to_send = {
                 'title': $scope.title,
                 'text': $scope.text,
-                'feedback': checkfeedback(value)
+                'label': checkfeedback(value)
             }
         }
         else {
             var to_send = {
                 'title': $scope.title,
                 'text': $scope.text,
-                'feedback': checkfeedback(value)
+                'label': checkfeedback(value)
             }
         }
 
@@ -37,14 +37,13 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
     };
 
     function checkfeedback (value) {
-        console.log(value)
         if ($scope.fakeValue > $scope.realValue) {
-            $scope.max = 'fake';
-            $scope.min = 'real';
+            $scope.max = 'FAKE';
+            $scope.min = 'REAL';
         }
         else {
-            $scope.max = 'real';
-            $scope.min = 'fake';
+            $scope.max = 'REAL';
+            $scope.min = 'FAKE';
         }
 
         if(value === 'yes')
