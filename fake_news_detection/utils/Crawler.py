@@ -12,7 +12,10 @@ def crawler_news(url):
         article.parse()
         d=dict()
         d['title']=article.title
-        d['authors']=article.authors
+        if len(article.authors)>0:
+            d['author']=article.authors[0]
+        else:
+            d['author']='unknown'
         d['body'] =article.text
         d['publisher'] =article.source_url
         return d
