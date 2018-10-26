@@ -1,4 +1,4 @@
-app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, fakeness) {
+app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, fakeness, feedback) {
 
     $scope.fakenessDone = false;
     $scope.loadingFakeness = false;
@@ -7,18 +7,64 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
         $scope.loading = false;
     });
 
-    $(".gaugeBox").on("contextmenu", function () {
+    $("#gaugeFakeness").on("contextmenu", function () {
         return false;
     });
 
+    $scope.sendFeedback = function (value) {
+
+        if (value === true) {
+            var to_send = {
+                'title': $scope.title,
+                'text': $scope.text,
+                'feedback': checkfeedback(value)
+            }
+        }
+        else {
+            var to_send = {
+                'title': $scope.title,
+                'text': $scope.text,
+                'feedback': checkfeedback(value)
+            }
+        }
+
+        console.log(to_send)
+
+        feedback.sendFb(to_send).then(function (response) {
+            console.log(response)
+        }, function (response) {
+        });
+    };
+
+    function checkfeedback (value) {
+        console.log(value)
+        if ($scope.fakeValue > $scope.realValue) {
+            $scope.max = 'fake';
+            $scope.min = 'real';
+        }
+        else {
+            $scope.max = 'real';
+            $scope.min = 'fake';
+        }
+
+        if(value === 'yes')
+            return $scope.max
+        else
+            return $scope.min
+    }
 
     $scope.analyzeUrl = function () {
         if (!$scope.url)
             return false;
+
         $scope.loadingAnalyzeUrl = true;
+
         var to_send = $scope.url;
+
         url.analyzeUrl(to_send).then(function (response) {
             $scope.page = response.data;
+            $scope.title = $scope.page.title;
+            $scope.text = $scope.page.body;
             $scope.loadingAnalyzeUrl = false;
         }, function (response) {
             $scope.loadingAnalyzeUrl = false;
@@ -26,7 +72,7 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
     };
 
     $scope.send = function () {
-
+        $scope.fakenessDone = false;
         $('#gaugeFakeness').removeClass('animated fadeIn');
         zingchart.exec('gaugeFakeness', 'destroy');
 
@@ -40,7 +86,6 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
         };
 
         $scope.loadingFakeness = true;
-
         fakeness.getFakeness(to_send).then(function (response) {
             $scope.value = response.data[0];
             $scope.fakeValue = parseInt($scope.value.FAKE * 100);
@@ -50,6 +95,7 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
                 id: 'gaugeFakeness',
                 data: {
                     "type": "gauge",
+                    "background-color": "#f7fafc",
                     "scale-r": {
                         "aperture": 200,
                         "values": "0:100:20",
@@ -111,11 +157,11 @@ app.controller('indexCtrl', function ($scope, $http, $document, errorCode, url, 
                 height: "100%",
                 width: "100%"
             });
-
+            $scope.fakenessDone = true;
             $scope.loadingFakeness = false;
             $('#gaugeFakeness').addClass('animated fadeIn');
-
         }, function (response) {
+            $scope.fakenessDone = false;
             $scope.loadingFakeness = false;
             console.log(response)
         });
