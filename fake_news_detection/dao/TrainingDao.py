@@ -19,6 +19,7 @@ def get_train_dataset():
     training_set= pd.read_csv(dataset_beta+"/fake_or_real_news.csv") # dataset
     df_app=training_set[['title','text','label']]
     df=df.append(df_app)
+    #df=df_app
     df=df.dropna(subset = ['title','text','label'])
     df['text'].swifter.apply(clean_text)
     df['title'].swifter.apply(clean_text)

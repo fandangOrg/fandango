@@ -107,6 +107,8 @@ def clean_text(text):
     text = re.sub(r"\'ll", " will ", text)
     text = re.sub(r"\'scuse", " excuse ", text)
     text = re.sub('\W', ' ', text)
+    text = re.sub(r'[0-9]*', ' ', text)
+
     text = re.sub('\s+', ' ', text)
     text = text.strip(' ')
     return text        
@@ -114,13 +116,15 @@ def clean_text(text):
 
 
 if __name__  == "__main__":
-    
-    d = DataPrep() 
-    d.printInfodb()
-    d.preprocessingdb()
-    X_train, X_test, y_train, y_test = d.splitdataset()
-    #print(X_train.head())
-    del d
-    
+    print(clean_text("casa mia oggi 34 "))
+    #===========================================================================
+    # d = DataPrep() 
+    # d.printInfodb()
+    # d.preprocessingdb()
+    # X_train, X_test, y_train, y_test = d.splitdataset()
+    # #print(X_train.head())
+    # del d
+    # 
+    #===========================================================================
     
     

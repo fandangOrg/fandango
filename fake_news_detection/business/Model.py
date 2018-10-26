@@ -20,12 +20,14 @@ from fake_news_detection.business.FeaturesExtraction import features_extraction,
     count_no_alfanumber, len_words, len_sentences, SampleExtractor
 from sklearn.model_selection._split import train_test_split
 from sklearn import metrics
+from dask.dataframe.core import DataFrame
+from fake_news_detection.utils.Analyzer import display_scores
  
   
 class SklearnModel:
     def __init__(self,model,name):
         self.model = model
-        self.vect  = TfidfVectorizer(stop_words='english',ngram_range=(1,1))
+        self.vect  = TfidfVectorizer(stop_words='english',ngram_range=(2,3))
         self.vect_title  = TfidfVectorizer(stop_words='english',ngram_range=(1,2))
         self.vects_features_title=list()
         self.vects_features_text=list()
@@ -56,17 +58,22 @@ class SklearnModel:
         #=======================================================================
         
         print("INIT TRAIN")
-        print(tfidf_train)
-        matrix=self.vect.fit_transform(tfidf_train)
+        matrix_text=self.vect.fit_transform(tfidf_train)
         matrix_title =self.vect_title.fit_transform(title_train)
-        print(matrix.shape)
+        print(matrix_text.shape)
         print(matrix_title.shape)
 
-        matrix=self._concatenate_csc_matrices_by_columns(matrix,matrix_title)
+        matrix=self._concatenate_csc_matrices_by_columns(matrix_text,matrix_title)
         print(matrix.shape)
         self.model.fit(matrix, y_train)
-        #self.most_informative_feature_for_binary_classification()
-        
+        terms = self.vect.get_feature_names()
+        vamx=display_scores(self.vect, matrix_text)
+            
+    def analyzer_vector(self,values):
+        vect= TfidfVectorizer(stop_words='english',ngram_range=(1,1))
+        print("INIT TRAIN")
+        matrix_text=vect.fit_transform(values)
+        display_scores(vect, matrix_text)
         
         
     def _concatenate_csc_matrices_by_columns(self,matrix1, matrix2):
@@ -83,11 +90,14 @@ class SklearnModel:
         
     def predict(self,title,text):
         print("PREDICT")
-        text = clean_text(text)
+        print("title:",title)
+        #text = clean_text(text)
+        text = text
+        print("text:",text)
         matrix = self.vect.transform([text])
         matrix_title = self.vect_title.transform([title])
         matrix=self._concatenate_csc_matrices_by_columns(matrix,matrix_title)
-
+        print(self.model.predict(matrix))
         return pd.DataFrame(self.model.predict_proba(matrix), columns=self.model.classes_)
         
 
@@ -112,7 +122,13 @@ if __name__ == '__main__':
 
     model=SklearnModel(clf,'test')
     training_set=get_train_dataset()
-    X_train, X_test, y_train, y_test = train_test_split(training_set[['title','text']],training_set[["label"]], test_size=0.33, random_state=1234)
+    app_fake_text=training_set[training_set['label']=="FAKE"]['text']
+    app_real_text=training_set[training_set['label']=="REAL"]['text']
+    print("REAL")
+    model.analyzer_vector(app_real_text)
+    print("FAKE")
+    model.analyzer_vector(app_fake_text)
+    X_train, X_test, y_train, y_test = train_test_split(training_set[['title','text']],training_set[["label"]], test_size=0.33, random_state=42)
     print(y_train)
     model.train(X_train['title'],X_train['text'], y_train['label'],training_set)
     #model.train(training_set['title'],training_set['text'], training_set['label'],training_set)
