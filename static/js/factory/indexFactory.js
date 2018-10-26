@@ -26,7 +26,7 @@ app.factory('fakeness',['$http', function ($http) {
 app.factory('url',['$http', function ($http) {
     return {
         analyzeUrl: function (to_send) {
-            return $http.post(base + "/cr_url",to_send);
+            return $http.post(base + "/cr_url?url="+to_send);
         }
     };
 }]);
