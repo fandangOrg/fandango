@@ -33,7 +33,15 @@
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
                             <div class="col-12">
-                                <h3 class="mb-0">Article Checker</h3>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h3 class="mb-0">Article Checker</h3>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <h3 class="mb-0">Language supported : <img class="pl-1" height="30"
+                                                                                   src="assets/img/uk_flag.png"></h3>
+                                    </div>
+                                </div>
                             </div>
                             <!--<div class="col-6 text-right">-->
                             <!--<btn data-ng-attr-title="{{!title || !source || !text ? 'Fill all the fields': 'Check Fakeness'}}" ng-click="send()" class="btn btn-sm btn-icon btn-success" ng-class="{'disabled': !title || !source || !text}">-->
@@ -155,8 +163,10 @@
                                 </div>
                             </div>
 
-                            <div ng-if="feedbackSelected === true" class="alert alert-success" role="alert" id="alert" style="margin-bottom: 0">
-                                <strong>Thank you for the feedback!</strong> Click again on 'Check Fakeness' to see the change.
+                            <div ng-if="feedbackSelected === true" class="alert alert-success" role="alert" id="alert"
+                                 style="margin-bottom: 0">
+                                <strong>Thank you for the feedback!</strong> Click again on 'Check Fakeness' to see the
+                                new Fakeness Level.
                             </div>
                         </div>
                     </div>
