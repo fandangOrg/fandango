@@ -6,21 +6,45 @@ Created on Oct 25, 2018
 import re
 from nltk.tokenize import sent_tokenize
 import treetaggerwrapper
-import swifter
+import numpy as np
 
 from sklearn.base import BaseEstimator, TransformerMixin
 
-class SampleExtractor(BaseEstimator, TransformerMixin):
+class DataFrameColumnExtracter(TransformerMixin):
 
-    def __init__(self, name_columns):
-        self.name_columns = name_columns  # e.g. pass in a column name to extract
-
-    def transform(self, df, y=None):
-        return df[self.name_columns]
+    def __init__(self, column):
+        self.column = column
 
     def fit(self, X, y=None):
+        return self
+
+    def transform(self, X, y=None):
+        return X[self.column]
+    
+class SampleExtractor(BaseEstimator, TransformerMixin):
+
+    def __init__(self, name_columns,vect=None):
+        self.name_columns = name_columns  # e.g. pass in a column name to extract
+        self.vect=vect
+        
+    def transform(self, X, y=None):
+        if self.vect:
+            t=self.vect.transform(X[self.name_columns])
+            print(self.name_columns)
+            print(t.shape)
+            return t
+        else:
+            t= X[[self.name_columns]]
+        print(self.name_columns)
+        print(t.shape)
+        return np.array(t)
+
+    def fit(self, X, y=None):
+        if self.vect:
+            self.vect.fit(X[self.name_columns])
         return self  # generally does nothing
     
+
 def features_extraction(df,features,column):
     if type(features)==list:
         for f in features:
@@ -36,7 +60,7 @@ def features_extraction_JJ(df,column):
 
     
 def _add_feature(df,column,name,funct):
-    df["new_f_"+name]=df[column].swifter.apply(funct)
+    df["new_f_"+column+"_"+name]=df[column].swifter.apply(funct)
     return df
 
 def count_no_alfanumber(text):

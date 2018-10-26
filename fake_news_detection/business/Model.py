@@ -10,18 +10,20 @@ from sklearn.naive_bayes import MultinomialNB
 import pandas as pd
 from fake_news_detection.config.AppConfig import dataset_beta
 from sklearn.ensemble.forest import RandomForestClassifier
-from sklearn.pipeline import Pipeline
+from sklearn.pipeline import Pipeline, FeatureUnion, make_pipeline, make_union
 from scipy import hstack
 import numpy
 import scipy.sparse as sp
 from fake_news_detection.dao.PickleDao import ModelDao
 from fake_news_detection.dao.TrainingDao import get_train_dataset
 from fake_news_detection.business.FeaturesExtraction import features_extraction,\
-    count_no_alfanumber, len_words, len_sentences, SampleExtractor
+    count_no_alfanumber, len_words, len_sentences, SampleExtractor,\
+    DataFrameColumnExtracter
 from sklearn.model_selection._split import train_test_split
 from sklearn import metrics
 from dask.dataframe.core import DataFrame
 from fake_news_detection.utils.Analyzer import display_scores
+from sklearn.preprocessing._function_transformer import FunctionTransformer
  
   
 class SklearnModel:
@@ -29,45 +31,98 @@ class SklearnModel:
         self.model = model
         self.vect  = TfidfVectorizer(stop_words='english',ngram_range=(2,3))
         self.vect_title  = TfidfVectorizer(stop_words='english',ngram_range=(1,2))
-        self.vects_features_title=list()
-        self.vects_features_text=list()
+        self.vects_features_title=[]
+        self.vects_features_text=[]
         self.name=name
-
-        #=======================================================================
-        # self.pipeline = Pipeline([
-        # ('vect', CountVectorizer()), 
-        # ('tfidf', TfidfVectorizer()),
-        # ('clf',  self.model),
-        # ])
-        #=======================================================================
-            
-    
-    def train(self,title_train,tfidf_train,y_train,df):
-        #=======================================================================
-        # df=features_extraction(df,[len,count_no_alfanumber,len_words,len_sentences], 'title')
-        # filter_col_title = [col for col in df if col.startswith('new_f')]
-        # trasforms=list()
-        # for col in df.columns:
-        #     if col.startswith('new_f'):
-        #         self.vects_features_title.append(SampleExtractor(col))
-        #         
-        # df=features_extraction(df,[len,count_no_alfanumber,len_words,len_sentences], 'text')
-        # for col in df.columns:
-        #     if col.startswith('new_f'):
-        #         self.vects_features_text.append(SampleExtractor(col))
-        #=======================================================================
         
-        print("INIT TRAIN")
-        matrix_text=self.vect.fit_transform(tfidf_train)
-        matrix_title =self.vect_title.fit_transform(title_train)
-        print(matrix_text.shape)
-        print(matrix_title.shape)
-
-        matrix=self._concatenate_csc_matrices_by_columns(matrix_text,matrix_title)
-        print(matrix.shape)
+       
+    def train_new(self,title_train,tfidf_train,y_train,df):
+        print("df=",df.shape,df.columns)
+        title_pipe = make_pipeline(
+               DataFrameColumnExtracter('title'), 
+               self.vect_title
+        )
+        
+        text_pipe = make_pipeline(
+               DataFrameColumnExtracter('text'), 
+               self.vect
+        )
+        self.feature_union = make_union(title_pipe, text_pipe)
+        sparse_matrix_of_counts = self.feature_union.fit_transform(df)
+        self.model.fit(sparse_matrix_of_counts, y_train)
+        
+    def train(self,df,y_train):
+        print("df=",df.shape,df.columns)
+        title_pipe = make_pipeline(
+               DataFrameColumnExtracter('title'), 
+               self.vect_title
+        )
+        
+        text_pipe = make_pipeline(
+               DataFrameColumnExtracter('text'), 
+               self.vect
+        )
+        #=======================================================================
+        # self.feats_title= [('title', SampleExtractor('title', TfidfVectorizer(stop_words='english',ngram_range=(1,2))))]
+        # self.feats_text= [('text',  SampleExtractor('text', TfidfVectorizer(stop_words='english',ngram_range=(1,2))))]
+        #=======================================================================
+        #=======================================================================
+        # self.feats_title= [('title', SampleExtractor('title',self.vect_title))]
+        # self.feats_text= [('text',  SampleExtractor('text',self.vect))]
+        #=======================================================================
+        self.feats_title=[]
+        self.feats_text=[]
+        df=features_extraction(df, self.vects_features_title, 'title')
+        id_feats=0
+        for col in df.columns:
+            if col.startswith('new_f_title'):
+                self.feats_title.append((str(id_feats),SampleExtractor(col)))
+                id_feats+=1
+        #
+        df=features_extraction(df, self.vects_features_text, 'text')
+        for col in df.columns:
+            if col.startswith('new_f_text'):
+                self.feats_text.append((str(id_feats),SampleExtractor(col)))
+                id_feats+=1
+        print("CREA PIPELINE")
+        print(self.feats_title)
+        if len(self.feats_title)>0:
+            union_tl= FeatureUnion(self.feats_title)
+            union_text= FeatureUnion(self.feats_text)
+            self.feature_union = make_union(*[text_pipe,title_pipe,union_tl, union_text])
+        else:
+            self.feature_union = make_union(*[text_pipe,title_pipe])
+        matrix=self.feature_union.fit_transform(df)
+        print("feature_union" ,matrix.shape)    
         self.model.fit(matrix, y_train)
-        terms = self.vect.get_feature_names()
-        vamx=display_scores(self.vect, matrix_text)
+
+#===============================================================================
+#         print("INIT TRAIN")
+#         print(len(df),df.shape,df.columns)
+#         #=======================================================================
+#         matrix_text=self.union_text.fit_transform(df)
+#         matrix_title =self.union_tl.fit_transform(df)
+#         
+#         
+#         #=======================================================================
+#         #=======================================================================
+#         # matrix_text=self.vect.fit_transform(tfidf_train)
+#         # matrix_title =self.vect_title.fit_transform(title_train)
+#         #=======================================================================
+#         print(matrix_text.shape)
+#         print(matrix_title.shape)
+# 
+#         matrix=self._concatenate_csc_matrices_by_columns(matrix_text,matrix_title)
+#         print(matrix.shape)
+#===============================================================================
+
+        #=======================================================================
+        # self.model.fit(matrix, y_train)
+        #=======================================================================
+        #=======================================================================
+        # terms = self.vect.get_feature_names()
+        # vamx=display_scores(self.vect, matrix_text)
+        #=======================================================================
             
     def analyzer_vector(self,values):
         vect= TfidfVectorizer(stop_words='english',ngram_range=(1,1))
@@ -81,35 +136,59 @@ class SklearnModel:
         return combined_2
 
     def predict_accuary(self,X_test, y_test):
-        matrix=self.vect.transform(X_test['text'])
-        matrix_title =self.vect_title.transform(X_test['title'])
-        matrix=self._concatenate_csc_matrices_by_columns(matrix,matrix_title)
+        df=features_extraction(X_test, self.vects_features_title, 'title')
+        df=features_extraction(df, self.vects_features_text, 'text')
+
+        #matrix=self.vect.transform(X_test['text'])
+        #matrix_title =self.vect_title.transform(X_test['title'])
+        #matrix=self._concatenate_csc_matrices_by_columns(matrix,matrix_title)
+        matrix=self.feature_union.transform(df)
         pred=self.model.predict(matrix)
         score = metrics.accuracy_score(y_test['label'], pred)
         print(score)
         
     def predict(self,title,text):
-        print("PREDICT")
-        print("title:",title)
-        #text = clean_text(text)
-        text = text
-        print("text:",text)
-        matrix = self.vect.transform([text])
-        matrix_title = self.vect_title.transform([title])
-        matrix=self._concatenate_csc_matrices_by_columns(matrix,matrix_title)
+        doc = {"title":[title],"text":[text]}
+        df=pd.DataFrame.from_dict(doc)
+        df=features_extraction(df, self.vects_features_title, 'title')
+        df=features_extraction(df, self.vects_features_text, 'text')
+        print("PREDICT",df)
+        matrix=self.feature_union.transform(df)
         print(self.model.predict(matrix))
         return pd.DataFrame(self.model.predict_proba(matrix), columns=self.model.classes_)
+
+        #=======================================================================
+        # print("title:",title)
+        # #text = clean_text(text)
+        # text = text
+        # print("text:",text)
+        # matrix = self.vect.transform([text])
+        # matrix_title = self.vect_title.transform([title])
+        # matrix=self._concatenate_csc_matrices_by_columns(matrix,matrix_title)
+        # print(self.model.predict(matrix))
+        # return pd.DataFrame(self.model.predict_proba(matrix), columns=self.model.classes_)
+        #=======================================================================
         
     def partial_fit(self,title,text,label):
+        doc = {"title":[title],"text":[text]}
+        df=pd.DataFrame.from_dict(doc)
+        df=features_extraction(df, self.vects_features_title, 'title')
+        df=features_extraction(df, self.vects_features_text, 'text')
         print("PARTIAL")
         print("title:",title)
         print("text:",text)
         print("label:",label)
-        matrix = self.vect.transform([text])
-        matrix_title = self.vect_title.transform([title])
-        matrix=self._concatenate_csc_matrices_by_columns(matrix,matrix_title)
+        matrix=self.feature_union.transform(df)
+        print(matrix.shape)
+        #=======================================================================
+        # matrix = self.vect.transform([text])
+        # matrix_title = self.vect_title.transform([title])
+        # matrix=self._concatenate_csc_matrices_by_columns(matrix,matrix_title)
+        #=======================================================================
+        
         print(self.model.partial_fit(matrix,[label]))
-        ModelDao().save(self,self.name)
+        print("FITTATO")
+        #ModelDao().save(self,self.name)
         
         
     def most_informative_feature_for_binary_classification(self, n=100):  
@@ -135,13 +214,20 @@ if __name__ == '__main__':
     training_set=get_train_dataset()
     app_fake_text=training_set[training_set['label']=="FAKE"]['text']
     app_real_text=training_set[training_set['label']=="REAL"]['text']
-    print("REAL")
-    model.analyzer_vector(app_real_text)
-    print("FAKE")
-    model.analyzer_vector(app_fake_text)
+    
+    #===========================================================================
+    # print("REAL")
+    # model.analyzer_vector(app_real_text)
+    # print("FAKE")
+    # model.analyzer_vector(app_fake_text)
+    #===========================================================================
+    
+    
     X_train, X_test, y_train, y_test = train_test_split(training_set[['title','text']],training_set[["label"]], test_size=0.33, random_state=42)
     print(y_train)
-    model.train(X_train['title'],X_train['text'], y_train['label'],training_set)
+#    model.train(X_train['title'],X_train['text'], y_train['label'],X_train)
+    model.train(X_train, y_train['label'])
+
     #model.train(training_set['title'],training_set['text'], training_set['label'],training_set)
     oo.save(model,model.name)
     #
