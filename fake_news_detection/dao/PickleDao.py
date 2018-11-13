@@ -53,7 +53,7 @@ class ModelDao(object):
         elif typed.lower() == "n":
             print("Please enter a name for the model")
             nome = input()
-            output_path = picklepath +"/"+ str(nome) + ".p"
+            output_path = picklepath +"/"+str(nome) + ".p"
             self.checkPath(nome, modello, output_path)
             
             
