@@ -7,6 +7,6 @@
     
     <pydev_property name="org.python.pydev.PYTHON_PROJECT_VERSION">python 3.6</pydev_property>
     
-    <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">/home/daniele/progetti/fandango-fake-news/venv/bin/python3.6</pydev_property>
+    <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">/home/camila/workspace/fandango-fake-news/fake_news_detection/venv/bin/python3.6</pydev_property>
     
 </pydev_project>

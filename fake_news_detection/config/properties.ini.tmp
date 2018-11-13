@@ -1,5 +1,5 @@
 [default]  #sezione
-#log_folder = /home/camila/progetti/fake-news-detection
+log_folder = /home/camila/workspace/fandango-fake-news
 picklepath = /home/camila/
 
 #variabile sez. Vedere getLovelevel
@@ -14,7 +14,9 @@ index_refugees = news_crawler
 username = elastic
 password = RjuSUIk4hFlL46fvTf5z
 indexfakenews = indexfakenews
-doctype = _doc
+doctype = document
+mapping = /home/camila/workspace/fandango-fake-news/fake_news_detection/config/liarmapping.json
+new_mapped_index = liarindex
 
 [service]
 url = http://0.0.0.0:9800/
