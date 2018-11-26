@@ -92,35 +92,7 @@ class SklearnModel:
             self.feature_union = make_union(*[text_pipe,title_pipe])
         matrix=self.feature_union.fit_transform(df)
         print("feature_union" ,matrix.shape)    
-        self.model.fit(matrix, y_train)
-
-#===============================================================================
-#         print("INIT TRAIN")
-#         print(len(df),df.shape,df.columns)
-#         #=======================================================================
-#         matrix_text=self.union_text.fit_transform(df)
-#         matrix_title =self.union_tl.fit_transform(df)
-#         
-#         
-#         #=======================================================================
-#         #=======================================================================
-#         # matrix_text=self.vect.fit_transform(tfidf_train)
-#         # matrix_title =self.vect_title.fit_transform(title_train)
-#         #=======================================================================
-#         print(matrix_text.shape)
-#         print(matrix_title.shape)
-# 
-#         matrix=self._concatenate_csc_matrices_by_columns(matrix_text,matrix_title)
-#         print(matrix.shape)
-#===============================================================================
-
-        #=======================================================================
-        # self.model.fit(matrix, y_train)
-        #=======================================================================
-        #=======================================================================
-        # terms = self.vect.get_feature_names()
-        # vamx=display_scores(self.vect, matrix_text)
-        #=======================================================================
+        self.model.fit(matrix, y_train) 
             
     def analyzer_vector(self,values):
         vect= TfidfVectorizer(stop_words='english',ngram_range=(1,1))

@@ -9,7 +9,7 @@ import configparser
 import os
 import pkg_resources 
 from configparser import ConfigParser, RawConfigParser
-
+from elasticsearch import Elasticsearch
   
 def getConfig(fname=None):     
     if fname == None:                                                           #cambiare tmp

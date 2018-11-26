@@ -7,7 +7,6 @@ import pickle
 from fake_news_detection.config.AppConfig import picklepath
 import os
 
-
 class ModelDao(object):
     '''
     classdocs
