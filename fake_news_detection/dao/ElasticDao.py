@@ -8,14 +8,14 @@ from fake_news_detection.config.AppConfig import index_name, getEsConnector,\
     pathFileLastDate, docType, mapping, new_mapped_index
 from fake_news_detection.utils.logger import getLogger
 from elasticsearch import helpers
-
+import csv
 
 
 class Search( ):
 #prendo il connettore
     def __init__(self): 
         self.ESclient = getEsConnector()
-        self.index_name = index_name
+        self.index_name = new_mapped_index
         self.docType = docType   
         self.log = getLogger(__name__) #richiamo la funzione scritta nel log 
         
@@ -148,6 +148,47 @@ class Search( ):
             self.log.info("File successfully written: date = {date}".format(date = lastdate))
         return lastdate
     
+    
+     #change between body or body if you want to use or or and operation among words in the 
+    def similarity_query(self,text):
+        
+        body = {
+                "query": {
+                    "match_phrase": {
+                        "claim": text
+                        }
+                    }
+                }
+        
+        body1 = {
+                  "query": {
+                    "bool": {
+                      "should": [
+                        {
+                          "match_phrase": {
+                            "claim": text
+                          }
+                        }
+                      ],
+                      "filter": [
+                        {
+                          "match": {
+                            "claim": text
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+        
+        res = self.ESclient.search(index= self.index_name, body= body1)
+        l =[]
+        for r in res['hits']['hits']:
+            l.append(r['_source']) 
+            
+        return l
+    
+    
     def CreateNewIndex(self):
         if not self.ESclient.indices.exists(index=new_mapped_index):
             mapping_path = mapping
@@ -160,22 +201,34 @@ class Search( ):
                     raise "Could not create new index: {ind}".format(ind = new_mapped_index)
         return new_mapped_index
     
-    def AddNewFieldsandINDEX(self, i , phrase_taggedL, crea_indice, lista_azioni):
-        taggedL = []
-        for item in phrase_taggedL:
-            new_nested ={"word": item[0],
-                         "pos": item[1],
-                         "lemma": item[2].rstrip()
-                            }
-            taggedL.append(new_nested)
-        i["_source"]["pos_tag"] = taggedL
-        lista_azioni.append( {
-                '_op_type': 'index',
-                '_index': crea_indice,
-                '_type': self.docType,
-                '_source': i['_source'],
-                '_id': i['_id']
-            })
+    def AddNewFieldsandINDEX(self,csv_file, crea_indice, lista_azioni):
+            
+        with open(csv_file) as f:
+            reader = csv.reader(f, delimiter='\t')
+            for r in reader:
+                #print(r)
+            
+                    #print(row.split('/t'))
+                fields ={}
+                        
+                fields["id_jason"] = r[0]
+                fields["label"] =  r[1]
+                fields["claim"] =  r[2]
+                fields["topic"] = r[3]
+                fields["author"] = r[4]
+                fields["role_of_the_authore"] = r[5]
+                
+                
+                print(fields)
+                
+                lista_azioni.append( {
+                    '_op_type': 'index',
+                    '_index': crea_indice,
+                    '_type': self.docType,
+                    '_source': fields
+        
+                })
+    
         return lista_azioni
     
     def BulkNewIndex(self, lista_azioni):
@@ -185,9 +238,8 @@ class Search( ):
 
                 
         self.log.info("New index successfully indexed")
-    
-    
 
+    
         
         
         

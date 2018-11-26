@@ -4,7 +4,8 @@ Created on Oct 18, 2018
 @author: daniele
 '''
 from ds4biz_flask.model.DS4BizFlask import DS4BizFlask
-from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel
+from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel,\
+    InterfaceInputFeedBack
 from fake_news_detection.dao.PickleDao import ModelDao
 from fake_news_detection.business.Model import SklearnModel
 from flask_cors.extension import CORS
@@ -14,12 +15,19 @@ from fake_news_detection.config.AppConfig import static_folder
 from fake_news_detection.utils.Crawler import crawler_news
 
  
-oo = ModelDao()
+oo = ModelDao() 
 model = oo.load('test')
     
     
 
  
+def feedback(info:InterfaceInputFeedBack)->str:
+    print(info)
+    '''Creazione di un nuovo analizzatore per i social'''
+    text=info.text.replace("\n"," ")
+    model.partial_fit(info.title,text,info.label)
+    return "OK"
+
  
 def analyzer(info:InterfaceInputModel)->str:
     print(info)
@@ -40,6 +48,8 @@ app.root="/fandango/v0.1/fakeness"
 app.name="FANDANGO"
 app.add_service("analyzer",analyzer, method='POST')
 app.add_service("cr_url",crawler, method='POST')
+app.add_service("feedback",feedback, method='POST')
+
 CORS(app)
 
 

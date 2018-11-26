@@ -8,7 +8,6 @@ import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 import numpy as np 
-import matplotlib.pyplot as plt
 from fake_news_detection.config.AppConfig import dataset_beta
 
 
@@ -31,9 +30,11 @@ class DataPrep(object):
         print("######Let's take a look of the dataset:#######", self.df.head())
         print("######dataset balanced:#######",self.df.groupby('label').size())
         lens = self.df.text.str.len()
-        plt.hist(lens)
-        plt.show()
-        
+        #=======================================================================
+        # plt.hist(lens)
+        # plt.show()
+        # 
+        #=======================================================================
         
     def preprocessingdb(self):
         
@@ -41,7 +42,7 @@ class DataPrep(object):
         df_p['text'] = df_p['text'].map(lambda com : self.clean_text(com))
         print("######dataset preprocessed######")
         return(df_p)
-    
+     
     def clean_text(self,text):
         
         text = text.lower()
@@ -107,6 +108,8 @@ def clean_text(text):
     text = re.sub(r"\'ll", " will ", text)
     text = re.sub(r"\'scuse", " excuse ", text)
     text = re.sub('\W', ' ', text)
+    text = re.sub(r'[0-9]*', ' ', text)
+
     text = re.sub('\s+', ' ', text)
     text = text.strip(' ')
     return text        
@@ -114,13 +117,15 @@ def clean_text(text):
 
 
 if __name__  == "__main__":
-    
-    d = DataPrep() 
-    d.printInfodb()
-    d.preprocessingdb()
-    X_train, X_test, y_train, y_test = d.splitdataset()
-    #print(X_train.head())
-    del d
-    
+    print(clean_text("casa mia oggi 34 "))
+    #===========================================================================
+    # d = DataPrep() 
+    # d.printInfodb()
+    # d.preprocessingdb()
+    # X_train, X_test, y_train, y_test = d.splitdataset()
+    # #print(X_train.head())
+    # del d
+    # 
+    #===========================================================================
     
     
