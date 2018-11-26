@@ -6,11 +6,11 @@ Created on 6 nov 2018
 from fake_news_detection.dao.ElasticDao import Search
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.config.AppConfig import new_mapped_index
-
+#import json
 
 class IndexLiar():
     '''
-    classdocs
+    run if you want to create a index on elastic search
     '''
 
 
@@ -27,20 +27,18 @@ class IndexLiar():
         S = Search()
         S.CreateNewIndex()
         lista_azioni = []
-        lista_azioni = S.AddNewFieldsandINDEX("/home/camila/workspace/fandango-fake-news/fake_news_detection/LIARDATASET/train.tsv", new_mapped_index, lista_azioni)
+        lista_azioni = S.AddNewFieldsandINDEX("/home/camila/eclipse-workspace/fandango-fake-news/fake_news_detection/resources/LIARDATASET/train.tsv", new_mapped_index, lista_azioni)
         S.BulkNewIndex(lista_azioni)
 
     def similarClaims(self,text, max_claims = 3):
         
         S= Search()
         r = S.similarity_query(text)
-        #print(r[0:max_claims])
+        #jsonclaims = json.dumps(r)
         
-        p = pd.DataFrame(r[0:max_claims])
-        print(p[['label','claim']])
-        return p[['label','claim']]
-            
-        #return r[0:max_claims]
+        print(r)
+        return r
+
         
         
             
