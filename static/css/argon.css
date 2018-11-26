@@ -15551,8 +15551,8 @@ a.text-lighter:focus {
 .badge-dot i {
     display: inline-block;
 
-    width: .375rem;
-    height: .375rem;
+    width: .550rem;
+    height: .550rem;
     margin-right: .375rem;
 
     vertical-align: middle;
@@ -18981,7 +18981,7 @@ textarea[resize='horizontal'] {
 .table th {
     font-size: .8125rem;
 
-    white-space: nowrap;
+    /*white-space: nowrap;*/
 }
 
 .table.align-items-center td,
@@ -19031,8 +19031,8 @@ textarea[resize='horizontal'] {
 
 .card .table td,
 .card .table th {
-    padding-right: 1.5rem;
-    padding-left: 1.5rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
 }
 
 p {
@@ -23123,4 +23123,31 @@ html:not([dir='rtl']) .noUi-horizontal .noUi-handle {
 
 .fa-thumbs-down:hover {
     color:#f5365c;
+}
+
+.pants-fire {
+    color: #FF4136;
+}
+
+.false {
+    color: #FF851B;
+}
+
+.barely-true {
+    color: #FFDC00;
+}
+
+.half-true {
+    color: #01FF70;
+}
+
+.mostly-true {
+    color: #2ECC40;
+}
+
+.true {
+    color: #3D9970;
+}
+td {
+    word-wrap:break-word;
 }

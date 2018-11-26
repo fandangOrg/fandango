@@ -38,3 +38,11 @@ app.factory('feedback',['$http', function ($http) {
         }
     };
 }]);
+
+app.factory('claim',['$http', function ($http) {
+    return {
+        getClaim: function (to_send) {
+            return $http.post(base + "/claim", to_send);
+        }
+    };
+}]);

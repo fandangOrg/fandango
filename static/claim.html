@@ -13,10 +13,10 @@
     <link type="text/css" href="css/argon.css" rel="stylesheet">
 </head>
 
-<body ng-controller="indexCtrl">
+<body ng-controller="claimCtrl">
 <div ng-if="loading === true" id="preloader"></div>
 <nav class="navbar navbar-vertical fixed-left navbar-light bg-white" id="sidenav-main">
-    <div class="container-fluid" style="margin: 5">
+    <div class="container-fluid" style="margin: 5px">
         <a class="navbar-brand pt-0">
             <img src="assets/img/Logo.png" class="navbar-brand-img">
         </a>
@@ -38,7 +38,7 @@
                                         <h3 class="mb-0">Article Checker</h3>
                                     </div>
                                     <div class="col-6 text-right">
-                                        <h3 class="mb-0"><span class="hidden-xs">Language supported : </span><img class="pl-1" height="30"
+                                        <h3 class="mb-0">Language supported : <img class="pl-1" height="30"
                                                                                    src="assets/img/uk_flag.png"></h3>
                                     </div>
                                 </div>
@@ -93,7 +93,8 @@
                                     </div>
                                 </div>
                                 <textarea ng-model="text" class="form-control form-control-alternative"
-                                          placeholder="Copy and paste or write an article"></textarea>
+                                          placeholder="Copy and paste or write an article"
+                                          ng-mouseup="showSelectedText()"></textarea>
                             </div>
                         </form>
                     </div>
@@ -109,7 +110,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body" style="padding: 5;min-height: auto;">
+                        <div class="card-body" style="padding: 5px;min-height: auto;">
                             <div class="mt-2 mb-2">
                                 <ul class="list-unstyled">
                                     <li>- Author : <strong>{{page.author}}</strong></li>
@@ -122,12 +123,12 @@
                                     </li>
                                 </ul>
                                 <div class="col-12 text-center">
-                                    <btn ng-click="send()" ng-if="loadingFakeness === false"
+                                    <div ng-click="send()" ng-if="loadingFakeness === false"
                                          class="btn btn-lg btn-icon btn-success"
                                          ng-class="{'disabled': !title || !text}">
                                         <span class="btn-inner--icon"><img src="assets/img/verify.png"></span>
                                         <span class="btn-inner--text">Check Fakeness</span>
-                                    </btn>
+                                    </div>
                                     <div ng-if="loadingFakeness === true" class="lds-hourglass"></div>
                                 </div>
                             </div>
@@ -162,12 +163,91 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div ng-if="feedbackSelected === true" class="alert alert-success" role="alert" id="alert"
                                  style="margin-bottom: 0">
                                 <strong>Thank you for the feedback!</strong> Click again on 'Check Fakeness' to see the
                                 new Fakeness Level.
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 mt-2">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-6">
+                                    <h3 class="mb-0">Highlighted</h3>
+                                </div>
+                                <!--<div class="col-6 text-right">-->
+                                <!--<div ng-if="highlightedText !== ''" title="Clear box" ng-click="clearHighlight()" class="btn btn-sm btn-icon btn-success animated fadeIn">-->
+                                <!--<span class="btn-inner&#45;&#45;icon">-->
+                                <!--<img src="assets/img/verify.png">-->
+                                <!--</span>-->
+                                <!--<span class="btn-inner&#45;&#45;text">Clear box</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                        <div class="card-body" style="height: 300px;padding: 5px">
+                            <textarea resize='none' ng-bind="selectedText"
+                                      class="form-control form-control-alternative bg-white" disabled
+                                      style="min-height: 235px"></textarea>
+                            <div class="row mt-3">
+                                <div class="col-6 text-center">
+                                    <div ng-click="sendClaim()"
+                                         class="btn btn-sm btn-icon btn-success"
+                                         ng-class="{'disabled': !selectedText}">
+                                        <span class="btn-inner--icon"><img src="assets/img/verify.png"></span>
+                                        <span class="btn-inner--text">Check</span>
+                                    </div>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <div ng-click="selectedText = ''"
+                                         class="btn btn-sm btn-icon btn-success"
+                                         ng-class="{'disabled': !selectedText}">
+                                        <span class="btn-inner--icon"><i class="fas fa-broom"
+                                                                         style="font-size: 17px"></i></span>
+                                        <span class="btn-inner--text">Clear</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 mt-2">
+                    <div class="card bg-secondary shadow mt-2" ng-if="claims.length > 0">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <h3 class="mb-0">Related claims</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="max-height: 600px;overflow-y:auto;overflow-x:hidden;padding: 0">
+                            <table class="table align-items-center table-flush" style="width: 100%;table-layout:fixed;">
+                                <thead class="thead-light" style="visibility: collapse">
+                                <tr>
+                                    <!--<th scope="col">Author</th>-->
+                                    <th style="width: 80%" scope="col">Claim</th>
+                                    <th scope="col"></th>
+                                    <!--<th style="padding: 5px;" scope="col">Fakeness</th>-->
+                                </tr>
+                                </thead>
+                                <tbody style="background-color: white">
+                                <tr ng-repeat="claim in claims">
+                                    <!--<td class="text-capitalize">-->
+                                    <!--{{claim.author | dashless}}-->
+                                    <!--</td>-->
+                                    <td>
+                                        {{claim.claim}}
+                                    </td>
+                                    <td>
+                                        <span title="{{claim.label | dashless | capitalize}}"><i ng-class="getClaimFakeness(claim.label)" style="font-size: 25px"></i></span>
+                                        <!--<span style="white-space: pre-line;" class="badge badge-dot mr-4"><i ng-class="claim.label"></i> {{claim.label | dashless | capitalize}}</span>-->
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -184,21 +264,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 mt-2">
-                    <div class="card bg-secondary shadow">
-                        <div class="card-header bg-white border-0">
-                            <div class="row align-items-center">
-                                <div class="col-12">
-                                    <h3 class="mb-0">Related claims ( Not available )</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body disabled-no-opacity" style="height: 300px">
-                        </div>
-                    </div>
-                </div>
             </div>
-            <div class="col-lg-8 hidden-md hidden-sm hidden-xs"></div>
         </div>
     </div>
 </div>
@@ -207,7 +273,7 @@
 <script src="js/vendors/angular.min.js"></script>
 <script src="js/module/module.js"></script>
 <!-- <script src="web/module.js"></script> -->
-<script src="js/controller/indexController.js"></script>
+<script src="js/controller/claimController.js"></script>
 <script src="js/directive/indexDirective.js"></script>
 <script src="js/factory/indexFactory.js"></script>
 <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
