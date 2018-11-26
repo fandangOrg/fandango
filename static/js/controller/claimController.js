@@ -7,8 +7,8 @@ app.controller('claimCtrl', function ($scope, $http, $document, errorCode, url, 
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
 
-    var levelReal = ['true','mostly-true','half-true','barely-true'];
-    var levelFalse = ['false','pants-fire'];
+    var levelReal = ['true', 'mostly-true', 'half-true', 'barely-true'];
+    var levelFalse = ['false', 'pants-fire'];
 
     angular.element(function () {
         $scope.loading = false;
@@ -24,15 +24,21 @@ app.controller('claimCtrl', function ($scope, $http, $document, errorCode, url, 
     };
 
     $scope.getSelectionText = function () {
+
         if (window.getSelection) {
-            if (window.getSelection().toString() === '')
+            try {
+                var ta = $('textarea').get(0);
+                $scope.highlightedText = ta.value.substring(ta.selectionStart, ta.selectionEnd);
                 return $scope.highlightedText;
-            else
-                $scope.highlightedText = window.getSelection().toString();
-        } else if (document.selection && document.selection.type != "Control") {
+            } catch (e) {
+                console.log('Cant get selection text')
+            }
+        }
+
+        // IF IE
+        if (document.selection && document.selection.type != "Control") {
             $scope.highlightedText = document.selection.createRange().text;
         }
-        return $scope.highlightedText;
     };
 
     $scope.sendClaim = function () {
@@ -49,10 +55,10 @@ app.controller('claimCtrl', function ($scope, $http, $document, errorCode, url, 
     };
 
     $scope.getClaimFakeness = function (level) {
-        if(levelReal.includes(level))
-            return 'fas fa-check-circle '+level;
+        if (levelReal.includes(level))
+            return 'fas fa-check-circle ' + level;
         else
-            return 'fas fa-times-circle '+level;
+            return 'fas fa-times-circle ' + level;
     };
 
     $scope.sendFeedback = function (value) {
