@@ -104,4 +104,4 @@ http.cors.allow-methods : OPTIONS, HEAD, GET, POST, PUT, DELETE
 http.cors.allow-headers : X-Requested-With,X-Auth-Token,Content-Type, Content-Length, Authorization
 http.cors.allow-credentials : true
 #path.repo : /home/livetech/elastic_snaprepos
-reindex.remote.whitelist: 94.23.7.153:9200
+#reindex.remote.whitelist: 94.23.7.153:9200
