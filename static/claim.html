@@ -17,12 +17,16 @@
 <div ng-if="loading === true" id="preloader"></div>
 <nav class="navbar navbar-vertical fixed-left navbar-light bg-white" id="sidenav-main">
     <div class="container-fluid" style="margin: 5px">
-        <a class="navbar-brand pt-0">
-            <img src="assets/img/Logo.png" class="navbar-brand-img">
-        </a>
-        <a class="navbar-brand pt-0">
-            <img src="assets/img/fandango.png" class="navbar-brand-img">
-        </a>
+        <div class="col-6">
+            <a class="navbar-brand pt-0" style="float: left">
+                <img src="assets/img/fandango.png" class="navbar-brand-img">
+            </a>
+        </div>
+        <div class="col-6">
+            <a class="navbar-brand pt-0" style="float: right">
+                <img src="assets/img/horizon-logo.png" class="navbar-brand-img">
+            </a>
+        </div>
     </div>
 </nav>
 <div class="main-content">
@@ -135,7 +139,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 mt-2">
+                <div ng-show="fakenessDone === true" class="col-xs-12 mt-2 animated fadeInDown">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
@@ -145,10 +149,10 @@
                             </div>
                         </div>
                         <div class="card-body gaugeBox" style="height: auto;padding: 0">
-                            <div id='gaugeFakeness' class="animated fadeIn"
+                            <div id='gaugeFakeness' class="animated fadeIn delay-1s"
                                  style="height: 300px">
                             </div>
-                            <div id="feedback" class="col-sm-12" ng-if="fakenessDone === true">
+                            <div id="feedback" class="col-sm-12">
                                 <div class="row">
                                     <div class="col-7">
                                         <label class="form-control-label">Real or fake?</label>
@@ -175,17 +179,9 @@
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
-                                <div class="col-6">
-                                    <h3 class="mb-0">Highlighted</h3>
+                                <div class="col-12">
+                                    <h3 class="mb-0">Current selection</h3>
                                 </div>
-                                <!--<div class="col-6 text-right">-->
-                                <!--<div ng-if="highlightedText !== ''" title="Clear box" ng-click="clearHighlight()" class="btn btn-sm btn-icon btn-success animated fadeIn">-->
-                                <!--<span class="btn-inner&#45;&#45;icon">-->
-                                <!--<img src="assets/img/verify.png">-->
-                                <!--</span>-->
-                                <!--<span class="btn-inner&#45;&#45;text">Clear box</span>-->
-                                <!--</div>-->
-                                <!--</div>-->
                             </div>
                         </div>
                         <div class="card-body" style="height: 300px;padding: 5px">
@@ -223,14 +219,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body" style="max-height: 600px;overflow-y:auto;overflow-x:hidden;padding: 0">
+                        <div class="card-body" style="max-height: 600px;overflow-y:auto;overflow-x:auto;padding: 0">
                             <table class="table align-items-center table-flush" style="width: 100%;table-layout:fixed;">
-                                <thead class="thead-light" style="visibility: collapse">
+                                <thead class="thead-light">
                                 <tr>
-                                    <!--<th scope="col">Author</th>-->
-                                    <th style="width: 80%" scope="col">Claim</th>
-                                    <th scope="col"></th>
-                                    <!--<th style="padding: 5px;" scope="col">Fakeness</th>-->
+                                    <th style="width: 60%" scope="col">Claim</th>
+                                    <th colspan="2" scope="col">Confidence</th>
                                 </tr>
                                 </thead>
                                 <tbody style="background-color: white">
@@ -238,12 +232,19 @@
                                     <!--<td class="text-capitalize">-->
                                     <!--{{claim.author | dashless}}-->
                                     <!--</td>-->
-                                    <td>
-                                        {{claim.claim}}
+                                    <td ng-bind-html="claim.claim">
                                     </td>
                                     <td>
-                                        <span title="{{claim.label | dashless | capitalize}}"><i ng-class="getClaimFakeness(claim.label)" style="font-size: 25px"></i></span>
+                                        <span title="{{claim.label | dashless | capitalize}}"><i
+                                                ng-class="getClaimFakeness(claim.label)"
+                                                style="font-size: 25px"></i>
+                                        </span>
                                         <!--<span style="white-space: pre-line;" class="badge badge-dot mr-4"><i ng-class="claim.label"></i> {{claim.label | dashless | capitalize}}</span>-->
+                                    </td>
+                                    <td style="padding: 0">
+                                        <span class="font-weight-bold" ng-if="claim._score <= 15">Low</span>
+                                        <span class="font-weight-bold" ng-if="claim._score > 15 && claim._score <= 30">Medium</span>
+                                        <span class="font-weight-bold" ng-if="claim._score > 30">High</span>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -251,26 +252,49 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 mt-2">
-                    <div class="card bg-secondary shadow">
-                        <div class="card-header bg-white border-0">
-                            <div class="row align-items-center">
-                                <div class="col-12">
-                                    <h3 class="mb-0">Current selection ( Not available )</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body disabled-no-opacity" style="height: 300px">
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
+<footer class="footer">
+    <div class="row align-items-center justify-content-xl-between">
+        <!--<div class="col-xl-6">-->
+        <!--<div class="copyright text-center text-xl-left text-muted">-->
+        <!--&copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative-->
+        <!--Tim</a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-xl-6">-->
+        <!--<ul class="nav nav-footer justify-content-center justify-content-xl-end">-->
+        <!--<li class="nav-item">-->
+        <!--<a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>-->
+        <!--</li>-->
+        <!--<li class="nav-item">-->
+        <!--<a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About-->
+        <!--Us</a>-->
+        <!--</li>-->
+        <!--<li class="nav-item">-->
+        <!--<a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>-->
+        <!--</li>-->
+        <!--<li class="nav-item">-->
+        <!--<a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md"-->
+        <!--class="nav-link" target="_blank">MIT License</a>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</div>-->
+        <div class="col-12">
+            <div class="copyright text-center text-muted">
+                Powered by
+                <a href="http://ilivetech.it" target="_blank">
+                    <img src="assets/img/Logo.png" style="height: 50px;"></a>
+            </div>
+        </div>
+    </div>
+</footer>
 <script src="js/vendors/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="js/vendors/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
 <script src="js/module/module.js"></script>
 <!-- <script src="web/module.js"></script> -->
 <script src="js/controller/claimController.js"></script>

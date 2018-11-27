@@ -8,7 +8,7 @@ app.controller('claimCtrl', function ($scope, $http, $document, errorCode, url, 
     $scope.feedbackSelected = false;
 
     var levelReal = ['true', 'mostly-true', 'half-true', 'barely-true'];
-    var levelFalse = ['false', 'pants-fire'];
+    // var levelFalse = ['false', 'pants-fire'];
 
     angular.element(function () {
         $scope.loading = false;
@@ -56,9 +56,9 @@ app.controller('claimCtrl', function ($scope, $http, $document, errorCode, url, 
 
     $scope.getClaimFakeness = function (level) {
         if (levelReal.includes(level))
-            return 'fas fa-check-circle ' + level;
+            return 'fas fa-check-circle text-green';
         else
-            return 'fas fa-times-circle ' + level;
+            return 'fas fa-times-circle text-red';
     };
 
     $scope.sendFeedback = function (value) {
