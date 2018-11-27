@@ -9,6 +9,7 @@ from fake_news_detection.config.AppConfig import index_name, getEsConnector,\
 from fake_news_detection.utils.logger import getLogger
 from elasticsearch import helpers
 import csv
+from elasticsearch.helpers import bulk
 
 
 class Search( ):
@@ -100,6 +101,11 @@ class Search( ):
         return result['hits']['hits']
         
 
+    def delete(self):
+        try:
+            self.ESclient.indices.delete(self.index_name)
+        except:
+            pass
             
     def DownloadPartial(self):
         
@@ -170,7 +176,7 @@ class Search( ):
                           }
                         }
                       ],
-                      "filter": [
+                      "must": [
                         {
                           "match": {
                             "claim": text
@@ -184,20 +190,31 @@ class Search( ):
         res = self.ESclient.search(index= self.index_name, body= body1)
         l =[]
         for r in res['hits']['hits']:
-            l.append(r['_source']) 
+            print(r)
+            if r["_score"]>5:
+                d=r['_source']
+                d['_score']=r["_score"]
+                l.append(d) 
             
         return l
     
     
     def CreateNewIndex(self):
+        try:
+            self.ESclient.indices.delete_template("template_segnalazioni")
+        except:
+            pass
+        
         if not self.ESclient.indices.exists(index=new_mapped_index):
             mapping_path = mapping
             with open(mapping_path , "r") as f:
                 map = f.read()
+                print(map)
                 try:
                     self.ESclient.indices.create(index = new_mapped_index, body = map)
                 except:
                     self.log.info("Could not create new index: {ind}".format(ind = new_mapped_index))
+                    print(new_mapped_index)
                     raise "Could not create new index: {ind}".format(ind = new_mapped_index)
         return new_mapped_index
     
@@ -231,6 +248,25 @@ class Search( ):
     
         return lista_azioni
     
+    def _bulk_items(self,items):
+        for  source_dict in items:
+            yield source_dict
+            #===================================================================
+            # yield {'_op_type': 'index',
+            # '_index': self.collection,
+            #  'refresh':'wait_for',
+            # '_type': '_doc',
+            # '_source': source_dict
+            # }
+            #===================================================================
+                
+        
+    #===========================================================================
+    # def BulkNewIndex(self,lista_azioni):
+    #     #self.client.commit(self.collection, openSearcher=True)
+    #     bulk(self.ESclient, self._bulk_items([x for x in lista_azioni]))
+    #===========================================================================
+         
     def BulkNewIndex(self, lista_azioni):
         for success, info in helpers.parallel_bulk(self.ESclient, lista_azioni):
             if not success:

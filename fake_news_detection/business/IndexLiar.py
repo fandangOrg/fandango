@@ -5,7 +5,7 @@ Created on 6 nov 2018
 '''
 from fake_news_detection.dao.ElasticDao import Search
 from fake_news_detection.utils.logger import getLogger
-from fake_news_detection.config.AppConfig import new_mapped_index
+from fake_news_detection.config.AppConfig import new_mapped_index, train_claims
 #import json
 
 class IndexLiar():
@@ -21,13 +21,17 @@ class IndexLiar():
         self.Search = Search()
         self.log = getLogger(__name__)
         self.new_mapped_index = new_mapped_index
-
-    def runIndexCreation(self):
+    
+    def delete(self):
+        S = Search()
+        S.delete()
+        
+    def runIndexCreation(self,name_file):
         
         S = Search()
         S.CreateNewIndex()
         lista_azioni = []
-        lista_azioni = S.AddNewFieldsandINDEX("/home/camila/eclipse-workspace/fandango-fake-news/fake_news_detection/resources/LIARDATASET/train.tsv", new_mapped_index, lista_azioni)
+        lista_azioni = S.AddNewFieldsandINDEX(train_claims+"/"+name_file, new_mapped_index, lista_azioni)
         S.BulkNewIndex(lista_azioni)
 
     def similarClaims(self,text, max_claims = 3):
@@ -41,11 +45,19 @@ class IndexLiar():
 
         
         
-            
+def popolate():
+    I = IndexLiar()
+    I.delete()
+    I.runIndexCreation('train.tsv')
+    I.runIndexCreation('test.tsv')
+    I.runIndexCreation('valid.tsv')
+    
 if __name__  == "__main__":
     
     
     I = IndexLiar()
-    #I.runIndexCreation()
+    I.runIndexCreation('train.tsv')
+    I.runIndexCreation('test.tsv')
+    I.runIndexCreation('valid.tsv')
     I.similarClaims("dance")
     

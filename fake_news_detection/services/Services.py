@@ -14,7 +14,7 @@ from fake_news_detection.config import AppConfig
 from fake_news_detection.config.AppConfig import static_folder
 from fake_news_detection.utils.Crawler import crawler_news
 from flask import request
-from fake_news_detection.business.IndexLiar import IndexLiar
+from fake_news_detection.business.IndexLiar import IndexLiar, popolate
 
 oo = ModelDao() 
 model = oo.load('test')
@@ -45,11 +45,13 @@ def crawler(url:str)->str:
 def claim():
     j = request.get_json()  #key txt of the dictionary
     text = j.get("text")
-    #I = IndexLiar()
-    #j_resp = I.similarClaims(text, max_claims=5)
-    j_resp = ["ciao test 1","ciao test 2 "]
+    I = IndexLiar()
+    j_resp = I.similarClaims(text, max_claims=5)
     return j_resp
 
+def popolate_claims():
+    popolate()
+    
 app=DS4BizFlask(__name__,static_folder=static_folder+"/",static_url_path="/web")
 app.root="/fandango/v0.1/fakeness"
 app.name="FANDANGO"
@@ -57,7 +59,7 @@ app.add_service("analyzer",analyzer, method='POST')
 app.add_service("cr_url",crawler, method='POST')
 app.add_service("feedback",feedback, method='POST')
 app.add_service("claim", claim, method = 'POST')
-
+app.add_service("popolate_claims", popolate_claims, method = 'POST')
 CORS(app)
 
 

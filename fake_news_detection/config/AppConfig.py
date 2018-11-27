@@ -13,7 +13,7 @@ from elasticsearch import Elasticsearch
   
 def getConfig(fname=None):     
     if fname == None:                                                           #cambiare tmp
-        fname = pkg_resources.resource_filename("fake_news_detection.config", 'properties.ini.tmp')  # @UndefinedVariable     
+        fname = pkg_resources.resource_filename("fake_news_detection.config", 'properties.ini')  # @UndefinedVariable     
         
              
     config = ConfigParser()
@@ -35,8 +35,9 @@ BASEPORT= os.environ.get("BASEPORT_SERVICE") or config["service"]["port"]
 picklepath = pkg_resources.resource_filename("fake_news_detection.resources.model", "")  # @UndefinedVariable
 dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
 static_folder = pkg_resources.resource_filename("static", "")  # @UndefinedVariable
+train_claims = pkg_resources.resource_filename("fake_news_detection.resources.claims", "")# @UndefinedVariable
 
-
+mapping = pkg_resources.resource_filename("fake_news_detection.resources.claims", "liarmapping.json")# @UndefinedVariable
 
 def getEsConnector():
     url= os.environ.get("URL_ELASTIC") or config["elasticsearch"][ "url"]
@@ -50,7 +51,7 @@ def getEsConnector():
 index_name= os.environ.get("INDEX_ELASTIC") or config.get("elasticsearch", "indexfakenews")
 docType = os.environ.get("INDEX_ELASTIC") or config.get("elasticsearch", "doctype")
 pathFileLastDate = os.environ.get("pathFileLastDate") or config.get("default", "fileLastDate")
-mapping = os.environ.get("MAPPING_ELASTIC") or config.get("elasticsearch", "mapping")
+#mapping = os.environ.get("MAPPING_ELASTIC") or config.get("elasticsearch", "mapping")
 new_mapped_index = os.environ.get("NEW_MAPPED_INDEX") or config.get("elasticsearch", "new_mapped_index")
 
 if __name__ == '__main__':
