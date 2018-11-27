@@ -152,7 +152,7 @@
                             <div id='gaugeFakeness' class="animated fadeIn delay-1s"
                                  style="height: 300px">
                             </div>
-                            <div id="feedback" class="col-sm-12">
+                            <div ng-if="fakenessDone === true" id="feedback" class="col-sm-12 animated fadeIn delay-1s">
                                 <div class="row">
                                     <div class="col-7">
                                         <label class="form-control-label">Real or fake?</label>
@@ -198,7 +198,7 @@
                                     </div>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <div ng-click="selectedText = ''"
+                                    <div ng-click="clear()"
                                          class="btn btn-sm btn-icon btn-success"
                                          ng-class="{'disabled': !selectedText}">
                                         <span class="btn-inner--icon"><i class="fas fa-broom"
@@ -223,8 +223,8 @@
                             <table class="table align-items-center table-flush" style="width: 100%;table-layout:fixed;">
                                 <thead class="thead-light">
                                 <tr>
-                                    <th style="width: 60%" scope="col">Claim</th>
-                                    <th colspan="2" scope="col">Confidence</th>
+                                    <th style="width: 60%;text-align: center" scope="col">Claim</th>
+                                    <th scope="col" style="text-align: center">Match</th>
                                 </tr>
                                 </thead>
                                 <tbody style="background-color: white">
@@ -232,19 +232,19 @@
                                     <!--<td class="text-capitalize">-->
                                     <!--{{claim.author | dashless}}-->
                                     <!--</td>-->
-                                    <td ng-bind-html="claim.claim">
+                                    <td ng-bind-html="claim.claim" ng-class="getClaimFakeness(claim.label)">
                                     </td>
-                                    <td>
-                                        <span title="{{claim.label | dashless | capitalize}}"><i
-                                                ng-class="getClaimFakeness(claim.label)"
-                                                style="font-size: 25px"></i>
-                                        </span>
-                                        <!--<span style="white-space: pre-line;" class="badge badge-dot mr-4"><i ng-class="claim.label"></i> {{claim.label | dashless | capitalize}}</span>-->
-                                    </td>
-                                    <td style="padding: 0">
-                                        <span class="font-weight-bold" ng-if="claim._score <= 15">Low</span>
-                                        <span class="font-weight-bold" ng-if="claim._score > 15 && claim._score <= 30">Medium</span>
-                                        <span class="font-weight-bold" ng-if="claim._score > 30">High</span>
+                                    <!--<td>-->
+                                        <!--<span title="{{claim.label | dashless | capitalize}}"><i-->
+                                                <!--ng-class="getClaimFakeness(claim.label)"-->
+                                                <!--style="font-size: 25px"></i>-->
+                                        <!--</span>-->
+                                        <!--&lt;!&ndash;<span style="white-space: pre-line;" class="badge badge-dot mr-4"><i ng-class="claim.label"></i> {{claim.label | dashless | capitalize}}</span>&ndash;&gt;-->
+                                    <!--</td>-->
+                                    <td style="padding: 0;text-align: center">
+                                        <span class="font-weight-bold " ng-if="claim._score <= 15">Low</span>
+                                        <span class="font-weight-bold " ng-if="claim._score > 15 && claim._score <= 30">Medium</span>
+                                        <span class="font-weight-bold " ng-if="claim._score > 30">High</span>
                                     </td>
                                 </tr>
                                 </tbody>
