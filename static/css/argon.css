@@ -17,6 +17,7 @@ html {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    overflow-x: hidden;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
     -ms-overflow-style: scrollbar;
@@ -16231,7 +16232,7 @@ a.btn-icon-only {
 }
 
 .footer {
-    padding: 2.5rem 0;
+    padding: 0.5rem;
 
     background: #f7fafc;
 }
@@ -16273,7 +16274,7 @@ a.btn-icon-only {
 }
 
 .footer .copyright {
-    font-size: .875rem;
+    font-size: .925rem;
 }
 
 .footer-dark .col-footer .heading {
@@ -17316,7 +17317,7 @@ textarea[resize='horizontal'] {
 .navbar-vertical .navbar-brand-img,
 .navbar-vertical .navbar-brand > img {
     max-width: 100%;
-    height: 80px;
+    height: 65px;
 }
 
 @media (min-width: 768px) {
