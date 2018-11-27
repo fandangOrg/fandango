@@ -173,9 +173,11 @@ class Search( ):
                         {
                           "match_phrase": {
                             "claim": text
+                            
                           }
                         }
                       ],
+                      "minimum_should_match": "80%",
                       "must": [
                         {
                           "match": {
@@ -185,6 +187,17 @@ class Search( ):
                       ]
                     }
                   }
+                    ,
+                    "highlight" : {
+                        "pre_tags" : ["<b>"],
+                        "post_tags" : ["</b>"],
+                        "fields" : {
+                            "claim" : 
+                                {
+                                 "number_of_fragments":0
+                                }
+                        }
+                    }
                 }
         
         res = self.ESclient.search(index= self.index_name, body= body1)
@@ -194,6 +207,7 @@ class Search( ):
             if r["_score"]>5:
                 d=r['_source']
                 d['_score']=r["_score"]
+                d["claim"]=r["highlight"]["claim"][0]
                 l.append(d) 
             
         return l

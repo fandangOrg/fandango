@@ -42,15 +42,16 @@ def crawler(url:str)->str:
     print(url)
     return crawler_news(url)
 
-def claim():
+def claim(text:str)->str:
     j = request.get_json()  #key txt of the dictionary
     text = j.get("text")
     I = IndexLiar()
     j_resp = I.similarClaims(text, max_claims=5)
     return j_resp
 
-def popolate_claims():
+def popolate_claims()->str:
     popolate()
+    return "DONE"
     
 app=DS4BizFlask(__name__,static_folder=static_folder+"/",static_url_path="/web")
 app.root="/fandango/v0.1/fakeness"
@@ -59,7 +60,7 @@ app.add_service("analyzer",analyzer, method='POST')
 app.add_service("cr_url",crawler, method='POST')
 app.add_service("feedback",feedback, method='POST')
 app.add_service("claim", claim, method = 'POST')
-app.add_service("popolate_claims", popolate_claims, method = 'POST')
+app.add_service("popolate_claims", popolate_claims, method = 'GET')
 CORS(app)
 
 

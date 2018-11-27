@@ -4,12 +4,9 @@
     
     
     <pydev_pathproperty name="org.python.pydev.PROJECT_SOURCE_PATH">
-                
-        
-        <path>/fandango-fake-news</path>
-                
-    
-    </pydev_pathproperty>
+<path>/fandango-fake-news</path>
+<path>/${PROJECT_DIR_NAME}/compose_es</path>
+</pydev_pathproperty>
             
     
     
