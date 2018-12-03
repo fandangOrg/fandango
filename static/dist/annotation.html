@@ -1,0 +1,140 @@
+<html ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Fandango Fake news</title>
+    <link href="img/favicon.png" rel="icon" type="image/png">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!--<link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">-->
+    <!--<link href="node_modules/bootstrap/dist/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="libs/bootstrap.min.css">
+    <link type="text/css" href="css/min/style.min.css" rel="stylesheet">
+</head>
+
+<body ng-controller="annotationCtrl">
+<div ng-if="loading === true" id="preloader"></div>
+<app-navbar></app-navbar>
+<div class="main-content">
+    <div class="col-12 pt-3 pb-3">
+        <div class="row">
+            <div class="col-lg-9 col-sm-12">
+                <article-checker></article-checker>
+            </div>
+            <div class="col-lg-3 col-sm-12 box">
+                <div class="col-xs-12">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <h3 class="mb-0">Article Analysis</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="padding: 5px;min-height: auto;">
+                            <div class="mt-2 mb-2">
+                                <ul class="list-unstyled">
+                                    <li>- Author : <strong>{{page.author}}</strong></li>
+                                    <li>- Publisher : <strong>{{page.publisher}}</strong></li>
+                                    <li>- Related Article Pubblication
+                                        <ul class="list-unstyled">
+                                            <li ng-repeat="article in pubblication"></li>
+                                            <li class="text-gray">- Not available</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <div class="col-12 text-center">
+                                    <btn ng-click="send()" ng-if="loadingFakeness === false"
+                                         class="btn btn-lg btn-icon btn-success"
+                                         ng-class="{'disabled': !title || !text}">
+                                        <span class="btn-inner--icon"><img src="img/verify.png"></span>
+                                        <span class="btn-inner--text">Check Fakeness</span>
+                                    </btn>
+                                    <div ng-if="loadingFakeness === true" class="lds-hourglass"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 mt-2">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <h3 class="mb-0">Fakeness Level</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body gaugeBox" style="height: auto;padding: 0">
+                            <div id='gaugeFakeness' class="animated fadeIn"
+                                 style="height: 300px">
+                            </div>
+                            <div id="feedback" class="col-sm-12" ng-if="fakenessDone === true">
+                                <div class="row">
+                                    <div class="col-7">
+                                        <label class="form-control-label">Real or fake?</label>
+                                    </div>
+                                    <div class="col-5 text-right" id="feedbackCol">
+                                        <i title="Real" ng-click="sendFeedback('REAL')"
+                                           class="fas fa-thumbs-up pointer animated text-green bounceIn delay-1s mr-4"
+                                           style="font-size: 22px"></i>
+                                        <i title="Fake" ng-click="sendFeedback('FAKE')"
+                                           class="fas fa-thumbs-down pointer animated text-red bounceIn delay-1s"
+                                           style="font-size: 22px"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-if="feedbackSelected === true" class="alert alert-success" role="alert" id="alert"
+                                 style="margin-bottom: 0">
+                                <strong>Thank you for the feedback!</strong> Click again on 'Check Fakeness' to see the
+                                new Fakeness Level.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 mt-2">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <h3 class="mb-0">Current selection ( Not available )</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body disabled-no-opacity" style="height: 300px">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 mt-2">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <h3 class="mb-0">Related claims ( Not available )</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body disabled-no-opacity" style="height: 300px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 hidden-md hidden-sm hidden-xs"></div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap.min.js"></script>
+<script src="libs/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.js"></script>
+<script src="js/app.min.js"></script>
+<!-- <script src="web/module.min.js"></script> -->
+<script src="js/controller/annotationController.min.js"></script>
+<script src="js/directive/mainDirective.min.js"></script>
+<script src="js/factory/mainFactory.min.js"></script>
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+</body>
+</html>
