@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="libs/bootstrap.min.css">
-    <link type="text/css" href="css/min/style.min.css" rel="stylesheet">
+    <link type="text/css" href="css/style.min.css" rel="stylesheet">
 </head>
 
 <body ng-controller="annotationCtrl">
@@ -45,12 +45,12 @@
                                     </li>
                                 </ul>
                                 <div class="col-12 text-center">
-                                    <btn ng-click="send()" ng-if="loadingFakeness === false"
+                                    <div ng-click="send()" ng-if="loadingFakeness === false"
                                          class="btn btn-lg btn-icon btn-success"
                                          ng-class="{'disabled': !title || !text}">
                                         <span class="btn-inner--icon"><img src="img/verify.png"></span>
                                         <span class="btn-inner--text">Check Fakeness</span>
-                                    </btn>
+                                    </div>
                                     <div ng-if="loadingFakeness === true" class="lds-hourglass"></div>
                                 </div>
                             </div>
@@ -67,8 +67,7 @@
                             </div>
                         </div>
                         <div class="card-body gaugeBox" style="height: auto;padding: 0">
-                            <div id='gaugeFakeness' class="animated fadeIn"
-                                 style="height: 300px">
+                            <div id='gaugeFakeness' class="h300 animated fadeIn">
                             </div>
                             <div id="feedback" class="col-sm-12" ng-if="fakenessDone === true">
                                 <div class="row">
@@ -103,7 +102,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body disabled-no-opacity" style="height: 300px">
+                        <div class="card-body h300 disabled-no-opacity">
                         </div>
                     </div>
                 </div>
@@ -116,7 +115,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body disabled-no-opacity" style="height: 300px">
+                        <div class="card-body h300 disabled-no-opacity">
                         </div>
                     </div>
                 </div>

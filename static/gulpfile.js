@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     prefixer = require('gulp-autoprefixer'),
     cssmin = require('gulp-cssmin'),
     rename = require('gulp-rename'),
+    concat = require('gulp-concat'),
     uncss = require('gulp-uncss'),
     uglify = require('gulp-uglify'),
     rimraf = require('rimraf'),
@@ -15,7 +16,7 @@ var path = {
         html: 'source/html/*.html',
         html_partials: 'source/html/html_partials/*.html',
         js: 'source/js/**/*.js',
-        css: 'source/css/',
+        css: 'source/css/**/*.css',
         img: 'source/img/**/*.*',
         libs: 'source/libs/**/*.*'
     },
@@ -30,7 +31,7 @@ var path = {
         html: 'source/html/**/*.*',
         html_partials: 'source/html/html_partials/*.html',
         js: 'source/js/**/*.js',
-        css: 'source/css/**/*.*',
+        css: 'source/css/**/*.css',
         img: 'source/img/**/*.*',
         libs: 'source/libs/**/*.*'
     }
@@ -56,18 +57,18 @@ gulp.task('js:build', function () {
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest(path.dist.js))
         .pipe(browserSync.reload({stream: true}));
-
 });
 
 gulp.task('css:build', function () {
-    gulp.src(path.source.css + '*.css')
-        .pipe(gulp.dest(path.dist.css))
+    gulp.src(path.source.css)
         // .pipe(uncss({
         //     html: ['source/html/*.html']
         // }))
         .pipe(cssmin())
-        .pipe(rename({suffix: '.min'}))
-        .pipe(gulp.dest(path.dist.css + 'min/'));
+        .pipe(prefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
+        .pipe(concat('style.min.css'))
+        .pipe(gulp.dest(path.dist.css))
+        .pipe(browserSync.reload({stream: true}));
 });
 
 gulp.task('libs:build', function () {

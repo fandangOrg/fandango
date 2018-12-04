@@ -1,0 +1,124 @@
+.border {
+    border: 1px solid #e9ecef !important;
+}
+
+.border-top {
+    border-top: 1px solid #e9ecef !important;
+}
+
+.border-right {
+    border-right: 1px solid #e9ecef !important;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e9ecef !important;
+}
+
+.border-left {
+    border-left: 1px solid #e9ecef !important;
+}
+
+.border-0 {
+    border: 0 !important;
+}
+
+.border-top-0 {
+    border-top: 0 !important;
+}
+
+.border-right-0 {
+    border-right: 0 !important;
+}
+
+.border-bottom-0 {
+    border-bottom: 0 !important;
+}
+
+.border-left-0 {
+    border-left: 0 !important;
+}
+
+.border-primary {
+    border-color: #5e72e4 !important;
+}
+
+.border-secondary {
+    border-color: #f7fafc !important;
+}
+
+.border-success {
+    border-color: #2dce89 !important;
+}
+
+.border-info {
+    border-color: #11cdef !important;
+}
+
+.border-warning {
+    border-color: #fb6340 !important;
+}
+
+.border-danger {
+    border-color: #f5365c !important;
+}
+
+.border-light {
+    border-color: #adb5bd !important;
+}
+
+.border-dark {
+    border-color: #212529 !important;
+}
+
+.border-default {
+    border-color: #172b4d !important;
+}
+
+.border-white {
+    border-color: #fff !important;
+}
+
+.border-neutral {
+    border-color: #fff !important;
+}
+
+.border-darker {
+    border-color: black !important;
+}
+
+.border-white {
+    border-color: #fff !important;
+}
+
+.rounded {
+    border-radius: .375rem !important;
+}
+
+.rounded-top {
+    border-top-left-radius: .375rem !important;
+    border-top-right-radius: .375rem !important;
+}
+
+.rounded-right {
+    border-top-right-radius: .375rem !important;
+    border-bottom-right-radius: .375rem !important;
+}
+
+.rounded-bottom {
+    border-bottom-right-radius: .375rem !important;
+    border-bottom-left-radius: .375rem !important;
+}
+
+.rounded-left {
+    border-top-left-radius: .375rem !important;
+    border-bottom-left-radius: .375rem !important;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.rounded-0 {
+    border-radius: 0 !important;
+}
+

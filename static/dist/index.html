@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="libs/bootstrap.min.css">
-    <link type="text/css" href="css/min/style.min.css" rel="stylesheet">
+    <link type="text/css" href="css/style.min.css" rel="stylesheet">
 </head>
 
 <body ng-controller="indexCtrl">
@@ -67,8 +67,7 @@
                             </div>
                         </div>
                         <div class="card-body gaugeBox" style="height: auto;padding: 0">
-                            <div id='gaugeFakeness' class="animated fadeIn delay-1s"
-                                 style="height: 300px">
+                            <div id='gaugeFakeness' class="h300 animated fadeIn delay-1s">
                             </div>
                             <div ng-if="fakenessDone === true" id="feedback" class="col-sm-12 animated fadeIn delay-1s">
                                 <div class="row">
@@ -102,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body" style="height: 300px;padding: 5px">
+                        <div class="card-body h300" style="padding: 5px">
                             <textarea resize='none' ng-bind="selectedText"
                                       class="form-control form-control-alternative bg-white" disabled
                                       style="min-height: 235px"></textarea>

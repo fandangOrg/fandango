@@ -1,0 +1,459 @@
+.table {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    background-color: transparent;
+}
+
+.table th,
+.table td {
+    padding: 1rem;
+
+    vertical-align: top;
+
+    border-top: 1px solid #e9ecef;
+}
+
+.table thead th {
+    vertical-align: bottom;
+
+    border-bottom: 2px solid #e9ecef;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #e9ecef;
+}
+
+.table .table {
+    background-color: #f8f9fe;
+}
+
+.table-sm th,
+.table-sm td {
+    padding: .5rem;
+}
+
+.table-bordered {
+    border: 1px solid #e9ecef;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #e9ecef;
+}
+
+.table-bordered thead th,
+.table-bordered thead td {
+    border-bottom-width: 2px;
+}
+
+.table-borderless th,
+.table-borderless td,
+.table-borderless thead th,
+.table-borderless tbody + tbody {
+    border: 0;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f6f9fc;
+}
+
+.table-primary,
+.table-primary > th,
+.table-primary > td {
+    background-color: #d2d8f7;
+}
+
+.table-hover .table-primary:hover {
+    background-color: #bcc5f3;
+}
+
+.table-hover .table-primary:hover > td,
+.table-hover .table-primary:hover > th {
+    background-color: #bcc5f3;
+}
+
+.table-secondary,
+.table-secondary > th,
+.table-secondary > td {
+    background-color: #fdfefe;
+}
+
+.table-hover .table-secondary:hover {
+    background-color: #ecf6f6;
+}
+
+.table-hover .table-secondary:hover > td,
+.table-hover .table-secondary:hover > th {
+    background-color: #ecf6f6;
+}
+
+.table-success,
+.table-success > th,
+.table-success > td {
+    background-color: #c4f1de;
+}
+
+.table-hover .table-success:hover {
+    background-color: #afecd2;
+}
+
+.table-hover .table-success:hover > td,
+.table-hover .table-success:hover > th {
+    background-color: #afecd2;
+}
+
+.table-info,
+.table-info > th,
+.table-info > td {
+    background-color: #bcf1fb;
+}
+
+.table-hover .table-info:hover {
+    background-color: #a4ecfa;
+}
+
+.table-hover .table-info:hover > td,
+.table-hover .table-info:hover > th {
+    background-color: #a4ecfa;
+}
+
+.table-warning,
+.table-warning > th,
+.table-warning > td {
+    background-color: #fed3ca;
+}
+
+.table-hover .table-warning:hover {
+    background-color: #febeb1;
+}
+
+.table-hover .table-warning:hover > td,
+.table-hover .table-warning:hover > th {
+    background-color: #febeb1;
+}
+
+.fas {
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+}
+.table-danger,
+.table-danger > th,
+.table-danger > td {
+    background-color: #fcc7d1;
+}
+
+.table-hover .table-danger:hover {
+    background-color: #fbafbd;
+}
+
+.table-hover .table-danger:hover > td,
+.table-hover .table-danger:hover > th {
+    background-color: #fbafbd;
+}
+
+.table-light,
+.table-light > th,
+.table-light > td {
+    background-color: #e8eaed;
+}
+
+.table-hover .table-light:hover {
+    background-color: #dadde2;
+}
+
+.table-hover .table-light:hover > td,
+.table-hover .table-light:hover > th {
+    background-color: #dadde2;
+}
+
+.table-dark,
+.table-dark > th,
+.table-dark > td {
+    background-color: #c1c2c3;
+}
+
+.table-hover .table-dark:hover {
+    background-color: #b4b5b6;
+}
+
+.table-hover .table-dark:hover > td,
+.table-hover .table-dark:hover > th {
+    background-color: #b4b5b6;
+}
+
+.table-default,
+.table-default > th,
+.table-default > td {
+    background-color: #bec4cd;
+}
+
+.table-hover .table-default:hover {
+    background-color: #b0b7c2;
+}
+
+.table-hover .table-default:hover > td,
+.table-hover .table-default:hover > th {
+    background-color: #b0b7c2;
+}
+
+.table-white,
+.table-white > th,
+.table-white > td {
+    background-color: white;
+}
+
+.table-hover .table-white:hover {
+    background-color: #f2f2f2;
+}
+
+.table-hover .table-white:hover > td,
+.table-hover .table-white:hover > th {
+    background-color: #f2f2f2;
+}
+
+.table-neutral,
+.table-neutral > th,
+.table-neutral > td {
+    background-color: white;
+}
+
+.table-hover .table-neutral:hover {
+    background-color: #f2f2f2;
+}
+
+.table-hover .table-neutral:hover > td,
+.table-hover .table-neutral:hover > th {
+    background-color: #f2f2f2;
+}
+
+.table-darker,
+.table-darker > th,
+.table-darker > td {
+    background-color: #b8b8b8;
+}
+
+.table-hover .table-darker:hover {
+    background-color: #ababab;
+}
+
+.table-hover .table-darker:hover > td,
+.table-hover .table-darker:hover > th {
+    background-color: #ababab;
+}
+
+.table-active,
+.table-active > th,
+.table-active > td {
+    background-color: #f6f9fc;
+}
+
+.table-hover .table-active:hover {
+    background-color: #e3ecf6;
+}
+
+.table-hover .table-active:hover > td,
+.table-hover .table-active:hover > th {
+    background-color: #e3ecf6;
+}
+
+.table .thead-dark th {
+    color: #f8f9fe;
+    border-color: #1f3a68;
+    background-color: #172b4d;
+}
+
+.table .thead-light th {
+    color: #8898aa;
+    border-color: #e9ecef;
+    background-color: #f6f9fc;
+}
+
+.table-dark {
+    color: #f8f9fe;
+    background-color: #172b4d;
+}
+
+.table-dark th,
+.table-dark td,
+.table-dark thead th {
+    border-color: #1f3a68;
+}
+
+.table-dark.table-bordered {
+    border: 0;
+}
+
+.table-dark.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, .05);
+}
+
+.table-dark.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, .075);
+}
+
+@media (max-width: 575.98px) {
+    .table-responsive-sm {
+        display: block;
+        overflow-x: auto;
+
+        width: 100%;
+
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    .table-responsive-sm > .table-bordered {
+        border: 0;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .table-responsive-md {
+        display: block;
+        overflow-x: auto;
+
+        width: 100%;
+
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    .table-responsive-md > .table-bordered {
+        border: 0;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .table-responsive-lg {
+        display: block;
+        overflow-x: auto;
+
+        width: 100%;
+
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    .table-responsive-lg > .table-bordered {
+        border: 0;
+    }
+}
+
+@media (max-width: 1199.98px) {
+    .table-responsive-xl {
+        display: block;
+        overflow-x: auto;
+
+        width: 100%;
+
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+
+    .table-responsive-xl > .table-bordered {
+        border: 0;
+    }
+}
+
+.table-responsive {
+    display: block;
+    overflow-x: auto;
+
+    width: 100%;
+
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.table-responsive > .table-bordered {
+    border: 0;
+}
+
+td {
+    word-wrap:break-word;
+}
+
+.table thead th {
+    font-size: .65rem;
+
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    border-bottom: 1px solid #e9ecef;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.table td .progress {
+    width: 120px;
+    height: 3px;
+    margin: 0;
+}
+
+.table td,
+.table th {
+    font-size: .8125rem;
+
+    /*white-space: nowrap;*/
+}
+
+.table.align-items-center td,
+.table.align-items-center th {
+    vertical-align: middle;
+}
+
+.table .thead-dark th {
+    color: #4d7bca;
+    background-color: #1c345d;
+}
+
+.table .thead-light th {
+    color: #8898aa;
+    background-color: #f6f9fc;
+}
+
+.table-hover tr {
+    transition: all .15s ease;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+    .table-hover tr {
+        transition: none;
+    }
+}
+
+.table-flush td,
+.table-flush th {
+    border-right: 0;
+    border-left: 0;
+}
+
+.table-flush tbody tr:first-child td,
+.table-flush tbody tr:first-child th {
+    border-top: 0;
+}
+
+.table-flush tbody tr:last-child td,
+.table-flush tbody tr:last-child th {
+    border-bottom: 0;
+}
+
+.card .table {
+    margin-bottom: 0;
+}
+
+.card .table td,
+.card .table th {
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
