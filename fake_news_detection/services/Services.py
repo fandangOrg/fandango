@@ -53,8 +53,8 @@ def popolate_claims()->str:
     popolate()
     return "DONE"
     
-app=DS4BizFlask(__name__,static_folder=static_folder+"/",static_url_path="/web")
-app.root="/fandango/v0.1/fakeness"
+app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="/web")
+app.root="/fandango/v0.2/fakeness"
 app.name="FANDANGO"
 app.add_service("analyzer",analyzer, method='POST')
 app.add_service("cr_url",crawler, method='POST')
