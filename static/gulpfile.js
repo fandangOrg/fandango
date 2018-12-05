@@ -62,7 +62,7 @@ gulp.task('js:build', function () {
 gulp.task('css:build', function () {
     gulp.src(path.source.css)
         // .pipe(uncss({
-        //     html: ['source/html/*.html']
+        //     html: ['source/html/*.html', 'source/html_partials/*.html']
         // }))
         .pipe(cssmin())
         .pipe(prefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
