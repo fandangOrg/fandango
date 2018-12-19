@@ -1,17 +1,20 @@
-app.controller('annotationCtrl', ['$scope','$http','$document','errorCode','url','fakeness','feedback', function ($scope, $http, $document, errorCode, url, fakeness, feedback) {
+app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', 'url', 'fakeness', 'feedback', function ($scope, $http, $document, errorCode, url, fakeness, feedback) {
 
     $scope.fakenessDone = false;
     $scope.loadingFakeness = false;
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
+    $scope.language = "uk";
+
     angular.element(function () {
         $scope.loading = false;
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-    $("#gaugeFakeness").on("contextmenu", function () {
-        return false;
-    });
+
+    $scope.changeLanguage = function (language) {
+        $scope.language = language;
+    };
 
     $scope.sendFeedback = function (value) {
 
@@ -34,6 +37,11 @@ app.controller('annotationCtrl', ['$scope','$http','$document','errorCode','url'
         });
     };
 
+    $scope.startAnalyze = function () {
+        $("#btnStartAnalyze").addClass("animated fadeOut faster");
+        $scope.analyzeStarted = true;
+    };
+
     $scope.analyzeUrl = function () {
         if (!$scope.url)
             return false;
@@ -51,110 +59,4 @@ app.controller('annotationCtrl', ['$scope','$http','$document','errorCode','url'
             $scope.loadingAnalyzeUrl = false;
         });
     };
-
-    $scope.send = function () {
-        $scope.feedbackSelected = false;
-        $scope.fakenessDone = false;
-        $('#gaugeFakeness').removeClass('animated fadeIn');
-        zingchart.exec('gaugeFakeness', 'destroy');
-
-        if (!$scope.title || !$scope.text)
-            return false;
-
-        var to_send = {
-            'title': $scope.title,
-            'text': $scope.text,
-            'source': ''
-        };
-
-        $scope.loadingFakeness = true;
-        fakeness.getFakeness(to_send).then(function (response) {
-            $scope.value = response.data[0];
-            $scope.fakeValue = parseInt($scope.value.FAKE * 100);
-            $scope.realValue = parseInt($scope.value.REAL * 100);
-
-            zingchart.render({
-                id: 'gaugeFakeness',
-                data: {
-                    "type": "gauge",
-                    "background-color": "#f7fafc",
-                    "scale-r": {
-                        "markers":[
-                            {
-                                "type":"line",
-                                "range":[50],
-                                "line-color":"grey",
-                                "line-width":2,
-                                "line-style":"dashed",
-                                "alpha":1
-                            }
-                        ],
-                        "aperture": 200,
-                        "values": "0:100:25",
-                        "center": {
-                            "size": 5,
-                            "background-color": "#66CCFF #FFCCFF",
-                            "border-color": "none"
-                        },
-                        "ring": {
-                            "size": 10,
-                            "rules": [
-                                {
-                                    "rule": "%v >= 0 && %v <= 25",
-                                    "background-color": "green"
-                                },
-                                {
-                                    "rule": "%v >= 25 && %v <= 50",
-                                    "background-color": "yellow"
-                                },
-                                {
-                                    "rule": "%v >= 50 && %v <= 75",
-                                    "background-color": "orange"
-                                },
-                                {
-                                    "rule": "%v >= 75 && %v <=100",
-                                    "background-color": "red"
-                                }
-                            ]
-                        },
-                        "labels": ["REAL", "", "", "", "FAKE"],  //Scale Labels
-                        "item": {  //Scale Label Styling
-                            "font-color": "black",
-                            "font-family": "Open Sans, serif",
-                            "font-size": 13,
-                            "font-weight": "bold",   //or "normal"
-                            "font-style": "normal",   //or "italic"
-                            "offset-r": 0,
-                            "angle": "auto"
-                        }
-                    },
-                    gui: {
-                        contextMenu: {
-                            empty: true
-                        }
-                    },
-                    "plot": {
-                        tooltip:{
-                            visible:false
-                        },
-                        "csize": "5%",
-                        "size": "100%",
-                        "background-color": "#000000"
-                    },
-                    "series": [
-                        {"values": [$scope.fakeValue]}
-                    ]
-                },
-                height: "100%",
-                width: "100%"
-            });
-            $scope.fakenessDone = true;
-            $scope.loadingFakeness = false;
-            $('#gaugeFakeness').addClass('animated fadeIn');
-        }, function (response) {
-            $scope.fakenessDone = false;
-            $scope.loadingFakeness = false;
-            console.log(response)
-        });
-    }
 }]);

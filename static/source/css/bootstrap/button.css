@@ -1294,6 +1294,10 @@ button.close {
     width: 20px;
 }
 
+.btn-inner--text {
+    vertical-align: middle;
+}
+
 .btn-icon .btn-inner--text:not(:first-child) {
     margin-left: .50em;
 }
