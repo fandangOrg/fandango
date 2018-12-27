@@ -5,11 +5,18 @@ app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', '
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
     $scope.language = "uk";
+    $scope.categories = ['Category 1','Category 2','Category 3'];
 
     angular.element(function () {
         $scope.loading = false;
         $('[data-toggle="tooltip"]').tooltip();
     });
+
+    $scope.ciao = function () {
+        // console.log($('.categoryList').val())
+        console.log($scope.selectedCategory);
+        console.log($scope.fakeSelected)
+    };
 
 
     $scope.changeLanguage = function (language) {

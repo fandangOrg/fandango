@@ -58,25 +58,57 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body h200">
+                        <div class="card-body" style="height: 170px">
+                            <div class="row text-center animated fadeIn delay-05s" ng-show="analyzeStarted">
+                                <div class="col-6">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" ng-model="fakeSelected" value="no"
+                                               class="custom-control-input" id="realCb">
+                                        <label class="custom-control-label" for="realCb">Real</label>
+                                        <i title="Real"
+                                           class="fas fa-thumbs-up pointer animated text-green bounceIn delay-1s ml-1"
+                                           style="font-size: 22px"></i>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" ng-model="fakeSelected" value="yes"
+                                               class="custom-control-input" id="fakeCb">
+                                        <label class="custom-control-label" for="fakeCb">Fake</label>
+                                        <i title="Fake"
+                                           class="fas fa-thumbs-down pointer animated text-red bounceIn delay-1s ml-1"
+                                           style="font-size: 22px"></i>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="row">
+                                <div ng-show='fakeSelected === "yes"' class="col-12 mt-3 animated fadeIn faster"
+                                     style="z-index: 2">
+                                    <select class="custom-control custom-select categoryList"
+                                            ng-model="selectedCategory" ng-options="category for category in categories">
+                                        <option value="" hidden>Select a category</option>
+                                    </select>
+                                </div>
                                 <div class="col-12 text-center middle-container">
-                                    <div id="btnStartAnalyze" ng-click="startAnalyze()" class="btn btn-lg btn-icon btn-success">
+                                    <div id="btnStartAnalyze" ng-click="startAnalyze()"
+                                         class="btn btn-lg btn-icon btn-success">
                                         <span class="btn-inner--icon"><i class="fas fa-play"></i></span>
                                         <span class="btn-inner--text">Start Analyze</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row bottom-container animated fadeIn" ng-if="analyzeStarted">
+                            <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeStarted">
                                 <div class="col-6 text-center">
-                                    <div ng-click="sendClaim()"
+                                    <div ng-click=""
+                                         ng-class="{}"
                                          class="btn btn-sm btn-icon btn-success">
                                         <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
                                         <span class="btn-inner--text">Send</span>
                                     </div>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <div ng-click="clear()"
+                                    <div ng-click="ciao()"
                                          class="btn btn-sm btn-icon btn-success">
                                         <span class="btn-inner--icon"><i class="fas fa-chevron-right"></i></span>
                                         <span class="btn-inner--text">Skip</span>
