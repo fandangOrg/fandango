@@ -100,7 +100,7 @@
                             </div>
                             <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeStarted">
                                 <div class="col-6 text-center">
-                                    <div ng-click=""
+                                    <div ng-click="sendAnnotation()"
                                          ng-class="{}"
                                          class="btn btn-sm btn-icon btn-success">
                                         <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
@@ -108,8 +108,8 @@
                                     </div>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <div ng-click="ciao()"
-                                         class="btn btn-sm btn-icon btn-success">
+                                    <div
+                                         ng-click="skipAnnotation()" class="btn btn-sm btn-icon btn-success">
                                         <span class="btn-inner--icon"><i class="fas fa-chevron-right"></i></span>
                                         <span class="btn-inner--text">Skip</span>
                                     </div>

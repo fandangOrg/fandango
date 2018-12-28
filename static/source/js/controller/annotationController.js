@@ -12,13 +12,6 @@ app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', '
         $('[data-toggle="tooltip"]').tooltip();
     });
 
-    $scope.ciao = function () {
-        // console.log($('.categoryList').val())
-        console.log($scope.selectedCategory);
-        console.log($scope.fakeSelected)
-    };
-
-
     $scope.changeLanguage = function (language) {
         $scope.language = language;
     };
@@ -42,6 +35,20 @@ app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', '
             console.log(response)
         }, function (response) {
         });
+    };
+
+    $scope.sendAnnotation = function () {
+
+        // $(".fa-thumbs-up").removeClass(" bounceIn");
+        // setTimeout('$(".fa-thumbs-up").addClass(" bounceIn")' , 500);
+
+        $('.custom-control-input').attr('checked',false);
+        $scope.fakeSelected = 'reset';
+    };
+
+    $scope.skipAnnotation = function () {
+        $('.custom-control-input').attr('checked',false);
+        $scope.fakeSelected = 'reset';
     };
 
     $scope.startAnalyze = function () {
