@@ -1,6 +1,6 @@
 var app = angular.module('app', ['ngSanitize']);
-//var base = "/fandango/v0.2/fakeness";
-var base = "http://fandango.livetech.site/fandango/v0.2/fakeness";
+var base = "http://192.168.2.176:9800/fandango/v0.3/fakeness";
+//var base = "http://fandango.livetech.site/fandango/v0.3/fakeness";
 
 app.filter('dashless', function () {
     return function (input) {
