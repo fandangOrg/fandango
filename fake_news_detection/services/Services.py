@@ -5,7 +5,7 @@ Created on Oct 18, 2018
 '''
 from ds4biz_flask.model.DS4BizFlask import DS4BizFlask
 from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel,\
-    InterfaceInputFeedBack
+    InterfaceInputFeedBack, News, News_annotated, News_domain
 from fake_news_detection.dao.PickleDao import ModelDao
 from fake_news_detection.business.Model import SklearnModel
 from flask_cors.extension import CORS
@@ -31,11 +31,25 @@ def feedback(info:InterfaceInputFeedBack)->str:
 
 def get_languages()->DS4BizList(Language):
     l= list()
-    l.append(Language("en","english",True))
-    l.append(Language("it","italian",False))
-    l.append(Language("es","spanish",False))
-    l.append(Language("el_GR","greek",False))
+    l.append(Language("en","English",True))
+    l.append(Language("it","Italian",False))
+    l.append(Language("es","Spanish",False))
+    l.append(Language("el_GR","Greek",False))
     return l
+    
+def next_news()->News:
+    return News('news1','www.thegurdian.uk','sono il titolo', 'ciao, sono il testo','sono lautore', 'sono lente')    
+    
+def new_annotation(annotation:News_annotated)-> str:
+    print('id:' ,annotation.id,'label:', annotation.label)
+    return 'DONE'
+
+def domain_annotation(list_url:News_domain)->str:
+    list_url = list_url.domain.split('\n')
+    print(i.domain for i in list_url) 
+    return 'DONE'
+    
+    
     
 def analyzer(info:InterfaceInputModel)->str:
     print(info)
@@ -71,7 +85,9 @@ app.add_service("feedback",feedback, method='POST')
 app.add_service("claim", claim, method = 'POST')
 app.add_service("popolate_claims", popolate_claims, method = 'GET')
 app.add_service("get_languages",get_languages, method = 'GET')
-
+app.add_service("next_news", next_news, method ='POST')
+app.add_service("new_annotation", new_annotation, method = 'POST')
+app.add_service('domain_annotation', domain_annotation, method = 'POST')
 CORS(app)
 
 

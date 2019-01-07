@@ -21,3 +21,25 @@ class InterfaceInputFeedBack:
         self.text = text
         self.label = label
         
+        
+        
+class News:
+    def __init__(self,id:str, url:str, title:str, text:str, author:str, publish:str):
+        self.id = id
+        self.url = url
+        self.title = title
+        self.text = text
+        self.author = author
+        self.publish = publish
+
+
+class News_annotated:
+    def __init__(self, id:str, label:str):
+        self.id = id
+        self.label = label
+        
+class News_domain:
+    def __init__(self, domain:str):
+        self.domain = domain
+
+
