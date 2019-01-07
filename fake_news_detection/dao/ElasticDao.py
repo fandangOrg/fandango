@@ -250,7 +250,7 @@ class Search( ):
                 fields["role_of_the_authore"] = r[5]
                 
                 
-                print(fields)
+                #print(fields)
                 
                 lista_azioni.append( {
                     '_op_type': 'index',
