@@ -21,7 +21,40 @@
     <div class="col-12 pt-3 pb-3">
         <div class="row">
             <div class="col-lg-9 col-sm-12">
-                <article-checker></article-checker>
+                <div class="card bg-secondary shadow">
+                    <div class="card-body" style="padding: 5px;min-height: auto;">
+                        <div class="nav-wrapper">
+                            <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-code-branch mr-2"></i>Manual</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-code-branch mr-2"></i>Auto</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fas fa-code-branch mr-2"></i>Checker</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                        <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
+                                        <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse.</p>
+                                    </div>
+                                    <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                                        <article-checker></article-checker>
+                                    </div>
+                                    <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                        <article-checker></article-checker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<article-checker></article-checker>-->
             </div>
             <div class="col-lg-3 col-sm-12 box">
                 <div class="col-xs-12">
@@ -55,7 +88,12 @@
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-12">
-                                    <h3 class="mb-0">Annotation</h3>
+                                    <div class="float-left">
+                                        <h3 class="mb-0">Annotation</h3>
+                                    </div>
+                                    <div class="float-right">
+                                        <i class="fas fa-info" rel="tooltip" title="Key active" style="font-size: 18px;vertical-align: middle"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -84,13 +122,13 @@
                             </div>
 
                             <div class="row">
-                                <div ng-show='fakeSelected === "yes"' class="col-12 mt-3 animated fadeIn faster"
-                                     style="z-index: 2">
-                                    <select class="custom-control custom-select categoryList"
-                                            ng-model="selectedCategory" ng-options="category for category in categories">
-                                        <option value="" hidden>Select a category</option>
-                                    </select>
-                                </div>
+                                <!--<div ng-show='fakeSelected === "yes"' class="col-12 mt-3 animated fadeIn faster"-->
+                                <!--style="z-index: 2">-->
+                                <!--<select class="custom-control custom-select categoryList"-->
+                                <!--ng-model="selectedCategory" ng-options="category for category in categories">-->
+                                <!--<option value="" hidden>Select a category</option>-->
+                                <!--</select>-->
+                                <!--</div>-->
                                 <div class="col-12 text-center middle-container">
                                     <div id="btnStartAnalyze" ng-click="startAnalyze()"
                                          class="btn btn-lg btn-icon btn-success">
@@ -102,17 +140,19 @@
                             <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeStarted">
                                 <div class="col-6 text-center">
                                     <div ng-click="sendAnnotation()"
-                                         ng-class="{}"
+                                         ng-class="{'disabled': !radioSelected}"
                                          class="btn btn-sm btn-icon btn-success">
                                         <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
-                                        <span class="btn-inner--text">Send</span>
+                                        <span class="btn-inner--text">Save and next</span>
                                     </div>
                                 </div>
                                 <div class="col-6 text-center">
                                     <div
-                                         ng-click="skipAnnotation()" class="btn btn-sm btn-icon btn-success">
+                                            ng-click="skipAnnotation()"
+                                            ng-class="{'disabled': !radioSelected}"
+                                            class="btn btn-sm btn-icon btn-success">
                                         <span class="btn-inner--icon"><i class="fas fa-chevron-right"></i></span>
-                                        <span class="btn-inner--text">Skip</span>
+                                        <span class="btn-inner--text">Skip article</span>
                                     </div>
                                 </div>
                             </div>
@@ -130,6 +170,7 @@
 <script src="libs/angular.min.js"></script>
 <script src="libs/angular-sanitize.min.js"></script>
 <script src="js/app.min.js"></script>
+<script src="js/argon.min.js"></script>
 <!-- <script src="web/module.min.js"></script> -->
 <script src="js/controller/annotationController.min.js"></script>
 <script src="js/directive/mainDirective.min.js"></script>

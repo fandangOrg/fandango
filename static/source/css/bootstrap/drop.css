@@ -348,6 +348,16 @@
     color: black;
 }
 
+.languageDisabled {
+    background-color: #9d9898;
+    color:#e7e7e7;
+    cursor: default;
+}
+
+.languageDisabled:hover {
+    background-color: #9d9898 !important;
+}
+
 .dropdown:hover .dropdown-content {
     display: block;
 }
