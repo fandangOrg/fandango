@@ -9,12 +9,9 @@
                     <div class="col-6 text-right">
                         <h3 class="mb-0"><span class="hidden-xs">Language selected </span>
                             <div class="dropdown">
-                                <img class="pl-1 default-flag" ng-src="img/{{language}}_flag.png">
+                                <img class="pl-1 default-flag" ng-src="img/{{selectedLanguage}}.png">
                                 <div class="dropdown-content">
-                                    <a ng-click="changeLanguage('uk')" href="#">English <img src="img/uk_flag.png"></a>
-                                    <a ng-click="changeLanguage('ita')" href="#">Italian <img src="img/ita_flag.png"></a>
-                                    <a ng-click="changeLanguage('gre')" href="#">Greek <img src="img/gre_flag.png"> </a>
-                                    <a ng-click="changeLanguage('spa')" href="#">Spanish <img src="img/spa_flag.png"> </a>
+                                    <a ng-repeat="language in languages" ng-click="changeLanguage(language.language)" ng-class="{'languageDisabled': language.active == 'False'}" ref="#">{{language.name}} <img ng-src="img/{{language.language}}.png"></a>
                                 </div>
                             </div>
                         </h3>

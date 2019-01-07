@@ -17,6 +17,7 @@ from flask import request
 from fake_news_detection.business.IndexLiar import IndexLiar, popolate
 from ds4biz_flask.model.DS4BizTyping import DS4BizList
 from fake_news_detection.model.Language import Language
+from fake_news_detection.business import getAnnotated
 
 oo = ModelDao() 
 model = oo.load('test')
@@ -76,6 +77,10 @@ def popolate_claims()->str:
     popolate()
     return "DONE"
     
+def getAnnotated()->str:
+    annotate = getAnnotated()
+    return annotate.Investigate()
+    
 app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="/web")
 app.root="/fandango/v0.3/fakeness"
 app.name="FANDANGO"
@@ -84,6 +89,7 @@ app.add_service("cr_url",crawler, method='POST')
 app.add_service("feedback",feedback, method='POST')
 app.add_service("claim", claim, method = 'POST')
 app.add_service("popolate_claims", popolate_claims, method = 'GET')
+app.add_service("get_annotated", getAnnotated, method='POST')
 app.add_service("get_languages",get_languages, method = 'GET')
 app.add_service("next_news", next_news, method ='POST')
 app.add_service("new_annotation", new_annotation, method = 'POST')

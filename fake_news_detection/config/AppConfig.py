@@ -45,7 +45,7 @@ def getEsConnector():
         #password = os.environ.get("PWD_ELASTIC") or config['elasticsearch']['password'] 
         #esConnector = Elasticsearch(url, http_auth = (username, pwd))
      #esConnector = Elasticsearch(url, http_auth=(username,password))
-    esConnector = Elasticsearch(url)
+    esConnector = Elasticsearch(url, max_size=25)
     return esConnector
 
 index_name= os.environ.get("INDEX_ELASTIC") or config.get("elasticsearch", "indexfakenews")

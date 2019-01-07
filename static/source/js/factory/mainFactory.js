@@ -31,6 +31,15 @@ app.factory('url',['$http', function ($http) {
     };
 }]);
 
+app.factory('lang',['$http', function ($http) {
+    return {
+        getLanguages: function () {
+            return $http.get(base + "/get_languages");
+        }
+    };
+}]);
+
+
 app.factory('feedback',['$http', function ($http) {
     return {
         sendFb: function (to_send) {

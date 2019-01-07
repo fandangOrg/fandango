@@ -1,19 +1,23 @@
-app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', 'url', 'fakeness', 'feedback', function ($scope, $http, $document, errorCode, url, fakeness, feedback) {
+app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', 'url', 'fakeness', 'feedback', 'lang', function ($scope, $http, $document, errorCode, url, fakeness, feedback, lang) {
 
     $scope.fakenessDone = false;
     $scope.loadingFakeness = false;
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
-    $scope.language = "uk";
-    $scope.categories = ['Category 1','Category 2','Category 3'];
-
+    $scope.radioSelected = false;
+    $scope.selectedLanguage = "en";
+    // $scope.categories = ['Category 1','Category 2','Category 3'];
     angular.element(function () {
-        $scope.loading = false;
-        $('[data-toggle="tooltip"]').tooltip();
+        lang.getLanguages().then(function (response) {
+            $scope.languages = response.data;
+            console.log($scope.languages);
+            $scope.loading = false;
+            $("[rel=tooltip]").tooltip({placement: 'left'});
+        });
     });
 
     $scope.changeLanguage = function (language) {
-        $scope.language = language;
+        $scope.selectedLanguage = language;
     };
 
     $scope.sendFeedback = function (value) {
@@ -42,19 +46,25 @@ app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', '
         // $(".fa-thumbs-up").removeClass(" bounceIn");
         // setTimeout('$(".fa-thumbs-up").addClass(" bounceIn")' , 500);
 
-        $('.custom-control-input').attr('checked',false);
+        $('.custom-control-input').attr('checked', false);
         $scope.fakeSelected = 'reset';
+        $scope.radioSelected = false;
     };
 
     $scope.skipAnnotation = function () {
-        $('.custom-control-input').attr('checked',false);
+        $('.custom-control-input').attr('checked', false);
         $scope.fakeSelected = 'reset';
+        $scope.radioSelected = false;
     };
 
     $scope.startAnalyze = function () {
         $("#btnStartAnalyze").addClass("animated fadeOut faster");
         $scope.analyzeStarted = true;
     };
+
+    $('input[type=radio]').click(function (e) {
+        $scope.radioSelected = true;
+    });
 
     $scope.analyzeUrl = function () {
         if (!$scope.url)
