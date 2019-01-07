@@ -13,55 +13,16 @@ from elasticsearch.helpers import bulk
 
 
 class Search( ):
-#prendo il connettore
     def __init__(self): 
         self.ESclient = getEsConnector()
-        self.index_name = new_mapped_index
+        self.index_name = new_mapped_index #news_article_current
         self.docType = docType   
         self.log = getLogger(__name__) #richiamo la funzione scritta nel log 
         
         #helper aiutano alla combinazioni di queries
         
-        
-    """
-    def DownloadAll(self):
-        body2 = {"query": {"match_all":{}}}
-        
-    
-        res = self.ESclient.count(index= self.index_name, body= body2)
-        size = res['count']
-        
-        body = {"query":{"match_all":{}},"size": size}
-        
-        result = self.ESclient.search(self.index_name,self.docType, body= body)
-        for res in result['hits']['hits']:
-            yield res['_source']
-        
-        
-    """
-    def DownloadAll(self):
-        
-        
-        body2 = {"query": {"match_all":{}}}
-        
-    
-        res = self.ESclient.count(index= self.index_name, body= body2)
-        size = res['count']
-        
-        
-        body = { "size": 10,
-                    "query": {
-                        "match_all":{}
-                        }
-                    ,
-                    "sort": [
-                        {"date_download": "desc"},
-                        {"url": "desc"}
-                    ]
-                }
-        
-        result = self.ESclient.search(index=self.index_name , body= body)
-        bookmark = [result['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1])]
+
+    def GetNextElements(self, bookmark):
         
         body1 = {"size": 10,
                     "query": {
@@ -75,10 +36,48 @@ class Search( ):
                        
                     ]
                 }
+        res = self.ESclient.search(index=self.index_name, body= body1)
+        for el in res['hits']['hits']:
+            if el is not None:
+                yield el['_source']
+            else:
+                try:
+                    bookmark = [res['hits']['hits'][-1]['sort'][0], str(res['hits']['hits'][-1]['sort'][1])]
+                    self.GetNextElements(bookmark)  
+                except Exception as e:
+                    self.DownloadAll()          
+    
+    
+    def DownloadAll(self):
+        
+        
+        body = { "size": 10,
+                    "query": {
+                        "match":{"label": ""}
+                        }
+                    ,
+                    "sort": [
+                        {"date_download": "desc"},
+                        {"url": "desc"}
+                    ]
+                }
+        
+        result = self.ESclient.search(index=self.index_name , body= body)
+        for res in result['hits']['hits']:
+            if res:
+                yield res['_source']
+        else:
+            try:                
+                bookmark = [result['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1])]
+                self.GetNextElements(bookmark)
+            except Exception as e:
+                self.DownloadAll()
+        
+
         
         
         
-        
+    """    
         while len(result['hits']['hits']) < size:
             res = self.ESclient.search(index=self.index_name, body= body1)
             for el in res['hits']['hits']:
@@ -99,6 +98,7 @@ class Search( ):
 
 
         return result['hits']['hits']
+    """
         
 
     def delete(self):
