@@ -337,3 +337,9 @@ pre code {
 
     color: inherit;
 }
+
+.default-flag {
+    width: 35px;
+    height: 20px;
+    cursor: pointer;
+}

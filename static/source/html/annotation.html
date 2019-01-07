@@ -1,4 +1,5 @@
-<html ng-app="app">
+<!DOCTYPE html>
+<html ng-app="app" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -44,78 +45,77 @@
                                         </ul>
                                     </li>
                                 </ul>
-                                <div class="col-12 text-center">
-                                    <div ng-click="send()" ng-if="loadingFakeness === false"
-                                         class="btn btn-lg btn-icon btn-success"
-                                         ng-class="{'disabled': !title || !text}">
-                                        <span class="btn-inner--icon"><img src="img/verify.png"></span>
-                                        <span class="btn-inner--text">Check Fakeness</span>
-                                    </div>
-                                    <div ng-if="loadingFakeness === true" class="lds-hourglass"></div>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="col-xs-12 mt-2">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
                                 <div class="col-12">
-                                    <h3 class="mb-0">Fakeness Level</h3>
+                                    <h3 class="mb-0">Annotation</h3>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body gaugeBox" style="height: auto;padding: 0">
-                            <div id='gaugeFakeness' class="h300 animated fadeIn">
-                            </div>
-                            <div id="feedback" class="col-sm-12" ng-if="fakenessDone === true">
-                                <div class="row">
-                                    <div class="col-7">
-                                        <label class="form-control-label">Real or fake?</label>
-                                    </div>
-                                    <div class="col-5 text-right" id="feedbackCol">
-                                        <i title="Real" ng-click="sendFeedback('REAL')"
-                                           class="fas fa-thumbs-up pointer animated text-green bounceIn delay-1s mr-4"
+                        <div class="card-body" style="height: 170px">
+                            <div class="row text-center animated fadeIn delay-05s" ng-show="analyzeStarted">
+                                <div class="col-6">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" ng-model="fakeSelected" value="no"
+                                               class="custom-control-input" id="realCb">
+                                        <label class="custom-control-label" for="realCb">Real</label>
+                                        <i title="Real"
+                                           class="fas fa-thumbs-up pointer animated text-green bounceIn delay-1s ml-1"
                                            style="font-size: 22px"></i>
-                                        <i title="Fake" ng-click="sendFeedback('FAKE')"
-                                           class="fas fa-thumbs-down pointer animated text-red bounceIn delay-1s"
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="custom-control custom-radio">
+                                        <input type="radio" ng-model="fakeSelected" value="yes"
+                                               class="custom-control-input" id="fakeCb">
+                                        <label class="custom-control-label" for="fakeCb">Fake</label>
+                                        <i title="Fake"
+                                           class="fas fa-thumbs-down pointer animated text-red bounceIn delay-1s ml-1"
                                            style="font-size: 22px"></i>
                                     </div>
                                 </div>
                             </div>
 
-                            <div ng-if="feedbackSelected === true" class="alert alert-success" role="alert" id="alert"
-                                 style="margin-bottom: 0">
-                                <strong>Thank you for the feedback!</strong> Click again on 'Check Fakeness' to see the
-                                new Fakeness Level.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 mt-2">
-                    <div class="card bg-secondary shadow">
-                        <div class="card-header bg-white border-0">
-                            <div class="row align-items-center">
-                                <div class="col-12">
-                                    <h3 class="mb-0">Current selection ( Not available )</h3>
+                            <div class="row">
+                                <div ng-show='fakeSelected === "yes"' class="col-12 mt-3 animated fadeIn faster"
+                                     style="z-index: 2">
+                                    <select class="custom-control custom-select categoryList"
+                                            ng-model="selectedCategory" ng-options="category for category in categories">
+                                        <option value="" hidden>Select a category</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 text-center middle-container">
+                                    <div id="btnStartAnalyze" ng-click="startAnalyze()"
+                                         class="btn btn-lg btn-icon btn-success">
+                                        <span class="btn-inner--icon"><i class="fas fa-play"></i></span>
+                                        <span class="btn-inner--text">Start Analyze</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-body h300 disabled-no-opacity">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 mt-2">
-                    <div class="card bg-secondary shadow">
-                        <div class="card-header bg-white border-0">
-                            <div class="row align-items-center">
-                                <div class="col-12">
-                                    <h3 class="mb-0">Related claims ( Not available )</h3>
+                            <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeStarted">
+                                <div class="col-6 text-center">
+                                    <div ng-click="sendAnnotation()"
+                                         ng-class="{}"
+                                         class="btn btn-sm btn-icon btn-success">
+                                        <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
+                                        <span class="btn-inner--text">Send</span>
+                                    </div>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <div
+                                         ng-click="skipAnnotation()" class="btn btn-sm btn-icon btn-success">
+                                        <span class="btn-inner--icon"><i class="fas fa-chevron-right"></i></span>
+                                        <span class="btn-inner--text">Skip</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="card-body h300 disabled-no-opacity">
                         </div>
                     </div>
                 </div>

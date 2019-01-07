@@ -6,6 +6,7 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fake
     $scope.loadingFakeness = false;
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
+    $scope.language = "uk";
 
     var levelReal = ['true', 'mostly-true', 'half-true'];
     // var levelFalse = ['false', 'pants-fire'];
@@ -21,6 +22,10 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fake
 
     $scope.showSelectedText = function () {
         $scope.selectedText = $scope.getSelectionText();
+    };
+
+    $scope.changeLanguage = function (language) {
+        $scope.language = language;
     };
 
     $scope.getSelectionText = function () {
