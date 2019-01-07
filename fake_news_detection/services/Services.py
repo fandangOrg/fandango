@@ -15,6 +15,8 @@ from fake_news_detection.config.AppConfig import static_folder
 from fake_news_detection.utils.Crawler import crawler_news
 from flask import request
 from fake_news_detection.business.IndexLiar import IndexLiar, popolate
+from ds4biz_flask.model.DS4BizTyping import DS4BizList
+from fake_news_detection.model.Language import Language
 
 oo = ModelDao() 
 model = oo.load('test')
@@ -27,7 +29,14 @@ def feedback(info:InterfaceInputFeedBack)->str:
     model.partial_fit(info.title,text,info.label)
     return "OK"
 
- 
+def get_languages()->DS4BizList(Language):
+    l= list()
+    l.append(Language("en","english",True))
+    l.append(Language("it","italian",False))
+    l.append(Language("es","spanish",False))
+    l.append(Language("el_GR","greek",False))
+    return l
+    
 def analyzer(info:InterfaceInputModel)->str:
     print(info)
     '''Creazione di un nuovo analizzatore per i social'''
@@ -54,13 +63,15 @@ def popolate_claims()->str:
     return "DONE"
     
 app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="/web")
-app.root="/fandango/v0.2/fakeness"
+app.root="/fandango/v0.3/fakeness"
 app.name="FANDANGO"
 app.add_service("analyzer",analyzer, method='POST')
 app.add_service("cr_url",crawler, method='POST')
 app.add_service("feedback",feedback, method='POST')
 app.add_service("claim", claim, method = 'POST')
 app.add_service("popolate_claims", popolate_claims, method = 'GET')
+app.add_service("get_languages",get_languages, method = 'GET')
+
 CORS(app)
 
 
