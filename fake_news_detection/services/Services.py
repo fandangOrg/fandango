@@ -18,7 +18,7 @@ from fake_news_detection.business.IndexLiar import IndexLiar, popolate
 from ds4biz_flask.model.DS4BizTyping import DS4BizList
 from fake_news_detection.model.Language import Language
 from fake_news_detection.business import getAnnotated
-
+ 
 oo = ModelDao() 
 model = oo.load('test')
     
@@ -73,7 +73,7 @@ def claim(text:str)->str:
     j_resp = I.similarClaims(text, max_claims=5)
     return j_resp
 
-def popolate_claims()->str:
+def popolate_claims()->str: 
     popolate()
     return "DONE"
     
