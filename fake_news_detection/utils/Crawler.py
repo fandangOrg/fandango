@@ -4,6 +4,7 @@ Created on Oct 26, 2018
 @author: daniele
 '''
 from newspaper.article import Article
+#MODIFICARE IL SERVIZIO SULLA HOME DELL'ANALIZER
 def crawler_news(url):
 
         #url = url.encode("utf-8")
@@ -11,13 +12,14 @@ def crawler_news(url):
         article.download()
         article.parse()
         d=dict()
+        d['url']=url
         d['title']=article.title
         if len(article.authors)>0:
-            d['author']=article.authors[0]
+            d['authors']=article.authors
         else:
-            d['author']='unknown'
-        d['body'] =article.text
-        d['publisher'] =article.source_url
+            d['authors']='unknown'
+        d['text'] =article.text
+        d['source_url'] =article.source_url
         return d
 
         

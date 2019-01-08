@@ -4,19 +4,19 @@ picklepath = /home/camila/
 
 #variabile sez. Vedere getLovelevel
 log_level = INFO
-fileLastDate = None
 
 [elasticsearch]
-
-#url = http://94.23.7.153:9200
 url = http://localhost:9200
+index_news=news_article_current
+doctype_news = article
+
 index_refugees = news_crawler
 username = elastic
 password = RjuSUIk4hFlL46fvTf5z
 indexfakenews = indexfakenews
 doctype = document
 mapping = /home/camila/workspace/fandango-fake-news/fake_news_detection/config/liarmapping.json
-new_mapped_index = liarindex
+new_mapped_index = claims
 
 [service]
 url = http://0.0.0.0:9800/

@@ -4,15 +4,15 @@ Created on 27 set 2018
 @author: camila
 '''
 
-from fake_news_detection.config.AppConfig import index_name, getEsConnector,\
-    pathFileLastDate, docType, mapping, new_mapped_index
+from fake_news_detection.config.AppConfig import index_name_news, get_elastic_connector,\
+    docType, mapping, index_name_claims
 from fake_news_detection.utils.logger import getLogger
 from elasticsearch import helpers
 import csv
 from elasticsearch.helpers import bulk
 
 
-class Search( ):
+class Search:
     def __init__(self): 
         self.ESclient = getEsConnector()
         self.index_name = new_mapped_index #news_article_current
@@ -75,32 +75,6 @@ class Search( ):
         
 
         
-        
-        
-    """    
-        while len(result['hits']['hits']) < size:
-            res = self.ESclient.search(index=self.index_name, body= body1)
-            for el in res['hits']['hits']:
-                result['hits']['hits'].append( el )
-            bookmark = [res['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1])]
-            body1 = {"size": 10,
-                    "query": {
-                        "match_all":{}
-                        }
-                    ,
-                    "search_after": bookmark,
-                    "sort": [
-                        {"date_download": "desc"},
-                        {"url": "desc"}
-                    ]
-            
-                }
-
-
-        return result['hits']['hits']
-    """
-        
-
     def delete(self):
         try:
             self.ESclient.indices.delete(self.index_name)
