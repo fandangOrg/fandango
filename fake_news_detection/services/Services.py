@@ -18,8 +18,11 @@ from fake_news_detection.business.IndexLiar import IndexLiar, popolate
 from ds4biz_flask.model.DS4BizTyping import DS4BizList
 from fake_news_detection.model.Language import Language
 from fake_news_detection.business import getAnnotated
+from fake_news_detection.dao.DAO import DAONewsElastic
  
-oo = ModelDao() 
+oo = ModelDao()
+dao_news=DAONewsElastic()
+ 
 model = oo.load('test')
     
     
@@ -33,16 +36,25 @@ def feedback(info:InterfaceInputFeedBack)->str:
 def get_languages()->DS4BizList(Language):
     l= list()
     l.append(Language("en","English",True))
-    l.append(Language("it","Italian",False))
+    l.append(Language("it","Italian",True))
     l.append(Language("es","Spanish",False))
+    l.append(Language("pt","Portuguese",True))
     l.append(Language("el_GR","Greek",False))
     return l
     
-def next_news()->News:
-    return News('news1','www.thegurdian.uk','sono il titolo', 'ciao, sono il testo','sono lautore', 'sono lente')    
+def next_news(lang:str)->News:
+    print(lang)
+    try:
+        news=dao_news.next(languages=lang)
+    except StopIteration:
+        return {"END":"True",
+            "title":"ALL NEWS ANNOTATED"}
+    return news
+ # News('news1','www.thegurdian.uk','sono il titolo', 'ciao, sono il testo','sono lautore', 'sono lente')    
     
 def new_annotation(annotation:News_annotated)-> str:
     print('id:' ,annotation.id,'label:', annotation.label)
+    dao_news.set_label(annotation.id, annotation.label)
     return 'DONE'
 
 def domain_annotation(list_url:News_domain)->str:
@@ -50,6 +62,12 @@ def domain_annotation(list_url:News_domain)->str:
     print(i.domain for i in list_url) 
     return 'DONE'
     
+    
+#TODO
+#ATTIVARE NEW DOCUMENT
+#pisu invierà il documento paripari a come gli da crawler e aggiungerà la lingua
+#e la label
+#va dirottato in  create_doc_news
     
     
 def analyzer(info:InterfaceInputModel)->str:
@@ -77,9 +95,6 @@ def popolate_claims()->str:
     popolate()
     return "DONE"
     
-def getAnnotated()->str:
-    annotate = getAnnotated()
-    return annotate.Investigate()
     
 app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="/web")
 app.root="/fandango/v0.3/fakeness"
@@ -89,7 +104,6 @@ app.add_service("cr_url",crawler, method='POST')
 app.add_service("feedback",feedback, method='POST')
 app.add_service("claim", claim, method = 'POST')
 app.add_service("popolate_claims", popolate_claims, method = 'GET')
-app.add_service("get_annotated", getAnnotated, method='POST')
 app.add_service("get_languages",get_languages, method = 'GET')
 app.add_service("next_news", next_news, method ='POST')
 app.add_service("new_annotation", new_annotation, method = 'POST')

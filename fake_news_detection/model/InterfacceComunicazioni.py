@@ -24,14 +24,17 @@ class InterfaceInputFeedBack:
         
         
 class News:
-    def __init__(self,id:str, url:str, title:str, text:str, author:str, publish:str):
+    def __init__(self,id:str=None, url:str, title:str, text:str, authors:str, source_domain:str,language:str=None):
         self.id = id
         self.url = url
         self.title = title
         self.text = text
-        self.author = author
-        self.publish = publish
+        self.authors = authors
+        self.source_domain = source_domain
+        self.language = language
 
+    def __str__(self):
+        return  "id: "+self.id+"; url: "+self.url+"; title: "+self.title+"; text: "+self.text.replace("\n"," ")
 
 class News_annotated:
     def __init__(self, id:str, label:str):
