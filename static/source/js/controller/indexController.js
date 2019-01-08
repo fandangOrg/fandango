@@ -1,4 +1,4 @@
-app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fakeness','feedback','claim', function ($scope, $http, $document, errorCode, url, fakeness, feedback, claim) {
+app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fakeness','feedback','claim', 'lang', function ($scope, $http, $document, errorCode, url, fakeness, feedback, claim, lang) {
 
     $scope.fakenessDone = false;
     $scope.highlightedText = '';
@@ -6,15 +6,19 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fake
     $scope.loadingFakeness = false;
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
-    $scope.language = "uk";
+    $scope.selectedLanguage = "en";
 
     var levelReal = ['true', 'mostly-true', 'half-true'];
     // var levelFalse = ['false', 'pants-fire'];
 
     angular.element(function () {
-        $scope.loading = false;
-        $('[data-toggle="tooltip"]').tooltip();
+        $("[rel=tooltip]").tooltip({placement: 'left'});
+        lang.getLanguages().then(function (response) {
+            $scope.languages = response.data;
+            $scope.loading = false;
+        });
     });
+
 
     $("#gaugeFakeness").on("contextmenu", function () {
         return false;
@@ -25,7 +29,12 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fake
     };
 
     $scope.changeLanguage = function (language) {
-        $scope.language = language;
+        if(language.active === 'False') {
+            return;
+        }
+        else {
+            $scope.selectedLanguage = language.language;
+        }
     };
 
     $scope.getSelectionText = function () {
@@ -85,8 +94,6 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fake
             'text': $scope.text,
             'label': value
         };
-
-        console.log(to_send);
 
         feedback.sendFb(to_send).then(function (response) {
             console.log(response)

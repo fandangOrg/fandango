@@ -9,9 +9,10 @@
                     <div class="col-6 text-right">
                         <h3 class="mb-0"><span class="hidden-xs">Language selected </span>
                             <div class="dropdown">
-                                <img class="pl-1 default-flag" ng-src="img/{{selectedLanguage}}.png">
+                                <img class="pl-1 default-flag" ng-src="img/flags/{{selectedLanguage}}.png" alt="flag">
                                 <div class="dropdown-content">
-                                    <a ng-repeat="language in languages" ng-click="changeLanguage(language.language)" ng-class="{'languageDisabled': language.active == 'False'}" ref="#">{{language.name}} <img ng-src="img/{{language.language}}.png"></a>
+                                    <a ng-repeat="language in languages" ng-click="changeLanguage(language)" ng-attr-title="{{language.active == 'False' ? 'Not available' : undefined}}"
+                                       ng-class="{'languageDisabled': language.active == 'False'}">{{language.name}} <img ng-src="img/flags/{{language.language}}.png"></a>
                                 </div>
                             </div>
                         </h3>
@@ -32,7 +33,7 @@
                 </div>
                 <div class="col-md-1 col-xs-12 url_analyze">
                     <div ng-click="analyzeUrl()"
-                         class="icon bg-gray icon-shape text-white rounded-circle shadow"
+                         class="icon bg-gray icon-shape text-white rounded-15 shadow"
                          ng-class="{'bg-gradient-teal pointer': url || !url == 'bg-gray'}">
                                         <span class="btn-inner--icon"><img ng-if="loadingAnalyzeUrl === false"
                                                                            title="URL Analyze"

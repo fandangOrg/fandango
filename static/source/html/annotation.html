@@ -22,14 +22,14 @@
         <div class="row">
             <div class="col-lg-9 col-sm-12">
                 <div class="card bg-secondary shadow">
-                    <div class="card-body" style="padding: 5px;min-height: auto;">
+                    <div class="card-body" style="padding: 0px 10px 10px 10px">
                         <div class="nav-wrapper">
                             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-code-branch mr-2"></i>Manual</a>
+                                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-code-branch mr-2"></i>Auto</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-code-branch mr-2"></i>Auto</a>
+                                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-code-branch mr-2"></i>Manual</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fas fa-code-branch mr-2"></i>Checker</a>
@@ -37,20 +37,17 @@
                             </ul>
                         </div>
                         <div class="card shadow">
-                            <div class="card-body">
                                 <div class="tab-content" id="myTabContent">
                                     <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                                        <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth.</p>
-                                        <p class="description">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse.</p>
+                                        <article-checker-auto></article-checker-auto>
                                     </div>
                                     <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                                        <article-checker></article-checker>
+                                        <article-checker-manual></article-checker-manual>
                                     </div>
                                     <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
                                         <article-checker></article-checker>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,30 +89,36 @@
                                         <h3 class="mb-0">Annotation</h3>
                                     </div>
                                     <div class="float-right">
-                                        <i class="fas fa-info" rel="tooltip" title="Key active" style="font-size: 18px;vertical-align: middle"></i>
+                                        <i class="fas fa-info" rel="tooltip" title="Key active" style="font-size: 15px;vertical-align: middle"></i>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body" style="height: 170px">
+                        <div class="card-body" style="height: 130px">
                             <div class="row text-center animated fadeIn delay-05s" ng-show="analyzeStarted">
                                 <div class="col-6">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" ng-model="fakeSelected" value="no"
+                                        <input type="radio" ng-model="fakeSelected" value="REAL"
                                                class="custom-control-input" id="realCb">
                                         <label class="custom-control-label" for="realCb">Real</label>
                                         <i title="Real"
-                                           class="fas fa-thumbs-up pointer animated text-green bounceIn delay-1s ml-1"
+                                           class="fas fa-thumbs-up animated text-green bounceIn delay-1s ml-1"
                                            style="font-size: 22px"></i>
+
+                                        <!--<i ng-if="radioSelected" class="fas fa-check animated text-green bounceIn delay-1s ml-1"-->
+                                           <!--style="font-size: 22px"></i>-->
+                                        <!--<div ng-if="radioSelected" class="circle-loader" style="margin-left: 3px">-->
+                                            <!--<div class="checkmark draw"></div>-->
+                                        <!--</div>-->
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" ng-model="fakeSelected" value="yes"
+                                        <input type="radio" ng-model="fakeSelected" value="FAKE"
                                                class="custom-control-input" id="fakeCb">
                                         <label class="custom-control-label" for="fakeCb">Fake</label>
                                         <i title="Fake"
-                                           class="fas fa-thumbs-down pointer animated text-red bounceIn delay-1s ml-1"
+                                           class="fas fa-thumbs-down animated text-red bounceIn delay-1s ml-1"
                                            style="font-size: 22px"></i>
                                     </div>
                                 </div>
@@ -138,7 +141,7 @@
                                 </div>
                             </div>
                             <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeStarted">
-                                <div class="col-6 text-center">
+                                <div class="col-6 text-left">
                                     <div ng-click="sendAnnotation()"
                                          ng-class="{'disabled': !radioSelected}"
                                          class="btn btn-sm btn-icon btn-success">
@@ -146,10 +149,9 @@
                                         <span class="btn-inner--text">Save and next</span>
                                     </div>
                                 </div>
-                                <div class="col-6 text-center">
+                                <div class="col-6 text-right">
                                     <div
                                             ng-click="skipAnnotation()"
-                                            ng-class="{'disabled': !radioSelected}"
                                             class="btn btn-sm btn-icon btn-success">
                                         <span class="btn-inner--icon"><i class="fas fa-chevron-right"></i></span>
                                         <span class="btn-inner--text">Skip article</span>

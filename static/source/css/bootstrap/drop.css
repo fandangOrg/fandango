@@ -344,18 +344,19 @@
 }
 
 .dropdown-content a:hover {
+    cursor: pointer;
     background-color: #ddd;
     color: black;
 }
 
 .languageDisabled {
-    background-color: #9d9898;
-    color:#e7e7e7;
-    cursor: default;
+    background-color: #a9a9a9;
+    color:#e2e1e1 !important;
+    cursor: default !important;
 }
 
 .languageDisabled:hover {
-    background-color: #9d9898 !important;
+    background-color: #a9a9a9 !important;
 }
 
 .dropdown:hover .dropdown-content {

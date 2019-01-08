@@ -27,8 +27,8 @@
                 <div class="col-md-11 col-xs-12 urlContainer" style="padding-right: 0">
                     <div class="form-group">
                         <input class="form-control form-control-alternative"
-                               ng-model="url" placeholder="Enter a URL to analyze"
-                               type="text">
+                               ng-model="url" placeholder=""
+                               type="text" disabled>
                     </div>
                 </div>
                 <div class="col-md-1 col-xs-12 url_analyze">
@@ -51,12 +51,12 @@
                             <label class="form-control-label" for="input-first-name">Title</label>
                             <input type="text" id="input-first-name"
                                    class="form-control form-control-alternative"
-                                   placeholder="Insert a title" ng-model="title">
+                                   placeholder="" ng-model="title" disabled>
                         </div>
                     </div>
                 </div>
                 <textarea ng-model="text" class="form-control form-control-alternative"
-                          placeholder="Copy and paste or write an article"
+                          placeholder="" disabled
                           ng-mouseup="showSelectedText()"></textarea>
             </div>
         </form>

@@ -1,23 +1,53 @@
-app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', 'url', 'fakeness', 'feedback', 'lang', function ($scope, $http, $document, errorCode, url, fakeness, feedback, lang) {
+app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', 'url', 'fakeness', 'feedback', 'lang', 'next', 'update', function ($scope, $http, $document, errorCode, url, fakeness, feedback, lang, next, update) {
 
     $scope.fakenessDone = false;
     $scope.loadingFakeness = false;
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
     $scope.radioSelected = false;
+
+    $scope.page = {
+        'author':'',
+        'publisher':''
+    };
+
     $scope.selectedLanguage = "en";
     // $scope.categories = ['Category 1','Category 2','Category 3'];
     angular.element(function () {
+        $("[rel=tooltip]").tooltip({placement: 'left'});
         lang.getLanguages().then(function (response) {
             $scope.languages = response.data;
-            console.log($scope.languages);
             $scope.loading = false;
-            $("[rel=tooltip]").tooltip({placement: 'left'});
         });
     });
 
     $scope.changeLanguage = function (language) {
-        $scope.selectedLanguage = language;
+        if (language.active === 'False') {
+            return;
+        } else {
+            $scope.selectedLanguage = language.language;
+
+            $("#btnStartAnalyze").addClass("animated fadeOut faster");
+            setTimeout(function () {
+                $("#btnStartAnalyze").remove();
+            }, 500);
+
+            $scope.analyzeStarted = true;
+
+            next.goNext($scope.selectedLanguage).then(function (response) {
+                $scope.news = response.data; // ----> NEWS : ANNOTATION NEWS
+                console.log($scope.news);
+                $scope.page.publisher = $scope.news.publish;
+                $scope.url = $scope.news.url;
+                $scope.title = $scope.news.title;
+                $scope.text = $scope.news.text;
+
+
+                $('.custom-control-input').attr('checked', false);
+                $scope.fakeSelected = 'reset';
+                $scope.radioSelected = false;
+            });
+        }
     };
 
     $scope.sendFeedback = function (value) {
@@ -33,8 +63,6 @@ app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', '
             'label': value
         };
 
-        console.log(to_send);
-
         feedback.sendFb(to_send).then(function (response) {
             console.log(response)
         }, function (response) {
@@ -42,28 +70,69 @@ app.controller('annotationCtrl', ['$scope', '$http', '$document', 'errorCode', '
     };
 
     $scope.sendAnnotation = function () {
+        if (!$scope.radioSelected)
+            return;
 
-        // $(".fa-thumbs-up").removeClass(" bounceIn");
-        // setTimeout('$(".fa-thumbs-up").addClass(" bounceIn")' , 500);
+        var to_send = {
+            "id": $scope.news.id,
+            "label": $scope.fakeSelected
+        };
 
-        $('.custom-control-input').attr('checked', false);
-        $scope.fakeSelected = 'reset';
-        $scope.radioSelected = false;
+        update.doUpdate(to_send).then(function (response) {
+            next.goNext($scope.selectedLanguage).then(function (response) {
+                $scope.news = response.data; // ----> NEWS : ANNOTATION NEWS
+                console.log($scope.news);
+                $scope.page.publisher = $scope.news.publish;
+                $scope.url = $scope.news.url;
+                $scope.title = $scope.news.title;
+                $scope.text = $scope.news.text;
+
+
+                $('.custom-control-input').attr('checked', false);
+                $scope.fakeSelected = 'reset';
+                $scope.radioSelected = false;
+            });
+        });
     };
 
     $scope.skipAnnotation = function () {
-        $('.custom-control-input').attr('checked', false);
-        $scope.fakeSelected = 'reset';
-        $scope.radioSelected = false;
+        next.goNext($scope.selectedLanguage).then(function (response) {
+            $scope.news = response.data; // ----> NEWS : ANNOTATION NEWS
+            console.log($scope.news);
+            $scope.page.publisher = $scope.news.publish;
+            $scope.url = $scope.news.url;
+            $scope.title = $scope.news.title;
+            $scope.text = $scope.news.text;
+
+
+            $('.custom-control-input').attr('checked', false);
+            $scope.fakeSelected = 'reset';
+            $scope.radioSelected = false;
+        });
     };
 
     $scope.startAnalyze = function () {
         $("#btnStartAnalyze").addClass("animated fadeOut faster");
-        $scope.analyzeStarted = true;
+        setTimeout(function () {
+            $("#btnStartAnalyze").remove();
+        }, 500);
+
+        next.goNext($scope.selectedLanguage).then(function (response) {
+            $scope.news = response.data; // ----> NEWS : ANNOTATION NEWS
+            console.log($scope.news);
+            $scope.page.publisher = $scope.news.publish;
+            $scope.url = $scope.news.url;
+            $scope.title = $scope.news.title;
+            $scope.text = $scope.news.text;
+            $scope.analyzeStarted = true;
+        });
     };
 
     $('input[type=radio]').click(function (e) {
         $scope.radioSelected = true;
+
+        // $(".fa-thumbs-up").removeClass("bounceIn");
+        // setTimeout('$(".fa-thumbs-up").addClass("bounceIn")' , 50);
     });
 
     $scope.analyzeUrl = function () {
