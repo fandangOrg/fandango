@@ -22,144 +22,42 @@
         <div class="row">
             <div class="col-lg-9 col-sm-12">
                 <div class="card bg-secondary shadow">
-                    <div class="card-body" style="padding: 0px 10px 10px 10px">
+                    <div class="card-body" style="padding: 0 10px 10px 10px">
                         <div class="nav-wrapper">
                             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0 active" id="tabs-icons-text-1-tab" data-toggle="tab" href="#tabs-icons-text-1" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true"><i class="fas fa-code-branch mr-2"></i>Auto</a>
+                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('auto') }" data-toggle="tab" href="#auto" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">Auto</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-2-tab" data-toggle="tab" href="#tabs-icons-text-2" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false"><i class="fas fa-code-branch mr-2"></i>Manual</a>
+                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('manual') }" data-toggle="tab" href="#manual" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">Manual</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0" id="tabs-icons-text-3-tab" data-toggle="tab" href="#tabs-icons-text-3" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false"><i class="fas fa-code-branch mr-2"></i>Checker</a>
+                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('domain') }" data-toggle="tab" href="#domain" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false">Domain</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="card shadow">
                                 <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="tabs-icons-text-1" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                                        <article-checker-auto></article-checker-auto>
+                                    <div class="tab-pane fade show active" id="auto" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
+                                        <div ui-view="article_checker"></div>
                                     </div>
-                                    <div class="tab-pane fade" id="tabs-icons-text-2" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                                        <article-checker-manual></article-checker-manual>
+                                    <div class="tab-pane fade" id="manual" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
+                                        <div ui-view="article_checker"></div>
                                     </div>
-                                    <div class="tab-pane fade" id="tabs-icons-text-3" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-                                        <article-checker></article-checker>
+                                    <div class="tab-pane fade" id="domain" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
+                                        <div ui-view="article_checker"></div>
                                     </div>
                                 </div>
                         </div>
                     </div>
                 </div>
-                <!--<article-checker></article-checker>-->
             </div>
             <div class="col-lg-3 col-sm-12 box">
-                <div class="col-xs-12">
-                    <div class="card bg-secondary shadow">
-                        <div class="card-header bg-white border-0">
-                            <div class="row align-items-center">
-                                <div class="col-12">
-                                    <h3 class="mb-0">Article Analysis</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body" style="padding: 5px;min-height: auto;">
-                            <div class="mt-2 mb-2">
-                                <ul class="list-unstyled">
-                                    <li>- Author : <strong>{{page.author}}</strong></li>
-                                    <li>- Publisher : <strong>{{page.publisher}}</strong></li>
-                                    <li>- Related Article Pubblication
-                                        <ul class="list-unstyled">
-                                            <li ng-repeat="article in pubblication"></li>
-                                            <li class="text-gray">- Not available</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <article-analysis></article-analysis>
                 <div class="col-xs-12 mt-2">
-                    <div class="card bg-secondary shadow">
-                        <div class="card-header bg-white border-0">
-                            <div class="row align-items-center">
-                                <div class="col-12">
-                                    <div class="float-left">
-                                        <h3 class="mb-0">Annotation</h3>
-                                    </div>
-                                    <div class="float-right">
-                                        <i class="fas fa-info" rel="tooltip" title="Key active" style="font-size: 15px;vertical-align: middle"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body" style="height: 130px">
-                            <div class="row text-center animated fadeIn delay-05s" ng-show="analyzeStarted">
-                                <div class="col-6">
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" ng-model="fakeSelected" value="REAL"
-                                               class="custom-control-input" id="realCb">
-                                        <label class="custom-control-label" for="realCb">Real</label>
-                                        <i title="Real"
-                                           class="fas fa-thumbs-up animated text-green bounceIn delay-1s ml-1"
-                                           style="font-size: 22px"></i>
-
-                                        <!--<i ng-if="radioSelected" class="fas fa-check animated text-green bounceIn delay-1s ml-1"-->
-                                           <!--style="font-size: 22px"></i>-->
-                                        <!--<div ng-if="radioSelected" class="circle-loader" style="margin-left: 3px">-->
-                                            <!--<div class="checkmark draw"></div>-->
-                                        <!--</div>-->
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="custom-control custom-radio">
-                                        <input type="radio" ng-model="fakeSelected" value="FAKE"
-                                               class="custom-control-input" id="fakeCb">
-                                        <label class="custom-control-label" for="fakeCb">Fake</label>
-                                        <i title="Fake"
-                                           class="fas fa-thumbs-down animated text-red bounceIn delay-1s ml-1"
-                                           style="font-size: 22px"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <!--<div ng-show='fakeSelected === "yes"' class="col-12 mt-3 animated fadeIn faster"-->
-                                <!--style="z-index: 2">-->
-                                <!--<select class="custom-control custom-select categoryList"-->
-                                <!--ng-model="selectedCategory" ng-options="category for category in categories">-->
-                                <!--<option value="" hidden>Select a category</option>-->
-                                <!--</select>-->
-                                <!--</div>-->
-                                <div class="col-12 text-center middle-container">
-                                    <div id="btnStartAnalyze" ng-click="startAnalyze()"
-                                         class="btn btn-lg btn-icon btn-success">
-                                        <span class="btn-inner--icon"><i class="fas fa-play"></i></span>
-                                        <span class="btn-inner--text">Start Analyze</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeStarted">
-                                <div class="col-6 text-left">
-                                    <div ng-click="sendAnnotation()"
-                                         ng-class="{'disabled': !radioSelected}"
-                                         class="btn btn-sm btn-icon btn-success">
-                                        <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
-                                        <span class="btn-inner--text">Save and next</span>
-                                    </div>
-                                </div>
-                                <div class="col-6 text-right">
-                                    <div
-                                            ng-click="skipAnnotation()"
-                                            class="btn btn-sm btn-icon btn-success">
-                                        <span class="btn-inner--icon"><i class="fas fa-chevron-right"></i></span>
-                                        <span class="btn-inner--text">Skip article</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        <!-- ANNOTATION HTML ROUTING -->
+                        <div ui-view="annotation"></div>
+                        <!-- END -->
                 </div>
             </div>
             <div class="col-lg-8 hidden-md hidden-sm hidden-xs"></div>
@@ -171,8 +69,9 @@
 <script src="libs/bootstrap.min.js"></script>
 <script src="libs/angular.min.js"></script>
 <script src="libs/angular-sanitize.min.js"></script>
+<script src="libs/angular-route.min.js"></script>
+<script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
 <script src="js/app.min.js"></script>
-<script src="js/argon.min.js"></script>
 <!-- <script src="web/module.min.js"></script> -->
 <script src="js/controller/annotationController.min.js"></script>
 <script src="js/directive/mainDirective.min.js"></script>

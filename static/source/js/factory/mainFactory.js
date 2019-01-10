@@ -7,9 +7,8 @@ app.factory('errorCode',function () {
                     return "Invalid input";
                 case 500:
                 case 0:
-                    return "Error occured on the service side";
                 case -1:
-                    return "Error occured on the server side";
+                    return "Error occured on the service side";
             }
         }
     };
@@ -23,7 +22,7 @@ app.factory('fakeness',['$http', function ($http) {
     };
 }]);
 
-app.factory('url',['$http', function ($http) {
+app.factory('crUrl',['$http', function ($http) {
     return {
         analyzeUrl: function (to_send) {
             return $http.post(base + "/cr_url?url="+to_send);
@@ -51,6 +50,23 @@ app.factory('next',['$http', function ($http) {
     return {
         goNext: function (language) {
             return $http.post(base + "/next_news?lang="+language);
+        }
+    };
+}]);
+
+
+app.factory('manual',['$http', function ($http) {
+    return {
+        manualAnnotation: function (to_send) {
+            return $http.post(base + "/new_document_annotation", to_send);
+        }
+    };
+}]);
+
+app.factory('domain',['$http', function ($http) {
+    return {
+        domainAnnotation: function (to_send) {
+            return $http.post(base + "/domain_annotation", to_send);
         }
     };
 }]);

@@ -27,3 +27,21 @@ app.directive("articleCheckerAuto", function () {
         templateUrl : 'article_checker_auto.html'
     }
 });
+
+app.directive("articleCheckerDomain", function () {
+    return {
+        templateUrl : 'article_checker_domain.html'
+    }
+});
+
+app.directive("articleAnalysis", function () {
+    return {
+        templateUrl : 'article_analysis.html'
+    }
+});
+
+app.directive("articleAnalysisFakeness", function () {
+    return {
+        templateUrl : 'article_analysis_fakeness.html'
+    }
+});
