@@ -32,6 +32,9 @@ class News:
         self.authors = authors
         self.source_domain = source_domain
         self.language = language
+        
+        def __getitem__(self, item):
+            return self.__dict__[item]
 
     def __str__(self):
         return  "id: "+self.id+"; url: "+self.url+"; title: "+self.title+"; text: "+self.text.replace("\n"," ")

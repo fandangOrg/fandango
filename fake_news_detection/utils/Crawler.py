@@ -4,23 +4,33 @@ Created on Oct 26, 2018
 @author: daniele
 '''
 from newspaper.article import Article
-#MODIFICARE IL SERVIZIO SULLA HOME DELL'ANALIZER
-def crawler_news(url):
+from fake_news_detection.utils.logger import getLogger
 
-        #url = url.encode("utf-8")
-        article = Article(url)
-        article.download()
-        article.parse()
-        d=dict()
-        d['url']=url
-        d['title']=article.title
-        if len(article.authors)>0:
-            d['authors']=article.authors
-        else:
-            d['authors']='unknown'
-        d['text'] =article.text
-        d['source_url'] =article.source_url
-        return d
+log = getLogger(__name__)
+
+
+
+def crawler_news(url):
+    """
+    Parse text from an url, and extract an article
+    @param url: str 
+    @return: d: dict
+    """    
+    #url = url.encode("utf-8")
+    article = Article(url)
+    article.download()
+    article.parse()
+    d=dict()
+    d['url']=url
+    d['title']=article.title
+    if len(article.authors)>0:
+        d['authors']=article.authors
+    else:
+        d['authors']='unknown'
+    d['text'] =article.text
+    d['source_url'] =article.source_url
+    log.debug("New article crawled: {art}".format(art=d))
+    return d
 
         
 if __name__ == '__main__':
