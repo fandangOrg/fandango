@@ -161,7 +161,7 @@ class DAONewsElastic(DAONews):
             text=el["_source"].get("text")
             language=el["_source"].get("language")
             author=el["_source"].get("authors")
-            response_news = News(id_doc,url,title,text,author,publish,language)
+            response_news = News(url,title,text,author,publish,id_doc,language)
             self.log.debug("New doc to annotate generated: {doc}".format(doc=response_news))
             return response_news
 
@@ -169,7 +169,7 @@ class DAONewsElastic(DAONews):
 if __name__ == '__main__':
     dao=DAONewsElastic()
     while 1: 
-        k = dao.next(languages="ptiii")
+        k = dao.next(languages="pt")
         print(k.text,k.id)
         dao.set_label(k.id, "FAKE")
     print(dao.next(languages="pt"))

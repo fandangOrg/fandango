@@ -5,13 +5,12 @@ Created on 27 set 2018
 '''
 
 from fake_news_detection.config.AppConfig import  get_elastic_connector,\
-    docType, mapping, index_name_claims, train_claims, dataset_beta
+    docType, mapping, index_name_claims, train_claims
 from fake_news_detection.utils.logger import getLogger
 from elasticsearch import helpers
 import csv
 from fake_news_detection.utils.Exception import FandangoException
-from nltk.data import path
-import itertools
+from fake_news_detection.model.InterfacceComunicazioni import Claim
 
 log = getLogger(__name__)
 
@@ -42,15 +41,9 @@ class DAOClaimInputCSV:
         
     def all(self):
         with open( self.path) as f:
-            reader = csv.reader(f, delimiter='\t')
+            reader = csv.reader(f, delimiter=self.delimeter)
             for r in reader:
-                claim = {}
-                claim["id_json"] = r[0]
-                claim["label"] =  r[1]
-                claim["claim"] =  r[2]
-                claim["topic"] = r[3]
-                claim["author"] = r[4]
-                claim["role_of_the_authors"] = r[5]
+                claim = Claim(r[1], r[2], r[4])
                 yield claim
         
  
@@ -130,7 +123,6 @@ class DAOClaimsOutputElastic:
         return lista_claim
        
     def __delete_index(self):
-        #TODO:RIMETTERE IL DELETE DEL TEMPLATE
         """
         remove index from ES
         """
@@ -166,21 +158,35 @@ class DAOClaimsOutputElastic:
 
 
     def add_claim(self, claim):
-        raise NotImplementedError()
+        """
+        single insertion in elastic
+        @param claim: str
+        """
+        try:
+            self.es.index(index=self.index_name, doc_type=self.docType,  body=claim)
+            log.debug("New document successfully indexed")
+        except Exception as e:
+            self.log.error("Can't index document, an error has occurred: {err}".format(err=e))
+            raise FandangoException("Can't index document, an error has occurred: {err}".format(err=e))
+ 
     
     def add_claims(self, dao:DAOClaimInput):
+        """
+        Bulk claims in elastic
+        @param dao: class
+        """
         lista_claims = []
         for c,claim in enumerate(dao.all()):
             if c%1000==0:
-                print("number claims",c)
+                log.info("Number claims: {c}".format(c=c))
             lista_claims.append( {
                     '_op_type': 'index',
                     '_index': self.index_name,
                     '_type': self.docType,
-                    '_source': claim
+                    '_source': claim.__dict__
         
                 })
-        print("start insert in elastic")
+        log.info("Start insert data in elastic")
         self.__bulk_new_index(lista_claims)
         
     def __bulk_new_index(self, lista_azioni):
@@ -190,10 +196,10 @@ class DAOClaimsOutputElastic:
         """
         for success, info in helpers.parallel_bulk(self.es_client, lista_azioni):
             if not success:
-                self.log.info("Can't index documents, an error has occurred: {err}".format(err=info))
+                self.log.error("Can't index documents, an error has occurred: {err}".format(err=info))
                 raise FandangoException("Can't index documents, an error has occurred: {err}".format(err=info))
                 
-        log.info("New index successfully indexed")
+        log.info("New documents successfully indexed")
 
     
     
@@ -204,7 +210,7 @@ if __name__ == '__main__':
     #for claim in dao_input.all():
     #    print(claim)
         
-    dao_input= DAOClaimInputDummy()
+    #dao_input= DAOClaimInputDummy()
     dao_output = DAOClaimsOutputElastic()
     #dao_output.restart_source()
     #dao_output.add_claims(dao_input)

@@ -7,7 +7,6 @@ from ds4biz_flask.model.DS4BizFlask import DS4BizFlask
 from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel,\
     InterfaceInputFeedBack, News, News_annotated, News_domain
 from fake_news_detection.dao.PickleDAO import ModelDAO
-from fake_news_detection.business.Model import SklearnModel
 from flask_cors.extension import CORS
 import json
 from fake_news_detection.config import AppConfig
@@ -17,13 +16,13 @@ from flask import request
 from ds4biz_flask.model.DS4BizTyping import DS4BizList
 from fake_news_detection.model.Language import Language
 from fake_news_detection.dao.DAO import DAONewsElastic
-from fake_news_detection.business.UploadClaims import UploadClaims, popolate,\
-    popola_all
+from fake_news_detection.business.ClaimsManager import popola_all, similar_claims
 from fake_news_detection.utils.logger import getLogger
+from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic
  
 oo = ModelDAO()
 dao_news=DAONewsElastic()
-
+dao_claim_output=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
 model = oo.load('test')
@@ -72,12 +71,12 @@ def domain_annotation(list_url:News_domain)->str:
     
     
 def analyzer(info:InterfaceInputModel)->str:
-    print(info)
-    '''Creazione di un nuovo analizzatore per i social'''
-    print(info.title,info.text)
+    log.info(info)
+    log.info('''Creazione di un nuovo analizzatore per i social''')
+    log.info(info.title,info.text)
     text=info.text.replace("\n"," ")
     prest=model.predict(info.title,text)
-    print(json.loads(prest.to_json(orient='records')))
+    log.info(json.loads(prest.to_json(orient='records')))
     
     return json.loads(prest.to_json(orient='records'))
 
@@ -88,12 +87,11 @@ def crawler(url:str)->str:
 def claim(text:str)->str:
     j = request.get_json()  #key txt of the dictionary
     text = j.get("text")
-    I = UploadClaims()
-    j_resp = I.similarClaims(text, max_claims=5)
+    j_resp =similar_claims(dao_claim_output,text)
     return j_resp
 
 def popolate_claims()->str: 
-    popola_all()
+    popola_all(dao_claim_output)
     return "DONE"
     
     
