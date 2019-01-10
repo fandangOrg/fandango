@@ -1026,6 +1026,16 @@ fieldset:disabled a.btn {
     border-radius: .4375rem;
 }
 
+.btn-md,
+.btn-group-md > .btn {
+    font-size: 1.25rem;
+
+    line-height: 1.5;
+
+    border-radius: .4375rem;
+}
+
+
 .btn-sm,
 .btn-group-sm > .btn {
     font-size: .875rem;
@@ -1254,6 +1264,11 @@ button.close {
 .btn-sm,
 .btn-group-sm > .btn {
     font-size: .75rem;
+}
+
+.btn-md,
+.btn-group-md > .btn {
+    font-size: .875rem;
 }
 
 .btn-lg,

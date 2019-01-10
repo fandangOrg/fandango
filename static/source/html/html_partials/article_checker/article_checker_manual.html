@@ -11,7 +11,7 @@
                             <div class="dropdown">
                                 <img class="pl-1 default-flag" ng-src="img/flags/{{selectedLanguage}}.png" alt="flag">
                                 <div class="dropdown-content">
-                                    <a ng-repeat="language in languages" ng-click="changeLanguage(language)" ng-attr-title="{{language.active == 'False' ? 'Not available' : undefined}}"
+                                    <a ng-repeat="language in languages" ng-click="changeLanguage(language,'manual')" ng-attr-title="{{language.active == 'False' ? 'Not available' : undefined}}"
                                        ng-class="{'languageDisabled': language.active == 'False'}">{{language.name}} <img ng-src="img/flags/{{language.language}}.png"></a>
                                 </div>
                             </div>
@@ -24,24 +24,24 @@
     <div class="card-body">
         <form>
             <div class="row">
-                <div class="col-md-12 col-xs-12 urlContainer">
+                <div class="col-md-11 col-xs-12 urlContainer" style="padding-right: 0">
                     <div class="form-group">
                         <input class="form-control form-control-alternative"
-                               ng-model="url" placeholder=""
-                               type="text" disabled>
+                               ng-model="page.url" placeholder="Enter a URL to analyze"
+                               type="text">
                     </div>
                 </div>
-                <!--<div class="col-md-1 col-xs-12 url_analyze">-->
-                    <!--<div ng-click="analyzeUrl()"-->
-                         <!--class="icon bg-gray icon-shape text-white rounded-15 shadow"-->
-                         <!--ng-class="{'bg-gradient-teal pointer': url || !url == 'bg-gray'}">-->
-                                        <!--<span class="btn-inner&#45;&#45;icon"><img ng-if="loadingAnalyzeUrl === false"-->
-                                                                           <!--title="URL Analyze"-->
-                                                                           <!--src="img/url_analyze.png">-->
-                                            <!--<div ng-if="loadingAnalyzeUrl === true" class="lds-hourglass-white"></div>-->
-                                        <!--</span>-->
-                    <!--</div>-->
-                <!--</div>-->
+                <div class="col-md-1 col-xs-12 url_analyze">
+                    <div ng-click="analyzeUrl(page.url)"
+                         class="icon bg-gray icon-shape text-white rounded-15 shadow"
+                         ng-class="{'bg-gradient-teal pointer': page.url || !page.url == 'bg-gray'}">
+                                        <span class="btn-inner--icon"><img ng-if="!loadingAnalyzeUrl"
+                                                                           title="URL Analyze"
+                                                                           src="img/url_analyze.png">
+                                            <div ng-if="loadingAnalyzeUrl" class="lds-hourglass-white"></div>
+                                        </span>
+                    </div>
+                </div>
             </div>
             <hr class="my-4"/>
             <div class="form-group">
@@ -50,14 +50,13 @@
                         <div class="form-group">
                             <label class="form-control-label" for="input-first-name">Title</label>
                             <input type="text" id="input-first-name"
-                                   class="form-control form-control-alternative"
-                                   placeholder="" ng-model="title" disabled>
+                                   class="form-control disabled-white form-control-alternative"
+                                   placeholder="" ng-model="page.title" disabled>
                         </div>
                     </div>
                 </div>
-                <textarea ng-model="text" class="form-control form-control-alternative"
-                          placeholder="" disabled
-                          ng-mouseup="showSelectedText()"></textarea>
+                <textarea ng-model="page.text" class="form-control disabled-white form-control-alternative"
+                          placeholder="" disabled></textarea>
             </div>
         </form>
     </div>

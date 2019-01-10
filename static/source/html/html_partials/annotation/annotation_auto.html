@@ -1,0 +1,77 @@
+<div class="card bg-secondary shadow">
+    <div class="card-header bg-white border-0">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <div class="float-left">
+                    <h3 class="mb-0">Annotation</h3>
+                </div>
+                <div class="float-right">
+                    <i class="fas fa-info" rel="tooltip" title="Key active"
+                       style="font-size: 15px;vertical-align: middle"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body card-annotation">
+        <div class="row" ng-if="!newExist">
+            <div class="col-12 text-center">
+                <h4>No more news for selected language</h4>
+            </div>
+        </div>
+
+        <div ng-if="newExist">
+            <div class="row text-center animated fadeIn delay-05s" ng-show="analyzeStarted">
+                <div class="col-6">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" ng-model="fakeSelected" value="REAL"
+                               class="custom-control-input" id="realCb">
+                        <label class="custom-control-label" for="realCb">Real</label>
+                        <i title="Real"
+                           class="fas fa-thumbs-up animated text-green bounceIn delay-1s ml-1"
+                           style="font-size: 22px"></i>
+
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="custom-control custom-radio">
+                        <input type="radio" ng-model="fakeSelected" value="FAKE"
+                               class="custom-control-input" id="fakeCb">
+                        <label class="custom-control-label" for="fakeCb">Fake</label>
+                        <i title="Fake"
+                           class="fas fa-thumbs-down animated text-red bounceIn delay-1s ml-1"
+                           style="font-size: 22px"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12 text-center middle-container" ng-if="!analyzeStarted">
+                    <div id="btnStartAnalyze" ng-click="startAnalyze()"
+                         class="btn btn-lg btn-icon btn-success">
+                        <span class="btn-inner--icon"><i class="fas fa-play"></i></span>
+                        <span class="btn-inner--text">Start Analyze</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeStarted">
+                <div class="col-6 text-left">
+                    <div ng-click="sendAnnotation(fakeSelected)"
+                         ng-class="{'disabled': !fakeSelected}"
+                         class="btn btn-sm btn-icon btn-success">
+                        <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
+                        <span class="btn-inner--text">Save and next</span>
+                    </div>
+                </div>
+                <div class="col-6 text-right">
+                    <div
+                            ng-click="skipAnnotation()"
+                            class="btn btn-sm btn-icon btn-success">
+                        <span class="btn-inner--icon"><i class="fas fa-chevron-right"></i></span>
+                        <span class="btn-inner--text">Skip article</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

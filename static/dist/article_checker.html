@@ -27,18 +27,18 @@
                 <div class="col-md-11 col-xs-12 urlContainer" style="padding-right: 0">
                     <div class="form-group">
                         <input class="form-control form-control-alternative"
-                               ng-model="url" placeholder="Enter a URL to analyze"
+                               ng-model="page.url" placeholder="Enter a URL to analyze"
                                type="text">
                     </div>
                 </div>
                 <div class="col-md-1 col-xs-12 url_analyze">
                     <div ng-click="analyzeUrl()"
                          class="icon bg-gray icon-shape text-white rounded-15 shadow"
-                         ng-class="{'bg-gradient-teal pointer': url || !url == 'bg-gray'}">
-                                        <span class="btn-inner--icon"><img ng-if="loadingAnalyzeUrl === false"
+                         ng-class="{'bg-gradient-teal pointer': page.url || !page.url == 'bg-gray'}">
+                                        <span class="btn-inner--icon"><img ng-if="!loadingAnalyzeUrl"
                                                                            title="URL Analyze"
                                                                            src="img/url_analyze.png">
-                                            <div ng-if="loadingAnalyzeUrl === true" class="lds-hourglass-white"></div>
+                                            <div ng-if="loadingAnalyzeUrl" class="lds-hourglass-white"></div>
                                         </span>
                     </div>
                 </div>
@@ -51,11 +51,11 @@
                             <label class="form-control-label" for="input-first-name">Title</label>
                             <input type="text" id="input-first-name"
                                    class="form-control form-control-alternative"
-                                   placeholder="Insert a title" ng-model="title">
+                                   placeholder="Insert a title" ng-model="page.title">
                         </div>
                     </div>
                 </div>
-                <textarea ng-model="text" class="form-control form-control-alternative"
+                <textarea ng-model="page.text" class="form-control form-control-alternative"
                           placeholder="Copy and paste or write an article"
                           ng-mouseup="showSelectedText()"></textarea>
             </div>
