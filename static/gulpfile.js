@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
     uncss = require('gulp-uncss'),
-    uglify = require('gulp-uglify'),
+    uglify = require('gulp-uglify-es').default,
     rimraf = require('rimraf'),
     browserSync = require('browser-sync').create();
 

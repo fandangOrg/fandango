@@ -12,7 +12,7 @@
             </div>
         </div>
     </div>
-    <div class="card-body card-annotation">
+    <div class="card-body card-annotation" style="height: 185px;">
         <div class="row text-center animated fadeIn delay-05s" ng-show="analyzeOk">
             <div class="col-6">
                 <div class="custom-control custom-radio">
@@ -37,6 +37,12 @@
             </div>
         </div>
 
+        <div ng-show='fakeSelected' class="col-12 mt-3 animated fadeIn faster">
+            <select class="custom-control custom-select categoryList"
+                    ng-model="selectedCategory" ng-options="lang.name for lang in languages">
+                <option value="" hidden>Select a category</option>
+            </select>
+        </div>
         <div class="row">
             <div class="col-12 text-center" ng-if="!analyzeOk">
                 <h5>Analyze a news first to select an annotation</h5>
@@ -44,8 +50,8 @@
         </div>
         <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeOk">
             <div class="col-12 text-center">
-                <div ng-click="sendManualAnnotation(fakeSelected)"
-                     ng-class="{'disabled': !fakeSelected}"
+                <div ng-click="sendAnnotation(fakeSelected, selectedCategory.name, 'manual')"
+                     ng-class="{'disabled': !fakeSelected || !selectedCategory.name}"
                      class="btn btn-md btn-icon btn-success">
                     <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
                     <span class="btn-inner--text">Save</span>

@@ -21,6 +21,7 @@
     "gulp-rename": "^1.4.0",
     "gulp-run": "^1.7.1",
     "gulp-uglify": "^3.0.0",
+    "gulp-uglify-es": "^1.0.4",
     "gulp-uncss": "^1.0.6",
     "gulp-watch": "^5.0.1",
     "rimraf": "^2.6.2"
