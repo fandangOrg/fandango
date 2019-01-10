@@ -35,6 +35,10 @@
     flex: 1 1 auto;
 }
 
+.card-annotation {
+    height: 130px;
+}
+
 .card-title {
     margin-bottom: 1.25rem;
 }

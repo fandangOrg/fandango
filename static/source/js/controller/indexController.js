@@ -1,4 +1,4 @@
-app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fakeness','feedback','claim', 'lang', function ($scope, $http, $document, errorCode, url, fakeness, feedback, claim, lang) {
+app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fakeness','feedback','claim', 'lang', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang) {
 
     $scope.fakenessDone = false;
     $scope.highlightedText = '';
@@ -7,6 +7,14 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fake
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
     $scope.selectedLanguage = "en";
+
+    $scope.page = {
+        'author': '',
+        'publisher': '',
+        'url':'',
+        'text':'',
+        'title':''
+    };
 
     var levelReal = ['true', 'mostly-true', 'half-true'];
     // var levelFalse = ['false', 'pants-fire'];
@@ -90,8 +98,8 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fake
         $("#feedback").fadeOut();
 
         var to_send = {
-            'title': $scope.title,
-            'text': $scope.text,
+            'title': $scope.page.title,
+            'text': $scope.page.text,
             'label': value
         };
 
@@ -102,17 +110,18 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fake
     };
 
     $scope.analyzeUrl = function () {
-        if (!$scope.url)
+        if (!$scope.page.url)
             return false;
 
         $scope.loadingAnalyzeUrl = true;
 
-        var to_send = $scope.url;
-
-        url.analyzeUrl(to_send).then(function (response) {
-            $scope.page = response.data;
-            $scope.title = $scope.page.title;
-            $scope.text = $scope.page.body;
+        var to_send = $scope.page.url;
+        crUrl.analyzeUrl(to_send).then(function (response) {
+            console.log(response.data)
+            $scope.page.title = response.data.title;
+            $scope.page.text = response.data.text;
+            $scope.page.publisher = response.data.source_domain;
+            $scope.page.author = response.data.authors;
             $scope.loadingAnalyzeUrl = false;
         }, function (response) {
             $scope.loadingAnalyzeUrl = false;
@@ -125,12 +134,12 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','url','fake
         $('#gaugeFakeness').removeClass('animated fadeIn');
         zingchart.exec('gaugeFakeness', 'destroy');
 
-        if (!$scope.title || !$scope.text)
+        if (!$scope.page.title || !$scope.page.text)
             return false;
 
         var to_send = {
-            'title': $scope.title,
-            'text': $scope.text,
+            'title': $scope.page.title,
+            'text': $scope.page.text,
             'source': ''
         };
 

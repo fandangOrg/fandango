@@ -51,6 +51,10 @@
     background-color: #d3d7da !important;
 }
 
+.disabled-white {
+    background-color: white !important;
+}
+
 .form-control:disabled,
 .form-control[readonly] {
     opacity: 1;

@@ -364,6 +364,11 @@
     list-style: none;
 }
 
+.list-unstyled li:before {
+    content: "-"; /* Insert content that looks like bullets */
+    padding-right: 7px;
+}
+
 .list-inline {
     padding-left: 0;
 
