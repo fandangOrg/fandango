@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html ng-app="app" lang="en">
+<html ng-app="annotation" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Fandango Fake news</title>
     <link href="img/favicon.png" rel="icon" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <!--<link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">-->
-    <!--<link href="node_modules/bootstrap/dist/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="libs/bootstrap.min.css">
@@ -24,40 +22,57 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-body" style="padding: 0 10px 10px 10px">
                         <div class="nav-wrapper">
-                            <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text" role="tablist">
+                            <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text"
+                                role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('auto') }" data-toggle="tab" href="#auto" role="tab" aria-controls="tabs-icons-text-1" aria-selected="true">Auto</a>
+                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('auto') }"
+                                       data-toggle="tab" href="#auto" role="tab" aria-controls="auto"
+                                       aria-selected="true">Auto</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('manual') }" data-toggle="tab" href="#manual" role="tab" aria-controls="tabs-icons-text-2" aria-selected="false">Manual</a>
+                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('manual') }"
+                                       data-toggle="tab" href="#manual" role="tab" aria-controls="manual"
+                                       aria-selected="false">Manual</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('domain') }" data-toggle="tab" href="#domain" role="tab" aria-controls="tabs-icons-text-3" aria-selected="false">Domain</a>
+                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('domain') }"
+                                       data-toggle="tab" href="#domain" role="tab" aria-controls="domain"
+                                       aria-selected="false">Domain</a>
                                 </li>
                             </ul>
                         </div>
+                        <div class="alert alert-success" role="alert">
+                            <span class="alert-inner--icon"><i class="fas fa-thumbs-up"></i></span>
+                            <span class="alert-inner--text">Annotation sent successfully. Content marked as <strong>{{fakeSelected | capitalize}}</strong>!</span>
+                        </div>
                         <div class="card shadow">
-                                <div class="tab-content" id="myTabContent">
-                                    <div class="tab-pane fade show active" id="auto" role="tabpanel" aria-labelledby="tabs-icons-text-1-tab">
-                                        <div ui-view="article_checker"></div>
-                                    </div>
-                                    <div class="tab-pane fade" id="manual" role="tabpanel" aria-labelledby="tabs-icons-text-2-tab">
-                                        <div ui-view="article_checker"></div>
-                                    </div>
-                                    <div class="tab-pane fade" id="domain" role="tabpanel" aria-labelledby="tabs-icons-text-3-tab">
-                                        <div ui-view="article_checker"></div>
-                                    </div>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="auto" role="tabpanel"
+                                     aria-labelledby="auto-tab">
+                                    <div ui-view="article_checker"></div>
                                 </div>
+                                <div class="tab-pane fade" id="manual" role="tabpanel"
+                                     aria-labelledby="manual-tab">
+                                    <div ui-view="article_checker"></div>
+                                </div>
+                                <div class="tab-pane fade" id="domain" role="tabpanel"
+                                     aria-labelledby="domain-tab">
+                                    <div ui-view="article_checker"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-3 col-sm-12 box">
-                <article-analysis></article-analysis>
+                <!-- $state.includes('domain') -->
+                <div>
+                    <article-analysis></article-analysis>
+                </div>
                 <div class="col-xs-12 mt-2">
-                        <!-- ANNOTATION HTML ROUTING -->
-                        <div ui-view="annotation"></div>
-                        <!-- END -->
+                    <!-- ANNOTATION HTML ROUTING -->
+                    <div ui-view="annotation"></div>
+                    <!-- END -->
                 </div>
             </div>
             <div class="col-lg-8 hidden-md hidden-sm hidden-xs"></div>
@@ -68,14 +83,12 @@
 <script src="libs/jquery.min.js"></script>
 <script src="libs/bootstrap.min.js"></script>
 <script src="libs/angular.min.js"></script>
-<script src="libs/angular-sanitize.min.js"></script>
 <script src="libs/angular-route.min.js"></script>
-<script src="//unpkg.com/@uirouter/angularjs/release/angular-ui-router.min.js"></script>
 <script src="js/app.min.js"></script>
 <!-- <script src="web/module.min.js"></script> -->
 <script src="js/controller/annotationController.min.js"></script>
-<script src="js/directive/mainDirective.min.js"></script>
-<script src="js/factory/mainFactory.min.js"></script>
+<script src="js/directive/annotationDirective.min.js"></script>
+<script src="js/factory/annotationFactory.min.js"></script>
 <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 </body>
 </html>

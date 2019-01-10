@@ -1,4 +1,4 @@
-app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fakeness','feedback','claim', 'lang', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang) {
+index.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fakeness','feedback','claim', 'lang', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang) {
 
     $scope.fakenessDone = false;
     $scope.highlightedText = '';
@@ -49,7 +49,7 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fa
 
         if (window.getSelection) {
             try {
-                var ta = $('textarea').get(0);
+                let ta = $('textarea').get(0);
                 $scope.highlightedText = ta.value.substring(ta.selectionStart, ta.selectionEnd);
                 return $scope.highlightedText;
             } catch (e) {

@@ -1,4 +1,4 @@
-app.controller('annotationCtrl', ['$rootScope', '$scope', '$http', '$document','crUrl', 'lang', 'next', 'update', '$state', 'manual','domain', function ($rootScope, $scope, $http, $document, crUrl, lang, next, update, $state, manual, domain) {
+annotation.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'next', 'update', '$state', 'manual', 'domain', function ($scope, $http, crUrl, lang, next, update, $state, manual, domain) {
 
 
     $scope.loadingAnalyzeUrl = false;
@@ -6,6 +6,7 @@ app.controller('annotationCtrl', ['$rootScope', '$scope', '$http', '$document','
     $scope.$state = $state;
     $scope.analyzeOk = false;
     $scope.newExist = true;
+    $(".alert").hide();
 
     $scope.page = {
         'author': '',
@@ -26,6 +27,13 @@ app.controller('annotationCtrl', ['$rootScope', '$scope', '$http', '$document','
         $scope.analyzeStarted = false;
         $scope.analyzeOk = false;
     });
+
+    function showAlert() {
+        $(".alert").fadeTo(1250, 500).slideUp(500, function () {
+            $(".alert").slideUp(500);
+            $scope.fakeSelected = undefined;
+        });
+    }
 
     $scope.changeTextNews = function (response) {
         $scope.news = response.data; // ----> NEWS : ANNOTATION NEWS
@@ -55,7 +63,7 @@ app.controller('annotationCtrl', ['$rootScope', '$scope', '$http', '$document','
         } else {
             $scope.selectedLanguage = language.language;
 
-            if(tab === 'manual')
+            if (tab === 'manual')
                 return;
 
 
@@ -83,64 +91,71 @@ app.controller('annotationCtrl', ['$rootScope', '$scope', '$http', '$document','
         }
     };
 
-    $scope.sendDomainAnnotation = function (response) {
-        if (!response)
-            return;
+    $scope.sendAnnotation = function (label, text, tab) {
+        switch (tab) {
 
-        var to_send = {
-            "list_url": response,
-        };
+            case 'auto':
+                if (!label)
+                    return;
 
-        domain.domainAnnotation(to_send).then(function (response) {
-            console.log(response)
-        })
-    };
+                $scope.fakeSelected = label;
 
-    $scope.sendAnnotation = function (response) {
-        if (!response)
-            return;
+                var to_send = {
+                    "id": $scope.news.id,
+                    "label": $scope.fakeSelected
+                };
 
-        $scope.fakeSelected = response;
+                update.doUpdate(to_send).then(function (response) {
+                    next.goNext($scope.selectedLanguage).then(function (response) {
+                        $scope.changeTextNews(response);
+                    });
+                });
+                break;
 
-        var to_send = {
-            "id": $scope.news.id,
-            "label": $scope.fakeSelected
-        };
+            case 'manual':
+                if (!label || !text) // TEXT PER MANUAL CONTIENE LA LINGUA INVECE CHE IL CONTENUTO DELLA NEWS
+                    return;
 
-        update.doUpdate(to_send).then(function (response) {
-            next.goNext($scope.selectedLanguage).then(function (response) {
-                $scope.changeTextNews(response);
+                $scope.fakeSelected = label;
 
-                $scope.fakeSelected = undefined;
-            });
-        });
-    };
+                var to_send = {
+                    "label": $scope.fakeSelected,
+                    "lang": $scope.selectedLanguage,
+                    "url": $scope.page.url
+                };
 
-    $scope.sendManualAnnotation = function (response) {
+                console.log(to_send);
 
-        $scope.fakeSelected = response;
+                manual.manualAnnotation(to_send).then(function (response) {
+                    console.log(response);
+                    $('.custom-control-input').attr('checked', false);
+                });
+                break;
 
-        var to_send = {
-            "label": $scope.fakeSelected,
-            "lang": $scope.selectedLanguage,
-            "url": $scope.page.url
-        };
+            case 'domain':
+                if (!text || !label)
+                    return;
 
-        console.log(to_send);
+                var to_send = {
+                    "list_url": text,
+                    "label": label
+                };
 
-        manual.manualAnnotation(to_send).then(function (response) {
-            console.log(response);
+                $scope.fakeSelected = label;
 
-            $('.custom-control-input').attr('checked', false);
-            $scope.fakeSelected = undefined;
+                domain.domainAnnotation(to_send).then(function (response) {
+                    console.log(response);
+                    $scope.page.text = '';
+                })
+        }
 
-        });
+        showAlert();
+
     };
 
     $scope.skipAnnotation = function () {
         next.goNext($scope.selectedLanguage).then(function (response) {
             $scope.changeTextNews(response);
-
             $('.custom-control-input').attr('checked', false);
             $scope.fakeSelected = undefined;
         });

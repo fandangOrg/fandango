@@ -1,27 +1,34 @@
-var app = angular.module('app', ['ngSanitize', 'ui.router']);
-var base = "http://192.168.2.161:9800/fandango/v0.3/fakeness";
+const index = angular.module('index', ['ngSanitize']);
+const annotation = angular.module('annotation', ['ui.router']);
+
+const base = "http://192.168.2.161:9800/fandango/v0.3/fakeness";
 //var base = "http://fandango.livetech.site/fandango/v0.3/fakeness";
 
-app.filter('capitalize', function () {
+index.filter('capitalize', function () {
     return function (input) {
         return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
     }
 });
 
-app.config(['$locationProvider', function ($locationProvider) {
+annotation.filter('capitalize', function () {
+    return function (input) {
+        return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    }
+});
+
+annotation.config(['$locationProvider', function ($locationProvider) {
     $locationProvider.hashPrefix('');
 }]);
 
-app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
+annotation.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/');
 
     $stateProvider
-
         .state('auto', {
             url: '/',
             views: {
                 'article_checker': {templateUrl: 'article_checker_auto.html'},
-                'annotation': {templateUrl: 'annotation_auto.html',},
+                'annotation': {templateUrl: 'annotation_auto.html'},
             }
         })
         .state('manual', {
