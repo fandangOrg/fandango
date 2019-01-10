@@ -17,7 +17,8 @@ from flask import request
 from ds4biz_flask.model.DS4BizTyping import DS4BizList
 from fake_news_detection.model.Language import Language
 from fake_news_detection.dao.DAO import DAONewsElastic
-from fake_news_detection.business.UploadClaims import UploadClaims, popolate
+from fake_news_detection.business.UploadClaims import UploadClaims, popolate,\
+    popola_all
 from fake_news_detection.utils.logger import getLogger
  
 oo = ModelDAO()
@@ -92,7 +93,7 @@ def claim(text:str)->str:
     return j_resp
 
 def popolate_claims()->str: 
-    popolate()
+    popola_all()
     return "DONE"
     
     
