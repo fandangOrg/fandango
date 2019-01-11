@@ -41,6 +41,7 @@ class DAONewsElastic(DAONews):
         #self.bookmark=None
         
     def set_label(self,id,label):
+        print("set label")
         doc_up=  {
            '_op_type': 'update',
            '_index': self.index_name,
@@ -130,7 +131,7 @@ class DAONewsElastic(DAONews):
             text=el["_source"].get("text")
             language=el["_source"].get("language")
             author=el["_source"].get("authors")
-            return News(id_doc,url,title,text,author,publish,language)
+            return News(url,title,text,author,publish,language,id_doc)
 
     def all(self,filter=None,languages=None):
         body={

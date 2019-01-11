@@ -24,7 +24,7 @@ class InterfaceInputFeedBack:
         
         
 class News:
-    def __init__(self,id:str=None, url:str, title:str, text:str, authors:str, source_domain:str,language:str=None):
+    def __init__(self,url:str, title:str, text:str, authors:str, source_domain:str,language:str=None,id:str=None):
         self.id = id
         self.url = url
         self.title = title
