@@ -26,8 +26,8 @@
             <div class="row">
                 <div class="col-md-12 col-xs-12 urlContainer">
                     <div class="form-group">
-                        <input class="form-control form-control-alternative"
-                               ng-model="url" placeholder=""
+                        <input class="form-control disabled-white form-control-alternative"
+                               ng-model="page.url" placeholder="Start Analyze to show url"
                                type="text" disabled>
                     </div>
                 </div>
@@ -50,14 +50,13 @@
                         <div class="form-group">
                             <label class="form-control-label" for="input-first-name">Title</label>
                             <input type="text" id="input-first-name"
-                                   class="form-control form-control-alternative"
-                                   placeholder="" ng-model="title" disabled>
+                                   class="form-control disabled-white form-control-alternative"
+                                   placeholder="Start Analyze to show title" ng-model="page.title" disabled>
                         </div>
                     </div>
                 </div>
-                <textarea ng-model="text" class="form-control form-control-alternative"
-                          placeholder="" disabled
-                          ng-mouseup="showSelectedText()"></textarea>
+                <textarea ng-model="page.text" class="form-control disabled-white form-control-alternative"
+                          placeholder="Start Analyze to show the news text" disabled></textarea>
             </div>
         </form>
     </div>

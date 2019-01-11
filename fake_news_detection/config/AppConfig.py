@@ -46,7 +46,7 @@ def get_elastic_connector():
      # esConnector = Elasticsearch(url, http_auth=(username,password))
     url = os.environ.get("URL_ELASTIC") or config["elasticsearch"][ "url"]
     print(url)
-    esConnector = Elasticsearch(url)
+    esConnector = Elasticsearch(url, max_size=25)
     print(esConnector.ping())
     return esConnector
 

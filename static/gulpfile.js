@@ -7,14 +7,14 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
     uncss = require('gulp-uncss'),
-    uglify = require('gulp-uglify'),
+    uglify = require('gulp-uglify-es').default,
     rimraf = require('rimraf'),
     browserSync = require('browser-sync').create();
 
 var path = {
     source: {
         html: 'source/html/*.html',
-        html_partials: 'source/html/html_partials/*.html',
+        html_partials: 'source/html/html_partials/**/*.html',
         js: 'source/js/**/*.js',
         css: 'source/css/**/*.css',
         img: 'source/img/**/*.*',
@@ -29,7 +29,7 @@ var path = {
     },
     watch: {
         html: 'source/html/**/*.*',
-        html_partials: 'source/html/html_partials/*.html',
+        html_partials: 'source/html/html_partials/**/*.html',
         js: 'source/js/**/*.js',
         css: 'source/css/**/*.css',
         img: 'source/img/**/*.*',
@@ -46,6 +46,7 @@ gulp.task('html:build', function () {
 
 gulp.task('html_partials:build', function () {
     gulp.src(path.source.html_partials)
+        .pipe(rename({dirname: ''}))
         .pipe(gulp.dest(path.dist.html))
         .pipe(browserSync.reload({stream: true}));
 

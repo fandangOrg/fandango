@@ -1,0 +1,65 @@
+<div class="card bg-secondary shadow">
+    <div class="card-header bg-white border-0">
+        <div class="row align-items-center">
+            <div class="col-12">
+                <div class="float-left">
+                    <h3 class="mb-0">List Annotation</h3>
+                </div>
+                <div class="float-right">
+                    <i class="fas fa-info" rel="tooltip" title="Key active"
+                       style="font-size: 15px;vertical-align: middle"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body card-annotation">
+        <div class="row text-center animated fadeIn delay-05s">
+            <div class="col-6">
+                <div class="custom-control custom-radio">
+                    <input type="radio" ng-model="fakeSelected" value="REAL"
+                           class="custom-control-input" id="realCb">
+                    <label class="custom-control-label" for="realCb">Real</label>
+                    <i title="Real"
+                       class="fas fa-thumbs-up animated text-green bounceIn delay-1s ml-1"
+                       style="font-size: 22px"></i>
+
+                    <!--<i ng-if="radioSelected" class="fas fa-check animated text-green bounceIn delay-1s ml-1"-->
+                    <!--style="font-size: 22px"></i>-->
+                    <!--<div ng-if="radioSelected" class="circle-loader" style="margin-left: 3px">-->
+                    <!--<div class="checkmark draw"></div>-->
+                    <!--</div>-->
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="custom-control custom-radio">
+                    <input type="radio" ng-model="fakeSelected" value="FAKE"
+                           class="custom-control-input" id="fakeCb">
+                    <label class="custom-control-label" for="fakeCb">Fake</label>
+                    <i title="Fake"
+                       class="fas fa-thumbs-down animated text-red bounceIn delay-1s ml-1"
+                       style="font-size: 22px"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--<div ng-show='fakeSelected === "yes"' class="col-12 mt-3 animated fadeIn faster"-->
+            <!--style="z-index: 2">-->
+            <!--<select class="custom-control custom-select categoryList"-->
+            <!--ng-model="selectedCategory" ng-options="category for category in categories">-->
+            <!--<option value="" hidden>Select a category</option>-->
+            <!--</select>-->
+            <!--</div>-->
+        </div>
+        <div class="row bottom-container animated fadeIn delay-1s">
+            <div class="col-12 text-center">
+                <div ng-click="sendAnnotation(fakeSelected,page.text,'domain')"
+                     ng-class="{'disabled': !fakeSelected || !page.text}"
+                     class="btn btn-md btn-icon btn-success">
+                    <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
+                    <span class="btn-inner--text">Save</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

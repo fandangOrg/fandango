@@ -1,13 +1,11 @@
 <!DOCTYPE html>
-<html ng-app="app" lang="en">
+<html ng-app="index" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Fandango Fake news</title>
     <link href="img/favicon.png" rel="icon" type="image/png">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-    <!--<link href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">-->
-    <!--<link href="node_modules/bootstrap/dist/css/bootstrap.min.css">-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="libs/bootstrap.min.css">
@@ -24,40 +22,7 @@
                 <article-checker></article-checker>
             </div>
             <div class="col-lg-3 col-sm-12 box">
-                <div class="col-xs-12">
-                    <div class="card bg-secondary shadow">
-                        <div class="card-header bg-white border-0">
-                            <div class="row align-items-center">
-                                <div class="col-12">
-                                    <h3 class="mb-0">Article Analysis</h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body" style="padding: 5px;min-height: auto;">
-                            <div class="mt-2 mb-2">
-                                <ul class="list-unstyled">
-                                    <li>- Author : <strong>{{page.author}}</strong></li>
-                                    <li>- Publisher : <strong>{{page.publisher}}</strong></li>
-                                    <li>- Related Article Pubblication
-                                        <ul class="list-unstyled">
-                                            <li ng-repeat="article in pubblication"></li>
-                                            <li class="text-gray">- Not available</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <div class="col-12 text-center">
-                                    <div ng-click="send()" ng-if="loadingFakeness === false"
-                                         class="btn btn-lg btn-icon btn-success"
-                                         ng-class="{'disabled': !title || !text}">
-                                        <span class="btn-inner--icon"><img src="img/verify.png"></span>
-                                        <span class="btn-inner--text">Check Fakeness</span>
-                                    </div>
-                                    <div ng-if="loadingFakeness === true" class="lds-hourglass"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <article-analysis-fakeness></article-analysis-fakeness>
                 <div ng-show="fakenessDone === true" class="col-xs-12 mt-2 animated fadeInDown">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
@@ -182,8 +147,8 @@
 <script src="js/app.min.js"></script>
 <!-- <script src="web/module.min.js"></script> -->
 <script src="js/controller/indexController.min.js"></script>
-<script src="js/directive/mainDirective.min.js"></script>
-<script src="js/factory/mainFactory.min.js"></script>
+<script src="js/directive/indexDirective.min.js"></script>
+<script src="js/factory/indexFactory.min.js"></script>
 <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 </body>
 </html>

@@ -90,6 +90,7 @@
 
 .main-content {
     position: relative;
+    min-height: calc(100vh - 80px);
 }
 
 .main-content .navbar-top {
