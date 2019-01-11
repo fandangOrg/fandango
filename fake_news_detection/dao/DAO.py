@@ -46,7 +46,7 @@ class DAONewsElastic(DAONews):
         @param id: str
         @param label: str
         """
-        self.log.info("new annotation submitted: id:" ,id,'label:', label)
+        log.info("new annotation submitted: id: {id},label: {lbl}".format(id=id,lbl= label))
         doc_up=  {
            '_op_type': 'update',
            '_index': self.index_name,
@@ -65,7 +65,7 @@ class DAONewsElastic(DAONews):
            '_op_type': 'index',
            '_index': self.index_name,
            '_type': self.docType,
-           '_source' : news.__dict__
+           '_source' : news
         }
         self.bulk_on_elastic(doc_up)
         
@@ -78,9 +78,9 @@ class DAONewsElastic(DAONews):
         try:
             helpers.bulk(self.es_client, [doc_up])
         except Exception as e:
-            self.log.error("Could not perform bulk query: {err}".format(err=e))
+            log.error("Could not perform bulk query: {err}".format(err=e))
             raise FandangoException("Could not perform bulk query: {err}".format(err=e))
-        self.log.info("Bulk query successfully submitted to elastic: {doc_up}".format(doc_up=doc_up))
+        log.info("Bulk query successfully submitted to elastic: {doc_up}".format(doc_up=doc_up))
 
         
     def next(self,filter=None,languages=None):
@@ -161,7 +161,7 @@ class DAONewsElastic(DAONews):
             text=el["_source"].get("text")
             language=el["_source"].get("language")
             author=el["_source"].get("authors")
-            response_news = News(url,title,text,author,publish,id_doc,language)
+            response_news = News(url,title,text,author,publish,language,id_doc)
             log.debug("New doc to annotate generated: {doc}".format(doc=response_news))
             return response_news
 

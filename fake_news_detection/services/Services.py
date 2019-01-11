@@ -127,6 +127,7 @@ app.add_service("popolate_claims", popolate_claims, method = 'GET')
 app.add_service("get_languages",get_languages, method = 'GET')
 app.add_service("next_news", next_news, method ='POST')
 app.add_service("new_annotation", new_annotation, method = 'POST')
+app.add_service("new_doc_annotation", new_doc_annotation, method = 'POST')
 app.add_service('domain_annotation', domain_annotation, method = 'POST')
 CORS(app)
 
