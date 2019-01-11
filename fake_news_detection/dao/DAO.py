@@ -90,7 +90,7 @@ class DAONewsElastic(DAONews):
         @param languages: str
         @return: response_news: News
         """
-        self.log.info("New doc to annotate in {lang}".format(lang=languages))
+        log.info("New doc to annotate in {lang}".format(lang=languages))
         body={
               'size': 1,
               'query': {
@@ -143,13 +143,13 @@ class DAONewsElastic(DAONews):
             body["query"]["function_score"]["query"]["bool"]["must"].append(d)
             
         if filter:
-            self.log.debug("Searching for claim with label: {lbl}".format(lbl= filter))
+            log.debug("Searching for claim with label: {lbl}".format(lbl= filter))
             body["query"]["function_score"]["query"]["bool"]["must"][0]["bool"]["should"][0]["match"]["label"]=filter
             
         try:
             res = self.es_client.search(index=self.index_name, body= body,doc_type=self.docType)
         except Exception as e:
-            self.log.error("Could not query against elasticsearch: {err}".format(err=e))
+            log.error("Could not query against elasticsearch: {err}".format(err=e))
             raise FandangoException("Could not query against elasticsearch: {err}".format(err=e))
         if len(res['hits']['hits'])==0:
             raise StopIteration()
@@ -162,7 +162,7 @@ class DAONewsElastic(DAONews):
             language=el["_source"].get("language")
             author=el["_source"].get("authors")
             response_news = News(url,title,text,author,publish,id_doc,language)
-            self.log.debug("New doc to annotate generated: {doc}".format(doc=response_news))
+            log.debug("New doc to annotate generated: {doc}".format(doc=response_news))
             return response_news
 
  

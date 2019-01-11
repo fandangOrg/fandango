@@ -3,7 +3,6 @@ Created on Oct 18, 2018
 
 @author: daniele
 '''
-from ds4biz_flask.model.DS4BizTyping import DS4BizList
 
     
 class InterfaceInputModel:
@@ -32,6 +31,7 @@ class News:
         self.authors = authors
         self.source_domain = source_domain
         self.language = language
+        
 
 
     def __str__(self):
@@ -59,7 +59,11 @@ class New_news_annotated:
         self.lang = lang
         
     
-        
+class Claim:
+    def __init__(self, label, claim, author):
+        self.label = label
+        self.claim = claim
+        self.author = author        
         
 
 

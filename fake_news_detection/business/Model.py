@@ -14,8 +14,8 @@ from sklearn.pipeline import Pipeline, FeatureUnion, make_pipeline, make_union
 from scipy import hstack
 import numpy
 import scipy.sparse as sp
-from fake_news_detection.dao.PickleDao import ModelDao
-from fake_news_detection.dao.TrainingDao import get_train_dataset
+from fake_news_detection.dao.PickleDAO import ModelDAO
+from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
 from fake_news_detection.business.FeaturesExtraction import features_extraction,\
     count_no_alfanumber, len_words, len_sentences, SampleExtractor,\
     DataFrameColumnExtracter
@@ -176,12 +176,13 @@ class SklearnModel:
 
 if __name__ == '__main__':
     #clf = MultinomialNB(alpha= 0.05)
-    oo = ModelDao()
+    oo = ModelDAO()
 #    clf = RandomForestClassifier(n_jobs=-1, n_estimators=1,max_depth=40)
     clf = MultinomialNB(alpha= 0.05)
 
     model=SklearnModel(clf,'test')
-    training_set=get_train_dataset()
+    ii = DAOTrainingPD()
+    training_set= ii.get_train_dataset()
     app_fake_text=training_set[training_set['label']=="FAKE"]['text']
     app_real_text=training_set[training_set['label']=="REAL"]['text']
     

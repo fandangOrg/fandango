@@ -3,8 +3,6 @@ Created on 13 lug 2018
 
 @author: michele
 '''
-import codecs
-import logging
 import configparser
 import os
 import pkg_resources 

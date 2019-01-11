@@ -100,8 +100,7 @@
             "lowercase",
             "dutch_stop",
             "dutch_override",
-            "dutch_stemmer",
-            "type_as_payload"
+            "dutch_stemmer"
           ]
         },
         "rebuilt_greek": {
@@ -109,8 +108,7 @@
           "filter": [
             "greek_lowercase",
             "greek_stop",
-            "greek_stemmer",
-            "type_as_payload"
+            "greek_stemmer"
           ]
         },
         "rebuilt_italian": {
@@ -119,8 +117,7 @@
             "italian_elision",
             "lowercase",
             "italian_stop",
-            "italian_stemmer",
-            "type_as_payload"
+            "italian_stemmer"
           ]
         }
       }
