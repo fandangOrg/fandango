@@ -61,6 +61,7 @@ def next_news(lang:str)->News:
     
 def new_annotation(annotation:News_annotated)-> str:
     print('id:' ,annotation.id,'label:', annotation.label)
+    annotation.label = "A#"+annotation.label
     dao_news.set_label(annotation.id, annotation.label)
     return 'DONE'
 
@@ -75,6 +76,7 @@ def domain_annotation(list_u:News_domain) -> str:
 
 def new_doc_annotation(new_record:New_news_annotated)->str:
     news_crawled = crawler_news(new_record.url)
+    new_record.label ="M#"+new_record.label
     news_crawled['label'] = new_record.label
     news_crawled['language'] = new_record.lang
     
