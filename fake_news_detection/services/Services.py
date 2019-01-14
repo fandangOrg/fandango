@@ -33,7 +33,7 @@ model = oo.load('test')
     
     
 def feedback(info:InterfaceInputFeedBack)->str:
-    print(info)
+    log.debug(info)
     '''Creazione di un nuovo analizzatore per i social'''
     text=info.text.replace("\n"," ")
     model.partial_fit(info.title,text,info.label)
@@ -49,7 +49,7 @@ def get_languages()->DS4BizList(Language):
     return l
     
 def next_news(lang:str)->News:
-    print(lang)
+    log.debug(lang)
     try:
         news=dao_news.next(languages=lang)
     except StopIteration:
@@ -60,7 +60,7 @@ def next_news(lang:str)->News:
 
     
 def new_annotation(annotation:News_annotated)-> str:
-    print('id:' ,annotation.id,'label:', annotation.label)
+    log.debug('id:' ,annotation.id,'label:', annotation.label)
     annotation.label = "A#"+annotation.label
     dao_news.set_label(annotation.id, annotation.label)
     return 'DONE'
@@ -70,7 +70,7 @@ def new_annotation(annotation:News_annotated)-> str:
 
 
 def domain_annotation(list_u:News_domain) -> str:    
-    print([i for i in list_u.list_url.strip().split("\n")])
+    log.debug([i for i in list_u.list_url.strip().split("\n")])
     return( "DONE")
 
 
@@ -99,7 +99,7 @@ def analyzer(info:InterfaceInputModel)->str:
     return json.loads(prest.to_json(orient='records'))
 
 def crawler(url:str)->str:
-    print(url)
+    log.debug(url)
     return crawler_news(url)
 
 def claim(text:str)->str:
@@ -127,9 +127,10 @@ app.add_service("popolate_claims", popolate_claims, method = 'GET')
 app.add_service("get_languages",get_languages, method = 'GET')
 app.add_service("next_news", next_news, method ='POST')
 app.add_service("new_annotation", new_annotation, method = 'POST')
+app.add_service("new_doc_annotation", new_doc_annotation, method = 'POST')
 app.add_service('domain_annotation', domain_annotation, method = 'POST')
 CORS(app)
 
 
-print("RUN ON ",AppConfig.BASEURL,AppConfig.BASEPORT)
+log.info("RUN ON ",AppConfig.BASEURL,AppConfig.BASEPORT)
 app.run(host="0.0.0.0", port=AppConfig.BASEPORT,debug=False)
