@@ -85,7 +85,7 @@ class DAOTrainingElastic:
             if type(languages)==str:
                 languages=[languages]
             elif type(languages)!=list:
-                raise Exception
+                raise FandangoException("Languages should be a string or a list not {cl}".format(cl=type(languages)))
             d=dict()
             d["terms"]={"language":languages}
             body["query"]["bool"]["must"].append(d)
