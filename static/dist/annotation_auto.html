@@ -7,7 +7,7 @@
                 </div>
                 <div class="float-right">
                     <i class="fas fa-info" rel="tooltip" title="Key active"
-                       style="font-size: 15px;vertical-align: middle"></i>
+                       style="font-size: 15px;vertical-align: middle" onmouseenter="$(this).tooltip('show')"></i>
                 </div>
             </div>
         </div>
@@ -23,8 +23,8 @@
             <div class="row text-center animated fadeIn delay-05s" ng-show="analyzeStarted">
                 <div class="col-6">
                     <div class="custom-control custom-radio">
-                        <input type="radio" ng-model="fakeSelected" value="REAL"
-                               class="custom-control-input" id="realCb">
+                        <input type="radio" ng-model="selectedLabel" value="REAL"
+                               class="custom-control-input" id="realCb" ng-click='newLabel(selectedLabel)'>
                         <label class="custom-control-label" for="realCb">Real</label>
                         <i title="Real"
                            class="fas fa-thumbs-up animated text-green bounceIn delay-1s ml-1"
@@ -34,8 +34,8 @@
                 </div>
                 <div class="col-6">
                     <div class="custom-control custom-radio">
-                        <input type="radio" ng-model="fakeSelected" value="FAKE"
-                               class="custom-control-input" id="fakeCb">
+                        <input type="radio" ng-model="selectedLabel" value="FAKE"
+                               class="custom-control-input" id="fakeCb" ng-click='newLabel(selectedLabel)'>
                         <label class="custom-control-label" for="fakeCb">Fake</label>
                         <i title="Fake"
                            class="fas fa-thumbs-down animated text-red bounceIn delay-1s ml-1"
@@ -44,8 +44,8 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-12 text-center middle-container" ng-if="!analyzeStarted">
+            <div class="row" ng-if="!analyzeStarted">
+                <div class="col-12 text-center middle-container">
                     <div id="btnStartAnalyze" ng-click="startAnalyze()"
                          class="btn btn-lg btn-icon btn-success">
                         <span class="btn-inner--icon"><i class="fas fa-play"></i></span>
@@ -56,8 +56,8 @@
 
             <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeStarted">
                 <div class="col-6 text-left">
-                    <div ng-click="sendAnnotation(fakeSelected, undefined, 'auto')"
-                         ng-class="{'disabled': !fakeSelected}"
+                    <div ng-click="sendAnnotation(selectedLabel, undefined, 'auto')"
+                         ng-class="{'disabled': !isLabelSelected}"
                          class="btn btn-sm btn-icon btn-success">
                         <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
                         <span class="btn-inner--text">Save and next</span>

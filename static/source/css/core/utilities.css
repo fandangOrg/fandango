@@ -6560,6 +6560,8 @@
 }
 
 .middle-container {
+    right: 0;
+    left: 0;
     position: absolute !important;
     top: 50%;
 }

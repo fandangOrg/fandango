@@ -1,4 +1,4 @@
-index.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fakeness','feedback','claim', 'lang', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang) {
+app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fakeness','feedback','claim', 'lang', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang) {
 
     $scope.fakenessDone = false;
     $scope.highlightedText = '';

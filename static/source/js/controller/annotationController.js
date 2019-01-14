@@ -1,11 +1,15 @@
-annotation.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'next', 'update', '$state', 'manual', 'domain', function ($scope, $http, crUrl, lang, next, update, $state, manual, domain) {
+app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotation', function ($scope, $http, crUrl, lang, annotation) {
 
+    $scope.alertLabel = ''; // STRING TO SHOW ON SUCCESS ALERT
+    $scope.selectedLanguage = "en"; // DEFAULT LANGUAGE FOR MENU ON ARTICLE CHECKER
+    $scope.optionLanguage = ''; // LANGUAGE ON ANNOTATION OPTION MENU
+    $scope.tabSelected = 1; // 1 = AUTO - 2 = - MANUAL - 3 = DOMAIN
 
-    $scope.loadingAnalyzeUrl = false;
-    $scope.selectedLanguage = "en";
-    $scope.$state = $state;
-    $scope.analyzeOk = false;
-    $scope.newExist = true;
+    $scope.loadingAnalyzeUrl = false; // FLAG FOR SPINNER ON URL ANALYZING
+    $scope.analyzeOk = false; // FLAG FOR SHOW ERROR ON URL ANALYZING
+    $scope.newExist = true; // FLAG FOR CHECK IF IS LAST NEWS
+    $scope.isLabelSelected = false; // FLAG IF LABEL IS SELECTED
+    $scope.isLangSelected = true; // FLAG IF LANGUAGE IS SELECTED
     $(".alert").hide();
 
     $scope.page = {
@@ -16,58 +20,72 @@ annotation.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'ne
         'title': ''
     };
 
-    // RESET VALORI QUANDO SI CAMBIA TAB
-    $(window).on('hashchange', function (e) {
-        $scope.page.author = '';
-        $scope.page.title = '';
-        $scope.page.text = '';
-        $scope.page.url = '';
-        $scope.page.publisher = '';
-
-        $scope.analyzeStarted = false;
-        $scope.analyzeOk = false;
-    });
-
-    function showAlert() {
-        $(".alert").fadeTo(1250, 500).slideUp(500, function () {
-            $(".alert").slideUp(500);
-            $scope.fakeSelected = undefined;
-        });
-    }
-
-    $scope.changeTextNews = function (response) {
-        $scope.news = response.data; // ----> NEWS : ANNOTATION NEWS
-        console.log($scope.news);
-        $scope.page.publisher = $scope.news.source_domain;
-        $scope.page.url = $scope.news.url;
-        $scope.page.title = $scope.news.title;
-        $scope.page.text = $scope.news.text;
-        $scope.page.author = $scope.news.authors;
-
-        $('.custom-control-input').attr('checked', false);
-
+    $scope.newLabel = function (value) {
+        $scope.isLabelSelected = true;
     };
 
-    // $scope.categories = ['Category 1','Category 2','Category 3'];
+    $scope.newLang = function (value) {
+        $scope.optionLanguage = value;
+        $scope.isLangSelected = true;
+    };
+
     angular.element(function () {
-        $("[rel=tooltip]").tooltip({placement: 'left'});
         lang.getLanguages().then(function (response) {
             $scope.languages = response.data;
             $scope.loading = false;
         });
     });
 
-    $scope.changeLanguage = function (language, tab) {
-        if (language.active === 'False') {
+    function resetRadio() {
+        $('.custom-control-input').prop('checked', false);
+        $scope.isLabelSelected = false;
+    }
+
+    function resetLanguage() {
+        $('.languageList').prop('selectedIndex', 0);
+        $scope.isLangSelected = false;
+    }
+
+    function showAlert(esito) {
+        $("#alert" + esito).fadeTo(1500, 500).slideUp(500, function () {
+            $(".alert").slideUp(500);
+        });
+    }
+
+    $scope.changeTab = function (tab) {
+        if (tab === $scope.tabSelected)
+            return;
+
+        $scope.tabSelected = tab;
+        $scope.page.author = '';
+        $scope.page.title = '';
+        $scope.page.text = '';
+        $scope.page.url = '';
+        $scope.page.publisher = '';
+        resetRadio();
+        resetLanguage();
+        $scope.isLabelSelected = false;
+        $scope.analyzeStarted = false;
+        $scope.analyzeOk = false;
+    };
+
+    $scope.changeTextNews = function (response) {
+        $scope.news = response.data; // ----> NEWS : ANNOTATION NEWS
+        console.log($scope.news);
+        $scope.page.author = $scope.news.authors;
+        $scope.page.title = $scope.news.title;
+        $scope.page.text = $scope.news.text;
+        $scope.page.url = $scope.news.url;
+        $scope.page.publisher = $scope.news.source_domain;
+    };
+
+    $scope.changeLanguage = function (language) {
+        if (language.active === 'False' || $scope.selectedLanguage === language.language) {
             return;
         } else {
             $scope.selectedLanguage = language.language;
 
-            if (tab === 'manual')
-                return;
-
-
-            next.goNext($scope.selectedLanguage).then(function (response) {
+            annotation.goNext($scope.selectedLanguage).then(function (response) {
 
                 $scope.changeTextNews(response);
 
@@ -76,9 +94,8 @@ annotation.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'ne
                     return;
                 }
 
-
-                $('.custom-control-input').attr('checked', false);
-                $scope.fakeSelected = undefined;
+                resetRadio();
+                resetLanguage();
                 $("#btnStartAnalyze").addClass("animated fadeOut faster");
 
                 setTimeout(function () {
@@ -87,53 +104,66 @@ annotation.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'ne
 
                 $scope.newExist = true;
                 $scope.analyzeStarted = true;
+            }, function (response) {
+                showAlert('Error');
             });
         }
     };
 
     $scope.sendAnnotation = function (label, text, tab) {
+
         switch (tab) {
-
             case 'auto':
-                if (!label)
+                if (!$scope.isLabelSelected)
                     return;
-
-                $scope.fakeSelected = label;
 
                 var to_send = {
                     "id": $scope.news.id,
-                    "label": $scope.fakeSelected
+                    "label": label
                 };
 
-                update.doUpdate(to_send).then(function (response) {
-                    next.goNext($scope.selectedLanguage).then(function (response) {
+                $scope.alertLabel = label;
+
+                annotation.getAutoAnnotation(to_send).then(function (response) {
+                    resetRadio();
+                    showAlert('Success');
+                    annotation.goNext($scope.selectedLanguage).then(function (response) {
                         $scope.changeTextNews(response);
+
+                        if (response.data.hasOwnProperty('END')) {
+                            $scope.newExist = false;
+                            return;
+                        }
+
+                        $scope.newExist = true;
                     });
                 });
                 break;
 
             case 'manual':
-                if (!label || !text) // TEXT PER MANUAL CONTIENE LA LINGUA INVECE CHE IL CONTENUTO DELLA NEWS
+                if (!$scope.isLabelSelected || !$scope.isLangSelected) // TEXT PER MANUAL CONTIENE LA LINGUA INVECE CHE IL CONTENUTO DELLA NEWS
                     return;
 
-                $scope.fakeSelected = label;
-
                 var to_send = {
-                    "label": $scope.fakeSelected,
-                    "lang": $scope.selectedLanguage,
+                    "label": label,
+                    "lang": $scope.optionLanguage,
                     "url": $scope.page.url
                 };
 
+                $scope.alertLabel = label;
+
                 console.log(to_send);
 
-                manual.manualAnnotation(to_send).then(function (response) {
+                annotation.getManualAnnotation(to_send).then(function (response) {
+                    showAlert('Success');
+                    resetRadio();
+                    resetLanguage();
                     console.log(response);
-                    $('.custom-control-input').attr('checked', false);
                 });
                 break;
 
             case 'domain':
-                if (!text || !label)
+                if (!text || !$scope.isLabelSelected || !$scope.isLangSelected)
                     return;
 
                 var to_send = {
@@ -141,23 +171,24 @@ annotation.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'ne
                     "label": label
                 };
 
-                $scope.fakeSelected = label;
+                $scope.alertLabel = label;
 
-                domain.domainAnnotation(to_send).then(function (response) {
-                    console.log(response);
+                annotation.getDomainAnnotation(to_send).then(function (response) {
+                    showAlert('Success');
                     $scope.page.text = '';
+                    resetRadio();
+                    resetLanguage();
+                    console.log(response);
                 })
         }
 
-        showAlert();
 
     };
 
     $scope.skipAnnotation = function () {
-        next.goNext($scope.selectedLanguage).then(function (response) {
+        annotation.goNext($scope.selectedLanguage).then(function (response) {
             $scope.changeTextNews(response);
-            $('.custom-control-input').attr('checked', false);
-            $scope.fakeSelected = undefined;
+            resetRadio();
         });
     };
 
@@ -166,28 +197,28 @@ annotation.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'ne
         setTimeout(function () {
             $("#btnStartAnalyze").remove();
         }, 500);
-        next.goNext($scope.selectedLanguage).then(function (response) {
+        annotation.goNext($scope.selectedLanguage).then(function (response) {
             $scope.changeTextNews(response);
-
             $scope.analyzeStarted = true;
         });
     };
 
-    $scope.analyzeUrl = function (url) {
-        if (!url)
+    $scope.analyzeUrl = function () {
+
+        if (!$scope.page.url)
             return;
 
         $scope.loadingAnalyzeUrl = true;
-        $scope.page.url = url;
+
         var to_send = $scope.page.url;
 
         crUrl.analyzeUrl(to_send).then(function (response) {
             $scope.changeTextNews(response);
-
             console.log($scope.page);
             $scope.analyzeOk = true;
             $scope.loadingAnalyzeUrl = false;
         }, function (response) {
+            showAlert('Error');
             $scope.analyzeOk = false;
             $scope.loadingAnalyzeUrl = false;
         });

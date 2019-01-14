@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="annotation" lang="en">
+<html ng-app="app" lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,40 +24,47 @@
                         <div class="nav-wrapper">
                             <ul class="nav nav-pills nav-fill flex-column flex-md-row" id="tabs-icons-text"
                                 role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('auto') }"
+                                <li class="nav-item" ng-click="changeTab(1)">
+                                    <a class="nav-link mb-sm-3 mb-md-0 active"
                                        data-toggle="tab" href="#auto" role="tab" aria-controls="auto"
                                        aria-selected="true">Auto</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('manual') }"
+                                <li class="nav-item" ng-click="changeTab(2)">
+                                    <a class="nav-link mb-sm-3 mb-md-0"
                                        data-toggle="tab" href="#manual" role="tab" aria-controls="manual"
                                        aria-selected="false">Manual</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link mb-sm-3 mb-md-0" ng-class="{ active: $state.includes('domain') }"
+                                <li class="nav-item" ng-click="changeTab(3)">
+                                    <a class="nav-link mb-sm-3 mb-md-0"
                                        data-toggle="tab" href="#domain" role="tab" aria-controls="domain"
                                        aria-selected="false">Domain</a>
                                 </li>
                             </ul>
                         </div>
-                        <div class="alert alert-success" role="alert">
+
+                        <div class="alert alert-success" id="alertSuccess" role="alert">
                             <span class="alert-inner--icon"><i class="fas fa-thumbs-up"></i></span>
-                            <span class="alert-inner--text">Annotation sent successfully. Content marked as <strong>{{fakeSelected | capitalize}}</strong>!</span>
+                            <span class="alert-inner--text">Annotation sent successfully. Content marked as <strong>{{alertLabel | capitalize}}</strong>!</span>
                         </div>
+
+                        <div class="alert alert-danger" id="alertError" role="alert">
+                            <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
+                            <span class="alert-inner--text">Something goes wrong, retry!</span>
+                        </div>
+
                         <div class="card shadow">
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="auto" role="tabpanel"
                                      aria-labelledby="auto-tab">
-                                    <div ui-view="article_checker"></div>
+                                    <article-checker-auto></article-checker-auto>
                                 </div>
                                 <div class="tab-pane fade" id="manual" role="tabpanel"
                                      aria-labelledby="manual-tab">
-                                    <div ui-view="article_checker"></div>
+                                    <article-checker-manual></article-checker-manual>
                                 </div>
                                 <div class="tab-pane fade" id="domain" role="tabpanel"
                                      aria-labelledby="domain-tab">
-                                    <div ui-view="article_checker"></div>
+                                    <article-checker-domain></article-checker-domain>
                                 </div>
                             </div>
                         </div>
@@ -70,9 +77,15 @@
                     <article-analysis></article-analysis>
                 </div>
                 <div class="col-xs-12 mt-2">
-                    <!-- ANNOTATION HTML ROUTING -->
-                    <div ui-view="annotation"></div>
-                    <!-- END -->
+                    <div ng-if="tabSelected === 1">
+                        <annotation-auto></annotation-auto>
+                    </div>
+                    <div ng-if="tabSelected === 2">
+                        <annotation-manual></annotation-manual>
+                    </div>
+                    <div ng-if="tabSelected === 3">
+                        <annotation-domain></annotation-domain>
+                    </div>
                 </div>
             </div>
             <div class="col-lg-8 hidden-md hidden-sm hidden-xs"></div>
@@ -83,12 +96,17 @@
 <script src="libs/jquery.min.js"></script>
 <script src="libs/bootstrap.min.js"></script>
 <script src="libs/angular.min.js"></script>
-<script src="libs/angular-route.min.js"></script>
+<script src="libs/angular-sanitize.min.js"></script>
 <script src="js/app.min.js"></script>
 <!-- <script src="web/module.min.js"></script> -->
 <script src="js/controller/annotationController.min.js"></script>
-<script src="js/directive/annotationDirective.min.js"></script>
-<script src="js/factory/annotationFactory.min.js"></script>
+
+<script src="js/directive/sharedDirectives.min.js"></script>
+<script src="js/directive/annotationDirectives.min.js"></script>
+
+<script src="js/factory/sharedFactories.min.js"></script>
+<script src="js/factory/annotationFactories.min.js"></script>
+
 <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 </body>
 </html>

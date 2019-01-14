@@ -7,17 +7,22 @@
                 </div>
                 <div class="float-right">
                     <i class="fas fa-info" rel="tooltip" title="Key active"
-                       style="font-size: 15px;vertical-align: middle"></i>
+                       style="font-size: 15px;vertical-align: middle" onmouseenter="$(this).tooltip('show')"></i>
                 </div>
             </div>
         </div>
     </div>
     <div class="card-body card-annotation" style="height: 185px;">
+        <div class="row" ng-if="!analyzeOk">
+            <div class="col-12 middle-container text-center">
+                <h5>Analyze a news first to select an annotation</h5>
+            </div>
+        </div>
         <div class="row text-center animated fadeIn delay-05s" ng-show="analyzeOk">
             <div class="col-6">
                 <div class="custom-control custom-radio">
-                    <input type="radio" ng-model="fakeSelected" value="REAL"
-                           class="custom-control-input" id="realCb">
+                    <input type="radio" ng-model="selectedLabel" value="REAL"
+                           class="custom-control-input" id="realCb" ng-click='newLabel(selectedLabel)'>
                     <label class="custom-control-label" for="realCb">Real</label>
                     <i title="Real"
                        class="fas fa-thumbs-up animated text-green bounceIn delay-1s ml-1"
@@ -27,8 +32,8 @@
             </div>
             <div class="col-6">
                 <div class="custom-control custom-radio">
-                    <input type="radio" ng-model="fakeSelected" value="FAKE"
-                           class="custom-control-input" id="fakeCb">
+                    <input type="radio" ng-model="selectedLabel" value="FAKE"
+                           class="custom-control-input" id="fakeCb" ng-click='newLabel(selectedLabel)'>
                     <label class="custom-control-label" for="fakeCb">Fake</label>
                     <i title="Fake"
                        class="fas fa-thumbs-down animated text-red bounceIn delay-1s ml-1"
@@ -37,21 +42,17 @@
             </div>
         </div>
 
-        <div ng-show='fakeSelected' class="col-12 mt-3 animated fadeIn faster">
-            <select class="custom-control custom-select categoryList"
-                    ng-model="selectedCategory" ng-options="lang.name for lang in languages">
-                <option value="" hidden>Select a category</option>
+        <div ng-if="isLabelSelected" class="col-12 mt-3 animated fadeIn faster">
+            <select class="custom-control custom-select languageList"
+                    ng-model="selectedCategory" ng-options="lang.name for lang in languages" ng-change="newLang(selectedCategory.language)">
+                <option value="" hidden>Select language</option>
             </select>
         </div>
-        <div class="row">
-            <div class="col-12 text-center" ng-if="!analyzeOk">
-                <h5>Analyze a news first to select an annotation</h5>
-            </div>
-        </div>
+
         <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeOk">
             <div class="col-12 text-center">
-                <div ng-click="sendAnnotation(fakeSelected, selectedCategory.name, 'manual')"
-                     ng-class="{'disabled': !fakeSelected || !selectedCategory.name}"
+                <div ng-click="sendAnnotation(selectedLabel, undefined, 'manual')"
+                     ng-class="{'disabled': !isLabelSelected || !isLangSelected}"
                      class="btn btn-md btn-icon btn-success">
                     <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
                     <span class="btn-inner--text">Save</span>

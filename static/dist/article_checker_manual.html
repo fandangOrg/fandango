@@ -6,17 +6,6 @@
                     <div class="col-6">
                         <h3 class="mb-0">Article Checker</h3>
                     </div>
-                    <!--<div class="col-6 text-right">-->
-                        <!--<h3 class="mb-0"><span class="hidden-xs">Language selected </span>-->
-                            <!--<div class="dropdown">-->
-                                <!--<img class="pl-1 default-flag" ng-src="img/flags/{{selectedLanguage}}.png" alt="flag">-->
-                                <!--<div class="dropdown-content">-->
-                                    <!--<a ng-repeat="language in languages" ng-click="changeLanguage(language,'manual')" ng-attr-title="{{language.active == 'False' ? 'Not available' : undefined}}"-->
-                                       <!--ng-class="{'languageDisabled': language.active == 'False'}">{{language.name}} <img ng-src="img/flags/{{language.language}}.png"></a>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</h3>-->
-                    <!--</div>-->
                 </div>
             </div>
         </div>
@@ -32,7 +21,7 @@
                     </div>
                 </div>
                 <div class="col-md-1 col-xs-12 url_analyze">
-                    <div ng-click="analyzeUrl(page.url)"
+                    <div ng-click="analyzeUrl()"
                          class="icon bg-gray icon-shape text-white rounded-15 shadow"
                          ng-class="{'bg-gradient-teal pointer': page.url || !page.url == 'bg-gray'}">
                                         <span class="btn-inner--icon"><img ng-if="!loadingAnalyzeUrl"
