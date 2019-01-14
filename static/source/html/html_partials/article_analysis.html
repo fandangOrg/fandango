@@ -26,6 +26,15 @@
                         </ul>
                     </li>
                 </ul>
+                <div class="col-12 text-center">
+                    <div ng-click="send()" ng-if="!loadingFakeness === false"
+                         class="btn btn-lg btn-icon btn-success"
+                         ng-class="{'disabled': !page.title || !page.text}">
+                        <span class="btn-inner--icon"><img src="img/verify.png"></span>
+                        <span class="btn-inner--text">Check Fakeness</span>
+                    </div>
+                    <div ng-if="loadingFakeness === true" class="lds-hourglass"></div>
+                </div>
             </div>
         </div>
     </div>

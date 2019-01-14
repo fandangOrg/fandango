@@ -39,11 +39,3 @@ app.directive("annotationDomain", function () {
         templateUrl: 'annotation_domain.html'
     }
 });
-
-// ARTICLE ANALYSIS
-
-app.directive("articleAnalysis", function () {
-    return {
-        templateUrl: 'article_analysis.html'
-    }
-});

@@ -9,3 +9,9 @@ app.directive("appFooter", function () {
         templateUrl: 'footer.html'
     };
 });
+
+app.directive("articleAnalysis", function () {
+    return {
+        templateUrl: 'article_analysis.html'
+    }
+});

@@ -136,6 +136,8 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
                         }
 
                         $scope.newExist = true;
+                    }, function (response) {
+                        showAlert('Error');
                     });
                 });
                 break;
@@ -152,13 +154,13 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
                 $scope.alertLabel = label;
 
-                console.log(to_send);
-
                 annotation.getManualAnnotation(to_send).then(function (response) {
                     showAlert('Success');
                     resetRadio();
                     resetLanguage();
                     console.log(response);
+                }, function (response) {
+                    showAlert('Error');
                 });
                 break;
 
@@ -168,7 +170,8 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
                 var to_send = {
                     "list_url": text,
-                    "label": label
+                    "label": label,
+                    "lang": $scope.optionLanguage
                 };
 
                 $scope.alertLabel = label;
@@ -179,16 +182,18 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
                     resetRadio();
                     resetLanguage();
                     console.log(response);
-                })
+                }, function (response) {
+                    showAlert('Error');
+                });
         }
-
-
     };
 
     $scope.skipAnnotation = function () {
         annotation.goNext($scope.selectedLanguage).then(function (response) {
             $scope.changeTextNews(response);
             resetRadio();
+        }, function (response) {
+            showAlert('Error');
         });
     };
 
@@ -200,19 +205,18 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
         annotation.goNext($scope.selectedLanguage).then(function (response) {
             $scope.changeTextNews(response);
             $scope.analyzeStarted = true;
+        }, function (response) {
+            showAlert('Error');
         });
     };
 
     $scope.analyzeUrl = function () {
-
         if (!$scope.page.url)
             return;
 
         $scope.loadingAnalyzeUrl = true;
 
-        var to_send = $scope.page.url;
-
-        crUrl.analyzeUrl(to_send).then(function (response) {
+        crUrl.analyzeUrl($scope.page.url).then(function (response) {
             $scope.changeTextNews(response);
             console.log($scope.page);
             $scope.analyzeOk = true;
