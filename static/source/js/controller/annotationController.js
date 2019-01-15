@@ -95,6 +95,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
                 if (response.data.hasOwnProperty('END')) {
                     $scope.newExist = false;
+                    // showAlert('Warning');
                     return;
                 }
 
@@ -136,6 +137,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
                         if (response.data.hasOwnProperty('END')) {
                             $scope.newExist = false;
+                            // showAlert('Warning');
                             return;
                         }
 
@@ -162,7 +164,6 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
                     showAlert('Success');
                     resetRadio();
                     resetLanguage();
-                    console.log(response);
                 }, function (response) {
                     showAlert('Error');
                 });
@@ -185,7 +186,6 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
                     $scope.page.text = '';
                     resetRadio();
                     resetLanguage();
-                    console.log(response);
                 }, function (response) {
                     showAlert('Error');
                 });

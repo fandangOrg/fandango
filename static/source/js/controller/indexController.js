@@ -225,7 +225,6 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fa
         }, function (response) {
             $scope.fakenessDone = false;
             $scope.loadingFakeness = false;
-            console.log(response)
         });
     }
 }]);

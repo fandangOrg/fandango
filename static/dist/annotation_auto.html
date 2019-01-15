@@ -6,7 +6,9 @@
                     <h3 class="mb-0">Annotation</h3>
                 </div>
                 <div class="float-right">
-                    <i class="fas fa-info" rel="tooltip" title="Key active"
+                    <i class="fas fa-info" rel="tooltip" title="Press START ANALYZE to get an article.
+Choose fake or real clicking on the circle and save the option pressing SAVE.
+Click on SKIP to get a new article to annotate"
                        style="font-size: 15px;vertical-align: middle" onmouseenter="$(this).tooltip('show')"></i>
                 </div>
             </div>
@@ -57,7 +59,7 @@
             <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeStarted">
                 <div class="col-6 text-left">
                     <button ng-click="sendAnnotation(selectedLabel, undefined, 'auto')" ng-disabled="!isLabelSelected"
-                         class="btn btn-sm btn-icon btn-success">
+                            class="btn btn-sm btn-icon btn-success">
                         <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
                         <span class="btn-inner--text">Save and next</span>
                     </button>

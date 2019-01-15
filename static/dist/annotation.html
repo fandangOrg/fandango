@@ -27,7 +27,7 @@
                                 <li class="nav-item" ng-click="changeTab(1)">
                                     <a class="nav-link mb-sm-3 mb-md-0 active"
                                        data-toggle="tab" href="#auto" role="tab" aria-controls="auto"
-                                       aria-selected="true">Auto</a>
+                                       aria-selected="true">Automatic</a>
                                 </li>
                                 <li class="nav-item" ng-click="changeTab(2)">
                                     <a class="nav-link mb-sm-3 mb-md-0"
@@ -43,14 +43,19 @@
                         </div>
 
                         <div class="alert alert-success" id="alertSuccess" role="alert">
-                            <span class="alert-inner--icon"><i class="fas fa-thumbs-up"></i></span>
-                            <span class="alert-inner--text">Annotation sent successfully. Content marked as <strong>{{alertLabel | capitalize}}</strong>!</span>
+                            <span class="alert-inner--icon mr-2"><i class="fas fa-thumbs-up"></i></span>
+                            <span class="alert-inner--text">Annotation sent successfully. Content marked as <strong>{{alertLabel | capitalize}}</strong></span>
                         </div>
 
                         <div class="alert alert-danger" id="alertError" role="alert">
-                            <span class="alert-inner--icon"><i class="fas fa-exclamation-triangle"></i></span>
-                            <span class="alert-inner--text">Something goes wrong, retry!</span>
+                            <span class="alert-inner--icon mr-2"><i class="fas fa-times"></i></span>
+                            <span class="alert-inner--text">Something goes wrong, retry later</span>
                         </div>
+
+                        <!--<div class="alert alert-warning" id="alertWarning" role="alert">-->
+                            <!--<span class="alert-inner&#45;&#45;icon mr-2"><i class="fas fa-exclamation-triangle"></i></span>-->
+                            <!--<span class="alert-inner&#45;&#45;text">No more news for selected language</span>-->
+                        <!--</div>-->
 
                         <div class="card shadow">
                             <div class="tab-content" id="myTabContent">
