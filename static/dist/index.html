@@ -125,9 +125,9 @@
                                     <!--&lt;!&ndash;<span style="white-space: pre-line;" class="badge badge-dot mr-4"><i ng-class="claim.label"></i> {{claim.label | dashless | capitalize}}</span>&ndash;&gt;-->
                                     <!--</td>-->
                                     <td style="padding: 0;text-align: center">
-                                        <span class="font-weight-bold " ng-if="claim._score <= 15">Low</span>
-                                        <span class="font-weight-bold " ng-if="claim._score > 15 && claim._score <= 30">Medium</span>
-                                        <span class="font-weight-bold " ng-if="claim._score > 30">High</span>
+                                        <span class="font-weight-bold " ng-if="claim.score <= 15">Low</span>
+                                        <span class="font-weight-bold " ng-if="claim.score > 15 && claim.score <= 30">Medium</span>
+                                        <span class="font-weight-bold " ng-if="claim.score > 30">High</span>
                                     </td>
                                 </tr>
                                 </tbody>

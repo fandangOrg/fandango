@@ -45,12 +45,11 @@
 
         <div class="row bottom-container animated fadeIn delay-1s">
             <div class="col-12 text-center">
-                <div ng-click="sendAnnotation(selectedLabel,page.text,'domain')"
-                     ng-class="{'disabled': !isLabelSelected || !page.text || !isLangSelected}"
-                     class="btn btn-md btn-icon btn-success">
+                <button ng-click="sendAnnotation(selectedLabel,page.text,'domain')"
+                     class="btn btn-md btn-icon btn-success" ng-disabled="!isLabelSelected || !page.text || !isLangSelected">
                     <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
                     <span class="btn-inner--text">Save</span>
-                </div>
+                </button>
             </div>
         </div>
     </div>

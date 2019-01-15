@@ -1,4 +1,4 @@
-<div class="col-xs-12">
+<div class="col-xs-12 mb-2">
     <div class="card bg-secondary shadow">
         <div class="card-header bg-white border-0">
             <div class="row align-items-center">
@@ -27,13 +27,12 @@
                     </li>
                 </ul>
                 <div class="col-12 text-center">
-                    <div ng-click="send()" ng-if="!loadingFakeness === false"
-                         class="btn btn-lg btn-icon btn-success"
-                         ng-class="{'disabled': !page.title || !page.text}">
+                    <button ng-click="sendFakeness()" ng-if="loadingFakeness === false"
+                         class="btn btn-lg btn-icon btn-success" ng-disabled="!page.title || !page.text">
                         <span class="btn-inner--icon"><img src="img/verify.png"></span>
                         <span class="btn-inner--text">Check Fakeness</span>
-                    </div>
-                    <div ng-if="loadingFakeness === true" class="lds-hourglass"></div>
+                    </button>
+                    <div ng-if="loadingFakeness === true" class="loadingFakeness"></div>
                 </div>
             </div>
         </div>

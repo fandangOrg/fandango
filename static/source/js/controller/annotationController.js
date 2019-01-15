@@ -20,6 +20,13 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
         'title': ''
     };
 
+    angular.element(function () {
+        lang.getLanguages().then(function (response) {
+            $scope.languages = response.data;
+            $scope.loading = false;
+        });
+    });
+
     $scope.newLabel = function (value) {
         $scope.isLabelSelected = true;
     };
@@ -28,13 +35,6 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
         $scope.optionLanguage = value;
         $scope.isLangSelected = true;
     };
-
-    angular.element(function () {
-        lang.getLanguages().then(function (response) {
-            $scope.languages = response.data;
-            $scope.loading = false;
-        });
-    });
 
     function resetRadio() {
         $('.custom-control-input').prop('checked', false);
@@ -57,16 +57,20 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
             return;
 
         $scope.tabSelected = tab;
-        $scope.page.author = '';
-        $scope.page.title = '';
-        $scope.page.text = '';
-        $scope.page.url = '';
-        $scope.page.publisher = '';
+        $scope.resetField();
         resetRadio();
         resetLanguage();
         $scope.isLabelSelected = false;
         $scope.analyzeStarted = false;
         $scope.analyzeOk = false;
+    };
+
+    $scope.resetField = function () {
+        $scope.page.author = '';
+        $scope.page.title = '';
+        $scope.page.text = '';
+        $scope.page.url = '';
+        $scope.page.publisher = '';
     };
 
     $scope.changeTextNews = function (response) {
@@ -114,8 +118,8 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
         switch (tab) {
             case 'auto':
-                if (!$scope.isLabelSelected)
-                    return;
+                // if (!$scope.isLabelSelected)
+                //     return;
 
                 var to_send = {
                     "id": $scope.news.id,
@@ -143,8 +147,8 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
                 break;
 
             case 'manual':
-                if (!$scope.isLabelSelected || !$scope.isLangSelected) // TEXT PER MANUAL CONTIENE LA LINGUA INVECE CHE IL CONTENUTO DELLA NEWS
-                    return;
+                // if (!$scope.isLabelSelected || !$scope.isLangSelected) // TEXT PER MANUAL CONTIENE LA LINGUA INVECE CHE IL CONTENUTO DELLA NEWS
+                //     return;
 
                 var to_send = {
                     "label": label,
@@ -165,8 +169,8 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
                 break;
 
             case 'domain':
-                if (!text || !$scope.isLabelSelected || !$scope.isLangSelected)
-                    return;
+                // if (!text || !$scope.isLabelSelected || !$scope.isLangSelected)
+                //     return;
 
                 var to_send = {
                     "list_url": text,
@@ -223,6 +227,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
             $scope.loadingAnalyzeUrl = false;
         }, function (response) {
             showAlert('Error');
+            $scope.resetField();
             $scope.analyzeOk = false;
             $scope.loadingAnalyzeUrl = false;
         });

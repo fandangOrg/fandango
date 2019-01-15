@@ -1,5 +1,5 @@
 
-.lds-hourglass-white {
+.loadingFakeness-white {
     display: inline-block;
     position: relative;
     vertical-align: middle;
@@ -7,7 +7,7 @@
     height: 40px;
 }
 
-.lds-hourglass-white:after {
+.loadingFakeness-white:after {
     content: " ";
     display: block;
     border-radius: 50%;
@@ -17,10 +17,10 @@
     box-sizing: border-box;
     border: 14px solid #fff;
     border-color: white transparent white transparent;
-    animation: lds-hourglass 1.2s infinite;
+    animation: loadingFakeness 1.2s infinite;
 }
 
-@keyframes lds-hourglass-white {
+@keyframes loadingFakeness-white {
     0% {
         transform: rotate(0);
         animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
@@ -34,14 +34,14 @@
     }
 }
 
-.lds-hourglass {
+.loadingFakeness {
     display: inline-block;
     position: relative;
     width: 64px;
     height: 64px;
 }
 
-.lds-hourglass:after {
+.loadingFakeness:after {
     content: " ";
     display: block;
     border-radius: 50%;
@@ -51,10 +51,10 @@
     box-sizing: border-box;
     border: 26px solid #fff;
     border-color: #2dce89 transparent #2dce89 transparent;
-    animation: lds-hourglass 1.2s infinite;
+    animation: loadingFakeness 1.2s infinite;
 }
 
-@keyframes lds-hourglass {
+@keyframes loadingFakeness {
     0% {
         transform: rotate(0);
         animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);

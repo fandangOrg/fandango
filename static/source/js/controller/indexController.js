@@ -20,13 +20,11 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fa
     // var levelFalse = ['false', 'pants-fire'];
 
     angular.element(function () {
-        $("[rel=tooltip]").tooltip({placement: 'left'});
         lang.getLanguages().then(function (response) {
             $scope.languages = response.data;
             $scope.loading = false;
         });
     });
-
 
     $("#gaugeFakeness").on("contextmenu", function () {
         return false;
@@ -117,7 +115,7 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fa
 
         var to_send = $scope.page.url;
         crUrl.analyzeUrl(to_send).then(function (response) {
-            console.log(response.data)
+            console.log(response.data);
             $scope.page.title = response.data.title;
             $scope.page.text = response.data.text;
             $scope.page.publisher = response.data.source_domain;
@@ -128,14 +126,11 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fa
         });
     };
 
-    $scope.send = function () {
+    $scope.sendFakeness = function () {
         $scope.feedbackSelected = false;
         $scope.fakenessDone = false;
         $('#gaugeFakeness').removeClass('animated fadeIn');
         zingchart.exec('gaugeFakeness', 'destroy');
-
-        if (!$scope.page.title || !$scope.page.text)
-            return false;
 
         var to_send = {
             'title': $scope.page.title,

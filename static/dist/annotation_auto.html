@@ -56,12 +56,11 @@
 
             <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeStarted">
                 <div class="col-6 text-left">
-                    <div ng-click="sendAnnotation(selectedLabel, undefined, 'auto')"
-                         ng-class="{'disabled': !isLabelSelected}"
+                    <button ng-click="sendAnnotation(selectedLabel, undefined, 'auto')" ng-disabled="!isLabelSelected"
                          class="btn btn-sm btn-icon btn-success">
                         <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
                         <span class="btn-inner--text">Save and next</span>
-                    </div>
+                    </button>
                 </div>
                 <div class="col-6 text-right">
                     <div
