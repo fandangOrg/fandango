@@ -9,6 +9,7 @@ from fake_news_detection.config.AppConfig import get_elastic_connector,\
 import pandas as pd
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.utils.Exception import FandangoException
+import os
 
 
 
@@ -30,16 +31,41 @@ class DAOTrainingPD:
         
         df=df[['title','text']]
         df['label']='FAKE'
+        print(df.shape)
         training_set= pd.read_csv(dataset_beta+"/"+"guardian.csv",sep='\t') # dataset
         training_set['label']='REAL'
         df=df.append(training_set)
         training_set= pd.read_csv(dataset_beta+"/fake_or_real_news.csv") # dataset
         df_app=training_set[['title','text','label']]
+        print(df.shape)
         df=df.append(df_app)
         #df=df_app
         df=df.dropna(subset = ['title','text','label'])
         #df['text']=df['text'].swifter.apply(clean_text)
         #df['title'].swifter.apply(clean_text)
+        #df1= pd.DataFrame(columns=['title','text','label'])
+        for dir in os.listdir(dataset_beta):
+            if dir == "fake":
+                for file in os.listdir(dataset_beta + dir):
+                    with open(dataset_beta + dir + "/" +file) as f:
+                        dizio = dict()
+                        dizio['title'] = " ".join(f.readlines()[:1])
+                        dizio['text'] = " ".join(f.readlines()[2:])
+                        dizio['label'] = 'FAKE'
+                        df1  = pd.DataFrame([dizio], columns=dizio.keys())
+                        df = pd.concat([df, df1], axis =0)
+                        
+            elif dir == "legit":
+                for file in os.listdir(dataset_beta + dir):
+                    with open(dataset_beta + dir + "/"+ file) as f:
+                        dizio = dict()
+                        dizio['title'] = " ".join(f.readlines()[:1])
+                        dizio['text'] = " ".join(f.readlines()[1:])
+                        dizio['label'] = 'REAL'
+                        df1  = pd.DataFrame([dizio], columns=dizio.keys())
+                        df = pd.concat([df, df1], axis =0)
+        print(df.shape)
+                
         print(df.groupby(['label']).agg(['count']))
         return df
     
@@ -110,5 +136,5 @@ class DAOTrainingElastic:
         return pd.DataFrame(responseL)
 
 if __name__ == '__main__':
-    oo = DAOTrainingElastic()
-    print(oo.get_train_dataset(filter="FAKE"))
+    oo = DAOTrainingPD(dataset_beta)
+    print(oo.get_train_dataset())

@@ -5,7 +5,7 @@ Created on Jan 8, 2019
 '''
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article
+    index_name_news, docType_article, index_name_domain
 from fake_news_detection.model.InterfacceComunicazioni import News
 import random
 from elasticsearch import helpers
@@ -38,6 +38,28 @@ class DAONewsElastic(DAONews):
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news 
         self.docType = docType_article
+        self.domain_name_index = index_name_domain
+        
+        
+    def create_source(self,news):
+        """
+        create doc for annotated domain
+        @param news: obj
+        """
+        lista_operazioni = []
+        for notizia in news.list_url.split("\n"):
+            source = {
+                "label": news.label,
+                "domain" : notizia,
+                "lang" : news.lang
+                }
+            lista_operazioni.append( {
+           '_op_type': 'index',
+           '_index': self.domain_name_index,
+           '_type': self.docType,
+           '_source': source
+           })
+        self.bulk_on_elastic(lista_operazioni)
 
         
     def set_label(self,id,label):
@@ -75,8 +97,10 @@ class DAONewsElastic(DAONews):
         perform a bulk query in elastic
         @param doc_up: dict
         """
+        if type(doc_up) is not list:
+            doc_up = [doc_up]
         try:
-            helpers.bulk(self.es_client, [doc_up])
+            helpers.bulk(self.es_client, doc_up)
         except Exception as e:
             log.error("Could not perform bulk query: {err}".format(err=e))
             raise FandangoException("Could not perform bulk query: {err}".format(err=e))

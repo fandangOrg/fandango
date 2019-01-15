@@ -60,7 +60,7 @@ def next_news(lang:str)->News:
 
     
 def new_annotation(annotation:News_annotated)-> str:
-    log.debug('id:' ,annotation.id,'label:', annotation.label)
+    log.debug('id: {id}, label: {lbl}'.format(id= annotation.id, lbl=annotation.label))
     annotation.label = "A#"+annotation.label
     dao_news.set_label(annotation.id, annotation.label)
     return 'DONE'
@@ -69,8 +69,9 @@ def new_annotation(annotation:News_annotated)-> str:
     
 
 
-def domain_annotation(list_u:News_domain) -> str:    
-    log.debug([i for i in list_u.list_url.strip().split("\n")])
+def domain_annotation(list_u:News_domain) -> str:
+    dao_news.create_source(list_u)
+    log.debug("New domain source to annotate reiceived :{sou}".format(sou=list_u))  
     return( "DONE")
 
 
@@ -81,7 +82,7 @@ def new_doc_annotation(new_record:New_news_annotated)->str:
     news_crawled['language'] = new_record.lang
     
     dao_news.create_doc_news(news_crawled)
-    print(news_crawled)
+    log.debug(news_crawled)
     return('DONE')
   
         
@@ -132,5 +133,5 @@ app.add_service('domain_annotation', domain_annotation, method = 'POST')
 CORS(app)
 
 
-log.info("RUN ON ",AppConfig.BASEURL,AppConfig.BASEPORT)
+log.info("RUN ON {cfg}".format(cfg= AppConfig.BASEURL+AppConfig.BASEPORT))
 app.run(host="0.0.0.0", port=AppConfig.BASEPORT,debug=False)

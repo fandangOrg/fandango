@@ -9,4 +9,4 @@ __pycache__/
 *.pyc
 /static/node_modules
 /node_modules
-/fake_news_detection/resources/log/
+/fake_news_detection/resources

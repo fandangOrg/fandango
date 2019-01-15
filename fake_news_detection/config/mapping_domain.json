@@ -1,0 +1,21 @@
+{
+ "settings": {
+   "number_of_shards": 3,
+   "number_of_replicas": 1
+ },
+ "mappings": {
+   "document": {
+     "properties": {
+       "domain": {
+         "type": "keyword"
+       },
+       "label": {
+         "type": "keyword"
+       },
+       "lang": {
+         "type": "keyword"
+       }
+     }
+   }
+ }
+}

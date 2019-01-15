@@ -18,6 +18,8 @@ doctype = document
 mapping = /home/camila/workspace/fandango-fake-news/fake_news_detection/config/liarmapping.json
 new_mapped_index = claims
 
+new_domain_index = domain_annotated
+
 [service]
 url = http://0.0.0.0:9800/
 port = 9800
