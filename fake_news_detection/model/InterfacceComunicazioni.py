@@ -46,9 +46,10 @@ class News_annotated:
 
         
 class News_domain:
-    def __init__(self, label:str,list_url:str):
+    def __init__(self, label:str,list_url:str, lang:str):
         self.label = label
         self.list_url = list_url
+        self.lang = lang
         
         
         

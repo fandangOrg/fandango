@@ -5,7 +5,8 @@ Created on 27 set 2018
 '''
 
 from fake_news_detection.config.AppConfig import  get_elastic_connector,\
-    docType, mapping, index_name_claims, train_claims
+    docType, mapping, index_name_claims, train_claims, index_name_domain,\
+    mapping_domain_index
 from fake_news_detection.utils.logger import getLogger
 from elasticsearch import helpers
 import csv
@@ -68,7 +69,9 @@ class DAOClaimsOutputElastic:
     def __init__(self):
         self.es_client = get_elastic_connector()
         self.index_name = index_name_claims 
-        self.docType = docType   
+        self.docType = docType  
+        
+        self.domain_name_index = index_name_domain 
         
     def get_similarity_claims_from_text(self,text):
         """
@@ -122,15 +125,16 @@ class DAOClaimsOutputElastic:
             
         return lista_claim
        
-    def __delete_index(self):
+    def __delete_index(self, indice):
         """
         remove index from ES
+        @param indice: str
         """
         try:
-            self.es_client.indices.delete(self.index_name, ignore=[400,404])
+            self.es_client.indices.delete(indice, ignore=[400,404])
         except:
-            log.info("Could not delete index: {ind}".format(ind=self.index_name))
-            raise FandangoException("Could not delete index: {ind}".format(ind=self.index_name))
+            log.info("Could not delete index: {ind}".format(ind=indice))
+            raise FandangoException("Could not delete index: {ind}".format(ind=indice))
             
             
     def restart_source(self):
@@ -145,17 +149,29 @@ class DAOClaimsOutputElastic:
             pass
         
         if self.es_client.indices.exists(index=self.index_name):
-            self.__delete_index()
+            self.__delete_index(self.index_name)
             
-        with open(mapping , "r") as f:
-            body = f.read()
-            try:
-                self.es_client.indices.create(index = self.index_name, body = body)
-                log.info("Mapping successfully loaded for index: {ind}".format(ind =self.index_name))
-            except:
-                log.info("Could not create new index: {ind}".format(ind =self.index_name))
-                raise FandangoException("Could not create new index: {ind}".format(ind = self.index_name))
-
+            with open(mapping , "r") as f:
+                body = f.read()
+                try:
+                    self.es_client.indices.create(index = self.index_name, body = body)
+                    log.info("Mapping successfully loaded for index: {ind}".format(ind =self.index_name))
+                except:
+                    log.info("Could not create new index: {ind}".format(ind =self.index_name))
+                    raise FandangoException("Could not create new index: {ind}".format(ind = self.index_name))
+            
+        if self.es_client.indices.exists(index= self.self.domain_name_index):
+            self.__delete_index(self.domain_name_index)
+            
+            with open(mapping_domain_index , "r") as f:
+                body = f.read()
+                try:
+                    self.es_client.indices.create(index = self.domain_name_index, body = body)
+                    log.info("Mapping successfully loaded for index: {ind}".format(ind =self.domain_name_index))
+                except:
+                    log.info("Could not create new index: {ind}".format(ind =self.domain_name_index))
+                    raise FandangoException("Could not create new index: {ind}".format(ind = self.domain_name_index))
+ 
 
     def add_claim(self, claim):
         """

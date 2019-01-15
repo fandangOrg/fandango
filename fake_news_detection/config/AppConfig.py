@@ -35,7 +35,7 @@ dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", 
 static_folder = pkg_resources.resource_filename("static", "")  # @UndefinedVariable
 train_claims = pkg_resources.resource_filename("fake_news_detection.resources.claims", "")  # @UndefinedVariable
 
-mapping = pkg_resources.resource_filename("fake_news_detection.resources.claims", "liarmapping.json")  # @UndefinedVariable
+mapping = pkg_resources.resource_filename("fake_news_detection.config", "new_mapping.json")  # @UndefinedVariable
 
 def get_elastic_connector():
         # username = os.environ.get("USERNAME_ELASTIC") or config["elasticsearch"][ "username"]
@@ -54,6 +54,11 @@ docType_article = os.environ.get("DOCTYPE_NEWS") or config.get("elasticsearch", 
 
 docType = os.environ.get("INDEX_ELASTIC") or config.get("elasticsearch", "doctype")
 index_name_claims = os.environ.get("NEW_MAPPED_INDEX") or config.get("elasticsearch", "new_mapped_index")
+
+index_name_domain= os.environ.get("NEW_DOMAIN_INDEX") or config.get("elasticsearch", "new_domain_index")
+mapping_domain_index = pkg_resources.resource_filename("fake_news_detection.config", "mapping_domain.json") # @UndefinedVariable
+
+dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")
 
 if __name__ == '__main__':
     print(static_folder)

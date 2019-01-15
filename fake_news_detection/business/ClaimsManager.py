@@ -47,5 +47,5 @@ def popola_all(dao_output):
     
 if __name__  == "__main__":
     out = DAOClaimsOutputElastic()
-    similar_claims(dao_output=out,text="trump gay")
-    #popola_all(DAOClaimsOutputElastic())
+    #similar_claims(dao_output=out,text="trump gay")
+    popola_all(DAOClaimsOutputElastic())
