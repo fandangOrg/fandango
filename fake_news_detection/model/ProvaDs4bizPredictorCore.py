@@ -28,7 +28,7 @@ def partial_fit_with_ds4biz_predictor_core(conf:TransformingPredictor, X, y):
         raise ValueError("Invalid input 'X' in 'partial_fit_with_ds4biz_predictor_core'!")
     if type(y) != pd.core.series.Series and type(y) != list:
         raise ValueError("Invalid input 'y' in 'partial_fit_with_ds4biz_predictor_core'!")
-    if not conf.fitted:
+    if not conf.fitted:import
         raise Exception("It is not possible to call 'partial fit' before 'fit'!")
     if not conf.is_partially_fittable:
         raise Exception("The chosen model is not partialy fittable!")
@@ -127,5 +127,5 @@ if __name__ == "__main__":
     evaluate_trought_CV_with_ds4biz_predictor_core(conf, X, y)     # accuracy 0.953
 
     ### store and load from disk ###
-    store_ds4biz_model(conf, id="miao", path="/home/andrea/")
-    load_ds4biz_model(id="miao", path="/home/andrea/")
+    store_ds4biz_model(conf, id="clf-fandango", path="/home/camila/workspace/fandango-fake-news/fake_news_detection/resources/model")
+    load_ds4biz_model(id="miao", path="/home/camila/workspace/fandango-fake-news/fake_news_detection/resources/model")
