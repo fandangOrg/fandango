@@ -58,7 +58,7 @@ index_name_claims = os.environ.get("NEW_MAPPED_INDEX") or config.get("elasticsea
 index_name_domain= os.environ.get("NEW_DOMAIN_INDEX") or config.get("elasticsearch", "new_domain_index")
 mapping_domain_index = pkg_resources.resource_filename("fake_news_detection.config", "mapping_domain.json") # @UndefinedVariable
 
-dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")
+#dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")
 
 if __name__ == '__main__':
     print(static_folder)

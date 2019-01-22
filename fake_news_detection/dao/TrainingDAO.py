@@ -20,22 +20,22 @@ class DAOTraining:
         return NotImplementedError
     
 class DAOTrainingPD:
-    def __init__(self, path, delimiter='\t'):
+    def __init__(self, path=dataset_beta, delimiter='\t'):
         self.path = path
         self.delimiter = delimiter
         
     def get_train_dataset(self):
-        training_set= pd.read_csv(dataset_beta+"/"+"fake.csv") # dataset
+        training_set= pd.read_csv(self.path +"/"+"fake.csv") # dataset
         #print(training_set.dropna(subset = ['title'])['title'])
         df=training_set.dropna(subset = ['title','text'])
         
         df=df[['title','text']]
         df['label']='FAKE'
         print(df.shape)
-        training_set= pd.read_csv(dataset_beta+"/"+"guardian.csv",sep='\t') # dataset
+        training_set= pd.read_csv(self.path +"/"+"guardian.csv",sep='\t') # dataset
         training_set['label']='REAL'
         df=df.append(training_set)
-        training_set= pd.read_csv(dataset_beta+"/fake_or_real_news.csv") # dataset
+        training_set= pd.read_csv(self.path +"/fake_or_real_news.csv") # dataset
         df_app=training_set[['title','text','label']]
         print(df.shape)
         df=df.append(df_app)
@@ -44,10 +44,10 @@ class DAOTrainingPD:
         #df['text']=df['text'].swifter.apply(clean_text)
         #df['title'].swifter.apply(clean_text)
         #df1= pd.DataFrame(columns=['title','text','label'])
-        for dir in os.listdir(dataset_beta):
+        for dir in os.listdir(self.path ):
             if dir == "fake":
-                for file in os.listdir(dataset_beta + dir):
-                    with open(dataset_beta + dir + "/" +file) as f:
+                for file in os.listdir(self.path  + dir):
+                    with open(self.path  + dir + "/" +file) as f:
                         dizio = dict()
                         dizio['title'] = " ".join(f.readlines()[:1])
                         dizio['text'] = " ".join(f.readlines()[2:])
@@ -56,16 +56,16 @@ class DAOTrainingPD:
                         df = pd.concat([df, df1], axis =0)
                         
             elif dir == "legit":
-                for file in os.listdir(dataset_beta + dir):
-                    with open(dataset_beta + dir + "/"+ file) as f:
+                for file in os.listdir(self.path  + dir):
+                    with open(self.path  + dir + "/"+ file) as f:
                         dizio = dict()
                         dizio['title'] = " ".join(f.readlines()[:1])
                         dizio['text'] = " ".join(f.readlines()[1:])
                         dizio['label'] = 'REAL'
                         df1  = pd.DataFrame([dizio], columns=dizio.keys())
                         df = pd.concat([df, df1], axis =0)
+        df=df.sample(50)
         print(df.shape)
-                
         print(df.groupby(['label']).agg(['count']))
         return df
     

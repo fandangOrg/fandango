@@ -10,6 +10,7 @@ from fake_news_detection.model.InterfacceComunicazioni import News
 import random
 from elasticsearch import helpers
 from fake_news_detection.utils.Exception import FandangoException
+from ds4biz_predictor_core.dao.predictor_dao import FSPredictorDAO
 log = getLogger(__name__)
 
 class DAONews:
@@ -190,6 +191,16 @@ class DAONewsElastic(DAONews):
             return response_news
 
  
+########MODELLI#############
+class FSMemoryPredictorDAO(FSPredictorDAO):
+
+    def __init__(self, path):
+        FSPredictorDAO.__init__(self, path)
+
+    def delete_from_memory(self, nome_modello):
+        if nome_modello in self.predictors:
+            del self.predictors[nome_modello]
+            
 if __name__ == '__main__':
     dao=DAONewsElastic()
     while 1: 
