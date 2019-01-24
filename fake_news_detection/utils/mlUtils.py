@@ -19,13 +19,10 @@ def create_trasformer_predictor(name_classifier:str=None, params_classifier:dict
 
 
 
-def create_trasformer_predictor2(name_classifier:str=None,
+def create_trasformer_predictor_2(name_classifier:str=None,
                                  params_classifier:dict={},
                                  transformer_title:Transformer=TfidfVectorizer(),
                                  transformer_text:Transformer=TfidfVectorizer()) -> TransformingPredictor:
-
     request_transformer = ColumnTransformer({'title':transformer_title, 'text':transformer_text})
-    print(request_transformer)
     request_model = CreationRequest(name_classifier, params_classifier)
-
     return TransformingPredictorFactory().create(request_model, request_transformer)

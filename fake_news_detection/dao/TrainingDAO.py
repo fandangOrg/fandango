@@ -12,33 +12,41 @@ from fake_news_detection.utils.Exception import FandangoException
 import os
 
 
-
 log = getLogger(__name__)
+
+
 
 class DAOTraining:
     def get_train_dataset(self):
         return NotImplementedError
-    
+
+
+
 class DAOTrainingPD:
+
     def __init__(self, path=dataset_beta, delimiter='\t'):
         self.path = path
         self.delimiter = delimiter
         
-    def get_train_dataset(self):
+    def get_train_dataset(self, sample_size:float=1.0):
+        print("\n\n > start of 'get_train_dataset()'")
         training_set= pd.read_csv(self.path +"/"+"fake.csv") # dataset
         #print(training_set.dropna(subset = ['title'])['title'])
         df=training_set.dropna(subset = ['title','text'])
-        
         df=df[['title','text']]
         df['label']='FAKE'
-        print(df.shape)
+        print("shape after 'fake.csv' -->", df.shape)
+
         training_set= pd.read_csv(self.path +"/"+"guardian.csv",sep='\t') # dataset
         training_set['label']='REAL'
         df=df.append(training_set)
+        print("shape after 'guardian.csv' -->", df.shape)
+
         training_set= pd.read_csv(self.path +"/fake_or_real_news.csv") # dataset
         df_app=training_set[['title','text','label']]
-        print(df.shape)
         df=df.append(df_app)
+        print("shape after 'fake_or_real_news.csv' -->", df.shape)
+
         #df=df_app
         df=df.dropna(subset = ['title','text','label'])
         #df['text']=df['text'].swifter.apply(clean_text)
@@ -64,12 +72,19 @@ class DAOTrainingPD:
                         dizio['label'] = 'REAL'
                         df1  = pd.DataFrame([dizio], columns=dizio.keys())
                         df = pd.concat([df, df1], axis =0)
-        df=df.sample(50)
-        print(df.shape)
+
+        if sample_size < 1.0:
+            df = df.sample(frac=sample_size)
+
+        print("final shape -->", df.shape)
         print(df.groupby(['label']).agg(['count']))
+        print("> end of 'get_train_dataset()'\n")
         return df
-    
+
+
+
 class DAOTrainingElastic:
+
     def __init__(self):
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news 
@@ -134,6 +149,8 @@ class DAOTrainingElastic:
             responseL.append( {"title": el['_source']['title'],"text":el['_source']['text'],"label":el['_source']['label'] } )
         
         return pd.DataFrame(responseL)
+
+
 
 if __name__ == '__main__':
     oo = DAOTrainingPD(dataset_beta)
