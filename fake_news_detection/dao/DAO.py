@@ -5,7 +5,7 @@ Created on Jan 8, 2019
 '''
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article, index_name_domain
+    index_name_news, docType_article
 from fake_news_detection.model.InterfacceComunicazioni import News
 import random
 from elasticsearch import helpers

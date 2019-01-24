@@ -1,11 +1,14 @@
 '''
-Created on 27 set 2018
 
+
+Created on 27 set 2018
 @author: camila
+
+
 '''
 
 from fake_news_detection.config.AppConfig import  get_elastic_connector,\
-    docType, mapping, index_name_claims, train_claims, index_name_domain,\
+    docType, mapping, index_name_claims, train_claims,\
     mapping_domain_index
 from fake_news_detection.utils.logger import getLogger
 from elasticsearch import helpers
@@ -24,7 +27,7 @@ class DAOClaimInput:
 class DAOClaimInputDummy:
     
     def all(self):
-        claims="ciao questo é il claim numero "
+        claims="ciao questo è il claim numero "
         for k in range(100):
             claim = {}
             claim["id_json"] = str(k)
@@ -71,7 +74,29 @@ class DAOClaimsOutputElastic:
         self.index_name = index_name_claims 
         self.docType = docType  
         
-        self.domain_name_index = index_name_domain 
+        #self.domain_name_index = index_name_domain 
+    
+    
+    def check_claim_existence(self, text):
+        
+        
+        body = {
+                "query": {
+                  "match_phrase": {
+                    "claim": text
+                  }
+                }
+              }
+        
+        
+        res = self.es_client.search(index= self.index_name, body= body)
+        if len(res['hits']['hits']) < 1:
+            log.debug('Claim you want to add does not exist')
+            return True
+        else:
+            log.debug('Claim you want to add already exists')
+            return False
+        
         
     def get_similarity_claims_from_text(self,text):
         """
@@ -179,10 +204,10 @@ class DAOClaimsOutputElastic:
         @param claim: str
         """
         try:
-            self.es.index(index=self.index_name, doc_type=self.docType,  body=claim)
+            self.es_client.index(index=self.index_name, doc_type=self.docType,  body=claim)
             log.debug("New document successfully indexed")
         except Exception as e:
-            self.log.error("Can't index document, an error has occurred: {err}".format(err=e))
+            log.error("Can't index document, an error has occurred: {err}".format(err=e))
             raise FandangoException("Can't index document, an error has occurred: {err}".format(err=e))
  
     

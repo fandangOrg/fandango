@@ -66,6 +66,11 @@ class Claim:
         self.label = label
         self.claim = claim
         self.author = author        
-        
+    
+class Claims_annotated:
+    def __init__(self, claim:str, label:str):
+        self.claim = claim
+        self.label = label   
+
 
 
