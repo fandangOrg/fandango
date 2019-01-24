@@ -84,7 +84,11 @@ class DAOTrainingPD:
 
 
 class DAOTrainingElastic:
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> a2fbe31ef97e0a74135924e6fcd3fa9b5b4aff87
     def __init__(self):
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news 
@@ -152,6 +156,168 @@ class DAOTrainingElastic:
 
 
 
+<<<<<<< HEAD
+=======
+class DAOTrainingElasticByDomains():
+    
+      
+    def __init__(self):
+        self.es_client = get_elastic_connector()
+        self.index_name = index_name_news 
+        self.docType = docType_article
+        
+    
+    def get_train_dataset_from_domains(self,path_domain):
+        '''
+        from a given file, it converts articles labeled into rows of a dataframe
+        @param path_domain: str
+        @return: dataf : dataframe pandas 
+        '''
+        list_domains = self.read_domain(path_domain)
+        list_df = []
+        
+        for domain in list_domains:
+            label = domain[1]
+            list_documents = self.get_news_from_domain(domain[0])
+            print(domain[0])
+            df1 = pd.DataFrame.from_dict(list_documents)
+            df1['label'] = label
+            
+            print(df1.shape)
+            list_df.append(df1)
+        
+        dataf = pd.concat(list_df, axis= 0)
+        print(dataf.shape)
+        print( df1.head(5))
+        return dataf
+    
+    
+    def read_domain(self,path_domain):
+        '''
+        given a file, return a list of domain with label
+        @param path_domain: str
+    def __init__(self):
+        self.es_client = get_elastic_connector()
+        self.index_name = index_name_news 
+        self.docType = docType_article
+        
+    
+    def get_train_dataset_from_domains(self,path_domain):
+        
+        list_domains = self.read_domain(path_domain)
+        list_df = []
+        
+        for domain in list_domains:
+        @return: domain_list_labeled: list
+        '''
+        domain_list_labeled = []
+        if os.path.getsize(path_domain) < 1:
+            #check if file is empty
+            log.debug("empty file {pth}".format(pth = path_domain))
+            raise FandangoException("empty file {pth}".format(pth = path_domain))
+                
+        with open(path_domain, "rb") as f:
+            for line in f: 
+                line = line.decode('utf-8-sig')
+                line = line.split(',')      
+                domain_list_labeled.append((line[0].strip(), line[1].strip()))
+                log.debug('domain with annotation is {tup}'.format(tup = domain_list_labeled)  )                        
+        
+        return domain_list_labeled
+    
+    def get_news_from_domain(self,domain):
+        '''
+        Given a certain domain, it searches for all the documents of that domain
+        @param domain: str 
+        @return: result_list : list of dicts
+        '''
+        result_list =[]
+        body2 = {
+            "query": {
+            "term" : { "source_domain" : domain } 
+                }
+            }
+        
+        
+        
+        res = self.es_client.count(index= self.index_name, doc_type=self.docType, body= body2)
+        size = res['count']
+        
+        if size == 0 :
+            log.debug("no records for selected domain: {dmn}, it can't continue".format(dmn=domain))
+            raise FandangoException("no records for selected domain: {dmn}, it can't continue".format(dmn=domain))
+        
+        body = { "size": 10,
+                    "query": {
+                        "term" : {
+                            "source_domain" : domain
+                        }
+                    },
+                    "sort": [
+                        {"date_published": "asc"},
+                        {"_uid": "desc"}
+                    ]
+                }
+        
+        result = self.es_client.search(index= self.index_name, doc_type=self.docType, body = body)
+        bookmark = [result['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1]) ]
+        
+        body1 = {"size": 10,
+                    "query": {
+                        "term" : {
+                            "source_domain" : domain
+                        }
+                    },
+                    "search_after": bookmark,
+                    "sort": [
+                        {"date_published": "asc"},
+                        {"_uid": "desc"}
+                    ]
+                }
+        
+        
+        
+        
+        while len(result['hits']['hits']) < size:
+            res = self.es_client.search(index= self.index_name, doc_type=self.docType, body= body1)
+            for el in res['hits']['hits']:
+                result['hits']['hits'].append( el )
+            bookmark = [res['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1]) ]
+            body1 = {"size": 10,
+                    "query": {
+                        "term" : {
+                            "source_domain" : domain
+                        }
+                    },
+                    "search_after": bookmark,
+                    "sort": [
+                        {"date_published": "asc"},
+                        {"_uid": "desc"}
+                    ]
+                }
+        
+        for res in result['hits']['hits']:
+            result_list.append({"title":res['_source']['title'],  "text" : res['_source']['text'] , "label" : "" })
+        
+        #print(result_list[0:2])
+        log.debug("All articles from domain request are taken for training set building ")
+        return result_list
+    
+        #return  [res['_source']['title'], res['_source']['text']] for res in result['hits']['hits']
+
+                
+                
+                
+                
+                
+>>>>>>> a2fbe31ef97e0a74135924e6fcd3fa9b5b4aff87
 if __name__ == '__main__':
-    oo = DAOTrainingPD(dataset_beta)
-    print(oo.get_train_dataset())
+    #oo = DAOTrainingPD(dataset_beta)
+    #print(oo.get_train_dataset())
+    ii = DAOTrainingElasticByDomains()
+    ii.get_train_dataset_from_domains("/home/camila/Scrivania/url_list_labeled.txt")
+    
+    
+    
+    
+    

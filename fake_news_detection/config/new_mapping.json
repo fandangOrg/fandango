@@ -271,21 +271,6 @@
         },
         "videos": {
           "type": "text"
-        },
-        "pos_tag": {
-          "type": "nested",
-          "dynamic": "strict",
-          "properties": {
-            "word": {
-              "type": "keyword"
-            },
-            "pos": {
-              "type": "keyword"
-            },
-            "lemma": {
-              "type": "keyword"
-            }
-          }
         }
       }
     }

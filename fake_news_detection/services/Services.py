@@ -6,7 +6,7 @@ Created on Oct 18, 2018
 from ds4biz_flask.model.DS4BizFlask import DS4BizFlask
 from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel, \
     InterfaceInputFeedBack, News, News_annotated, News_domain,\
-    New_news_annotated
+    New_news_annotated, Claims_annotated
 from fake_news_detection.dao.PickleDAO import ModelDAO
 from fake_news_detection.business.Model import SklearnModel
 from flask_cors.extension import CORS
@@ -32,7 +32,7 @@ daopredictor=FSMemoryPredictorDAO(picklepath)
 #dao_news=DAONewsElastic()
 dao_news=DAONews()
 dao_claim_output=DAOClaimsOutput()
-#dao_claim_output=DAOClaimsOutputElastic()
+dao_claim_output_es=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
 #model = oo.load('test')
@@ -109,7 +109,15 @@ def analyzer(info:InterfaceInputModel)->str:
     log.info(json.loads(prest.to_json(orient='records')))
     return json.loads(prest.to_json(orient='records'))
 
-
+def new_claim_annotated(new_claim: Claims_annotated)->str:
+    
+    if dao_claim_output_es.check_claim_existence(new_claim.claim):
+        new_record = {"claim" : new_claim.claim, "label": new_claim.label}
+        dao_claim_output_es.add_claim(new_record)
+        return('new claim added')
+    else:
+        return('claim already in database')
+    
 def crawler(url:str)->str:
     log.debug(url)
     return crawler_news(url)
@@ -144,6 +152,7 @@ app.add_service("next_news", next_news, method ='POST')
 app.add_service("new_annotation", new_annotation, method = 'POST')
 app.add_service("new_doc_annotation", new_doc_annotation, method = 'POST')
 app.add_service('domain_annotation', domain_annotation, method = 'POST')
+app.add_service('new_claim_annotated', new_claim_annotated, method = 'POST')
 CORS(app)
 
 
