@@ -36,7 +36,7 @@ dao_claim_output_es=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
 #model = oo.load('test')
-nome_modello="modello_en"
+nome_modello="modello_en_2"
 
 def train_model()->str: 
     training()
@@ -97,6 +97,7 @@ def new_doc_annotation(new_record:New_news_annotated)->str:
 
 
 def analyzer(info:InterfaceInputModel)->str:
+    print("ciao")
     log.info(info)
     log.info('''Creazione di un nuovo analizzatore per i social''')
     #log.info(info.title,info.text)

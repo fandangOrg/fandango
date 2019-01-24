@@ -15,7 +15,6 @@ import os
 log = getLogger(__name__)
 
 
-
 class DAOTraining:
     def get_train_dataset(self):
         return NotImplementedError
@@ -84,11 +83,7 @@ class DAOTrainingPD:
 
 
 class DAOTrainingElastic:
-<<<<<<< HEAD
 
-=======
-    
->>>>>>> a2fbe31ef97e0a74135924e6fcd3fa9b5b4aff87
     def __init__(self):
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news 
@@ -124,8 +119,7 @@ class DAOTrainingElastic:
                     }
                     }
                     }
-        
-        
+
         if languages:
             if type(languages)==str:
                 languages=[languages]
@@ -156,8 +150,6 @@ class DAOTrainingElastic:
 
 
 
-<<<<<<< HEAD
-=======
 class DAOTrainingElasticByDomains():
     
       
@@ -224,7 +216,8 @@ class DAOTrainingElasticByDomains():
                 log.debug('domain with annotation is {tup}'.format(tup = domain_list_labeled)  )                        
         
         return domain_list_labeled
-    
+
+
     def get_news_from_domain(self,domain):
         '''
         Given a certain domain, it searches for all the documents of that domain
@@ -237,9 +230,7 @@ class DAOTrainingElasticByDomains():
             "term" : { "source_domain" : domain } 
                 }
             }
-        
-        
-        
+
         res = self.es_client.count(index= self.index_name, doc_type=self.docType, body= body2)
         size = res['count']
         
@@ -274,10 +265,7 @@ class DAOTrainingElasticByDomains():
                         {"_uid": "desc"}
                     ]
                 }
-        
-        
-        
-        
+
         while len(result['hits']['hits']) < size:
             res = self.es_client.search(index= self.index_name, doc_type=self.docType, body= body1)
             for el in res['hits']['hits']:
@@ -306,11 +294,7 @@ class DAOTrainingElasticByDomains():
         #return  [res['_source']['title'], res['_source']['text']] for res in result['hits']['hits']
 
                 
-                
-                
-                
-                
->>>>>>> a2fbe31ef97e0a74135924e6fcd3fa9b5b4aff87
+
 if __name__ == '__main__':
     #oo = DAOTrainingPD(dataset_beta)
     #print(oo.get_train_dataset())

@@ -57,6 +57,6 @@ def predict_proba(nome_modello):
 
 
 if __name__ == '__main__':
-    training(model_name="modello_en_2")
+    #training(model_name="modello_en_2")
     predict("modello_en_2")
     predict_proba("modello_en_2")
