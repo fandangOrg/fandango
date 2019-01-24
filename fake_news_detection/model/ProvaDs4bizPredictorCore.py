@@ -24,14 +24,6 @@ def fit_with_ds4biz_predictor_core(conf:TransformingPredictor, X, y):
 
 
 def partial_fit_with_ds4biz_predictor_core(conf:TransformingPredictor, X, y):
-    if type(X) != pd.core.series.Series and type(X) != list:
-        raise ValueError("Invalid input 'X' in 'partial_fit_with_ds4biz_predictor_core'!")
-    if type(y) != pd.core.series.Series and type(y) != list:
-        raise ValueError("Invalid input 'y' in 'partial_fit_with_ds4biz_predictor_core'!")
-    if not conf.fitted:import
-        raise Exception("It is not possible to call 'partial fit' before 'fit'!")
-    if not conf.is_partially_fittable:
-        raise Exception("The chosen model is not partialy fittable!")
     conf.partial_fit(X, y)
 
 

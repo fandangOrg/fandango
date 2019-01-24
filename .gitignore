@@ -10,3 +10,4 @@ __pycache__/
 /static/node_modules
 /node_modules
 /fake_news_detection/resources
+log.txt

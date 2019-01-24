@@ -37,9 +37,11 @@ log = getLogger(__name__)
  
 #model = oo.load('test')
 nome_modello="modello_en"
+
 def train_model()->str: 
     training()
-    
+
+
 def feedback(info:InterfaceInputFeedBack)->str:
     log.debug(info)
     '''Creazione di un nuovo analizzatore per i social'''
@@ -49,6 +51,7 @@ def feedback(info:InterfaceInputFeedBack)->str:
     daopredictor.update(model)
     return "OK"
 
+
 def get_languages()->DS4BizList(Language):
     l= list()
     l.append(Language("en","English",True))
@@ -57,7 +60,8 @@ def get_languages()->DS4BizList(Language):
     l.append(Language("pt","Portuguese",True))
     l.append(Language("el_GR","Greek",False))
     return l
-    
+
+
 def next_news(lang:str)->News:
     log.debug(lang)
     try:
@@ -76,9 +80,6 @@ def new_annotation(annotation:News_annotated)-> str:
     return 'DONE'
 
 
-    
-
-
 def domain_annotation(list_u:News_domain) -> str:
     dao_news.create_source(list_u)
     log.debug("New domain source to annotate reiceived :{sou}".format(sou=list_u))  
@@ -90,15 +91,11 @@ def new_doc_annotation(new_record:New_news_annotated)->str:
     new_record.label ="M#"+new_record.label
     news_crawled['label'] = new_record.label
     news_crawled['language'] = new_record.lang
-    
     dao_news.create_doc_news(news_crawled)
     log.debug(news_crawled)
     return('DONE')
-  
-        
-    
 
-    
+
 def analyzer(info:InterfaceInputModel)->str:
     log.info(info)
     log.info('''Creazione di un nuovo analizzatore per i social''')
@@ -106,23 +103,24 @@ def analyzer(info:InterfaceInputModel)->str:
     text=info.text.replace("\n"," ")
     model=daopredictor.get_by_id(nome_modello)
     #X_new = pd.Series(X_title_new).map(str) + ' ' + pd.Series(X_text_new).map(str)
-
     prest=model.predict_proba(pd.Series(info.title+" "+text))
     print(prest)
     prest=pd.DataFrame(prest, columns=model.predictor.predictor.classes_)
     log.info(json.loads(prest.to_json(orient='records')))
-    
     return json.loads(prest.to_json(orient='records'))
+
 
 def crawler(url:str)->str:
     log.debug(url)
     return crawler_news(url)
+
 
 def claim(text:str)->str:
     j = request.get_json()  #key txt of the dictionary
     text = j.get("text")
     j_resp =similar_claims(dao_claim_output,text)
     return j_resp
+
 
 def popolate_claims()->str: 
     popola_all(dao_claim_output)
