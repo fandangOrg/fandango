@@ -112,5 +112,12 @@ def count_ADJ(ss):
             if len(items)==3 and "JJ" in items[1] :
                 app.append(items[1])
         yield len(app)
+
+
 if __name__ == '__main__':
     print(math.log(10))
+    testo = """As well as concluding authorities had twice violated her right to a fair trial, the ECHR also found they had failed to investigate her complaints she had been subjected to degrading treatment, including being slapped on the head and deprived of sleep. The court did not, however, uphold her complaint of ill-treatment."""
+    tag(testo)
+    tag(testo)
+    multitag(testo)
+    count_ADJ(testo)

@@ -4,6 +4,8 @@ Created on Oct 18, 2018
 @author: daniele
 '''
 from ds4biz_flask.model.DS4BizFlask import DS4BizFlask
+
+from fake_news_detection.business.featureEngineering import add_new_features_to_df
 from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel, \
     InterfaceInputFeedBack, News, News_annotated, News_domain,\
     New_news_annotated, Claims_annotated
@@ -29,25 +31,28 @@ from fake_news_detection.apps.training_model import training
  
 #oo = ModelDAO()
 daopredictor=FSMemoryPredictorDAO(picklepath)
+
 #dao_news=DAONewsElastic()
-dao_news=DAONews()
-dao_claim_output=DAOClaimsOutput()
-dao_claim_output_es=DAOClaimsOutputElastic()
+#dao_news=DAONews()
+#dao_claim_output=DAOClaimsOutput()
+#dao_claim_output_es=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
 #model = oo.load('test')
-nome_modello="modello_en_2"
+nome_modello="modello_en_3"
+
 
 def train_model()->str: 
-    training()
+    training(nome_modello)
 
 
 def feedback(info:InterfaceInputFeedBack)->str:
     log.debug(info)
     '''Creazione di un nuovo analizzatore per i social'''
-    text=info.text.replace("\n"," ")
     model=daopredictor.get_by_id(nome_modello)
-    model.partial_fit(pd.Series(info.title+" "+text),pd.Series(info.label))
+    df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")]})
+    df_new = add_new_features_to_df(df)
+    model.partial_fit(df_new, pd.Series(info.label))
     daopredictor.update(model)
     return "OK"
 
@@ -70,7 +75,7 @@ def next_news(lang:str)->News:
         return {"END":"True",
             "title":"ALL NEWS ANNOTATED"}
     return news
- # News('news1','www.thegurdian.uk','sono il titolo', 'ciao, sono il testo','sono lautore', 'sono lente')    
+ # News('news1','www.thegurdian.uk','sono il titolo', 'ciao, sono il testo','sono lautore', 'sono lente')
 
     
 def new_annotation(annotation:News_annotated)-> str:
@@ -97,28 +102,28 @@ def new_doc_annotation(new_record:New_news_annotated)->str:
 
 
 def analyzer(info:InterfaceInputModel)->str:
-    print("ciao")
     log.info(info)
     log.info('''Creazione di un nuovo analizzatore per i social''')
     #log.info(info.title,info.text)
-    text=info.text.replace("\n"," ")
     model=daopredictor.get_by_id(nome_modello)
-    #X_new = pd.Series(X_title_new).map(str) + ' ' + pd.Series(X_text_new).map(str)
-    prest=model.predict_proba(pd.Series(info.title+" "+text))
+    df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n"," ")]})
+    df_new = add_new_features_to_df(df)
+    prest = model.predict_proba(df_new)
     print(prest)
     prest=pd.DataFrame(prest, columns=model.predictor.predictor.classes_)
     log.info(json.loads(prest.to_json(orient='records')))
     return json.loads(prest.to_json(orient='records'))
 
+
 def new_claim_annotated(new_claim: Claims_annotated)->str:
-    
     if dao_claim_output_es.check_claim_existence(new_claim.claim):
         new_record = {"claim" : new_claim.claim, "label": new_claim.label}
         dao_claim_output_es.add_claim(new_record)
         return('new claim added')
     else:
         return('claim already in database')
-    
+
+
 def crawler(url:str)->str:
     log.debug(url)
     return crawler_news(url)
@@ -134,8 +139,6 @@ def claim(text:str)->str:
 def popolate_claims()->str: 
     popola_all(dao_claim_output)
     return "DONE"
-
-
 
     
     
