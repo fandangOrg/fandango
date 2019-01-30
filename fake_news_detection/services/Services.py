@@ -28,13 +28,14 @@ from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
     DAOClaimsOutput
 from fake_news_detection.apps.training_model import training
+from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
  
 #oo = ModelDAO()
 daopredictor=FSMemoryPredictorDAO(picklepath)
 
-#dao_news=DAONewsElastic()
+dao_news=DAONewsElastic()
 #dao_news=DAONews()
-#dao_claim_output=DAOClaimsOutput()
+dao_claim_output=DAOClaimsOutput()
 #dao_claim_output_es=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
@@ -43,7 +44,9 @@ nome_modello="modello_en_3"
 
 
 def train_model()->str: 
-    training(nome_modello)
+    training_set = DAOTrainingPD().get_train_dataset(sample_size=1.0)
+    training_set_improved = add_new_features_to_df(df=training_set)
+    training(nome_modello,training_set_improved,daopredictor)
 
 
 def feedback(info:InterfaceInputFeedBack)->str:
@@ -102,8 +105,8 @@ def new_doc_annotation(new_record:New_news_annotated)->str:
 
 
 def analyzer(info:InterfaceInputModel)->str:
-    log.info(info)
-    log.info('''Creazione di un nuovo analizzatore per i social''')
+    #log.info(info)
+    log.info('''ANALISI NEWS''')
     #log.info(info.title,info.text)
     model=daopredictor.get_by_id(nome_modello)
     df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n"," ")]})

@@ -3,6 +3,10 @@ from pandas.core.frame import DataFrame
 from uuid import uuid4
 from fake_news_detection.business.FeaturesExtraction import len_words, count_no_alfanumber
 import pandas as pd
+import nltk
+from nltk.stem.api import StemmerI
+from nltk.stem.snowball import ItalianStemmer
+from nltk.stem import snowball
 
 
 class ColumnFEExtractor:
@@ -36,7 +40,25 @@ def getfunctionname(f):
     else:
         return f.__name__
 
-
+class Features_text_enginee:
+    def __init__(self):
+        self.__name__="unknown"
+        
+     
+    
+    
+class Filter_Text(Features_text_enginee):
+    def __init__(self,filter:List[str]):
+        super().__init__()
+        self.__name__="filter_list"
+        self.filter_words=filter
+        
+    def __call__(self,text):
+        new_text = " ".join([word for word in text.split() if word.lower() not in self.filter_words])
+        return new_text
+    
+    
+        
 def add_new_features_to_df(df:DataFrame, mapping:List[Tuple]=[('text', len_words), ('text', count_no_alfanumber), ('title', len_words), ('title', count_no_alfanumber)] ) -> DataFrame:
     extractor = ColumnFEExtractor(mapping)
     df_improved = extractor(df)
