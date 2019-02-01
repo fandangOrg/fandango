@@ -27,35 +27,36 @@ from fake_news_detection.business.ClaimsManager import popola_all, similar_claim
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
     DAOClaimsOutput
-from fake_news_detection.apps.training_model import training
+from fake_news_detection.apps.training_model import training, preprocess_df
 from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
  
-#oo = ModelDAO()
-daopredictor=FSMemoryPredictorDAO(picklepath)
+###oo = ModelDAO()
 
-dao_news=DAONewsElastic()
-#dao_news=DAONews()
-dao_claim_output=DAOClaimsOutput()
-#dao_claim_output_es=DAOClaimsOutputElastic()
+daopredictor = FSMemoryPredictorDAO(picklepath)
+daotrainingset = DAOTrainingPD()
+
+#dao_news=DAONewsElastic()
+###dao_news=DAONews()
+#dao_claim_output=DAOClaimsOutput()
+###dao_claim_output_es=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
-#model = oo.load('test')
+###model = oo.load('test')
 nome_modello="modello_en_3"
 
 
-def train_model()->str: 
-    training_set = DAOTrainingPD().get_train_dataset(sample_size=1.0)
-    training_set_improved = add_new_features_to_df(df=training_set)
-    training(nome_modello,training_set_improved,daopredictor)
+def train_model()->str:
+    training_set = daotrainingset.get_train_dataset(sample_size=0.01)
+    training_set_final = preprocess_df(training_set)
+    training(nome_modello, training_set_final, daopredictor)
 
 
 def feedback(info:InterfaceInputFeedBack)->str:
     log.debug(info)
-    '''Creazione di un nuovo analizzatore per i social'''
     model=daopredictor.get_by_id(nome_modello)
     df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")]})
-    df_new = add_new_features_to_df(df)
-    model.partial_fit(df_new, pd.Series(info.label))
+    training_set_final = preprocess_df(df)
+    model.partial_fit(training_set_final, pd.Series(info.label))
     daopredictor.update(model)
     return "OK"
 
@@ -105,15 +106,12 @@ def new_doc_annotation(new_record:New_news_annotated)->str:
 
 
 def analyzer(info:InterfaceInputModel)->str:
-    #log.info(info)
     log.info('''ANALISI NEWS''')
-    #log.info(info.title,info.text)
-    model=daopredictor.get_by_id(nome_modello)
+    model = daopredictor.get_by_id(nome_modello)
     df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n"," ")]})
-    df_new = add_new_features_to_df(df)
+    df_new = preprocess_df(df)
     prest = model.predict_proba(df_new)
-    print(prest)
-    prest=pd.DataFrame(prest, columns=model.predictor.predictor.classes_)
+    prest = pd.DataFrame(prest, columns=model.predictor.predictor.classes_)
     log.info(json.loads(prest.to_json(orient='records')))
     return json.loads(prest.to_json(orient='records'))
 

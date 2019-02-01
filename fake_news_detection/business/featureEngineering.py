@@ -1,24 +1,21 @@
 from typing import List, Tuple
 from pandas.core.frame import DataFrame
 from uuid import uuid4
-from fake_news_detection.business.FeaturesExtraction import len_words, count_no_alfanumber
-import pandas as pd
-import nltk
-from nltk.stem.api import StemmerI
-from nltk.stem.snowball import ItalianStemmer
-from nltk.stem import snowball
 
 
 class ColumnFEExtractor:
     def __init__(self, mapping: List[Tuple]):
         self.mapping = mapping
 
-    def __call__(self, objects):
+    def __call__(self, objects, cmd:bool=0):
         if isinstance(objects, DataFrame):
             for couple in self.mapping:
                 col = couple[0]
                 fun = couple[1]
-                objects[col + "_" + getfunctionname(fun)] = objects[col].apply(fun)
+                if cmd == 0:
+                    objects[col + "_" + self.__getfunctionname(fun)] = objects[col].apply(fun)  #Add new column
+                else:
+                    objects[col] = objects[col].apply(fun)  #Modify the same column
             return objects
         else:
             ret = []
@@ -29,40 +26,33 @@ class ColumnFEExtractor:
                     fun = couple[1]
                     value = obj.get(col)
                     if value:
-                        obj[col + "_" + getfunctionname(fun)] = fun(obj[col])
+                        if cmd == 0:
+                            obj[col + "_" + self.__getfunctionname(fun)] = fun(obj[col])  #Add new column
+                        else:
+                            obj[col] = fun(obj[col])  #Modify the same column
                 ret.append(obj)
             return ret
 
+    def __getfunctionname(self, f):
+        if f.__name__ == "<lambda>":
+            return str(uuid4())
+        else:
+            return f.__name__
 
-def getfunctionname(f):
-    if f.__name__ == "<lambda>":
-        return str(uuid4())
-    else:
-        return f.__name__
 
-class Features_text_enginee:
-    def __init__(self):
-        self.__name__="unknown"
-        
-     
-    
-    
-class Filter_Text(Features_text_enginee):
-    def __init__(self,filter:List[str]):
-        super().__init__()
-        self.__name__="filter_list"
-        self.filter_words=filter
-        
-    def __call__(self,text):
-        new_text = " ".join([word for word in text.split() if word.lower() not in self.filter_words])
-        return new_text
-    
-    
-        
-def add_new_features_to_df(df:DataFrame, mapping:List[Tuple]=[('text', len_words), ('text', count_no_alfanumber), ('title', len_words), ('title', count_no_alfanumber)] ) -> DataFrame:
+
+def add_new_features_to_df(df:DataFrame, mapping:List[Tuple]) -> DataFrame:
     extractor = ColumnFEExtractor(mapping)
-    df_improved = extractor(df)
+    df_improved = extractor(df, 0)
     return df_improved
+
+
+
+def preprocess_features_of_df(df:DataFrame, mapping:List[Tuple]) -> DataFrame:
+    extractor = ColumnFEExtractor(mapping)
+    df_modified = extractor(df, 1)
+    return df_modified
+
 
 
 

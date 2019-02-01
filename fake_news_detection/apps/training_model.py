@@ -1,29 +1,35 @@
-import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
-from fake_news_detection.business.configurationModel import create_trasformer_predictor
-from fake_news_detection.business.featureEngineering import add_new_features_to_df,\
-    Filter_Text
+from ds4biz_predictor_core.factories.scikit_predictor_factories import TransformingPredictorFactory
+from ds4biz_predictor_core.model.creation_requests import CreationRequest
+from ds4biz_predictor_core.model.transformers.transformers import ColumnTransformer
+from fake_news_detection.business.featureEngineering import add_new_features_to_df, preprocess_features_of_df
+from fake_news_detection.config.MLprocessConfig import transforming_mapping, name_classifier_1, params_classifier_1, \
+    text_preprocessing_mapping, new_features_mapping, name_classifier_2, params_classifier_2
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 from fake_news_detection.config.AppConfig import picklepath
 from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
-from fake_news_detection.business.FeaturesExtraction import len_words,\
-    count_no_alfanumber
+from pandas import DataFrame
 
 
-#daopredictor=FSMemoryPredictorDAO(picklepath)
 
-#DAOTrainingPD()
-def training(model_name:str, training_set_improved,daopredictor):
-    #training_set = dao_train.get_train_dataset(sample_size=sample_size)
-    #training_set_improved = add_new_features_to_df(df=training_set)
-    y = training_set_improved['label']
-    X = training_set_improved.drop(['label'], axis=1)
+def preprocess_df(training_set:DataFrame) -> DataFrame:
+    training_set_modified = preprocess_features_of_df(df=training_set.dropna(), mapping=text_preprocessing_mapping)
+    print("\n 1) Training_set_modified: \n", training_set_modified.iloc[0, :])
+    training_set_improved = add_new_features_to_df(df=training_set_modified.dropna(), mapping=new_features_mapping)
+    print("\n 2) Training_set_improved: \n", training_set_improved.iloc[0, :])
+    training_set_final = training_set_improved.dropna()
+    print("\n 3) Training_set_final: \n", training_set_final.iloc[0, :])
+    return training_set_final
+
+
+
+def training(model_name:str, training_set_final, daopredictor):
+    y = training_set_final['label']
+    X = training_set_final.drop(['label'], axis=1)
     print("Shape of X:", X.shape)
     print("Columns of X:", X.columns)
-    model = create_trasformer_predictor(name_classifier = "MultinomialNB",
-                                        params_classifier = {'alpha':0.5},
-                                        transformer_title = TfidfVectorizer(min_df=10, stop_words='english', lowercase=True),
-                                        transformer_text = TfidfVectorizer(min_df=15, ngram_range=(2, 3), stop_words='english', lowercase=True))
+    request_transformer = ColumnTransformer(transforming_mapping)
+    request_model = CreationRequest(name_classifier_2, params_classifier_2)
+    model = TransformingPredictorFactory().create(request_model, request_transformer)
     model.id = model_name
     model.fit(X, y)
     daopredictor.save(model)
@@ -32,33 +38,11 @@ def training(model_name:str, training_set_improved,daopredictor):
     print("   - Precision:", model.predictor.precision)
     print("   - Recall:", model.predictor.recall)
 
-#===============================================================================
-# 
-# def predict(nome_modello):
-#     training_set = DAOTrainingPD().get_train_dataset(sample_size=0.05)
-#     X = training_set[['title', 'text']]
-#     prediction = daopredictor.get_by_id(nome_modello).predict(X)
-#     print(prediction)
-# 
-# 
-# def predict_proba(nome_modello):
-#     training_set = DAOTrainingPD().get_train_dataset(sample_size=0.05)
-#     X = training_set[['title', 'text']]
-#     prob_distribution = daopredictor.get_by_id(nome_modello).predict_proba(X)
-#     print(daopredictor.get_by_id(nome_modello).predictor.predictor.classes_)
-#     np.set_printoptions(formatter={'float_kind': '{:f}'.format})
-#     print(prob_distribution)
-#===============================================================================
 
 
 if __name__ == '__main__':
-    daopredictor=FSMemoryPredictorDAO(picklepath)
-    training_set = DAOTrainingPD().get_train_dataset(sample_size=1)
-    #training_set_improved = add_new_features_to_df(df=training_set,mapping=[('title',Filter_Text(filter=["the"]))])
-    training_set_improved = add_new_features_to_df(df=training_set,mapping=[('text', len_words), ('text', count_no_alfanumber), ('title', len_words), ('title', count_no_alfanumber),('text*',Filter_Text(filter=["the"]))])
-    training_set_improved =training_set
-    training("modello_en2",training_set_improved,daopredictor)
-    #===========================================================================
-    # predict("modello_en2")
-    # predict_proba("modello_en2")
-    #===========================================================================
+    daopredictor = FSMemoryPredictorDAO(picklepath)
+    daotrainingset = DAOTrainingPD()
+    training_set = daotrainingset.get_train_dataset(sample_size=0.01)
+    training_set_final = preprocess_df(training_set)
+    training("modello_en_l", training_set_final, daopredictor)
