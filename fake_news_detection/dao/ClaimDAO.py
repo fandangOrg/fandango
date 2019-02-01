@@ -247,7 +247,7 @@ class DAOClaimsOutputElastic:
        
 if __name__ == '__main__':
     name=train_claims+"/train.tsv"
-   # dao_input= DAOClaimInputCSV(name)
+    #dao_input= DAOClaimInputCSV(name)
     #for claim in dao_input.all():
     #    print(claim)
         

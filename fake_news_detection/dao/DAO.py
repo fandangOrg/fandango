@@ -39,7 +39,7 @@ class DAONewsElastic(DAONews):
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news 
         self.docType = docType_article
-        self.domain_name_index = index_name_domain
+        #self.domain_name_index = index_name_domain
         
         
     def create_source(self,news):
@@ -56,7 +56,7 @@ class DAONewsElastic(DAONews):
                 }
             lista_operazioni.append( {
            '_op_type': 'index',
-           '_index': self.domain_name_index,
+           '_index': self.index_name,
            '_type': self.docType,
            '_source': source
            })
