@@ -2,8 +2,7 @@ from ds4biz_predictor_core.factories.scikit_predictor_factories import Transform
 from ds4biz_predictor_core.model.creation_requests import CreationRequest
 from ds4biz_predictor_core.model.transformers.transformers import ColumnTransformer
 from fake_news_detection.business.featureEngineering import add_new_features_to_df, preprocess_features_of_df
-from fake_news_detection.config.MLprocessConfig import transforming_mapping, name_classifier_1, params_classifier_1, \
-    text_preprocessing_mapping, new_features_mapping, name_classifier_2, params_classifier_2
+from fake_news_detection.config.MLprocessConfig import transforming_mapping, name_classifier_1, params_classifier_1, text_preprocessing_mapping, new_features_mapping, name_classifier_2, params_classifier_2
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 from fake_news_detection.config.AppConfig import picklepath
 from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
@@ -45,4 +44,4 @@ if __name__ == '__main__':
     daotrainingset = DAOTrainingPD()
     training_set = daotrainingset.get_train_dataset(sample_size=0.01)
     training_set_final = preprocess_df(training_set)
-    training("modello_en_l", training_set_final, daopredictor)
+    training("modello_en_all", training_set_final, daopredictor)

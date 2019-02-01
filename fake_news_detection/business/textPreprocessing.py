@@ -6,6 +6,7 @@ from nltk.corpus import stopwords
 from fake_news_detection.config.constants import LANG_SUPPORTED, QUOTES, LANG_MAPPING
 import numpy as np
 
+i=1
 
 class TextPreprocessor():
 
@@ -20,11 +21,14 @@ class TextPreprocessor():
         self.__name__ = self.__class__.__name__
         self.stopwords = stopwords.words(LANG_MAPPING[self.lang][0])
         self.stemmer = SnowballStemmer(LANG_MAPPING[self.lang][1])
-        self.nlp = spacy.load(LANG_MAPPING[self.lang][2])
+        self.nlp = spacy.load(LANG_MAPPING[self.lang][2], disable=["tagger", "parser", "ner"])
+        self.i = 1
 
 
     def __call__(self, text:str) -> str:
         try:
+            print(self.i)
+            self.i+=1
             text = self.encode(text)
             text = self.remove_chars(text=text, in_tab=self.invalid_chars)
 
@@ -64,7 +68,9 @@ class TextPreprocessor():
         new_doc = []
         for token in doc:
             token_txt = token.text.lower().strip()
-            if token.is_space or token.is_bracket or token.is_quote or (self.rm_stopwords and token.is_stop) or (self.rm_stopwords and token_txt in self.stopwords):
+            if token.is_space or token.is_bracket or token.is_quote or (self.rm_stopwords and token.is_stop):
+                continue
+            if self.rm_stopwords and token_txt in self.stopwords:
                 continue
             new_doc.append(self.stemmer.stem(token_txt))
         return (" ".join(new_doc)).strip()
@@ -74,10 +80,11 @@ class TextPreprocessor():
         doc = self.nlp(text)
         new_doc = []
         for token in doc:
-            #token_txt = token.text.lower().strip()
+            token_txt = token.text.lower().strip()
             if token.is_space or token.is_bracket or token.is_quote or (self.rm_stopwords and token.is_stop):
                 continue
-            #if self.rm_stopwords and token_txt in self.stopwords: continue
+            if self.rm_stopwords and token_txt in self.stopwords:
+                continue
             new_doc.append(token.lemma_.lower().strip())
         return (" ".join(new_doc)).strip()
 
@@ -87,7 +94,9 @@ class TextPreprocessor():
         new_doc = []
         for token in doc:
             token_txt = token.text.lower().strip()
-            if token.is_space or token.is_bracket or token.is_quote or (self.rm_stopwords and token.is_stop) or (self.rm_stopwords and token_txt in self.stopwords):
+            if token.is_space or token.is_bracket or token.is_quote or (self.rm_stopwords and token.is_stop):
+                continue
+            if self.rm_stopwords and token_txt in self.stopwords:
                 continue
             new_doc.append(token_txt)
         return (" ".join(new_doc)).strip()

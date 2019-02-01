@@ -13,7 +13,7 @@ class ColumnFEExtractor:
                 col = couple[0]
                 fun = couple[1]
                 if cmd == 0:
-                    objects[col + "_" + self.__getfunctionname(fun)] = objects[col].apply(fun)  #Add new column
+                    objects[col + "_" + self.__getfunctionname(fun)] = objects[col].apply(fun)   #Add new column
                 else:
                     objects[col] = objects[col].apply(fun)  #Modify the same column
             return objects
