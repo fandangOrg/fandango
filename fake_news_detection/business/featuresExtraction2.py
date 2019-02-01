@@ -52,6 +52,25 @@ class NegativeWordsCounter(FeaturesExtractor):
         except:
             return np.nan
 
+class PositiveWordsCounter(FeaturesExtractor):
+    def __call__(self, text:str) -> float:
+        try:
+            doc = Text(text, hint_language_code=self.lang)
+            return log(len([word for sentence in doc.sentences for word in sentence.words if word.polarity == 1]) + 1)
+        except:
+            return np.nan
+
+
+class SentimentWordsCounter(FeaturesExtractor):
+    def __call__(self, text:str) -> float:
+        try:
+            doc = Text(text, hint_language_code=self.lang)
+            pos = log(len([word for sentence in doc.sentences for word in sentence.words if word.polarity == +1]) + 1)
+            neg = log(len([word for sentence in doc.sentences for word in sentence.words if word.polarity == -1]) + 1)
+            return (pos+neg)/2.0
+        except:
+            return np.nan
+
 
 class EntitiesCounter(FeaturesExtractor):
     def __call__(self, text:str) -> float:

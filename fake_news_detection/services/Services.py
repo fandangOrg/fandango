@@ -10,7 +10,6 @@ from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputMode
     InterfaceInputFeedBack, News, News_annotated, News_domain,\
     New_news_annotated, Claims_annotated
 from fake_news_detection.dao.PickleDAO import ModelDAO
-from fake_news_detection.business.Model import SklearnModel
 from flask_cors.extension import CORS
 import json
 from fake_news_detection.config import AppConfig
@@ -45,13 +44,13 @@ log = getLogger(__name__)
 nome_modello="modello_en_3"
 
 
-def train_model()->str:
+def train_model() -> str:
     training_set = daotrainingset.get_train_dataset(sample_size=0.01)
     training_set_final = preprocess_df(training_set)
     training(nome_modello, training_set_final, daopredictor)
 
 
-def feedback(info:InterfaceInputFeedBack)->str:
+def feedback(info:InterfaceInputFeedBack) -> str:
     log.debug(info)
     model=daopredictor.get_by_id(nome_modello)
     df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")]})
@@ -61,7 +60,7 @@ def feedback(info:InterfaceInputFeedBack)->str:
     return "OK"
 
 
-def get_languages()->DS4BizList(Language):
+def get_languages() -> DS4BizList(Language):
     l= list()
     l.append(Language("en","English",True))
     l.append(Language("it","Italian",True))
@@ -71,7 +70,7 @@ def get_languages()->DS4BizList(Language):
     return l
 
 
-def next_news(lang:str)->News:
+def next_news(lang:str) -> News:
     log.debug(lang)
     try:
         news=dao_news.next(languages=lang)
@@ -82,7 +81,7 @@ def next_news(lang:str)->News:
  # News('news1','www.thegurdian.uk','sono il titolo', 'ciao, sono il testo','sono lautore', 'sono lente')
 
     
-def new_annotation(annotation:News_annotated)-> str:
+def new_annotation(annotation:News_annotated) -> str:
     log.debug('id: {id}, label: {lbl}'.format(id= annotation.id, lbl=annotation.label))
     annotation.label = "A#"+annotation.label
     dao_news.set_label(annotation.id, annotation.label)
@@ -95,7 +94,7 @@ def domain_annotation(list_u:News_domain) -> str:
     return( "DONE")
 
 
-def new_doc_annotation(new_record:New_news_annotated)->str:
+def new_doc_annotation(new_record:New_news_annotated) -> str:
     news_crawled = crawler_news(new_record.url)
     new_record.label ="M#"+new_record.label
     news_crawled['label'] = new_record.label
@@ -105,7 +104,7 @@ def new_doc_annotation(new_record:New_news_annotated)->str:
     return('DONE')
 
 
-def analyzer(info:InterfaceInputModel)->str:
+def analyzer(info:InterfaceInputModel) -> str:
     log.info('''ANALISI NEWS''')
     model = daopredictor.get_by_id(nome_modello)
     df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n"," ")]})
@@ -116,7 +115,7 @@ def analyzer(info:InterfaceInputModel)->str:
     return json.loads(prest.to_json(orient='records'))
 
 
-def new_claim_annotated(new_claim: Claims_annotated)->str:
+def new_claim_annotated(new_claim: Claims_annotated) -> str:
     if dao_claim_output_es.check_claim_existence(new_claim.claim):
         new_record = {"claim" : new_claim.claim, "label": new_claim.label}
         dao_claim_output_es.add_claim(new_record)
@@ -125,19 +124,19 @@ def new_claim_annotated(new_claim: Claims_annotated)->str:
         return('claim already in database')
 
 
-def crawler(url:str)->str:
+def crawler(url:str) -> str:
     log.debug(url)
     return crawler_news(url)
 
 
-def claim(text:str)->str:
+def claim(text:str) -> str:
     j = request.get_json()  #key txt of the dictionary
     text = j.get("text")
     j_resp =similar_claims(dao_claim_output,text)
     return j_resp
 
 
-def popolate_claims()->str: 
+def popolate_claims() -> str:
     popola_all(dao_claim_output)
     return "DONE"
 

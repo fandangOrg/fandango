@@ -42,6 +42,6 @@ def training(model_name:str, training_set_final, daopredictor):
 if __name__ == '__main__':
     daopredictor = FSMemoryPredictorDAO(picklepath)
     daotrainingset = DAOTrainingPD()
-    training_set = daotrainingset.get_train_dataset(sample_size=0.01)
+    training_set = daotrainingset.get_train_dataset(sample_size=0.05)
     training_set_final = preprocess_df(training_set)
     training("modello_en_all", training_set_final, daopredictor)

@@ -1,6 +1,7 @@
 from fake_news_detection.business.textPreprocessing import TextPreprocessor
 from fake_news_detection.config.constants import QUOTES
-from fake_news_detection.business.featuresExtraction2 import PositiveWordsCounter, NegativeWordsCounter, EntitiesCounter, WordsCounter, SentencesCounter
+from fake_news_detection.business.featuresExtraction2 import PositiveWordsCounter, NegativeWordsCounter, \
+    EntitiesCounter, WordsCounter, SentencesCounter, SentimentWordsCounter
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
 
@@ -14,23 +15,27 @@ text_preprocessing_mapping = [
                              ]
 
 new_features_mapping = [
-                            ('text', WordsCounter(lang=lang_code)),
-                            ('text', SentencesCounter(lang=lang_code)),
-                            ('text', PositiveWordsCounter(lang=lang_code)),
-                            ('text', NegativeWordsCounter(lang=lang_code)),
-                            ('text', EntitiesCounter(lang=lang_code)),
-                            ('title', EntitiesCounter(lang=lang_code))
+                            #('text', WordsCounter(lang=lang_code)),
+                            ('title', WordsCounter(lang=lang_code)),
+                            #('text', SentencesCounter(lang=lang_code)),
+                            #('text', PositiveWordsCounter(lang=lang_code)),
+                            #('text', NegativeWordsCounter(lang=lang_code)),
+                            ('text', SentimentWordsCounter(lang=lang_code)),
+                            ('text', EntitiesCounter(lang=lang_code))
+                            #('title', EntitiesCounter(lang=lang_code))
                         ]
 
 transforming_mapping = {
                          'title': TfidfVectorizer(min_df=10, stop_words=lang_name, lowercase=True),
                          'text': TfidfVectorizer(min_df=15, ngram_range=(2, 3), stop_words=lang_name, lowercase=True),
-                         'text_WordsCounter' : MinMaxScaler(feature_range=(0, 1)),
-                         'text_SentencesCounter' : MinMaxScaler(feature_range=(0, 1)),
-                         'text_PositiveWordsCounter' : MinMaxScaler(feature_range=(0, 1)),
-                         'text_NegativeWordsCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         #'text_WordsCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         'title_WordsCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         #'text_SentencesCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         #'text_PositiveWordsCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         #'text_NegativeWordsCounter' : MinMaxScaler(feature_range=(0, 1)),
                          'text_EntitiesCounter' : MinMaxScaler(feature_range=(0, 1)),
-                         'title_EntitiesCounter': MinMaxScaler(feature_range=(0, 1))
+                         #'title_EntitiesCounter': MinMaxScaler(feature_range=(0, 1))
+                         'text_SentimentWordsCounter' : MinMaxScaler(feature_range=(0, 1))
                        }
 
 name_classifier_1 = "MultinomialNB"

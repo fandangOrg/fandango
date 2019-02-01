@@ -22,13 +22,13 @@ class TextPreprocessor():
         self.stopwords = stopwords.words(LANG_MAPPING[self.lang][0])
         self.stemmer = SnowballStemmer(LANG_MAPPING[self.lang][1])
         self.nlp = spacy.load(LANG_MAPPING[self.lang][2], disable=["tagger", "parser", "ner"])
-        self.i = 1
+        #self.i = 1
 
 
     def __call__(self, text:str) -> str:
         try:
-            print(self.i)
-            self.i+=1
+            #print(self.i)
+            #self.i+=1
             text = self.encode(text)
             text = self.remove_chars(text=text, in_tab=self.invalid_chars)
 

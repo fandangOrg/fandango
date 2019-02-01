@@ -1,6 +1,8 @@
 from typing import List, Tuple
 from pandas.core.frame import DataFrame
 from uuid import uuid4
+import swifter
+
 
 
 class ColumnFEExtractor:
@@ -13,9 +15,11 @@ class ColumnFEExtractor:
                 col = couple[0]
                 fun = couple[1]
                 if cmd == 0:
-                    objects[col + "_" + self.__getfunctionname(fun)] = objects[col].apply(fun)   #Add new column
+                    values = objects[col].swifter.apply(fun)
+                    objects[col + "_" + self.__getfunctionname(fun)] = values  # Add new column
                 else:
-                    objects[col] = objects[col].apply(fun)  #Modify the same column
+                    values = objects[col].swifter.apply(fun)
+                    objects[col] = values                                      # Modify the same column
             return objects
         else:
             ret = []
