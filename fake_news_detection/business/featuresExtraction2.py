@@ -3,6 +3,7 @@ from abc import ABC, abstractmethod
 from fake_news_detection.config.constants import LANG_SUPPORTED
 import numpy as np
 from math import log
+from string import punctuation
 
 
 class FeaturesExtractor(ABC):
@@ -15,6 +16,26 @@ class FeaturesExtractor(ABC):
     @abstractmethod
     def __call__(self, text:str) -> int:
         pass
+
+
+class PunctuationCounter(FeaturesExtractor):
+    def __call__(self, text:str) -> float:
+        try:
+            count = 0
+            for p in punctuation:
+                if p in text:
+                    count += 1
+            return log(count + 1)
+        except:
+            return np.nan
+
+
+class CharsCounter(FeaturesExtractor):
+    def __call__(self, text:str) -> float:
+        try:
+            return log(len(text) + 1)
+        except:
+            return np.nan
 
 
 class WordsCounter(FeaturesExtractor):
@@ -65,9 +86,14 @@ class SentimentWordsCounter(FeaturesExtractor):
     def __call__(self, text:str) -> float:
         try:
             doc = Text(text, hint_language_code=self.lang)
-            pos = log(len([word for sentence in doc.sentences for word in sentence.words if word.polarity == +1]) + 1)
-            neg = log(len([word for sentence in doc.sentences for word in sentence.words if word.polarity == -1]) + 1)
-            return (pos+neg)/2.0
+            pos = 0
+            neg = 0
+            for word in doc.words:
+                if word.polarity == +1:
+                    pos += 1
+                elif word.polarity == -1:
+                    neg += 1
+            return log(pos+1) - log(neg+1)
         except:
             return np.nan
 
