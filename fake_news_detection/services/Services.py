@@ -26,7 +26,7 @@ from fake_news_detection.business.ClaimsManager import popola_all, similar_claim
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
     DAOClaimsOutput
-from fake_news_detection.apps.training_model import training, preprocess_df
+from fake_news_detection.apps.training_model import training, preprocess_df, load_df
 from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
 from typing import List
  
@@ -46,7 +46,8 @@ nome_modello="modello_en_3"
 
 
 def train_model() -> str:
-    training_set = daotrainingset.get_train_dataset(sample_size=0.01)
+    training_set = load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
+    #training_set = daotrainingset.get_train_dataset(sample_size=0.01)
     training_set_final = preprocess_df(training_set)
     training(nome_modello, training_set_final, daopredictor)
 

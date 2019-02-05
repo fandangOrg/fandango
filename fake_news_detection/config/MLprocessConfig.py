@@ -1,9 +1,10 @@
 from fake_news_detection.business.textPreprocessing import TextPreprocessor
 from fake_news_detection.config.constants import QUOTES
 from fake_news_detection.business.featuresExtraction2 import PositiveWordsCounter, NegativeWordsCounter, \
-    EntitiesCounter, WordsCounter, SentencesCounter, SentimentWordsCounter
+    EntitiesCounter, WordsCounter, SentencesCounter, SentimentWordsCounter, CharsCounter, PunctuationCounter
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
+from math import log
 
 
 lang_code = "en"
@@ -15,31 +16,38 @@ text_preprocessing_mapping = [
                              ]
 
 new_features_mapping = [
-                            #('text', WordsCounter(lang=lang_code)),
-                            ('title', WordsCounter(lang=lang_code)),
+                            ('text', CharsCounter(lang=lang_code)),
+                            ('title', CharsCounter(lang=lang_code)),
+                            ('text', PunctuationCounter(lang=lang_code)),
+                            ('title', PunctuationCounter(lang=lang_code)),
                             #('text', SentencesCounter(lang=lang_code)),
                             #('text', PositiveWordsCounter(lang=lang_code)),
                             #('text', NegativeWordsCounter(lang=lang_code)),
-                            ('text', SentimentWordsCounter(lang=lang_code)),
-                            ('text', EntitiesCounter(lang=lang_code))
+                            #('text', SentimentWordsCounter(lang=lang_code)),
+                            #('text', EntitiesCounter(lang=lang_code))
                             #('title', EntitiesCounter(lang=lang_code))
                         ]
 
 transforming_mapping = {
-                         'title': TfidfVectorizer(min_df=10, stop_words=lang_name, lowercase=True),
-                         'text': TfidfVectorizer(min_df=15, ngram_range=(2, 3), stop_words=lang_name, lowercase=True),
-                         #'text_WordsCounter' : MinMaxScaler(feature_range=(0, 1)),
-                         'title_WordsCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         'title': TfidfVectorizer(min_df=5, ngram_range=(1, 1), stop_words=lang_name, lowercase=True),
+                         'text': TfidfVectorizer(min_df=10, ngram_range=(1, 2), stop_words=lang_name, lowercase=True),
+                         'text_CharsCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         'title_CharsCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         'text_PunctuationCounter': MinMaxScaler(feature_range=(0, 1)),
+                         'title_PunctuationCounter': MinMaxScaler(feature_range=(0, 1)),
                          #'text_SentencesCounter' : MinMaxScaler(feature_range=(0, 1)),
                          #'text_PositiveWordsCounter' : MinMaxScaler(feature_range=(0, 1)),
                          #'text_NegativeWordsCounter' : MinMaxScaler(feature_range=(0, 1)),
-                         'text_EntitiesCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         #'text_EntitiesCounter' : MinMaxScaler(feature_range=(0, 1)),
                          #'title_EntitiesCounter': MinMaxScaler(feature_range=(0, 1))
-                         'text_SentimentWordsCounter' : MinMaxScaler(feature_range=(0, 1))
+                         #'text_SentimentWordsCounter' : MinMaxScaler(feature_range=(0, 1))
                        }
 
-name_classifier_1 = "MultinomialNB"
-params_classifier_1 = {'alpha':0.5}
 
-name_classifier_2 = "SGDClassifier"
-params_classifier_2 = {'loss':"log", "max_iter":100, 'n_jobs':-1}
+### CLASSIFIERS ###
+
+#name_classifier = "MultinomialNB"
+#params_classifier = {'alpha':0.5}
+
+name_classifier = "SGDClassifier"
+params_classifier = {'loss':"log", "max_iter":10, 'n_jobs':-1}
