@@ -53,8 +53,8 @@ class DAOTrainingPD:
         #df1= pd.DataFrame(columns=['title','text','label'])
         for dir in os.listdir(self.path ):
             if dir == "fake":
-                for file in os.listdir(self.path  + dir):
-                    with open(self.path  + dir + "/" +file) as f:
+                for file in os.listdir(self.path  +"/"+ dir):
+                    with open(self.path +"/"+  dir + "/" +file) as f:
                         dizio = dict()
                         dizio['title'] = " ".join(f.readlines()[:1])
                         dizio['text'] = " ".join(f.readlines()[2:])
@@ -63,8 +63,8 @@ class DAOTrainingPD:
                         df = pd.concat([df, df1], axis =0)
                         
             elif dir == "legit":
-                for file in os.listdir(self.path  + dir):
-                    with open(self.path  + dir + "/"+ file) as f:
+                for file in os.listdir(self.path+ "/"  + dir):
+                    with open(self.path +"/" + dir + "/"+ file) as f:
                         dizio = dict()
                         dizio['title'] = " ".join(f.readlines()[:1])
                         dizio['text'] = " ".join(f.readlines()[1:])
@@ -299,8 +299,8 @@ if __name__ == '__main__':
     #oo = DAOTrainingPD(dataset_beta)
     #print(oo.get_train_dataset())
     ii = DAOTrainingElasticByDomains()
-    ii.get_train_dataset_from_domains("/home/camila/Scrivania/url_list_labeled.txt")
-    
+    p = ii.get_train_dataset_from_domains("/home/camila/Scrivania/url_list_labeled.txt")
+    p.to_csv("/home/camila/Scrivania/Fandango_data.tsv",index = False, sep= "\t")
     
     
     

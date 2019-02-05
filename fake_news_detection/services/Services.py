@@ -28,16 +28,17 @@ from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
     DAOClaimsOutput
 from fake_news_detection.apps.training_model import training, preprocess_df
 from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
+from typing import List
  
 ###oo = ModelDAO()
 
 daopredictor = FSMemoryPredictorDAO(picklepath)
 daotrainingset = DAOTrainingPD()
 
-#dao_news=DAONewsElastic()
-###dao_news=DAONews()
-#dao_claim_output=DAOClaimsOutput()
-###dao_claim_output_es=DAOClaimsOutputElastic()
+dao_news=DAONewsElastic()
+#dao_news=DAONews()
+dao_claim_output=DAOClaimsOutput()
+dao_claim_output_es=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
 ###model = oo.load('test')
@@ -130,10 +131,16 @@ def crawler(url:str) -> str:
 
 
 def claim(text:str) -> str:
+    '''
     j = request.get_json()  #key txt of the dictionary
     text = j.get("text")
-    j_resp =similar_claims(dao_claim_output,text)
+    j_resp = similar_claims(dao_output=dao_claim_output_es,text=text)
     return j_resp
+    '''
+    print(text)
+    res = dao_claim_output_es.get_similarity_claims_from_text(text)
+    print(res)
+    return(res)
 
 
 def popolate_claims() -> str:

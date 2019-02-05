@@ -19,7 +19,8 @@ def similar_claims(dao_output, text):
     @param text: str
     @return: lista_claim: list
     """
-    return dao_output.get_similarity_claims_from_text(text)
+    
+    return DAOClaimsOutputElastic.get_similarity_claims_from_text(text)
 
     
         
@@ -48,4 +49,6 @@ def popola_all(dao_output):
 if __name__  == "__main__":
     out = DAOClaimsOutputElastic()
     #similar_claims(dao_output=out,text="trump gay")
-    popola_all(DAOClaimsOutputElastic())
+    popola_all(out)
+    
+    

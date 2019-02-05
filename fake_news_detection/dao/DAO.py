@@ -5,7 +5,7 @@ Created on Jan 8, 2019
 '''
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article
+    index_name_news, docType_article, domain_index, domain_docType
 from fake_news_detection.model.InterfacceComunicazioni import News
 import random
 from elasticsearch import helpers
@@ -39,8 +39,8 @@ class DAONewsElastic(DAONews):
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news 
         self.docType = docType_article
-        #self.domain_name_index = index_name_domain
-        
+        self.domain_name_index = domain_index
+        self.docType_domain = domain_docType
         
     def create_source(self,news):
         """
@@ -56,8 +56,8 @@ class DAONewsElastic(DAONews):
                 }
             lista_operazioni.append( {
            '_op_type': 'index',
-           '_index': self.index_name,
-           '_type': self.docType,
+           '_index': self.domain_name_index,
+           '_type': self.docType_domain,
            '_source': source
            })
         self.bulk_on_elastic(lista_operazioni)

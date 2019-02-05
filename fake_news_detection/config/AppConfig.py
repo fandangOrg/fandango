@@ -55,9 +55,14 @@ docType_article = os.environ.get("DOCTYPE_NEWS") or config.get("elasticsearch", 
 docType = os.environ.get("INDEX_ELASTIC") or config.get("elasticsearch", "doctype")
 index_name_claims = os.environ.get("NEW_MAPPED_INDEX") or config.get("elasticsearch", "claim_index")
 
-#index_name_domain= os.environ.get("NEW_DOMAIN_INDEX") or config.get("elasticsearch", "new_domain_index")
-mapping_domain_index = pkg_resources.resource_filename("fake_news_detection.config", "mapping_domain.json") # @UndefinedVariable
 
+
+domain_index= os.environ.get("DOMAI_INDEX") or config.get("elasticsearch", "domain_index")
+domain_docType= os.environ.get("DOMAIN_DOCTYPE") or config.get("elasticsearch", "domain_docType")
+
+
+#mapping_domain_index = pkg_resources.resource_filename("fake_news_detection.config", "mapping_domain.json") # @UndefinedVariable
+mapping_claim = os.environ.get("MAPPING_CLAIM") or config.get("elasticsearch", "mapping_claim")
 #dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")
 
 if __name__ == '__main__':

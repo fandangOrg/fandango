@@ -18,7 +18,8 @@ doctype = document
 mapping = /home/camila/workspace/fandango-fake-news/fake_news_detection/config/new_mapping.json
 #new_mapped_index = claims
 claim_index = claims
-new_domain_index = domain_annotated
+domain_index = domain
+domain_docType =  document
 
 [service]
 url = http://0.0.0.0:9800/

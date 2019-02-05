@@ -9,7 +9,7 @@ Created on 27 set 2018
 
 from fake_news_detection.config.AppConfig import  get_elastic_connector,\
     docType, mapping, index_name_claims, train_claims,\
-    mapping_domain_index
+    mapping_claim
 from fake_news_detection.utils.logger import getLogger
 from elasticsearch import helpers
 import csv
@@ -99,6 +99,7 @@ class DAOClaimsOutputElastic:
         
         
     def get_similarity_claims_from_text(self,text):
+        
         """
         retrieve a similar claim, querying against elastic
         @param text: str
@@ -185,17 +186,17 @@ class DAOClaimsOutputElastic:
                     log.info("Could not create new index: {ind}".format(ind =self.index_name))
                     raise FandangoException("Could not create new index: {ind}".format(ind = self.index_name))
             
-        if self.es_client.indices.exists(index= self.self.domain_name_index):
-            self.__delete_index(self.domain_name_index)
+        if self.es_client.indices.exists(index= self.index_name):
+            self.__delete_index(self.index_name)
             
-            with open(mapping_domain_index , "r") as f:
+            with open(mapping_claim , "r") as f:
                 body = f.read()
                 try:
-                    self.es_client.indices.create(index = self.domain_name_index, body = body)
-                    log.info("Mapping successfully loaded for index: {ind}".format(ind =self.domain_name_index))
+                    self.es_client.indices.create(index = self.index_name, body = body)
+                    log.info("Mapping successfully loaded for index: {ind}".format(ind =self.index_name))
                 except:
-                    log.info("Could not create new index: {ind}".format(ind =self.domain_name_index))
-                    raise FandangoException("Could not create new index: {ind}".format(ind = self.domain_name_index))
+                    log.info("Could not create new index: {ind}".format(ind =self.index_name))
+                    raise FandangoException("Could not create new index: {ind}".format(ind = self.index_name))
  
 
     def add_claim(self, claim):
