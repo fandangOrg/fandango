@@ -5,11 +5,9 @@ Created on Oct 18, 2018
 '''
 from ds4biz_flask.model.DS4BizFlask import DS4BizFlask
 
-from fake_news_detection.business.featureEngineering import add_new_features_to_df
 from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel, \
     InterfaceInputFeedBack, News, News_annotated, News_domain,\
     New_news_annotated, Claims_annotated
-from fake_news_detection.dao.PickleDAO import ModelDAO
 from flask_cors.extension import CORS
 import json
 from fake_news_detection.config import AppConfig
@@ -20,14 +18,13 @@ import pandas as pd
 from ds4biz_flask.model.DS4BizTyping import DS4BizList
 from fake_news_detection.model.Language import Language
 
-from fake_news_detection.dao.DAO import DAONewsElastic, FSMemoryPredictorDAO,\
-    DAONews
+from fake_news_detection.dao.DAO import DAONewsElastic, FSMemoryPredictorDAO
 from fake_news_detection.business.ClaimsManager import popola_all, similar_claims
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
     DAOClaimsOutput
-from fake_news_detection.apps.training_model import training, preprocess_df, load_df
-from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
+from fake_news_detection.dao.TrainingDAO import DAOTrainingPD,\
+    DAOTrainingElasticByDomains
 from typing import List
  
 ###oo = ModelDAO()
@@ -37,8 +34,8 @@ daotrainingset = DAOTrainingPD()
 
 dao_news=DAONewsElastic()
 #dao_news=DAONews()
-dao_claim_output=DAOClaimsOutput()
-dao_claim_output_es=DAOClaimsOutputElastic()
+#dao_claim_output=DAOClaimsOutput()
+dao_claim_output=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
 ###model = oo.load('test')
@@ -46,17 +43,21 @@ nome_modello="modello_en_3"
 
 
 def train_model() -> str:
-    training_set = load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
     #training_set = daotrainingset.get_train_dataset(sample_size=0.01)
-    training_set_final = preprocess_df(training_set)
-    training(nome_modello, training_set_final, daopredictor)
+    train_config=train_model()
+    dao_train = DAOTrainingElasticByDomains()
+    #training_set = train_config.load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
+    training_set=dao_train.get_train_dataset()
+    training_set_final = train_config.preprocess_df(training_set)
+    train_config.training(nome_modello, training_set_final, daopredictor)
 
 
 def feedback(info:InterfaceInputFeedBack) -> str:
     log.debug(info)
     model=daopredictor.get_by_id(nome_modello)
     df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")]})
-    training_set_final = preprocess_df(df)
+    train_config=train_model()
+    training_set_final = train_config.rapreprocess_df(df)
     model.partial_fit(training_set_final, pd.Series(info.label))
     daopredictor.update(model)
     return "OK"
@@ -110,7 +111,8 @@ def analyzer(info:InterfaceInputModel) -> str:
     log.info('''ANALISI NEWS''')
     model = daopredictor.get_by_id(nome_modello)
     df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n"," ")]})
-    df_new = preprocess_df(df)
+    train_config = train_model()
+    df_new = train_config.preprocess_df(df)
     prest = model.predict_proba(df_new)
     prest = pd.DataFrame(prest, columns=model.predictor.predictor.classes_)
     log.info(json.loads(prest.to_json(orient='records')))
@@ -118,9 +120,9 @@ def analyzer(info:InterfaceInputModel) -> str:
 
 
 def new_claim_annotated(new_claim: Claims_annotated) -> str:
-    if dao_claim_output_es.check_claim_existence(new_claim.claim):
+    if dao_claim_output.check_claim_existence(new_claim.claim):
         new_record = {"claim" : new_claim.claim, "label": new_claim.label}
-        dao_claim_output_es.add_claim(new_record)
+        dao_claim_output.add_claim(new_record)
         return('new claim added')
     else:
         return('claim already in database')
@@ -139,7 +141,7 @@ def claim(text:str) -> str:
     return j_resp
     '''
     print(text)
-    res = dao_claim_output_es.get_similarity_claims_from_text(text)
+    res = dao_claim_output.get_similarity_claims_from_text(text)
     print(res)
     return(res)
 

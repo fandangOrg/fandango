@@ -5,11 +5,12 @@ Created on Oct 24, 2018
 '''
 
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article, dataset_beta
+    index_name_news, docType_article, dataset_beta, domains_train
 import pandas as pd
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.utils.Exception import FandangoException
 import os
+from fake_news_detection.utils.file_reader import read_domain
 
 
 log = getLogger(__name__)
@@ -153,24 +154,22 @@ class DAOTrainingElastic:
 class DAOTrainingElasticByDomains():
     
       
-    def __init__(self):
+    def __init__(self,list_domains=read_domain(domains_train)):
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news 
         self.docType = docType_article
-        
+        self.list_domains=list_domains
     
-    def get_train_dataset_from_domains(self,path_domain):
+    def get_train_dataset(self):
         '''
         from a given file, it converts articles labeled into rows of a dataframe
         @param path_domain: str
         @return: dataf : dataframe pandas 
         '''
-        list_domains = self.read_domain(path_domain)
         list_df = []
-        
-        for domain in list_domains:
+        for domain in self.list_domains:
             label = domain[1]
-            list_documents = self.get_news_from_domain(domain[0])
+            list_documents = self.__get_news_from_domain(domain[0])
             print(domain[0])
             df1 = pd.DataFrame.from_dict(list_documents)
             df1['label'] = label
@@ -182,43 +181,8 @@ class DAOTrainingElasticByDomains():
         print(dataf.shape)
         print( df1.head(5))
         return dataf
-    
-    
-    def read_domain(self,path_domain):
-        '''
-        given a file, return a list of domain with label
-        @param path_domain: str
-    def __init__(self):
-        self.es_client = get_elastic_connector()
-        self.index_name = index_name_news 
-        self.docType = docType_article
-        
-    
-    def get_train_dataset_from_domains(self,path_domain):
-        
-        list_domains = self.read_domain(path_domain)
-        list_df = []
-        
-        for domain in list_domains:
-        @return: domain_list_labeled: list
-        '''
-        domain_list_labeled = []
-        if os.path.getsize(path_domain) < 1:
-            #check if file is empty
-            log.debug("empty file {pth}".format(pth = path_domain))
-            raise FandangoException("empty file {pth}".format(pth = path_domain))
-                
-        with open(path_domain, "rb") as f:
-            for line in f: 
-                line = line.decode('utf-8-sig')
-                line = line.split(',')      
-                domain_list_labeled.append((line[0].strip(), line[1].strip()))
-                log.debug('domain with annotation is {tup}'.format(tup = domain_list_labeled)  )                        
-        
-        return domain_list_labeled
 
-
-    def get_news_from_domain(self,domain):
+    def __get_news_from_domain(self,domain):
         '''
         Given a certain domain, it searches for all the documents of that domain
         @param domain: str 

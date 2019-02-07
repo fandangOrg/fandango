@@ -10,7 +10,6 @@ url = http://localhost:9200
 index_news=news_article_current
 doctype_news = article
 
-index_news = news_crawler
 username = elastic
 password = RjuSUIk4hFlL46fvTf5z
 indexfakenews = indexfakenews

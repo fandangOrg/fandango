@@ -36,6 +36,8 @@ static_folder = pkg_resources.resource_filename("static", "")  # @UndefinedVaria
 train_claims = pkg_resources.resource_filename("fake_news_detection.resources.claims", "")  # @UndefinedVariable
 
 mapping = pkg_resources.resource_filename("fake_news_detection.config", "new_mapping.json")  # @UndefinedVariable
+mapping_claim= pkg_resources.resource_filename("fake_news_detection.config", "new_mapping.json")  # @UndefinedVariable
+domains_train= pkg_resources.resource_filename("fake_news_detection.resources", "url_list_labeled.txt")  # @UndefinedVariable
 
 def get_elastic_connector():
         # username = os.environ.get("USERNAME_ELASTIC") or config["elasticsearch"][ "username"]
@@ -59,10 +61,10 @@ index_name_claims = os.environ.get("NEW_MAPPED_INDEX") or config.get("elasticsea
 
 domain_index= os.environ.get("DOMAI_INDEX") or config.get("elasticsearch", "domain_index")
 domain_docType= os.environ.get("DOMAIN_DOCTYPE") or config.get("elasticsearch", "domain_docType")
-
+domain_file=pkg_resources.resource_filename("fake_news_detection.resources", "new_mapping.json") 
 
 #mapping_domain_index = pkg_resources.resource_filename("fake_news_detection.config", "mapping_domain.json") # @UndefinedVariable
-mapping_claim = os.environ.get("MAPPING_CLAIM") or config.get("elasticsearch", "mapping_claim")
+#mapping_claim = os.environ.get("MAPPING_CLAIM") or config.get("elasticsearch", "mapping_claim")
 #dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")
 
 if __name__ == '__main__':

@@ -10,6 +10,7 @@ from math import log
 lang_code = "en"
 lang_name = "english"
 
+ 
 text_preprocessing_mapping = [
                                 ('text', TextPreprocessor(lang=lang_code, mode="lemmatization", rm_stopwords=True, invalid_chars=QUOTES, encoding="utf-8")),
                                 ('title', TextPreprocessor(lang=lang_code, mode="lemmatization", rm_stopwords=True, invalid_chars=QUOTES, encoding="utf-8"))

@@ -89,7 +89,7 @@ class DAOClaimsOutputElastic:
               }
         
         
-        res = self.es_client.search(index= self.index_name, body= body)
+        res = self.es_client.search(index=self.index_name, body= body)
         if len(res['hits']['hits']) < 1:
             log.debug('Claim you want to add does not exist')
             return True

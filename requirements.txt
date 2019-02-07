@@ -13,8 +13,6 @@ ds4biz-commons==0.0.2.dev0
 ds4biz-flask==0.0.3
 ds4biz-predictor-core==0.0.3.dev0
 elasticsearch==6.3.1
-en-core-web-md==2.0.0
-es-core-news-md==2.0.0
 feedfinder2==0.0.4
 feedparser==5.2.1
 Flask==1.0.2
@@ -22,7 +20,6 @@ Flask-Cors==3.0.6
 flask-swagger-ui==3.6.0
 HeapDict==1.0.0
 idna==2.8
-it-core-news-sm==2.0.0
 itsdangerous==0.24
 jieba3k==0.35.1
 Jinja2==2.10
@@ -35,14 +32,12 @@ msgpack==0.5.6
 msgpack-numpy==0.4.3.2
 murmurhash==1.0.1
 newspaper3k==0.2.8
-nl-core-news-sm==2.0.0
 nltk==3.3
 numba==0.42.0
 numpy==1.15.4
 pandas==0.23.4
 partd==0.3.9
 Pillow==5.3.0
-pkg-resources==0.0.0
 plac==0.9.6
 polyglot==16.7.4
 preshed==2.0.1
