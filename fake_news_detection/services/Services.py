@@ -19,7 +19,7 @@ from ds4biz_flask.model.DS4BizTyping import DS4BizList
 from fake_news_detection.model.Language import Language
 
 from fake_news_detection.dao.DAO import DAONewsElastic, FSMemoryPredictorDAO
-from fake_news_detection.business.ClaimsManager import popola_all, similar_claims
+from fake_news_detection.business.ClaimsManager import popola_all
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
     DAOClaimsOutput
@@ -133,17 +133,17 @@ def crawler(url:str) -> str:
     return crawler_news(url)
 
 
-def claim(text:str) -> str:
-    '''
+def claim() -> str:
     j = request.get_json()  #key txt of the dictionary
     text = j.get("text")
-    j_resp = similar_claims(dao_output=dao_claim_output_es,text=text)
+    j_resp =dao_claim_output.get_similarity_claims_from_text(text)
     return j_resp
-    '''
-    print(text)
-    res = dao_claim_output.get_similarity_claims_from_text(text)
-    print(res)
-    return(res)
+    #===========================================================================
+    # print(text)
+    # res = dao_claim_output.get_similarity_claims_from_text(text)
+    # print(res)
+    # return(res)
+    #===========================================================================
 
 
 def popolate_claims() -> str:

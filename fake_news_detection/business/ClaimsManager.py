@@ -11,17 +11,18 @@ from fake_news_detection.dao.ClaimDAO import DAOClaimInputCSV,\
 
 log = getLogger(__name__)
 
- 
-def similar_claims(dao_output, text):
-    """
-    From a claim in input, get the most similar claims recorded
-    @param dao_output: str
-    @param text: str
-    @return: lista_claim: list
-    """
-    
-    return DAOClaimsOutputElastic.get_similarity_claims_from_text(text)
-
+#===============================================================================
+#  
+# def similar_claims(dao_output, text):
+#     """
+#     From a claim in input, get the most similar claims recorded
+#     @param dao_output: str
+#     @param text: str
+#     @return: lista_claim: list
+#     """
+#     
+#     return DAOClaimsOutputElastic.get_similarity_claims_from_text(text)
+#===============================================================================
     
         
 def popola(nomefile,dao_output):
