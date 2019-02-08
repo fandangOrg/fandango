@@ -39,10 +39,10 @@ class News:
         return  "id: "+self.id+"; url: "+self.url+"; title: "+self.title+"; text: "+self.text.replace("\n"," ")
 
 class News_annotated:
-    def __init__(self, id:str, label:str):
+    def __init__(self, id:str, type_annotation:str, label:str):
         self.id = id
         self.label = label
-  
+        self.type_annotation=type_annotation
 
         
 class News_domain:
@@ -55,9 +55,10 @@ class News_domain:
         
         
 class New_news_annotated:
-    def __init__(self,url:str, label:str, lang:str):
+    def __init__(self,url:str, label:str, type_annotation:str, lang:str):
         self.url = url
         self.label = label
+        self.type_annotation = type_annotation
         self.lang = lang
         
     

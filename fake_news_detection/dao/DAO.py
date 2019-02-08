@@ -63,7 +63,7 @@ class DAONewsElastic(DAONews):
         self.bulk_on_elastic(lista_operazioni)
 
         
-    def set_label(self,id,label):
+    def set_label(self,id,label,type_annotation):
         """
         add a new field label in a doc with that id
         @param id: str
@@ -75,7 +75,7 @@ class DAONewsElastic(DAONews):
            '_index': self.index_name,
            '_type': self.docType,
            '_id': id,
-           'doc': {'label':label}
+           'doc': {'label':label,'type_annotation':type_annotation}
         }
         self.bulk_on_elastic(doc_up)
 
@@ -146,12 +146,12 @@ class DAONewsElastic(DAONews):
                   ]
                 },
               },
-              'functions':[ 
+              'functions':[
                 {
                   'random_score': 
                     {
                         "seed":random.randint(0,100000),
-                        "field":"_seq_no"
+                        #"field":"_seq_no"
                       }
                 }
                 ] 
@@ -172,6 +172,7 @@ class DAONewsElastic(DAONews):
             body["query"]["function_score"]["query"]["bool"]["must"][0]["bool"]["should"][0]["match"]["label"]=filter
             
         try:
+            print(body)
             res = self.es_client.search(index=self.index_name, body= body,doc_type=self.docType)
         except Exception as e:
             log.error("Could not query against elasticsearch: {err}".format(err=e))

@@ -26,15 +26,16 @@ from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
 from fake_news_detection.dao.TrainingDAO import DAOTrainingPD,\
     DAOTrainingElasticByDomains
 from typing import List
+from fake_news_detection.apps.training_model import Train_model
  
 ###oo = ModelDAO()
 
-daopredictor = FSMemoryPredictorDAO(picklepath)
-daotrainingset = DAOTrainingPD()
+#daotrainingset = DAOTrainingPD()
 
-dao_news=DAONewsElastic()
 #dao_news=DAONews()
 #dao_claim_output=DAOClaimsOutput()
+daopredictor = FSMemoryPredictorDAO(picklepath)
+dao_news=DAONewsElastic()
 dao_claim_output=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
@@ -44,7 +45,7 @@ nome_modello="modello_en_3"
 
 def train_model() -> str:
     #training_set = daotrainingset.get_train_dataset(sample_size=0.01)
-    train_config=train_model()
+    train_config=Train_model()
     dao_train = DAOTrainingElasticByDomains()
     #training_set = train_config.load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
     training_set=dao_train.get_train_dataset()
@@ -56,7 +57,7 @@ def feedback(info:InterfaceInputFeedBack) -> str:
     log.debug(info)
     model=daopredictor.get_by_id(nome_modello)
     df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")]})
-    train_config=train_model()
+    train_config=Train_model()
     training_set_final = train_config.rapreprocess_df(df)
     model.partial_fit(training_set_final, pd.Series(info.label))
     daopredictor.update(model)
@@ -67,7 +68,7 @@ def get_languages() -> DS4BizList(Language):
     l= list()
     l.append(Language("en","English",True))
     l.append(Language("it","Italian",True))
-    l.append(Language("es","Spanish",False))
+    l.append(Language("es","Spanish",True))
     l.append(Language("pt","Portuguese",True))
     l.append(Language("el_GR","Greek",False))
     return l
@@ -83,11 +84,11 @@ def next_news(lang:str) -> News:
     return news
  # News('news1','www.thegurdian.uk','sono il titolo', 'ciao, sono il testo','sono lautore', 'sono lente')
 
-    
+#VERREBBE CHIAMATO DAL SISTEMA IN REGIME
 def new_annotation(annotation:News_annotated) -> str:
     log.debug('id: {id}, label: {lbl}'.format(id= annotation.id, lbl=annotation.label))
-    annotation.label = "A#"+annotation.label
-    dao_news.set_label(annotation.id, annotation.label)
+    #annotation.type_annotation="A"
+    dao_news.set_label(annotation.id, annotation.label,"A")
     return 'DONE'
 
 
@@ -99,9 +100,9 @@ def domain_annotation(list_u:News_domain) -> str:
 
 def new_doc_annotation(new_record:New_news_annotated) -> str:
     news_crawled = crawler_news(new_record.url)
-    new_record.label ="M#"+new_record.label
     news_crawled['label'] = new_record.label
     news_crawled['language'] = new_record.lang
+    news_crawled['type_annotation'] = new_record.type_annotation
     dao_news.create_doc_news(news_crawled)
     log.debug(news_crawled)
     return('DONE')
@@ -111,7 +112,7 @@ def analyzer(info:InterfaceInputModel) -> str:
     log.info('''ANALISI NEWS''')
     model = daopredictor.get_by_id(nome_modello)
     df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n"," ")]})
-    train_config = train_model()
+    train_config = Train_model()
     df_new = train_config.preprocess_df(df)
     prest = model.predict_proba(df_new)
     prest = pd.DataFrame(prest, columns=model.predictor.predictor.classes_)
