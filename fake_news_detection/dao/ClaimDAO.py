@@ -146,7 +146,11 @@ class DAOClaimsOutputElastic:
         lista_claim =[]
         for r in res['hits']['hits']:
             if r["_score"]>5:
-                lista_claim.append( {"score": r['_score'], "claim": r["highlight"]["claim"][0]} )               
+                d=r['_source']
+                d['score']=r["_score"]
+                d["claim"]=r["highlight"]["claim"][0]
+                #{"score": r['_score'], "claim": r["highlight"]["claim"][0],}
+                lista_claim.append( d )               
                 log.debug("New similar claim founded, original claim: {ori}, found: {cl}".format(ori=text, cl=r['_source']['claim'])) 
             
         return lista_claim

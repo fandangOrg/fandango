@@ -120,6 +120,7 @@ def analyzer(info:InterfaceInputModel) -> str:
 
 
 def new_claim_annotated(new_claim: Claims_annotated) -> str:
+    print(new_claim.claim,new_claim.label)
     if dao_claim_output.check_claim_existence(new_claim.claim):
         new_record = {"claim" : new_claim.claim, "label": new_claim.label}
         dao_claim_output.add_claim(new_record)
@@ -137,6 +138,7 @@ def claim() -> str:
     j = request.get_json()  #key txt of the dictionary
     text = j.get("text")
     j_resp =dao_claim_output.get_similarity_claims_from_text(text)
+    print(j_resp)
     return j_resp
     #===========================================================================
     # print(text)
