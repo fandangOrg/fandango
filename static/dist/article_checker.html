@@ -24,14 +24,14 @@
     <div class="card-body">
         <form>
             <div class="row">
-                <div class="col-md-11 col-xs-12 urlContainer" style="padding-right: 0">
+                <div class="col-md-11 col-9 urlContainer" style="padding-right: 0 !important;">
                     <div class="form-group">
                         <input class="form-control form-control-alternative"
                                ng-model="page.url" placeholder="Enter a URL to analyze"
                                type="text">
                     </div>
                 </div>
-                <div class="col-md-1 col-xs-12 url_analyze">
+                <div class="col-md-1 col-3 url_analyze">
                     <div ng-click="analyzeUrl()"
                          class="icon bg-gray icon-shape text-white rounded-15 shadow"
                          ng-class="{'bg-gradient-teal pointer': page.url || !page.url == 'bg-gray'}">

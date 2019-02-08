@@ -26,24 +26,24 @@
                                 role="tablist">
                                 <li class="nav-item" ng-click="changeTab(1)">
                                     <a class="nav-link mb-sm-3 mb-md-0 active"
-                                       data-toggle="tab" href="#auto" role="tab" aria-controls="auto"
+                                       data-toggle="tab" href="#database" role="tab" aria-controls="database"
                                        aria-selected="true">Database</a>
                                 </li>
                                 <li class="nav-item" ng-click="changeTab(2)">
                                     <a class="nav-link mb-sm-3 mb-md-0"
-                                       data-toggle="tab" href="#manual" role="tab" aria-controls="manual"
+                                       data-toggle="tab" href="#url" role="tab" aria-controls="url"
                                        aria-selected="false">URL address</a>
                                 </li>
                                 <li class="nav-item" ng-click="changeTab(3)">
                                     <a class="nav-link mb-sm-3 mb-md-0"
-                                       data-toggle="tab" href="#domain" role="tab" aria-controls="domain"
+                                       data-toggle="tab" href="#domains" role="tab" aria-controls="domains"
                                        aria-selected="false">URL domains</a>
                                 </li>
                             </ul>
                         </div>
 
                         <div class="alert alert-success" id="alertSuccess" role="alert">
-                            <span class="alert-inner--icon mr-2"><i class="fas fa-thumbs-up"></i></span>
+                            <span class="alert-inner--icon mr-2"><i class="fas fa-check"></i></span>
                             <span class="alert-inner--text">Annotation sent successfully. Content marked as <strong>{{alertLabel | capitalize}}</strong></span>
                         </div>
 
@@ -59,17 +59,17 @@
 
                         <div class="card shadow">
                             <div class="tab-content" id="myTabContent">
-                                <div class="tab-pane fade show active" id="auto" role="tabpanel"
-                                     aria-labelledby="auto-tab">
-                                    <article-checker-auto></article-checker-auto>
+                                <div class="tab-pane fade show active" id="database" role="tabpanel"
+                                     aria-labelledby="database-tab">
+                                    <database-annotation></database-annotation>
                                 </div>
-                                <div class="tab-pane fade" id="manual" role="tabpanel"
-                                     aria-labelledby="manual-tab">
-                                    <article-checker-manual></article-checker-manual>
+                                <div class="tab-pane fade" id="url" role="tabpanel"
+                                     aria-labelledby="url-tab">
+                                    <url-annotation></url-annotation>
                                 </div>
-                                <div class="tab-pane fade" id="domain" role="tabpanel"
-                                     aria-labelledby="domain-tab">
-                                    <article-checker-domain></article-checker-domain>
+                                <div class="tab-pane fade" id="domains" role="tabpanel"
+                                     aria-labelledby="domains-tab">
+                                    <domains-annotation></domains-annotation>
                                 </div>
                             </div>
                         </div>
@@ -77,19 +77,18 @@
                 </div>
             </div>
             <div class="col-lg-3 col-sm-12 box">
-                <!-- $state.includes('domain') -->
                 <div ng-show="tabSelected !== 3">
                     <article-analysis></article-analysis>
                 </div>
                 <div class="col-xs-12">
                     <div ng-if="tabSelected === 1">
-                        <annotation-auto></annotation-auto>
+                        <database-start></database-start>
                     </div>
                     <div ng-if="tabSelected === 2">
-                        <annotation-manual></annotation-manual>
+                        <url-start></url-start>
                     </div>
                     <div ng-if="tabSelected === 3">
-                        <annotation-domain></annotation-domain>
+                        <domains-start></domains-start>
                     </div>
                 </div>
             </div>
@@ -105,13 +104,9 @@
 <script src="js/app.min.js"></script>
 <!-- <script src="web/module.min.js"></script> -->
 <script src="js/controller/annotationController.min.js"></script>
-
 <script src="js/directive/sharedDirectives.min.js"></script>
 <script src="js/directive/annotationDirectives.min.js"></script>
-
 <script src="js/factory/sharedFactories.min.js"></script>
 <script src="js/factory/annotationFactories.min.js"></script>
-
-<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 </body>
 </html>

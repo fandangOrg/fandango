@@ -1,4 +1,4 @@
-app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fakeness','feedback','claim', 'lang', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang) {
+app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl', 'fakeness', 'feedback', 'claim', 'lang','alert', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang, alert) {
 
     $scope.fakenessDone = false;
     $scope.highlightedText = '';
@@ -7,13 +7,14 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fa
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
     $scope.selectedLanguage = "en";
+    $(".alert").hide();
 
     $scope.page = {
         'author': '',
         'publisher': '',
-        'url':'',
-        'text':'',
-        'title':''
+        'url': '',
+        'text': '',
+        'title': ''
     };
 
     var levelReal = ['true', 'mostly-true', 'half-true'];
@@ -35,10 +36,9 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fa
     };
 
     $scope.changeLanguage = function (language) {
-        if(language.active === 'False') {
+        if (language.active === 'False') {
             return;
-        }
-        else {
+        } else {
             $scope.selectedLanguage = language.language;
         }
     };
@@ -72,6 +72,19 @@ app.controller('indexCtrl',['$scope','$http','$document','errorCode','crUrl','fa
         }, function (response) {
 
         });
+    };
+
+    $scope.saveClaim = function (label) {
+        var to_send = {
+            'claim': $scope.selectedText,
+            'label': label
+        };
+
+        claim.saveClaim(to_send).then(function (response) {
+            alert.showAlert('Success');
+        }, function (response) {
+            alert.showAlert('Error');
+        })
     };
 
     $scope.getClaimFakeness = function (level) {

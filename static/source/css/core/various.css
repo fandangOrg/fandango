@@ -343,3 +343,7 @@ pre code {
     height: 20px;
     cursor: pointer;
 }
+
+.url_analyze {
+    text-align: right;
+}

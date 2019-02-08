@@ -19,6 +19,15 @@
     <div class="col-12 pt-3 pb-3">
         <div class="row">
             <div class="col-lg-9 col-sm-12">
+                <div class="alert alert-success" id="alertSuccess" role="alert">
+                    <span class="alert-inner--icon mr-2"><i class="fas fa-check"></i></span>
+                    <span class="alert-inner--text">Claim successfully saved</span>
+                </div>
+
+                <div class="alert alert-danger" id="alertError" role="alert">
+                    <span class="alert-inner--icon mr-2"><i class="fas fa-times"></i></span>
+                    <span class="alert-inner--text">Something goes wrong, retry later</span>
+                </div>
                 <article-checker></article-checker>
             </div>
             <div class="col-lg-3 col-sm-12 box">
@@ -42,10 +51,10 @@
                                     </div>
                                     <div class="col-5 text-right" id="feedbackCol">
                                         <i title="Real" ng-click="sendFeedback('REAL')"
-                                           class="fas fa-thumbs-up pointer animated text-green bounceIn delay-1s mr-4"
+                                           class="fas fa-check pointer animated text-green bounceIn delay-1s mr-4"
                                            style="font-size: 22px"></i>
                                         <i title="Fake" ng-click="sendFeedback('FAKE')"
-                                           class="fas fa-thumbs-down pointer animated text-red bounceIn delay-1s"
+                                           class="fas fa-times pointer animated text-red bounceIn delay-1s"
                                            style="font-size: 22px"></i>
                                     </div>
                                 </div>
@@ -62,8 +71,21 @@
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
-                                <div class="col-12">
+                                <div class="col-7" style="padding-right: 0">
                                     <h3 class="mb-0">Current selection</h3>
+                                </div>
+                                <div class="col-5 text-right">
+                                    <div class="dropdown" ng-if="selectedText">
+                                        <button href="#" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"
+                                                aria-expanded="true">
+                                            Save Claim
+                                            <b class="caret"></b>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li class="dropdown-item" ng-click="saveClaim('REAL')"><i class="fas fa-check text-green pointer"></i><a href="#">Save as <strong>Real</strong></a></li>
+                                            <li class="dropdown-item" ng-click="saveClaim('FAKE')"><i class="fas fa-times text-red pointer"></i><a href="#">Save as <strong>Fake</strong></a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>

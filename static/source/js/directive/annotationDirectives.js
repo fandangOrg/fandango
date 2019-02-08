@@ -1,41 +1,41 @@
-// AUTO
+// DATABASE
 
-app.directive("articleCheckerAuto", function () {
+app.directive("databaseAnnotation", function () {
     return {
-        templateUrl: 'article_checker_auto.html'
+        templateUrl: 'databaseAnnotation.html'
     }
 });
 
-app.directive("annotationAuto", function () {
+app.directive("databaseStart", function () {
     return {
-        templateUrl: 'annotation_auto.html'
+        templateUrl: 'databaseStart.html'
     }
 });
 
-// MANUAL
+// URL
 
-app.directive("articleCheckerManual", function () {
+app.directive("urlAnnotation", function () {
     return {
-        templateUrl: 'article_checker_manual.html'
+        templateUrl: 'urlAnnotation.html'
     }
 });
 
-app.directive("annotationManual", function () {
+app.directive("urlStart", function () {
     return {
-        templateUrl: 'annotation_manual.html'
+        templateUrl: 'urlStart.html'
     }
 });
 
-// DOMAIN
+// DOMAINS
 
-app.directive("articleCheckerDomain", function () {
+app.directive("domainsAnnotation", function () {
     return {
-        templateUrl: 'article_checker_domain.html'
+        templateUrl: 'domainsAnnotation.html'
     }
 });
 
-app.directive("annotationDomain", function () {
+app.directive("domainsStart", function () {
     return {
-        templateUrl: 'annotation_domain.html'
+        templateUrl: 'domainsStart.html'
     }
 });

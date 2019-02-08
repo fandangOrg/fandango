@@ -10,7 +10,7 @@ html {
     line-height: 1.15;
     height: 100%;
     width: 100%;
-    background: url("../../img/background_blue.png") !important;
+    background: url("../img/background_blue.png") !important;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -234,12 +234,6 @@ caption {
 
 th {
     text-align: inherit;
-}
-
-.url_analyze {
-    margin: 0 auto;
-    float: none;
-    text-align: center;
 }
 
 label {

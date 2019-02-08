@@ -3,10 +3,10 @@
         <div class="row align-items-center">
             <div class="col-12">
                 <div class="float-left">
-                    <h3 class="mb-0">List Annotation</h3>
+                    <h3 class="mb-0">Annotation</h3>
                 </div>
                 <div class="float-right">
-                    <i class="fas fa-info" rel="tooltip" title="Paste or type a website url or a list separated by new line.
+                    <i class="fas fa-info" rel="tooltip" title="Paste or type an url and click on the grey button on the right.
 Choose fake or real clicking on the circle and save the option pressing SAVE"
                        style="font-size: 15px;vertical-align: middle" onmouseenter="$(this).tooltip('show')"></i>
                 </div>
@@ -14,15 +14,21 @@ Choose fake or real clicking on the circle and save the option pressing SAVE"
         </div>
     </div>
     <div class="card-body card-annotation" style="height: 185px;">
-        <div class="row text-center animated fadeIn delay-05s">
+        <div class="row" ng-if="!analyzeOk">
+            <div class="col-12 middle-container text-center">
+                <h5>Enter an URL to analyze</h5>
+            </div>
+        </div>
+        <div class="row text-center animated fadeIn delay-05s" ng-show="analyzeOk">
             <div class="col-6">
                 <div class="custom-control custom-radio">
                     <input type="radio" ng-model="selectedLabel" value="REAL"
                            class="custom-control-input" id="realCb" ng-click='newLabel(selectedLabel)'>
                     <label class="custom-control-label" for="realCb">Real</label>
                     <i title="Real"
-                       class="fas fa-thumbs-up animated text-green bounceIn delay-1s ml-1"
+                       class="fas fa-check align-middle animated text-green bounceIn delay-1s ml-1"
                        style="font-size: 22px"></i>
+
                 </div>
             </div>
             <div class="col-6">
@@ -31,7 +37,7 @@ Choose fake or real clicking on the circle and save the option pressing SAVE"
                            class="custom-control-input" id="fakeCb" ng-click='newLabel(selectedLabel)'>
                     <label class="custom-control-label" for="fakeCb">Fake</label>
                     <i title="Fake"
-                       class="fas fa-thumbs-down animated text-red bounceIn delay-1s ml-1"
+                       class="fas fa-times align-middle animated text-red bounceIn delay-1s ml-1"
                        style="font-size: 22px"></i>
                 </div>
             </div>
@@ -44,10 +50,10 @@ Choose fake or real clicking on the circle and save the option pressing SAVE"
             </select>
         </div>
 
-        <div class="row bottom-container animated fadeIn delay-1s">
+        <div class="row bottom-container animated fadeIn delay-1s" ng-if="analyzeOk">
             <div class="col-12 text-center">
-                <button ng-click="sendAnnotation(selectedLabel,page.text,'domain')"
-                     class="btn btn-md btn-icon btn-success" ng-disabled="!isLabelSelected || !page.text || !isLangSelected">
+                <button ng-click="sendAnnotation(selectedLabel, undefined, 'manual')"
+                     class="btn btn-md btn-icon btn-success" ng-disabled="!isLabelSelected || !isLangSelected || !page.url">
                     <span class="btn-inner--icon"><i class="fas fa-share-square"></i></span>
                     <span class="btn-inner--text">Save</span>
                 </button>
