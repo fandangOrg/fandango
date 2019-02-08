@@ -18,6 +18,9 @@ app.factory('claim',['$http', function ($http) {
     return {
         getClaim: function (to_send) {
             return $http.post(base + "/claim", to_send);
+        },
+        saveClaim: function (to_send) {
+            return $http.post(base + "/new_claim_annotated", to_send);
         }
     };
 }]);

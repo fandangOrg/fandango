@@ -4,7 +4,18 @@
             <div class="col-12">
                 <div class="row">
                     <div class="col-6">
-                        <h3 class="mb-0">Article Annotation</h3>
+                        <h3 class="mb-0">Article Checker</h3>
+                    </div>
+                    <div class="col-6 text-right">
+                        <h3 class="mb-0"><span class="hidden-xs">Language selected </span>
+                            <div class="dropdown">
+                                <img class="pl-1 default-flag" ng-src="img/flags/{{selectedLanguage}}.png" alt="flag">
+                                <div class="dropdown-content">
+                                    <a ng-repeat="language in languages" ng-click="changeLanguage(language)" ng-attr-title="{{language.active == 'False' ? 'Not available' : undefined}}"
+                                       ng-class="{'languageDisabled': language.active == 'False'}">{{language.name}} <img ng-src="img/flags/{{language.language}}.png"></a>
+                                </div>
+                            </div>
+                        </h3>
                     </div>
                 </div>
             </div>
@@ -13,14 +24,14 @@
     <div class="card-body">
         <form>
             <div class="row">
-                <div class="col-md-11 col-xs-12 urlContainer" style="padding-right: 0">
+                <div class="col-md-11 col-9 urlContainer" style="padding-right: 0 !important;">
                     <div class="form-group">
                         <input class="form-control form-control-alternative"
-                               ng-model="page.url" placeholder="Enter an URL to analyze"
+                               ng-model="page.url" placeholder="Enter a URL to analyze"
                                type="text">
                     </div>
                 </div>
-                <div class="col-md-1 col-xs-12 url_analyze">
+                <div class="col-md-1 col-3 url_analyze">
                     <div ng-click="analyzeUrl()"
                          class="icon bg-gray icon-shape text-white rounded-15 shadow"
                          ng-class="{'bg-gradient-teal pointer': page.url || !page.url == 'bg-gray'}">
@@ -39,13 +50,14 @@
                         <div class="form-group">
                             <label class="form-control-label" for="input-first-name">Title</label>
                             <input type="text" id="input-first-name"
-                                   class="form-control disabled-white form-control-alternative"
-                                   placeholder="Analyze an URL to show title" ng-model="page.title" disabled>
+                                   class="form-control form-control-alternative"
+                                   placeholder="Insert a title" ng-model="page.title">
                         </div>
                     </div>
                 </div>
-                <textarea ng-model="page.text" class="form-control disabled-white form-control-alternative"
-                          placeholder="Analyze an URL to show the news text" disabled></textarea>
+                <textarea ng-model="page.text" class="form-control form-control-alternative"
+                          placeholder="Copy and paste or write an article"
+                          ng-mouseup="showSelectedText()"></textarea>
             </div>
         </form>
     </div>

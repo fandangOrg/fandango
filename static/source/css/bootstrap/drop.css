@@ -199,6 +199,14 @@
     background-color: transparent;
 }
 
+.dropdown-item a {
+    color: #000;
+}
+
+.dropdown-item a:hover {
+    color: #1a174d;
+}
+
 .dropdown-item:hover,
 .dropdown-item:focus {
     text-decoration: none;
@@ -212,7 +220,7 @@
     text-decoration: none;
 
     color: #fff;
-    background-color: #5e72e4;
+    /*background-color: #5e72e4;*/
 }
 
 .dropdown-item.disabled,

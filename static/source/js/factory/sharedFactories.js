@@ -30,3 +30,14 @@ app.factory('lang',['$http', function ($http) {
     };
 }]);
 
+
+app.factory('alert', function () {
+    return {
+        showAlert: function (esito) {
+            $("#alert" + esito).fadeTo(2000, 500).slideUp(500, function () {
+                $(".alert").slideUp(500);
+            });
+        }
+    };
+});
+
