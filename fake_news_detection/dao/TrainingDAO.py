@@ -10,7 +10,6 @@ import pandas as pd
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.utils.Exception import FandangoException
 import os
-from fake_news_detection.utils.file_reader import read_domain
 from pip._vendor.html5lib.treebuilders import dom
 from elasticsearch_dsl.search import Search
 import itertools
@@ -157,7 +156,7 @@ class DAOTrainingElastic:
 class DAOTrainingElasticByDomains():
     
       
-    def __init__(self,list_domains=read_domain(domains_train)):
+    def __init__(self,list_domains=None):
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news 
         self.docType = docType_article
@@ -184,7 +183,7 @@ class DAOTrainingElasticByDomains():
         print( df1.head(5))
         return dataf
 
-    def __get_news(self,domain,limit=500):
+    def __get_news(self,domain,limit=3000):
         search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType)\
                 .query("term", source_domain=domain)
         response = search.execute()

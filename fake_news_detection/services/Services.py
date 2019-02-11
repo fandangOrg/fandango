@@ -40,13 +40,14 @@ dao_claim_output=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
 ###model = oo.load('test')
-nome_modello="modello_en_3"
+nome_modello="modello_en"
 
 
 def train_model() -> str:
     #training_set = daotrainingset.get_train_dataset(sample_size=0.01)
     train_config=Train_model()
-    dao_train = DAOTrainingElasticByDomains()
+    list_domains = dao_news.get_domain()
+    dao_train = DAOTrainingElasticByDomains(list_domains)
     #training_set = train_config.load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
     training_set=dao_train.get_train_dataset()
     training_set_final = train_config.preprocess_df(training_set)
@@ -69,8 +70,8 @@ def get_languages() -> DS4BizList(Language):
     l.append(Language("en","English",True))
     l.append(Language("it","Italian",True))
     l.append(Language("es","Spanish",True))
-    l.append(Language("pt","Portuguese",True))
-    l.append(Language("el_GR","Greek",False))
+    #l.append(Language("pt","Portuguese",True))
+    #l.append(Language("el_GR","Greek",False))
     return l
 
 
@@ -88,7 +89,8 @@ def next_news(lang:str) -> News:
 def new_annotation(annotation:News_annotated) -> str:
     log.debug('id: {id}, label: {lbl}'.format(id= annotation.id, lbl=annotation.label))
     #annotation.type_annotation="A"
-    dao_news.set_label(annotation.id, annotation.label,"A")
+    print("nuova ANNOTAZIONI")
+    dao_news.set_label(annotation.id, annotation.label,"M")
     return 'DONE'
 
 

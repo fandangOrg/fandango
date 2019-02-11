@@ -1,21 +1,22 @@
 fandango:
-  image: livetech/fandango-fake-news:0.0.8
-  links:
-    - elasticsearch
+  image: livetech/fandango-fake-news:0.1.0
+  volumes:
+    - ./:/data/
   environment:
     - BASEURL_SERVICE= http://0.0.0.0
     - BASEPORT_SERVICE=9800
-    - URL_ELASTIC=http://elasticsearch:9200
+    - URL_ELASTIC=http://localhost:9220
+    - MODEL_PATH=data/model
   ports:
     - 9800:9800
-    
-elasticsearch:
-   image: elasticsearch:6.4.2
-   ports:
-     - "9200:9200"
-     - "9399:9300"
-   environment:
-     ES_JAVA_OPTS: "-Xmx2g -Xms2g"
-     UseAVX: 1  
+   
+#elasticsearch:
+#   image: elasticsearch:6.4.2
+#   ports:
+#     - "9200:9200"
+#     - "9399:9300"
+#   environment:
+#     ES_JAVA_OPTS: "-Xmx2g -Xms2g"
+#     UseAVX: 1  
 
  

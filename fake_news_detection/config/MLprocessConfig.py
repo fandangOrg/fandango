@@ -1,19 +1,17 @@
 from fake_news_detection.business.textPreprocessing import TextPreprocessor
 from fake_news_detection.config.constants import QUOTES
-from fake_news_detection.business.featuresExtraction2 import PositiveWordsCounter, NegativeWordsCounter, \
-    EntitiesCounter, WordsCounter, SentencesCounter, SentimentWordsCounter, CharsCounter, PunctuationCounter
+from fake_news_detection.business.featuresExtraction2 import  CharsCounter, PunctuationCounter
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
-from math import log
 
 
 lang_code = "en"
 lang_name = "english"
 
- 
+preprocess=TextPreprocessor(lang=lang_code, mode="lemmatization", rm_stopwords=True, invalid_chars=QUOTES, encoding="utf-8")
 text_preprocessing_mapping = [
-                                ('text', TextPreprocessor(lang=lang_code, mode="lemmatization", rm_stopwords=True, invalid_chars=QUOTES, encoding="utf-8")),
-                                ('title', TextPreprocessor(lang=lang_code, mode="lemmatization", rm_stopwords=True, invalid_chars=QUOTES, encoding="utf-8"))
+                                ('text', preprocess),
+                                ('title', preprocess)
                              ]
 
 new_features_mapping = [
@@ -52,3 +50,5 @@ transforming_mapping = {
 
 name_classifier = "SGDClassifier"
 params_classifier = {'loss':"log", "max_iter":10, 'n_jobs':-1}
+
+

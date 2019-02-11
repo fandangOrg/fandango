@@ -9,7 +9,7 @@ from fake_news_detection.utils.Exception import FandangoException
 
 log = getLogger(__name__)
 
-def read_domain(path_domain):
+def read_domain_ss(path_domain):
     '''
     given a file, return a list of domain with label
     @param path_domain: str

@@ -30,7 +30,7 @@ log_folder = os.environ.get("LOG_FOLDER") or config.get("default", "log_folder")
 BASEURL = os.environ.get("BASEURL_SERVICE") or config["service"]["url"]
 BASEPORT = os.environ.get("BASEPORT_SERVICE") or config["service"]["port"]
 
-picklepath = pkg_resources.resource_filename("fake_news_detection.resources.model", "")  # @UndefinedVariable
+picklepath = os.environ.get("MODEL_PATH") or  pkg_resources.resource_filename("fake_news_detection.resources.model", "")  # @UndefinedVariable
 dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
 static_folder = pkg_resources.resource_filename("static", "")  # @UndefinedVariable
 train_claims = pkg_resources.resource_filename("fake_news_detection.resources.claims", "")  # @UndefinedVariable
@@ -51,6 +51,7 @@ def get_elastic_connector():
     return esConnector
 
 index_name_news = os.environ.get("INDEX_ELASTIC_NEWS") or config.get("elasticsearch", "index_news") or "news_article_current"
+index_name_output= os.environ.get("INDEX_ELASTIC_NEWS_ANNOTATION") or config.get("elasticsearch", "index_news_annotation") or "news_annotation_lvt"
 docType_article = os.environ.get("DOCTYPE_NEWS") or config.get("elasticsearch", "doctype_news") or "article"
 
 
@@ -59,7 +60,7 @@ index_name_claims = os.environ.get("NEW_MAPPED_INDEX") or config.get("elasticsea
 
 
 
-domain_index= os.environ.get("DOMAI_INDEX") or config.get("elasticsearch", "domain_index")
+domain_index= os.environ.get("DOMAIN_INDEX") or config.get("elasticsearch", "domain_index")
 domain_docType= os.environ.get("DOMAIN_DOCTYPE") or config.get("elasticsearch", "domain_docType")
 domain_file=pkg_resources.resource_filename("fake_news_detection.resources", "new_mapping.json") 
 

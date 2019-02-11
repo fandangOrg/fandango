@@ -8,6 +8,8 @@ log_level = INFO
 [elasticsearch]
 url = http://localhost:9200
 index_news=news_article_current
+index_news_annotation=news_article_current
+
 doctype_news = article
 
 username = elastic
