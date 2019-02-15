@@ -13,6 +13,8 @@ import os
 from pip._vendor.html5lib.treebuilders import dom
 from elasticsearch_dsl.search import Search
 import itertools
+from fake_news_detection.dao.DAO import DAONewsElastic
+#from fake_news_detection.services.Services import dao_news
 
 
 log = getLogger(__name__)
@@ -172,7 +174,7 @@ class DAOTrainingElasticByDomains():
         for domain in self.list_domains:
             label = domain[1]
             print(domain[0])
-            list_documents = self.__get_news(domain[0])
+            list_documents = self.__get_news_from_domain(domain[0])
             df1 = pd.DataFrame.from_dict(list_documents)
             df1['label'] = label
             print(df1.shape)
@@ -182,103 +184,125 @@ class DAOTrainingElasticByDomains():
         print(dataf.shape)
         print( df1.head(5))
         return dataf
-
-    def __get_news(self,domain,limit=3000):
-        search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType)\
-                .query("term", source_domain=domain)
-        response = search.execute()
-        result_list=[]
-        print("RESPONSE TOTAL:", response.hits.total)
-        for c,hit in enumerate(itertools.islice(search.scan(),limit)):
-            result_list.append({"title":hit.title,  "text" : hit.text})
-        return result_list
 #===============================================================================
-#     
-#     def __get_news_from_domain(self,domain):
-#         '''
-#         Given a certain domain, it searches for all the documents of that domain
-#         @param domain: str 
-#         @return: result_list : list of dicts
-#         '''
-#         result_list =[]
-#         body2 = {
-#             "query": {
-#             "term" : { "source_domain" : domain } 
-#                 }
-#             }
 # 
-#         res = self.es_client.count(index= self.index_name, doc_type=self.docType, body= body2)
-#         size = res['count']
-#         
-#         if size == 0 :
-#             log.debug("no records for selected domain: {dmn}, it can't continue".format(dmn=domain))
-#             raise FandangoException("no records for selected domain: {dmn}, it can't continue".format(dmn=domain))
-#         
-#         body = { "size": 1000,
-#                     "query": {
-#                         "term" : {
-#                             "source_domain" : domain
-#                         }
-#                     },
-#                     "sort": [
-#                         {"date_published": "asc"},
-#                         {"_uid": "desc"}
-#                     ]
-#                 }
-#         
-#         result = self.es_client.search(index= self.index_name, doc_type=self.docType, body = body)
-#         bookmark = [result['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1]) ]
-#         
-#         body1 = {"size": 1000,
-#                     "query": {
-#                         "term" : {
-#                             "source_domain" : domain
-#                         }
-#                     },
-#                     "search_after": bookmark,
-#                     "sort": [
-#                         {"date_published": "asc"},
-#                         {"_uid": "desc"}
-#                     ]
-#                 }
-# 
-#         while len(result['hits']['hits']) < size:
-#             res = self.es_client.search(index= self.index_name, doc_type=self.docType, body= body1)
-#             for el in res['hits']['hits']:
-#                 result['hits']['hits'].append( el )
-#             bookmark = [res['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1]) ]
-#             body1 = {"size": 1000,
-#                     "query": {
-#                         "term" : {
-#                             "source_domain" : domain
-#                         }
-#                     },
-#                     "search_after": bookmark,
-#                     "sort": [
-#                         {"date_published": "asc"},
-#                         {"_uid": "desc"}
-#                     ]
-#                 }
-#         
-#         for res in result['hits']['hits']:
-#             result_list.append({"title":res['_source']['title'],  "text" : res['_source']['text'] , "label" : "" })
-#         
-#         #print(result_list[0:2])
-#         log.debug("All articles from domain request are taken for training set building ")
+#     def __get_news(self,domain,limit=3000):
+#         search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType)\
+#                 .query("term", source_domain=domain)
+#         response = search.execute()
+#         result_list=[]
+#         print("RESPONSE TOTAL:", response.hits.total)
+#         for c,hit in enumerate(itertools.islice(search.scan(),limit)):
+#             result_list.append({"title":hit.title,  "text" : hit.text})
 #         return result_list
-#     
-#         #return  [res['_source']['title'], res['_source']['text']] for res in result['hits']['hits']
+#         
 #===============================================================================
+
+    
+ 
+     
+     
+    def __get_news_from_domain(self,domain,limit = 2000):
+        
+        '''
+        Given a certain domain, it searches for all the documents of that domain
+        @param domain: str 
+        @return: result_list : list of dicts
+        '''
+        
+        result_list =[]
+        #in case you want to take all the documents without a limit
+        
+        body2 = {
+            "query": {
+            "term" : { "source_domain" : domain } 
+                }
+            }
+ 
+        res = self.es_client.count(index= self.index_name, doc_type=self.docType, body= body2)
+        #size = res['count']
+        size = limit
+         
+        if size == 0 :
+            log.debug("no records for selected domain: {dmn}, it can't continue".format(dmn=domain))
+            raise FandangoException("no records for selected domain: {dmn}, it can't continue".format(dmn=domain))
+            
+                    
+        body = { "size": 20,
+                    "query": {
+                        "term" : {
+                            "source_domain" : domain
+                        }
+                    },
+                    "sort": [
+                        {"date_published": "asc"},
+                        {"_uid": "desc"}
+                    ]
+                }
+         
+        result = self.es_client.search(index= self.index_name, doc_type=self.docType, body = body)
+        bookmark = [result['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1]) ]
+         
+        body1 = {"size": 20,#1000
+                    "query": {
+                        "term" : {
+                            "source_domain" : domain
+                        }
+                    },
+                    "search_after": bookmark,
+                    "sort": [
+                        {"date_published": "asc"},
+                        {"_uid": "desc"}
+                    ]
+                }
+ 
+        while len(result['hits']['hits']) < size:
+            res = self.es_client.search(index= self.index_name, doc_type=self.docType, body= body1)
+            if len(res['hits']['hits']) == 0:
+                return [[res['_source']['title'], res['_source']['text']] for res in result['hits']['hits']]
+            
+            for el in res['hits']['hits']:
+                result['hits']['hits'].append( el )
+            bookmark = [res['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1]) ]
+            print(bookmark)
+            body1 = {"size": 20,#1000
+                    "query": {
+                        "term" : {
+                            "source_domain" : domain
+                        }
+                    },
+                    "search_after": bookmark,
+                    "sort": [
+                        {"date_published": "asc"},
+                        {"_uid": "desc"}
+                    ]
+                }
+         
+        #for res in result['hits']['hits']:
+        #    result_list.append({"title":res['_source']['title'],  "text" : res['_source']['text'] , "label" : "" })
+         
+        #print(result_list[0:2])
+        log.debug("All articles from domain request are taken for training set building ")
+        #return result_list
+        return  [[res['_source']['title'], res['_source']['text']] for res in result['hits']['hits']]
 
                 
 
 if __name__ == '__main__':
+    
+    dao_news=DAONewsElastic()
+    list_domains = dao_news.get_domain()
+    print(list_domains)
+    list_domains = [('www.wikileaks.com', 'FAKE')]
+    ii = DAOTrainingElasticByDomains(list_domains)
+    l= ii.get_train_dataset()
+    print(l.shape, l.columns)
     #oo = DAOTrainingPD(dataset_beta)
     #print(oo.get_train_dataset())
-    ii = DAOTrainingElasticByDomains()
-    p = ii.get_train_dataset_from_domains("/home/camila/Scrivania/url_list_labeled.txt")
-    p.to_csv("/home/camila/Scrivania/Fandango_data.tsv",index = False, sep= "\t")
-    
+    #ii = DAOTrainingElasticByDomains()
+    #p.to_csv("/home/camila/Scrivania/Fandango_data.tsv",index = False, sep= "\t"
+
+
     
     
     

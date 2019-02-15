@@ -23,8 +23,7 @@ from fake_news_detection.business.ClaimsManager import popola_all
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
     DAOClaimsOutput
-from fake_news_detection.dao.TrainingDAO import DAOTrainingPD,\
-    DAOTrainingElasticByDomains
+from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 from typing import List
 from fake_news_detection.apps.training_model import Train_model
  
@@ -40,7 +39,7 @@ dao_claim_output=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
 ###model = oo.load('test')
-nome_modello="modello_en"
+nome_modello="model1402"
 
 
 def train_model() -> str:
