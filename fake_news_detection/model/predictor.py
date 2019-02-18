@@ -29,7 +29,6 @@ class Preprocessing:
         self.preprocess=TextPreprocessor(lang=language, mode="lemmatization", rm_stopwords=True, invalid_chars=QUOTES, encoding="utf-8")
 
     def _preprocessing(self, X):
-        print(X)
         X=preprocess_features_of_df(df=X, mapping=text_preprocessing_mapping(self.preprocess))
         return X
     

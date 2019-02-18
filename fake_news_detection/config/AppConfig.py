@@ -63,7 +63,7 @@ index_name_claims = os.environ.get("NEW_MAPPED_INDEX") or config.get("elasticsea
 domain_index= os.environ.get("DOMAIN_INDEX") or config.get("elasticsearch", "domain_index")
 domain_docType= os.environ.get("DOMAIN_DOCTYPE") or config.get("elasticsearch", "domain_docType")
 domain_file=pkg_resources.resource_filename("fake_news_detection.resources", "new_mapping.json") 
-
+number_item_to_train= os.environ.get("SIZE_DOMAIN") or 20
 #mapping_domain_index = pkg_resources.resource_filename("fake_news_detection.config", "mapping_domain.json") # @UndefinedVariable
 #mapping_claim = os.environ.get("MAPPING_CLAIM") or config.get("elasticsearch", "mapping_claim")
 #dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")

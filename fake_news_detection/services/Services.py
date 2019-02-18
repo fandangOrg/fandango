@@ -3,7 +3,6 @@ Created on Oct 18, 2018
 
 @author: daniele
 '''
-from ds4biz_flask.model.DS4BizFlask import DS4BizFlask
 
 from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel, \
     InterfaceInputFeedBack, News, News_annotated, News_domain,\
@@ -11,12 +10,11 @@ from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputMode
 from flask_cors.extension import CORS
 import json
 from fake_news_detection.config import AppConfig
-from fake_news_detection.config.AppConfig import static_folder, picklepath
+from fake_news_detection.config.AppConfig import static_folder, picklepath,\
+    number_item_to_train
 from fake_news_detection.utils.Crawler import crawler_news
 from flask import request
 import pandas as pd
-from ds4biz_flask.model.DS4BizTyping import DS4BizList
-from fake_news_detection.model.Language import Language
 
 from fake_news_detection.dao.DAO import DAONewsElastic, FSMemoryPredictorDAO
 from fake_news_detection.business.ClaimsManager import popola_all
@@ -27,6 +25,8 @@ from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 from typing import List
 from fake_news_detection.model.predictor import Preprocessing, FakePredictor
 from fake_news_detection.config.MLprocessConfig import config_factory
+from ds4biz_flask.model.ds4bizflask import DS4BizFlask
+from fake_news_detection.model.Language import Language
  
 ###oo = ModelDAO()
 
@@ -79,7 +79,7 @@ def train_model()->Prestazioni:
     list_domains = dao_news.get_domain()
     dao_train = DAOTrainingElasticByDomains(list_domains)
     #training_set = train_config.load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
-    training_set=dao_train.get_train_dataset(limit=20)
+    training_set=dao_train.get_train_dataset(limit=number_item_to_train)
     
     logger.info("creazione modello "+nome_modello)
     predictor_fakeness = config_factory.create_model_by_configuration("fandango","1","english")
@@ -115,7 +115,7 @@ def analyzer(info:InterfaceInputModel) -> str:
     return json.loads(prest.to_json(orient='records'))
 
 
-def info()->DS4BizList(Info):
+def info()->List[Info]:
     ''' Ritorna tutte le informazioni sui modelli esistenti'''
     #===========================================================================
     # try:
@@ -134,12 +134,18 @@ def info()->DS4BizList(Info):
     #     raise CustomHttpException(*GENERIC_ERROR("info"))
     #===========================================================================
     
-    
-def get_languages() -> DS4BizList(Language):
+
+def destroy(nome_modello:str)->str:
+    ''' Elimina un analizzatore usando id '''
+    daopredictor.delete(nome_modello)
+    logger.info("rimuovi modello "+nome_modello)
+    return "MODEL %s DELETED"%nome_modello
+   
+def get_languages() -> List[Language]:
     l= list()
-    l.append(Language("en","English",True))
-    l.append(Language("it","Italian",True))
-    l.append(Language("es","Spanish",True))
+    l.append(Language("en","English","True"))
+    l.append(Language("it","Italian","True"))
+    l.append(Language("es","Spanish","True"))
     #l.append(Language("pt","Portuguese",True))
     #l.append(Language("el_GR","Greek",False))
     return l
@@ -174,7 +180,8 @@ def new_doc_annotation(new_record:New_news_annotated) -> str:
     news_crawled = crawler_news(new_record.url)
     news_crawled['label'] = new_record.label
     news_crawled['language'] = new_record.lang
-    news_crawled['type_annotation'] = new_record.type_annotation
+    news_crawled['type_annotation'] = "M"
+     # new_record.type_annotation
     dao_news.create_doc_news(news_crawled)
     log.debug(news_crawled)
     return('DONE')
@@ -187,7 +194,7 @@ def new_claim_annotated(new_claim: Claims_annotated) -> str:
         dao_claim_output.add_claim(new_record)
         return('new claim added')
     else:
-        return('claim already in database')
+        return('claim already in database') 
 
 
 def crawler(url:str) -> str:
@@ -231,7 +238,10 @@ app.add_service("new_doc_annotation", new_doc_annotation, method = 'POST')
 app.add_service('domain_annotation', domain_annotation, method = 'POST')
 app.add_service('new_claim_annotated', new_claim_annotated, method = 'POST')
 app.add_service("info",info, method='POST')
+app.add_service("destroy",destroy, method='POST')
+
 CORS(app)
 
 log.info("RUN ON {cfg}".format(cfg= AppConfig.BASEURL+AppConfig.BASEPORT))
+app.setup()
 app.run(host="0.0.0.0", port=AppConfig.BASEPORT,debug=False)

@@ -177,12 +177,14 @@ class DAOTrainingElasticByDomains():
             list_documents = self.__get_news_from_domain(domain[0],limit)
             df1 = pd.DataFrame.from_dict(list_documents)
             df1['label'] = label
-            print(df1.shape)
+           # print(df1.shape)
             list_df.append(df1)
         
         dataf = pd.concat(list_df, axis= 0)
-        print(dataf.shape)
-        print( df1.head(5))
+        #print(dataf.shape)
+        #print( df1.head(5))
+        print(dataf.groupby(['label']).agg(['count']))
+        print("> end of 'get_train_dataset()'\n")
         return dataf
 #===============================================================================
 # 
