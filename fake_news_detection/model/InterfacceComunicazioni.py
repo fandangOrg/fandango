@@ -75,3 +75,31 @@ class Claims_annotated:
 
 
 
+class Prestazioni:
+    
+    def __init__(self,precision:float,recall:float,accuracy:float,number_item:int):
+        self.precision = precision
+        self.recall = recall
+        self.accuracy = accuracy
+        self.number_item = number_item
+        
+    def toJSON(self):
+        return self.__dict__
+
+        
+
+class Info:
+    def __init__(self,nome_modello:str,data_creazione:str,prestazioni:Prestazioni,language:str):
+        self.nome_modello = nome_modello
+        self.data_creazione = data_creazione
+        self.prestazioni = prestazioni
+        self.language = language
+
+    def toJSON(self):
+        #return self.__dict__
+        return {"nome_modello":self.nome_modello,
+                "data_creazione": self.data_creazione,
+                "language": self.language,
+                "prestazioni":self.prestazioni.toJSON()}
+    
+        

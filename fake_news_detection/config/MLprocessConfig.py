@@ -13,7 +13,7 @@ from ds4biz_predictor_core.model.transformers.transformers import ColumnTransfor
 lang_code = "en"
 lang_name = "english"
 
-preprocess=TextPreprocessor(lang=lang_code, mode="lemmatization", rm_stopwords=True, invalid_chars=QUOTES, encoding="utf-8")
+#preprocess=TextPreprocessor(lang=lang_code, mode="lemmatization", rm_stopwords=True, invalid_chars=QUOTES, encoding="utf-8")
 
 def text_preprocessing_mapping(preprocess):
     return  [

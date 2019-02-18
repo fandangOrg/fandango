@@ -164,7 +164,7 @@ class DAOTrainingElasticByDomains():
         self.docType = docType_article
         self.list_domains=list_domains
     
-    def get_train_dataset(self):
+    def get_train_dataset(self,limit):
         '''
         from a given file, it converts articles labeled into rows of a dataframe
         @param path_domain: str
@@ -174,7 +174,7 @@ class DAOTrainingElasticByDomains():
         for domain in self.list_domains:
             label = domain[1]
             print(domain[0])
-            list_documents = self.__get_news_from_domain(domain[0])
+            list_documents = self.__get_news_from_domain(domain[0],limit)
             df1 = pd.DataFrame.from_dict(list_documents)
             df1['label'] = label
             print(df1.shape)
@@ -278,13 +278,13 @@ class DAOTrainingElasticByDomains():
                     ]
                 }
          
-        #for res in result['hits']['hits']:
-        #    result_list.append({"title":res['_source']['title'],  "text" : res['_source']['text'] , "label" : "" })
+        for res in result['hits']['hits']:
+            result_list.append({"title":res['_source']['title'],  "text" : res['_source']['text'] , "label" : "" })
          
         #print(result_list[0:2])
         log.debug("All articles from domain request are taken for training set building ")
-        #return result_list
-        return  [[res['_source']['title'], res['_source']['text']] for res in result['hits']['hits']]
+        return result_list
+        #return  [[res['_source']['title'], res['_source']['text']] for res in result['hits']['hits']]
 
                 
 

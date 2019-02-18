@@ -7,7 +7,7 @@ from ds4biz_flask.model.DS4BizFlask import DS4BizFlask
 
 from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel, \
     InterfaceInputFeedBack, News, News_annotated, News_domain,\
-    New_news_annotated, Claims_annotated
+    New_news_annotated, Claims_annotated, Prestazioni, Info
 from flask_cors.extension import CORS
 import json
 from fake_news_detection.config import AppConfig
@@ -25,7 +25,8 @@ from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
     DAOClaimsOutput
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 from typing import List
-from fake_news_detection.apps.training_model import Train_model
+from fake_news_detection.model.predictor import Preprocessing, FakePredictor
+from fake_news_detection.config.MLprocessConfig import config_factory
  
 ###oo = ModelDAO()
 
@@ -39,12 +40,13 @@ dao_claim_output=DAOClaimsOutputElastic()
 log = getLogger(__name__)
  
 ###model = oo.load('test')
-nome_modello="model1402"
+nome_modello="english_first_version"
+logger = getLogger(__name__) 
 
 
-def train_model() -> str:
+def train_model_old() -> str:
     #training_set = daotrainingset.get_train_dataset(sample_size=0.01)
-    train_config=Train_model()
+    train_config=None#Train_model()
     list_domains = dao_news.get_domain()
     dao_train = DAOTrainingElasticByDomains(list_domains)
     #training_set = train_config.load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
@@ -52,18 +54,87 @@ def train_model() -> str:
     training_set_final = train_config.preprocess_df(training_set)
     train_config.training(nome_modello, training_set_final, daopredictor)
 
+def train_model()->Prestazioni:
+
+    '''Creazione di un nuovo analizzatore per i social'''
+    modello = None
+    try:
+        modello = daopredictor.get_by_id(nome_modello)
+    except:
+        pass
+
+    if modello:
+        return "MODELLO GIÀ ESISTE"
+        #raise CustomHttpException(*ALREADY_EXIST(info.nome_modello))
+
+    #try:
+    preprocessing = Preprocessing("en")
+    #except Exception as e:
+    #    logger.error(e)
+    #    raise CustomHttpException(*LANGUAGE_ERROR())
+
+    #===========================================================================
+    # try:
+    #===========================================================================
+    list_domains = dao_news.get_domain()
+    dao_train = DAOTrainingElasticByDomains(list_domains)
+    #training_set = train_config.load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
+    training_set=dao_train.get_train_dataset(limit=20)
+    
+    logger.info("creazione modello "+nome_modello)
+    predictor_fakeness = config_factory.create_model_by_configuration("fandango","1","english")
+    predictor=FakePredictor(predictor_fakeness,preprocessing,nome_modello,'fakeness')
+    predictor.fit(training_set)
+    daopredictor.save(predictor)
+    return predictor.get_prestazioni().toJSON()
+
+    #===========================================================================
+    # except Exception as e:
+    #     logger.error(e)
+    #===========================================================================
+        #raise CustomHttpException(*GENERIC_ERROR("create_model"))
+    
 
 def feedback(info:InterfaceInputFeedBack) -> str:
     log.debug(info)
     model=daopredictor.get_by_id(nome_modello)
-    df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")]})
-    train_config=Train_model()
-    training_set_final = train_config.rapreprocess_df(df)
-    model.partial_fit(training_set_final, pd.Series(info.label))
+    df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")],'label': [info.label.replace("\n", " ")]})
+    model.partial_fit(df)
     daopredictor.update(model)
     return "OK"
 
 
+
+def analyzer(info:InterfaceInputModel) -> str:
+    log.info('''ANALISI NEWS''')
+    model = daopredictor.get_by_id(nome_modello)
+    df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n"," ")]})
+    prest = model.predict_proba(df)
+    prest = pd.DataFrame(prest, columns=model.predictor_fakeness.predictor.predictor.classes_)
+    log.info(json.loads(prest.to_json(orient='records')))
+    return json.loads(prest.to_json(orient='records'))
+
+
+def info()->DS4BizList(Info):
+    ''' Ritorna tutte le informazioni sui modelli esistenti'''
+    #===========================================================================
+    # try:
+    #===========================================================================
+    logger.info("informazioni")
+    response=list()
+    for _id in daopredictor.all():
+        p=daopredictor.get_by_id(_id)
+        p.id=_id
+        response.append(Info(p.id, p.date, p.get_prestazioni(),p.preprocessing.language).toJSON())
+        daopredictor.delete_from_memory(p.id)
+    return response
+    #===========================================================================
+    # except Exception as e:
+    #     logger.error(e)
+    #     raise CustomHttpException(*GENERIC_ERROR("info"))
+    #===========================================================================
+    
+    
 def get_languages() -> DS4BizList(Language):
     l= list()
     l.append(Language("en","English",True))
@@ -107,18 +178,6 @@ def new_doc_annotation(new_record:New_news_annotated) -> str:
     dao_news.create_doc_news(news_crawled)
     log.debug(news_crawled)
     return('DONE')
-
-
-def analyzer(info:InterfaceInputModel) -> str:
-    log.info('''ANALISI NEWS''')
-    model = daopredictor.get_by_id(nome_modello)
-    df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n"," ")]})
-    train_config = Train_model()
-    df_new = train_config.preprocess_df(df)
-    prest = model.predict_proba(df_new)
-    prest = pd.DataFrame(prest, columns=model.predictor.predictor.classes_)
-    log.info(json.loads(prest.to_json(orient='records')))
-    return json.loads(prest.to_json(orient='records'))
 
 
 def new_claim_annotated(new_claim: Claims_annotated) -> str:
@@ -171,8 +230,8 @@ app.add_service("new_annotation", new_annotation, method = 'POST')
 app.add_service("new_doc_annotation", new_doc_annotation, method = 'POST')
 app.add_service('domain_annotation', domain_annotation, method = 'POST')
 app.add_service('new_claim_annotated', new_claim_annotated, method = 'POST')
+app.add_service("info",info, method='POST')
 CORS(app)
-
 
 log.info("RUN ON {cfg}".format(cfg= AppConfig.BASEURL+AppConfig.BASEPORT))
 app.run(host="0.0.0.0", port=AppConfig.BASEPORT,debug=False)

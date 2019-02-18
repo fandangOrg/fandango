@@ -20,6 +20,7 @@ from fake_news_detection.business.featureEngineering import preprocess_features_
     add_new_features_to_df
 from fake_news_detection.config.MLprocessConfig import new_features_mapping,\
     text_preprocessing_mapping
+from fake_news_detection.model.InterfacceComunicazioni import Prestazioni
 
 
 class Preprocessing:
@@ -28,6 +29,7 @@ class Preprocessing:
         self.preprocess=TextPreprocessor(lang=language, mode="lemmatization", rm_stopwords=True, invalid_chars=QUOTES, encoding="utf-8")
 
     def _preprocessing(self, X):
+        print(X)
         X=preprocess_features_of_df(df=X, mapping=text_preprocessing_mapping(self.preprocess))
         return X
     
@@ -59,8 +61,10 @@ class FakePredictor(DS4BizPredictor):
         self.number_item=0
         
     def fit(self, X, y=None):
+        print("dataframe",X.columns)
         Y = X['label']
         X = X.drop(['label'], axis=1)
+        print("dataframedopo",X.columns)
         X=self.preprocessing.execution(X)
         self.predictor_fakeness.fit(X,Y)
         
@@ -96,8 +100,7 @@ class FakePredictor(DS4BizPredictor):
          
     
     def get_prestazioni(self):
-        return OutputPrestazioni(self._create_prestazioni(self.predictor_sentiment.predictor),
-                          self._create_prestazioni(self.predictor_dispatching.predictor))
+        return self._create_prestazioni(self.predictor_fakeness.predictor)
          
    
     def _update_prestazioni_model(self,predictor,prestazioni):
@@ -106,36 +109,40 @@ class FakePredictor(DS4BizPredictor):
         predictor.accuracy = prestazioni.accuracy
         self.number_item = prestazioni.number_item
         
-    def update_prestazioni(self,prestazioni:OutputPrestazioni):
-        self._update_prestazioni_model(self.predictor_sentiment.predictor,prestazioni.sentiment)
-        self._update_prestazioni_model(self.predictor_dispatching.predictor,prestazioni.dispatching)
-  
-def prestazioni_model(dati,predictor):
-    df = dataframe_from_social_data_no_split(dati)
-    df = df.dropna()
-    # calcolo prestazioni per il sentiment
-    y=predictor.predict(df[['commento']])
-    prestazioni_sentiment=prestazioni(df['sentiment'],y[0])
-    prestazioni_dispatching = prestazioni_multi_label(df['categorie'],y[1])
-    # print(df[['commento']])
-    # print(y[1])
-    output_prestazioni = OutputPrestazioni(prestazioni_sentiment, prestazioni_dispatching)
-    return output_prestazioni
-      
-def prestazioni(y_test,y_pred):
-    y_test=y_test.str.lower()
-    accuracy=metrics.accuracy_score(y_test,y_pred)
-    precision=metrics.precision_score(y_test,y_pred,average="macro")
-    recall=metrics.recall_score(y_test,y_pred,average="macro")
-    # print(accuracy,precision,recall)
-    return Prestazioni(precision,recall,accuracy,len(y_test))
-
-def prestazioni_multi_label(y_test,y_pred):
-    y_test_addative=list()
-    for i in range(len(y_test)):
-        if y_pred[i] in y_test[i]:
-            y_test_addative.append(y_pred[i])
-        else:
-            y_test_addative.append(y_test[i][0])
-    y_test_addative= pd.Series(y_test_addative)
-    return prestazioni(y_test_addative,y_pred)
+    #===========================================================================
+    # def update_prestazioni(self,prestazioni:OutputPrestazioni):
+    #     self._update_prestazioni_model(self.predictor_sentiment.predictor,prestazioni.sentiment)
+    #     self._update_prestazioni_model(self.predictor_dispatching.predictor,prestazioni.dispatching)
+    #===========================================================================
+#===============================================================================
+#   
+# def prestazioni_model(dati,predictor):
+#     df = dataframe_from_social_data_no_split(dati)
+#     df = df.dropna()
+#     # calcolo prestazioni per il sentiment
+#     y=predictor.predict(df[['commento']])
+#     prestazioni_sentiment=prestazioni(df['sentiment'],y[0])
+#     prestazioni_dispatching = prestazioni_multi_label(df['categorie'],y[1])
+#     # print(df[['commento']])
+#     # print(y[1])
+#     output_prestazioni = OutputPrestazioni(prestazioni_sentiment, prestazioni_dispatching)
+#     return output_prestazioni
+#       
+# def prestazioni(y_test,y_pred):
+#     y_test=y_test.str.lower()
+#     accuracy=metrics.accuracy_score(y_test,y_pred)
+#     precision=metrics.precision_score(y_test,y_pred,average="macro")
+#     recall=metrics.recall_score(y_test,y_pred,average="macro")
+#     # print(accuracy,precision,recall)
+#     return Prestazioni(precision,recall,accuracy,len(y_test))
+# 
+# def prestazioni_multi_label(y_test,y_pred):
+#     y_test_addative=list()
+#     for i in range(len(y_test)):
+#         if y_pred[i] in y_test[i]:
+#             y_test_addative.append(y_pred[i])
+#         else:
+#             y_test_addative.append(y_test[i][0])
+#     y_test_addative= pd.Series(y_test_addative)
+#     return prestazioni(y_test_addative,y_pred)
+#===============================================================================
