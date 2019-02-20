@@ -9,6 +9,7 @@ from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputMode
     New_news_annotated, Claims_annotated, Prestazioni, Info
 from flask_cors.extension import CORS
 import json
+from flask import json
 from fake_news_detection.config import AppConfig
 from fake_news_detection.config.AppConfig import static_folder, picklepath,\
     number_item_to_train
@@ -22,11 +23,12 @@ from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
     DAOClaimsOutput
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
-from typing import List
+from typing import List, Dict
 from fake_news_detection.model.predictor import Preprocessing, FakePredictor
 from fake_news_detection.config.MLprocessConfig import config_factory
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
 from fake_news_detection.model.Language import Language
+from fake_news_detection.dao.AuthorDAO import DAOAuthorOutputElastic
  
 ###oo = ModelDAO()
 
@@ -38,12 +40,14 @@ daopredictor = FSMemoryPredictorDAO(picklepath)
 dao_news=DAONewsElastic()
 dao_claim_output=DAOClaimsOutputElastic()
 log = getLogger(__name__)
- 
+dao_authors = DAOAuthorOutputElastic()
 ###model = oo.load('test')
-nome_modello="english_first_version"
+nome_modello="model_en_1802"
 logger = getLogger(__name__) 
 
 
+
+#-----------------> MODEL SERVICES--------------------------------------------------------------
 def train_model_old() -> str:
     #training_set = daotrainingset.get_train_dataset(sample_size=0.01)
     train_config=None#Train_model()
@@ -56,7 +60,7 @@ def train_model_old() -> str:
 
 def train_model()->Prestazioni:
 
-    '''Creazione di un nuovo analizzatore per i social'''
+    '''training a classification model'''
     modello = None
     try:
         modello = daopredictor.get_by_id(nome_modello)
@@ -140,7 +144,9 @@ def destroy(nome_modello:str)->str:
     daopredictor.delete(nome_modello)
     logger.info("rimuovi modello "+nome_modello)
     return "MODEL %s DELETED"%nome_modello
-   
+
+
+ 
 def get_languages() -> List[Language]:
     l= list()
     l.append(Language("en","English","True"))
@@ -151,6 +157,9 @@ def get_languages() -> List[Language]:
     return l
 
 
+
+########################################################################################
+#---------------------> annotation services<---------------------------------------
 def next_news(lang:str) -> News:
     log.debug(lang)
     try:
@@ -195,33 +204,46 @@ def new_claim_annotated(new_claim: Claims_annotated) -> str:
         return('new claim added')
     else:
         return('claim already in database') 
-
-
-def crawler(url:str) -> str:
-    log.debug(url)
-    return crawler_news(url)
-
-
+#------------------------------>CLAIM SERVICES <----------------------------
 def claim() -> str:
     j = request.get_json()  #key txt of the dictionary
     text = j.get("text")
     j_resp =dao_claim_output.get_similarity_claims_from_text(text)
     print(j_resp)
     return j_resp
-    #===========================================================================
-    # print(text)
-    # res = dao_claim_output.get_similarity_claims_from_text(text)
-    # print(res)
-    # return(res)
-    #===========================================================================
-
 
 def popolate_claims() -> str:
     popola_all(dao_claim_output)
     return "DONE"
 
-    
-    
+#---------------------------> EXTERNAL SERVICES<-----------------------------
+
+def author_org_score() -> str:
+    j = request.get_json()  
+    author_org = j.get("author_org")
+    try:
+        response = dao_authors.outout_author_organization(author_org)
+        print(response)
+        d = {"author_or_org" : response[0], "score" : response[1]}
+        return d
+    except:
+        raise Exception('404- cannot find the author')
+        
+        
+        
+#########################################################################
+#-------------------------> UTILS SERVICES <-----------------------------
+
+def crawler(url:str) -> str:
+    log.debug(url)
+    return crawler_news(url)
+
+
+
+
+
+
+
 app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="/web")
 app.root="/fandango/v0.3/fakeness"
 app.name="FANDANGO"
@@ -239,9 +261,10 @@ app.add_service('domain_annotation', domain_annotation, method = 'POST')
 app.add_service('new_claim_annotated', new_claim_annotated, method = 'POST')
 app.add_service("info",info, method='POST')
 app.add_service("destroy",destroy, method='POST')
-
+app.add_service("author_score", author_org_score, method = 'POST')
 CORS(app)
 
 log.info("RUN ON {cfg}".format(cfg= AppConfig.BASEURL+AppConfig.BASEPORT))
 app.setup()
 app.run(host="0.0.0.0", port=AppConfig.BASEPORT,debug=False)
+

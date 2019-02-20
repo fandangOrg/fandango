@@ -5,7 +5,7 @@ Created on Oct 24, 2018
 '''
 
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article, dataset_beta, domains_train
+    index_name_news, docType_article, domains_train
 import pandas as pd
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.utils.Exception import FandangoException
@@ -27,8 +27,8 @@ class DAOTraining:
 
 
 class DAOTrainingPD:
-
-    def __init__(self, path=dataset_beta, delimiter='\t'):
+    #dataset_beta togliere commento e metterlo nel path 
+    def __init__(self, path, delimiter='\t'):
         self.path = path
         self.delimiter = delimiter
         
@@ -295,9 +295,9 @@ if __name__ == '__main__':
     dao_news=DAONewsElastic()
     list_domains = dao_news.get_domain()
     print(list_domains)
-    list_domains = [('www.wikileaks.com', 'FAKE')]
+    #list_domains = [('www.wikileaks.com', 'FAKE')]
     ii = DAOTrainingElasticByDomains(list_domains)
-    l= ii.get_train_dataset()
+    l= ii.get_train_dataset(limit = 1000)
     print(l.shape, l.columns)
     #oo = DAOTrainingPD(dataset_beta)
     #print(oo.get_train_dataset())

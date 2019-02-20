@@ -3,12 +3,14 @@ Created on Oct 26, 2018
 
 @author: daniele
 '''
+
+
 from newspaper.article import Article
 from fake_news_detection.utils.logger import getLogger
+from fake_news_detection.dao.AuthorDAO import DAOAuthorOutputElastic
 
 log = getLogger(__name__)
-
-
+dao_author = DAOAuthorOutputElastic()
 
 def crawler_news(url):
     """
@@ -23,10 +25,16 @@ def crawler_news(url):
     d=dict()
     d['url']=url
     d['title']=article.title
+    
     if len(article.authors)>0:
-        d['authors']=article.authors
+        list_author_score = []
+    
+        for i in article.authors:
+            list_author_score.append({ "author" : i, "score" : dao_author.outout_author_organization(i)})
+        d['authors'] = list_author_score
     else:
         d['authors']='unknown'
+    
     d['text'] =article.text
     d['source_url'] =article.source_url
     log.debug("New article crawled: {art}".format(art=d))
