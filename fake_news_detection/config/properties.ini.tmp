@@ -8,6 +8,8 @@ log_level = INFO
 [elasticsearch]
 url = http://localhost:9200
 index_news=news_article_current
+index_news_annotation=news_article_current
+
 doctype_news = article
 
 username = elastic
@@ -15,10 +17,10 @@ password = RjuSUIk4hFlL46fvTf5z
 indexfakenews = indexfakenews
 doctype = document
 mapping = /home/camila/workspace/fandango-fake-news/fake_news_detection/config/new_mapping.json
-#new_mapped_index = claims
 claim_index = claims
 domain_index = domain
 domain_docType =  document
+index_author_org = test_author_org_index
 
 [service]
 url = http://0.0.0.0:9800/

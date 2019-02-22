@@ -2,11 +2,12 @@ from ds4biz_predictor_core.factories.scikit_predictor_factories import Transform
 from ds4biz_predictor_core.model.creation_requests import CreationRequest
 from ds4biz_predictor_core.model.transformers.transformers import ColumnTransformer
 from fake_news_detection.business.featureEngineering import add_new_features_to_df, preprocess_features_of_df
-from fake_news_detection.config.MLprocessConfig import transforming_mapping, text_preprocessing_mapping, new_features_mapping, name_classifier, params_classifier
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 from fake_news_detection.config.AppConfig import picklepath
 from pandas import DataFrame, read_csv
 from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
+from fake_news_detection.config.MLprocessConfig import text_preprocessing_mapping,\
+    new_features_mapping
 
 class Train_model:
     def load_df(self,path_to_dataset:str, sample_size:float=0.05) -> DataFrame:

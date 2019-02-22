@@ -39,11 +39,11 @@ class News:
         return  "id: "+self.id+"; url: "+self.url+"; title: "+self.title+"; text: "+self.text.replace("\n"," ")
 
 class News_annotated:
-    def __init__(self, id:str, label:str):
+    def __init__(self, id:str, label:str,type_annotation:str=None):
         self.id = id
         self.label = label
-  
-
+        self.type_annotation=type_annotation
+ 
         
 class News_domain:
     def __init__(self, label:str,list_url:str, lang:str):
@@ -55,9 +55,10 @@ class News_domain:
         
         
 class New_news_annotated:
-    def __init__(self,url:str, label:str, lang:str):
+    def __init__(self,url:str, label:str, lang:str, type_annotation:str=None):
         self.url = url
         self.label = label
+        self.type_annotation = type_annotation
         self.lang = lang
         
     
@@ -74,3 +75,31 @@ class Claims_annotated:
 
 
 
+class Prestazioni:
+    
+    def __init__(self,precision:float,recall:float,accuracy:float,number_item:int):
+        self.precision = precision
+        self.recall = recall
+        self.accuracy = accuracy
+        self.number_item = number_item
+        
+    def toJSON(self):
+        return self.__dict__
+
+        
+
+class Info:
+    def __init__(self,nome_modello:str,data_creazione:str,prestazioni:Prestazioni,language:str):
+        self.nome_modello = nome_modello
+        self.data_creazione = data_creazione
+        self.prestazioni = prestazioni
+        self.language = language
+
+    def toJSON(self):
+        #return self.__dict__
+        return {"nome_modello":self.nome_modello,
+                "data_creazione": self.data_creazione,
+                "language": self.language,
+                "prestazioni":self.prestazioni.toJSON()}
+    
+        

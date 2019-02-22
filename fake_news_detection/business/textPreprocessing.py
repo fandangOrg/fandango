@@ -35,7 +35,7 @@ class TextPreprocessor():
             if self.mode == "stemming":
                 preprocessed_text = self.stemming(text)
             elif self.mode == "lemmatization":
-                preprocessed_text = self.stemming(text)
+                preprocessed_text = self.lemmatization(text)
             else:
                 preprocessed_text = self.no_normalization(text)
 

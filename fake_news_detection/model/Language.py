@@ -15,6 +15,6 @@ class Language:
         '''
         self.language = language
         self.name=name
-        self.active = str(active)
+        self.active = active
         
         

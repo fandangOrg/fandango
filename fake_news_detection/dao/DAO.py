@@ -5,12 +5,14 @@ Created on Jan 8, 2019
 '''
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article, domain_index, domain_docType
+    index_name_news, docType_article, domain_index, domain_docType,\
+    index_name_output
 from fake_news_detection.model.InterfacceComunicazioni import News
 import random
 from elasticsearch import helpers
 from fake_news_detection.utils.Exception import FandangoException
 from ds4biz_predictor_core.dao.predictor_dao import FSPredictorDAO
+from elasticsearch_dsl.search import Search
 log = getLogger(__name__)
 
 class DAONews:
@@ -37,7 +39,8 @@ class DAONewsElastic(DAONews):
     
     def __init__(self):
         self.es_client = get_elastic_connector()
-        self.index_name = index_name_news 
+        self.index_name = index_name_news
+        self.index_name_output = index_name_output
         self.docType = docType_article
         self.domain_name_index = domain_index
         self.docType_domain = domain_docType
@@ -62,20 +65,53 @@ class DAONewsElastic(DAONews):
            })
         self.bulk_on_elastic(lista_operazioni)
 
+    def get_domain(self):
+        """
+        create doc for annotated domain
+        @param news: obj
+        """
+        body={
+              "query": {
+                "match_all": {}
+              }
+             }
         
-    def set_label(self,id,label):
+        search = Search(using=self.es_client,index=self.domain_name_index,doc_type=self.docType_domain)
+        search.from_dict(body)
+        response = search.execute()
+        print("RESPONSE TOTAL:", response.hits.total)
+        l = [] 
+        for r in response['hits']['hits']:
+            l.append((r["_source"]["domain"],r["_source"]["label"]))
+        return l
+            
+    def _get_article_By_id(self,id):
+        search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType)\
+                .query("term", _id=id)
+        response = search.execute()
+        print("RESPONSE TOTAL:", response.hits.total)
+        for r in response['hits']['hits']:
+                print(r["_source"])
+                return r["_source"]
+
+    def set_label(self,id,label,type_annotation):
         """
         add a new field label in a doc with that id
         @param id: str
         @param label: str
         """
+        news=self._get_article_By_id(id).__dict__
+        news["label"] = label
+        news["type_annotation"] =type_annotation
         log.info("new annotation submitted: id: {id},label: {lbl}".format(id=id,lbl= label))
         doc_up=  {
-           '_op_type': 'update',
-           '_index': self.index_name,
+           #'_op_type': 'update',
+           '_op_type': 'index',
+           '_index': self.index_name_output,
            '_type': self.docType,
-           '_id': id,
-           'doc': {'label':label}
+           #'_id': id,
+           #'doc': {'label':label,'type_annotation':type_annotation}
+            '_source' : news
         }
         self.bulk_on_elastic(doc_up)
 
@@ -86,10 +122,11 @@ class DAONewsElastic(DAONews):
         """
         doc_up=  {
            '_op_type': 'index',
-           '_index': self.index_name,
+           '_index': self.index_name_output,
            '_type': self.docType,
            '_source' : news
         }
+        print(doc_up)
         self.bulk_on_elastic(doc_up)
         
         
@@ -146,12 +183,12 @@ class DAONewsElastic(DAONews):
                   ]
                 },
               },
-              'functions':[ 
+              'functions':[
                 {
                   'random_score': 
                     {
                         "seed":random.randint(0,100000),
-                        "field":"_seq_no"
+                        #"field":"_seq_no"
                       }
                 }
                 ] 
@@ -172,6 +209,7 @@ class DAONewsElastic(DAONews):
             body["query"]["function_score"]["query"]["bool"]["must"][0]["bool"]["should"][0]["match"]["label"]=filter
             
         try:
+            print(body)
             res = self.es_client.search(index=self.index_name, body= body,doc_type=self.docType)
         except Exception as e:
             log.error("Could not query against elasticsearch: {err}".format(err=e))
@@ -203,12 +241,7 @@ class FSMemoryPredictorDAO(FSPredictorDAO):
             
 if __name__ == '__main__':
     dao=DAONewsElastic()
-    while 1: 
-        k = dao.next(languages="pt")
-        print(k.text,k.id)
-        dao.set_label(k.id, "FAKE")
-    print(dao.next(languages="pt"))
-    print(dao.next(languages="pt"))
+    print(dao.get_domain())
     
         
         
