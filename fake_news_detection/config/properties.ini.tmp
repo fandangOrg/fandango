@@ -21,6 +21,7 @@ mapping = /home/camila/workspace/fandango-fake-news/fake_news_detection/config/n
 claim_index = claims
 domain_index = domain
 domain_docType =  document
+index_author_org = test_author_org_index
 
 [service]
 url = http://0.0.0.0:9800/

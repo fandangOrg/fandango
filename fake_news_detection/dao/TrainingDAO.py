@@ -5,7 +5,7 @@ Created on Oct 24, 2018
 '''
 
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article, dataset_beta, domains_train
+    index_name_news, docType_article, domains_train
 import pandas as pd
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.utils.Exception import FandangoException
@@ -27,8 +27,8 @@ class DAOTraining:
 
 
 class DAOTrainingPD:
-
-    def __init__(self, path=dataset_beta, delimiter='\t'):
+    #dataset_beta togliere commento e metterlo nel path 
+    def __init__(self, path, delimiter='\t'):
         self.path = path
         self.delimiter = delimiter
         
@@ -248,13 +248,6 @@ class DAOTrainingElasticByDomains():
                 }
          
         result = self.es_client.search(index= self.index_name, doc_type=self.docType, body = body)
-        if len(result['hits']['hits']) < size:
-            for res in result['hits']['hits']:
-                if len(res['_source']['title'])>0 and len(res['_source']['text'])>0 :  
-                    result_list.append({"title":res['_source']['title'],  "text" : res['_source']['text'] , "label" : "" })
-            #print(result_list[0:2])
-            log.debug("All articles from domain request are taken for training set building ")
-            return result_list
         bookmark = [result['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1]) ]
          
         body1 = {"size": 20,#1000

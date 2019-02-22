@@ -9,6 +9,7 @@ from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputMode
     New_news_annotated, Claims_annotated, Prestazioni, Info
 from flask_cors.extension import CORS
 import json
+from flask import json
 from fake_news_detection.config import AppConfig
 from fake_news_detection.config.AppConfig import static_folder, picklepath,\
     number_item_to_train
@@ -27,8 +28,7 @@ from fake_news_detection.model.predictor import Preprocessing, FakePredictor
 from fake_news_detection.config.MLprocessConfig import config_factory
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
 from fake_news_detection.model.Language import Language
-from pip._internal.cli.cmdoptions import pre
-from builtins import str
+from fake_news_detection.dao.AuthorDAO import DAOAuthorOutputElastic
  
 ###oo = ModelDAO()
 
@@ -40,12 +40,14 @@ daopredictor = FSMemoryPredictorDAO(picklepath)
 dao_news=DAONewsElastic()
 dao_claim_output=DAOClaimsOutputElastic()
 log = getLogger(__name__)
- 
+dao_authors = DAOAuthorOutputElastic()
 ###model = oo.load('test')
 nome_modello="english_first_version"
 logger = getLogger(__name__) 
 
 
+
+#-----------------> MODEL SERVICES--------------------------------------------------------------
 def train_model_old() -> str:
     #training_set = daotrainingset.get_train_dataset(sample_size=0.01)
     train_config=None#Train_model()
@@ -58,7 +60,7 @@ def train_model_old() -> str:
 
 def train_model()->Prestazioni:
 
-    '''Creazione di un nuovo analizzatore per i social'''
+    '''training a classification model'''
     modello = None
     try:
         modello = daopredictor.get_by_id(nome_modello)
@@ -85,7 +87,7 @@ def train_model()->Prestazioni:
     dao_train = DAOTrainingElasticByDomains(list_domains)
     #training_set = train_config.load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
     training_set=dao_train.get_train_dataset(limit=number_item_to_train)
-    training_set.to_csv( '/home/daniele/resources/greenl.csv',index=False)
+    #training_set.to_csv( '/home/daniele/resources/greenl.csv',index=False)
     predictor.fit(training_set)
     daopredictor.save(predictor)
     return predictor.get_prestazioni().toJSON()
@@ -153,6 +155,9 @@ def get_languages() -> List[Language]:
     return l
 
 
+
+########################################################################################
+#---------------------> annotation services<---------------------------------------
 def next_news(lang:str) -> News:
     log.debug(lang)
     try:
