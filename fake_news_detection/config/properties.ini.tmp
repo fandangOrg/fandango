@@ -7,8 +7,9 @@ log_level = INFO
 
 [elasticsearch]
 url = http://localhost:9200
-index_news=news_article_current
-index_news_annotation=news_article_current
+#index_news=news_article_current
+index_news=test_preprocessed_data_current_en_cleaned
+index_news_annotation=news_article_current_lvt
 
 doctype_news = article
 

@@ -9,10 +9,13 @@ cytoolz==0.9.0.1
 dask==1.1.1
 dill==0.2.8.2
 distributed==1.25.3
+ds4biz-commons==0.0.2.dev0
 ds4biz-flask==0.0.11
 ds4biz-predictor-core==0.0.3.dev0
 elasticsearch==6.3.1
 elasticsearch-dsl==6.3.1
+en-core-web-md==2.0.0
+es-core-news-md==2.0.0
 feedfinder2==0.0.4
 feedparser==5.2.1
 Flask==1.0.2
@@ -20,6 +23,7 @@ Flask-Cors==3.0.6
 flask-swagger-ui==3.18.0
 HeapDict==1.0.0
 idna==2.8
+it-core-news-sm==2.0.0
 itsdangerous==1.1.0
 jieba3k==0.35.1
 Jinja2==2.10
@@ -32,6 +36,7 @@ msgpack==0.5.6
 msgpack-numpy==0.4.3.2
 murmurhash==1.0.1
 newspaper3k==0.2.8
+nl-core-news-sm==2.0.0
 nltk==3.4
 numba==0.42.1
 numpy==1.15.4
@@ -65,7 +70,7 @@ tinysegmenter==0.3
 tldextract==2.2.0
 toolz==0.9.0
 tornado==5.1.1
-tqdm==4.31.1
+tqdm==4.28.1
 ujson==1.35
 urllib3==1.24.1
 Werkzeug==0.14.1

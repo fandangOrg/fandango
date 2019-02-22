@@ -28,6 +28,7 @@ from fake_news_detection.config.MLprocessConfig import config_factory
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
 from fake_news_detection.model.Language import Language
 from pip._internal.cli.cmdoptions import pre
+from builtins import str
  
 ###oo = ModelDAO()
 
@@ -216,7 +217,10 @@ def claim() -> str:
     # return(res)
     #===========================================================================
 
-
+def info_domains()-> str:
+    list_domains = dao_news.get_domain()
+    return list_domains
+    
 def popolate_claims() -> str:
     popola_all(dao_claim_output)
     return "DONE"
@@ -240,6 +244,7 @@ app.add_service('domain_annotation', domain_annotation, method = 'POST')
 app.add_service('new_claim_annotated', new_claim_annotated, method = 'POST')
 app.add_service("info",info, method='POST')
 app.add_service("destroy",destroy, method='POST')
+app.add_service("info_domains",info_domains, method='GET')
 
 CORS(app)
 
