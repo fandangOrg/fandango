@@ -82,6 +82,19 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
         $scope.page.publisher = $scope.news.source_domain;
     };
 
+    $scope.getAuthorColor = function (score) {
+        switch (true) {
+            case (score < 20):
+                return 'text-red';
+            case (score < 40):
+                return 'text-warning';
+            case (score < 80):
+                return 'text-yellow';
+            case (score > 80):
+                return 'text-green';
+        }
+    };
+
     $scope.changeLanguage = function (language) {
         if (language.active === 'False' || $scope.selectedLanguage === language.language) {
             return;
