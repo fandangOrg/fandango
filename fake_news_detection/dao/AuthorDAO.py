@@ -34,7 +34,7 @@ class DAOAuthorOutputElastic:
             r = res['hits']['hits'][0]['_source']
             s = (r['author_name'], r['author_score'])
             print(s)
-            return r['author_score']*100
+            return int(float(r['author_score'])*100)
         else: 
             return -1
        
@@ -49,7 +49,7 @@ class DAOAuthorOutputElastic:
             r = res['hits']['hits'][0]['_source']
             s = (r['org_name'], r['org_score'])
             print(s)
-            return r['org_score']*100
+            return int(float(r['org_score'])*100)
         else: 
             return -1
 
