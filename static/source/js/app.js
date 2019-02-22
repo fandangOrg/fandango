@@ -1,6 +1,6 @@
 const app = angular.module('app', ['ngSanitize']);
 
-//var base = "http://192.168.2.114:9800/fandango/v0.3/fakeness";
+// var base = "http://192.168.2.161:9800/fandango/v0.3/fakeness";
 var base = "http://fandango.livetech.site/fandango/v0.3/fakeness";
 
 app.filter('capitalize', function () {

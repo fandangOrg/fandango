@@ -13,7 +13,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
     $(".alert").hide();
 
     $scope.page = {
-        'author': '',
+        'authors': [],
         'publisher': '',
         'url': '',
         'text': '',
@@ -33,7 +33,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
     }
 
     function resetField() {
-        $scope.page.author = '';
+        $scope.page.authors = [];
         $scope.page.title = '';
         $scope.page.text = '';
         $scope.page.url = '';
@@ -75,7 +75,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
     $scope.changeTextNews = function (response) {
         $scope.news = response.data; // ----> NEWS : ANNOTATION NEWS
         console.log($scope.news);
-        $scope.page.author = $scope.news.authors;
+        $scope.page.authors = $scope.news.authors;
         $scope.page.title = $scope.news.title;
         $scope.page.text = $scope.news.text;
         $scope.page.url = $scope.news.url;

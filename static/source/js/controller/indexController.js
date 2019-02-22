@@ -1,4 +1,4 @@
-app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl', 'fakeness', 'feedback', 'claim', 'lang','alert', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang, alert) {
+app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl', 'fakeness', 'feedback', 'claim', 'lang', 'alert', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang, alert) {
 
     $scope.fakenessDone = false;
     $scope.highlightedText = '';
@@ -10,7 +10,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     $(".alert").hide();
 
     $scope.page = {
-        'author': '',
+        'authors': [],
         'publisher': '',
         'url': '',
         'text': '',
@@ -96,6 +96,20 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             return 'text-red';
     };
 
+    $scope.getAuthorColor = function (score) {
+        switch (true) {
+            case (score < 20):
+                return 'text-red';
+            case (score < 40):
+                return 'text-warning';
+            case (score < 80):
+                return 'text-yellow';
+            case (score > 80):
+                return 'text-green';
+        }
+    };
+
+
     $scope.clear = function () {
         $scope.selectedText = '';
         $scope.claims = null;
@@ -132,7 +146,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             $scope.page.title = response.data.title;
             $scope.page.text = response.data.text;
             $scope.page.publisher = response.data.source_domain;
-            $scope.page.author = response.data.authors;
+            $scope.page.authors = response.data.authors;
             $scope.loadingAnalyzeUrl = false;
         }, function (response) {
             $scope.loadingAnalyzeUrl = false;
