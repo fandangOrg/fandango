@@ -29,6 +29,7 @@ from fake_news_detection.config.MLprocessConfig import config_factory
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
 from fake_news_detection.model.Language import Language
 from fake_news_detection.dao.AuthorDAO import DAOAuthorOutputElastic
+import ast
  
 ###oo = ModelDAO()
 
@@ -163,6 +164,14 @@ def next_news(lang:str) -> News:
     log.debug(lang)
     try:
         news=dao_news.next(languages=lang)
+        list_author_score = []
+        aut=ast.literal_eval(news.authors)
+        print(len(news.authors), len(aut),aut)
+        for i in aut:
+            list_author_score.append({ "author" : i, "score" : dao_authors.outout_author_organization(i)})
+        print(list_author_score)
+        news.authors = list_author_score
+   
     except StopIteration:
         return {"END":"True",
             "title":"ALL NEWS ANNOTATED"}

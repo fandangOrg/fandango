@@ -120,6 +120,7 @@ class DAONewsElastic(DAONews):
         prepare a bulk query to index a new document
         @param news: str
         """
+        news["authors"]=[d["author"] for d in news["authors"]]
         doc_up=  {
            '_op_type': 'index',
            '_index': self.index_name_output,
