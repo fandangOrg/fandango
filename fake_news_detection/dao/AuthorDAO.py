@@ -3,8 +3,7 @@ Created on 19 feb 2019
 
 @author: camila
 '''
-from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_author_org, docType
+from fake_news_detection.config.AppConfig import get_elastic_connector, index_author_org, docType
 
 class DAOAuthorOutputElastic:
     '''

@@ -23,7 +23,7 @@ from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.dao.ClaimDAO import DAOClaimsOutputElastic,\
     DAOClaimsOutput
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
-from typing import List, Dict
+from typing import List
 from fake_news_detection.model.predictor import Preprocessing, FakePredictor
 from fake_news_detection.config.MLprocessConfig import config_factory
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
@@ -42,7 +42,7 @@ dao_claim_output=DAOClaimsOutputElastic()
 log = getLogger(__name__)
 dao_authors = DAOAuthorOutputElastic()
 ###model = oo.load('test')
-nome_modello="model_en_1802"
+nome_modello="english_first_version"
 logger = getLogger(__name__) 
 
 
@@ -80,14 +80,14 @@ def train_model()->Prestazioni:
     #===========================================================================
     # try:
     #===========================================================================
+    logger.info("creazione modello "+nome_modello)
+    predictor_fakeness = config_factory.create_model_by_configuration("fandango","1","english")
+    predictor=FakePredictor(predictor_fakeness,preprocessing,nome_modello,'fakeness')
     list_domains = dao_news.get_domain()
     dao_train = DAOTrainingElasticByDomains(list_domains)
     #training_set = train_config.load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
     training_set=dao_train.get_train_dataset(limit=number_item_to_train)
-    
-    logger.info("creazione modello "+nome_modello)
-    predictor_fakeness = config_factory.create_model_by_configuration("fandango","1","english")
-    predictor=FakePredictor(predictor_fakeness,preprocessing,nome_modello,'fakeness')
+    #training_set.to_csv( '/home/daniele/resources/greenl.csv',index=False)
     predictor.fit(training_set)
     daopredictor.save(predictor)
     return predictor.get_prestazioni().toJSON()
@@ -102,8 +102,9 @@ def train_model()->Prestazioni:
 def feedback(info:InterfaceInputFeedBack) -> str:
     log.debug(info)
     model=daopredictor.get_by_id(nome_modello)
-    df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")],'label': [info.label.replace("\n", " ")]})
-    model.partial_fit(df)
+    for i in range(20):
+        df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")],'label': [info.label.replace("\n", " ")]})
+        model.partial_fit(df)
     daopredictor.update(model)
     return "OK"
 
@@ -144,9 +145,7 @@ def destroy(nome_modello:str)->str:
     daopredictor.delete(nome_modello)
     logger.info("rimuovi modello "+nome_modello)
     return "MODEL %s DELETED"%nome_modello
-
-
- 
+   
 def get_languages() -> List[Language]:
     l= list()
     l.append(Language("en","English","True"))
@@ -204,46 +203,36 @@ def new_claim_annotated(new_claim: Claims_annotated) -> str:
         return('new claim added')
     else:
         return('claim already in database') 
-#------------------------------>CLAIM SERVICES <----------------------------
-def claim() -> str:
-    j = request.get_json()  #key txt of the dictionary
-    text = j.get("text")
-    j_resp =dao_claim_output.get_similarity_claims_from_text(text)
-    print(j_resp)
-    return j_resp
 
-def popolate_claims() -> str:
-    popola_all(dao_claim_output)
-    return "DONE"
-
-#---------------------------> EXTERNAL SERVICES<-----------------------------
-
-def author_org_score() -> str:
-    j = request.get_json()  
-    author_org = j.get("author_org")
-    try:
-        response = dao_authors.outout_author_organization(author_org)
-        print(response)
-        d = {"author_or_org" : response[0], "score" : response[1]}
-        return d
-    except:
-        raise Exception('404- cannot find the author')
-        
-        
-        
-#########################################################################
-#-------------------------> UTILS SERVICES <-----------------------------
 
 def crawler(url:str) -> str:
     log.debug(url)
     return crawler_news(url)
 
 
+def claim() -> str:
+    j = request.get_json()  #key txt of the dictionary
+    text = j.get("text")
+    j_resp =dao_claim_output.get_similarity_claims_from_text(text)
+    print(j_resp)
+    return j_resp
+    #===========================================================================
+    # print(text)
+    # res = dao_claim_output.get_similarity_claims_from_text(text)
+    # print(res)
+    # return(res)
+    #===========================================================================
 
+def info_domains()-> str:
+    list_domains = dao_news.get_domain()
+    return list_domains
+    
+def popolate_claims() -> str:
+    popola_all(dao_claim_output)
+    return "DONE"
 
-
-
-
+    
+    
 app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="/web")
 app.root="/fandango/v0.3/fakeness"
 app.name="FANDANGO"
@@ -261,10 +250,10 @@ app.add_service('domain_annotation', domain_annotation, method = 'POST')
 app.add_service('new_claim_annotated', new_claim_annotated, method = 'POST')
 app.add_service("info",info, method='POST')
 app.add_service("destroy",destroy, method='POST')
-app.add_service("author_score", author_org_score, method = 'POST')
+app.add_service("info_domains",info_domains, method='GET')
+
 CORS(app)
 
 log.info("RUN ON {cfg}".format(cfg= AppConfig.BASEURL+AppConfig.BASEPORT))
 app.setup()
 app.run(host="0.0.0.0", port=AppConfig.BASEPORT,debug=False)
-

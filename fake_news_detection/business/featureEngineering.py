@@ -4,7 +4,6 @@ from uuid import uuid4
 import swifter
 
 
-
 class ColumnFEExtractor:
     def __init__(self, mapping: List[Tuple]):
         self.mapping = mapping
@@ -15,10 +14,10 @@ class ColumnFEExtractor:
                 col = couple[0]
                 fun = couple[1]
                 if cmd == 0:
-                    values = objects[col].swifter.apply(fun)
+                    values = objects[col].apply(fun)
                     objects[col + "_" + self.__getfunctionname(fun)] = values  # Add new column
                 else:
-                    values = objects[col].swifter.apply(fun)
+                    values = objects[col].apply(fun)
                     objects[col] = values                                      # Modify the same column
             return objects
         else:
@@ -48,6 +47,7 @@ class ColumnFEExtractor:
 def add_new_features_to_df(df:DataFrame, mapping:List[Tuple]) -> DataFrame:
     extractor = ColumnFEExtractor(mapping)
     df_improved = extractor(df, 0)
+    df_improved.dropna(inplace=True)
     return df_improved
 
 
@@ -55,6 +55,7 @@ def add_new_features_to_df(df:DataFrame, mapping:List[Tuple]) -> DataFrame:
 def preprocess_features_of_df(df:DataFrame, mapping:List[Tuple]) -> DataFrame:
     extractor = ColumnFEExtractor(mapping)
     df_modified = extractor(df, 1)
+    df_modified.dropna(inplace=True)
     return df_modified
 
 

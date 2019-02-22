@@ -5,6 +5,7 @@ from nltk import SnowballStemmer
 from nltk.corpus import stopwords
 from fake_news_detection.config.constants import LANG_SUPPORTED, QUOTES, LANG_MAPPING
 import numpy as np
+import logging
 
 i=1
 
@@ -43,7 +44,8 @@ class TextPreprocessor():
                 return np.nan
             else:
                 return preprocessed_text
-        except:
+        except Exception as e:
+            logging.exception(str(e)+str(text))
             return np.nan
 
 
