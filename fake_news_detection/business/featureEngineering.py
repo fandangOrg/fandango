@@ -14,10 +14,10 @@ class ColumnFEExtractor:
                 col = couple[0]
                 fun = couple[1]
                 if cmd == 0:
-                    values = objects[col].swifter.set_npartitions(8).apply(fun)
+                    values = objects[col].apply(fun)
                     objects[col + "_" + self.__getfunctionname(fun)] = values  # Add new column
                 else:
-                    values = objects[col].swifter.set_npartitions(8).apply(fun)
+                    values = objects[col].apply(fun)
                     objects[col] = values                                      # Modify the same column
             return objects
         else:

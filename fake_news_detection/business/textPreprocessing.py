@@ -45,7 +45,7 @@ class TextPreprocessor():
             else:
                 return preprocessed_text
         except Exception as e:
-            logging.exception(e)
+            logging.exception(str(e)+str(text))
             return np.nan
 
 

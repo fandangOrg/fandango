@@ -102,8 +102,9 @@ def train_model()->Prestazioni:
 def feedback(info:InterfaceInputFeedBack) -> str:
     log.debug(info)
     model=daopredictor.get_by_id(nome_modello)
-    df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")],'label': [info.label.replace("\n", " ")]})
-    model.partial_fit(df)
+    for i in range(20):
+        df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")],'label': [info.label.replace("\n", " ")]})
+        model.partial_fit(df)
     daopredictor.update(model)
     return "OK"
 
