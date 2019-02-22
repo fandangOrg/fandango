@@ -27,6 +27,7 @@ from fake_news_detection.model.predictor import Preprocessing, FakePredictor
 from fake_news_detection.config.MLprocessConfig import config_factory
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
 from fake_news_detection.model.Language import Language
+from pip._internal.cli.cmdoptions import pre
  
 ###oo = ModelDAO()
 
@@ -76,14 +77,14 @@ def train_model()->Prestazioni:
     #===========================================================================
     # try:
     #===========================================================================
+    logger.info("creazione modello "+nome_modello)
+    predictor_fakeness = config_factory.create_model_by_configuration("fandango","1","english")
+    predictor=FakePredictor(predictor_fakeness,preprocessing,nome_modello,'fakeness')
     list_domains = dao_news.get_domain()
     dao_train = DAOTrainingElasticByDomains(list_domains)
     #training_set = train_config.load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
     training_set=dao_train.get_train_dataset(limit=number_item_to_train)
-    
-    logger.info("creazione modello "+nome_modello)
-    predictor_fakeness = config_factory.create_model_by_configuration("fandango","1","english")
-    predictor=FakePredictor(predictor_fakeness,preprocessing,nome_modello,'fakeness')
+    training_set.to_csv( '/home/daniele/resources/greenl.csv',index=False)
     predictor.fit(training_set)
     daopredictor.save(predictor)
     return predictor.get_prestazioni().toJSON()

@@ -164,7 +164,7 @@ class DAOTrainingElasticByDomains():
         self.docType = docType_article
         self.list_domains=list_domains
     
-    def get_train_dataset(self,limit):
+    def get_train_dataset(self,limit=3000):
         '''
         from a given file, it converts articles labeled into rows of a dataframe
         @param path_domain: str
@@ -175,9 +175,13 @@ class DAOTrainingElasticByDomains():
             label = domain[1]
             print(domain[0])
             list_documents = self.__get_news_from_domain(domain[0],limit)
+            if len(list_documents)==0:
+                continue
+            print(domain[0],len(list_documents))
             df1 = pd.DataFrame.from_dict(list_documents)
             df1['label'] = label
-           # print(df1.shape)
+            df1.dropna(inplace=True)
+            # print(df1.shape)
             list_df.append(df1)
         
         dataf = pd.concat(list_df, axis= 0)
@@ -186,25 +190,26 @@ class DAOTrainingElasticByDomains():
         print(dataf.groupby(['label']).agg(['count']))
         print("> end of 'get_train_dataset()'\n")
         return dataf
-#===============================================================================
-# 
-#     def __get_news(self,domain,limit=3000):
-#         search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType)\
-#                 .query("term", source_domain=domain)
-#         response = search.execute()
-#         result_list=[]
-#         print("RESPONSE TOTAL:", response.hits.total)
-#         for c,hit in enumerate(itertools.islice(search.scan(),limit)):
-#             result_list.append({"title":hit.title,  "text" : hit.text})
-#         return result_list
-#         
-#===============================================================================
+ 
+    def __get_news_from_domain(self,domain,limit=3000):
+        search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType)\
+                .query("term", source_domain=domain)
+        response = search.execute()
+        result_list=[]
+        print("RESPONSE TOTAL:", response.hits.total)
+        for c,hit in enumerate(itertools.islice(search.scan(),limit)):
+            if len(hit.title.strip())>10 and len(hit.text.strip())>20:
+                result_list.append({"title":hit.title.strip(),  "text" : hit.text.strip()})
+            else:
+                print("scarto")
+        return result_list
+         
 
     
  
      
      
-    def __get_news_from_domain(self,domain,limit = 2000):
+    def __get_news_from_domainOLD(self,domain,limit = 2000):
         
         '''
         Given a certain domain, it searches for all the documents of that domain
@@ -243,6 +248,13 @@ class DAOTrainingElasticByDomains():
                 }
          
         result = self.es_client.search(index= self.index_name, doc_type=self.docType, body = body)
+        if len(result['hits']['hits']) < size:
+            for res in result['hits']['hits']:
+                if len(res['_source']['title'])>0 and len(res['_source']['text'])>0 :  
+                    result_list.append({"title":res['_source']['title'],  "text" : res['_source']['text'] , "label" : "" })
+            #print(result_list[0:2])
+            log.debug("All articles from domain request are taken for training set building ")
+            return result_list
         bookmark = [result['hits']['hits'][-1]['sort'][0], str(result['hits']['hits'][-1]['sort'][1]) ]
          
         body1 = {"size": 20,#1000
@@ -281,7 +293,8 @@ class DAOTrainingElasticByDomains():
                 }
          
         for res in result['hits']['hits']:
-            result_list.append({"title":res['_source']['title'],  "text" : res['_source']['text'] , "label" : "" })
+            if len(res['_source']['title'])>0 and len(res['_source']['text'])>0 :  
+                result_list.append({"title":res['_source']['title'],  "text" : res['_source']['text'] , "label" : "" })
          
         #print(result_list[0:2])
         log.debug("All articles from domain request are taken for training set building ")
@@ -295,9 +308,9 @@ if __name__ == '__main__':
     dao_news=DAONewsElastic()
     list_domains = dao_news.get_domain()
     print(list_domains)
-    list_domains = [('www.wikileaks.com', 'FAKE')]
+    #list_domains = [('www.wikileaks.com', 'FAKE')]
     ii = DAOTrainingElasticByDomains(list_domains)
-    l= ii.get_train_dataset()
+    l= ii.get_train_dataset(limit=100000)
     print(l.shape, l.columns)
     #oo = DAOTrainingPD(dataset_beta)
     #print(oo.get_train_dataset())

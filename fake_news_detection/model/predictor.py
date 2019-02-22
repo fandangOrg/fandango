@@ -61,11 +61,12 @@ class FakePredictor(DS4BizPredictor):
         
     def fit(self, X, y=None):
         print("dataframe",X.columns)
+        X=self.preprocessing.execution(X)
         Y = X['label']
         X = X.drop(['label'], axis=1)
         print("dataframedopo",X.columns)
-        X=self.preprocessing.execution(X)
         self.predictor_fakeness.fit(X,Y)
+        self.number_item=len(X)
         
     def predict(self, X):
         X=self.preprocessing.execution(X)
@@ -81,9 +82,9 @@ class FakePredictor(DS4BizPredictor):
         return True
     
     def partial_fit(self, X,y=None):
+        X=self.preprocessing.execution(X)
         Y = X['label']
         X = X.drop(['label'], axis=1)
-        X=self.preprocessing.execution(X)
         self.predictor_fakeness.partial_fit(X,Y)
         return "OK"
 
