@@ -12,6 +12,9 @@ from fake_news_detection.dao.AuthorDAO import DAOAuthorOutputElastic
 log = getLogger(__name__)
 dao_author = DAOAuthorOutputElastic()
 
+def preprocessing(d):
+    return d
+
 def crawler_news(url):
     """
     Parse text from an url, and extract an article
@@ -25,6 +28,10 @@ def crawler_news(url):
     d=dict()
     d['url']=url
     d['title']=article.title
+    d['text'] =article.text
+    d['source_url'] =article.source_url
+    
+    d=preprocessing(d)
     
     if len(article.authors)>0:
         list_author_score = []
@@ -35,8 +42,6 @@ def crawler_news(url):
     else:
         d['authors']='unknown'
     
-    d['text'] =article.text
-    d['source_url'] =article.source_url
     log.debug("New article crawled: {art}".format(art=d))
     return d
 
@@ -44,3 +49,5 @@ def crawler_news(url):
 if __name__ == '__main__':
     d= crawler_news("http://www.ansa.it/puglia/notizie/2018/10/26/bimbi-maltrattati-a-scuola-arrestate-4-maestre_1db48b10-4d5a-461e-832e-be63f66db10a.html")
     print(d)
+    
+    

@@ -25,6 +25,7 @@ class DAOAuthorOutputElastic:
         except:
             return self._get_organization(author_or_org)
     
+    
     def _get_author(self, author):
         
         body = {"query": {"term":{"author_name.keyword": {"value": author}}}}
