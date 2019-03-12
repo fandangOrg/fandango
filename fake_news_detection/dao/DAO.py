@@ -13,6 +13,7 @@ from elasticsearch import helpers
 from fake_news_detection.utils.Exception import FandangoException
 from ds4biz_predictor_core.dao.predictor_dao import FSPredictorDAO
 from elasticsearch_dsl.search import Search
+import random 
 log = getLogger(__name__)
 
 class DAONews:
@@ -45,6 +46,21 @@ class DAONewsElastic(DAONews):
         self.domain_name_index = domain_index
         self.docType_domain = domain_docType
         
+    def GetCounterDef(self):
+        body = {"query": {"exists" : { "label" : "user" }}}
+        try:
+            print(body)
+            res = self.es_client.search(index=self.index_name_output, body= body,doc_type=self.docType)
+        except Exception as e:
+            log.error("Could not query against elasticsearch: {err}".format(err=e))
+            raise FandangoException("Could not query against elasticsearch: {err}".format(err=e))
+        
+        return res['hits']['total']
+    
+    def GetCounterTemp(self):
+        
+        return(random.randint(1,1001)) 
+    
     def create_source(self,news):
         """
         create doc for annotated domain

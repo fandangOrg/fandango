@@ -1,6 +1,8 @@
 from fake_news_detection.business.textPreprocessing import TextPreprocessor
 from fake_news_detection.config.constants import QUOTES
-from fake_news_detection.business.featuresExtraction2 import  CharsCounter, PunctuationCounter
+from fake_news_detection.business.featuresExtraction2 import  CharsCounter, PunctuationCounter,\
+    StopwordCounter, LexicalDiversity, AveWordxParagraph, FleschReadingEase,\
+    FKGRadeLevel, SentencesCounter
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
 from ds4biz_predictor_core.model.creation_requests import CreationRequest,\
@@ -23,11 +25,16 @@ def text_preprocessing_mapping(preprocess):
 #(lang=lang_code)
 def new_features_mapping(lang_code):
     return  [
-                                ('text', CharsCounter(lang=lang_code) ),
-                                ('title', CharsCounter(lang=lang_code) ),
-                                ('text', PunctuationCounter(lang=lang_code) ),
-                                ('title', PunctuationCounter(lang=lang_code) ),
-                                #('text', SentencesCounter(lang=lang_code)),
+                                ('text', CharsCounter(lang=lang_code)),
+                                ('title', CharsCounter(lang=lang_code)),
+                                ('text', PunctuationCounter(lang=lang_code)),
+                                ('title', PunctuationCounter(lang=lang_code)),
+                                ('text', StopwordCounter(lang= lang_code)),
+                                ('text',LexicalDiversity(lang = lang_code)),
+                                ('text', AveWordxParagraph(lang = lang_code)),
+                                ('text', FleschReadingEase(lang = lang_code)),
+                                ('text', FKGRadeLevel(lang = lang_code)),
+                                ('text', SentencesCounter(lang=lang_code)),
                                 #('text', PositiveWordsCounter(lang=lang_code)),
                                 #('text', NegativeWordsCounter(lang=lang_code)),
                                 #('text', SentimentWordsCounter(lang=lang_code)),
@@ -43,7 +50,12 @@ transforming_mapping = {
                          'title_CharsCounter' : MinMaxScaler(feature_range=(0, 1)),
                          'text_PunctuationCounter': MinMaxScaler(feature_range=(0, 1)),
                          'title_PunctuationCounter': MinMaxScaler(feature_range=(0, 1)),
-                         #'text_SentencesCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         'text_StopwordCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         'text_LexicalDiversity' : MinMaxScaler(feature_range=(0, 1)),
+                         'text_AveWordxParagraph' : MinMaxScaler(feature_range=(0, 1)),
+                         'text_FleschReadingEase' : MinMaxScaler(feature_range=(0, 1)),
+                         'text_FKGRadeLevel' : MinMaxScaler(feature_range=(0, 1)),
+                         'text_SentencesCounter' : MinMaxScaler(feature_range=(0, 1)),
                          #'text_PositiveWordsCounter' : MinMaxScaler(feature_range=(0, 1)),
                          #'text_NegativeWordsCounter' : MinMaxScaler(feature_range=(0, 1)),
                          #'text_EntitiesCounter' : MinMaxScaler(feature_range=(0, 1)),
@@ -59,8 +71,6 @@ transforming_mapping = {
 
 #name_classifier = "SGDClassifier"
 #params_classifier = {'loss':"log", "max_iter":10, 'n_jobs':-1}
-
-
 
 class ConfigFactory:
     def __init__(self):
@@ -89,11 +99,12 @@ class ConfigFactory:
             raise Exception("Configuration don't exist",project,config_name)
 
 config_factory=ConfigFactory()
-mapping_params ={   "title_pr":{"mode":"lemmatization", "rm_stopwords":True, "invalid_chars":QUOTES, "encoding":"utf-8"},
-                    "text_pr":{"mode":"lemmatization", "rm_stopwords":True, "invalid_chars":QUOTES, "encoding":"utf-8"},
-                    "title_tr" : {"min_df":5, "ngram_range":(1, 1), "lowercase":True},
-                    "text_tr" : {"min_df":10, "ngram_range":(1, 1), "lowercase":True}
+mapping_params ={   "title_pr":{"mode":"lemmatization", "rm_stopwords":False, "invalid_chars":QUOTES, "encoding":"utf-8"},
+                    "text_pr":{"mode":"lemmatization", "rm_stopwords":False, "invalid_chars":QUOTES, "encoding":"utf-8"},
+                    "title_tr" : {"min_df":1, "ngram_range":(1, 1), "lowercase":True},
+                    "text_tr" : {"min_df":1, "ngram_range":(1, 1), "lowercase":True}
             }
+
 request_model1 = CreationRequest("SGDClassifier", {'loss':'log', 'max_iter':10, 'penalty':'elasticnet', 'tol':0.001,  'n_jobs':-1})
 config_factory.register_config("fandango","1", request_model1,mapping_params,text_preprocessing_mapping ,new_features_mapping,transforming_mapping)
 
