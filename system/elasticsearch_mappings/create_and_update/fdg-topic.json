@@ -1,0 +1,13 @@
+{
+    "index_patterns" : "fdg-topic",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "name":{"type":"text"},
+            "News":{"type":"object"},
+            "ClaimReviews":{"type":"object"},
+            "Facts":{"type":"object"}      
+        }
+        }
+    }
+}

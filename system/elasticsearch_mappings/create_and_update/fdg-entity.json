@@ -1,0 +1,12 @@
+{
+    "index_patterns" : "fdg-entity",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "name":{"type":"text"},
+            "type":{"type":"text"}      
+        }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "index_patterns" : "fdg-media",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "contentUrl":{"type":"text"},
+            "contentSize":{"type":"text"},
+            "uploadDate":{"type":"date"},
+            "encodingFormat":{"type":"text"},
+            "type":{"type":"text"},
+            "calculatedRating":{"type":"float"}    
+        }
+        }
+    }
+}

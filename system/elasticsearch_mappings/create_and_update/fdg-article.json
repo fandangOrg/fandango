@@ -1,0 +1,22 @@
+{
+    "index_patterns" : "fdg-article",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "headline":{"type":"text"},
+            "articleBody":{"type":"text"},
+            "dateCreated":{"type":"date"},
+            "dateModified":{"type":"date"},
+            "datePublished":{"type":"date"},
+            "author":{"type":"text"},
+            "publisher":{"type":"text"},
+            "calculatedRating":{"type":"float"},
+            "calculatedRatingDetail":{"type":"object"},
+            "about":{"type":"text"}    ,
+            "mentions":{"type":"long"},
+            "contains":{"type":"long"}     
+        }
+        }
+    }
+}

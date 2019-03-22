@@ -1,0 +1,21 @@
+{
+    "index_patterns" : "fdg-claim-review",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "name":{"type":"text"},
+            "text":{"type":"text"},
+            "url":{"type":"text"},
+            "about":{"type":"text"},
+            "mentions":{"type":"text"},
+            "dateCreated":{"type":"date"},
+            "dateModified":{"type":"date"},
+            "datePublished":{"type":"date"},
+            "temporalCoverageStart":{"type":"date"},
+            "temporalCoverageEnd":{"type":"date"},
+            "spatialCoverage":{"type":"text"}
+        }
+        }
+    }
+}

@@ -1,0 +1,4 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   217  100   217    0     0  36166      0 --:--:-- --:--:-- --:--:-- 36166
+{"error":{"root_cause":[{"type":"index_template_missing_exception","reason":"index_template [fdg-topic] missing"}],"type":"index_template_missing_exception","reason":"index_template [fdg-topic] missing"},"status":404}

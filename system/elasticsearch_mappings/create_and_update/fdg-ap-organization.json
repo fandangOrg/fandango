@@ -1,0 +1,15 @@
+{
+    "index_patterns" : "fdg-organization",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "name":{"type":"text"},
+            "url":{"type":"text"},
+            "nationality":{"type":"text"},
+            "bias":{"type":"text"},
+            "parentOrganization":{"type":"long"}         
+        }
+        }
+    }
+}
