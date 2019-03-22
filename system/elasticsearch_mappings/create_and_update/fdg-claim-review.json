@@ -1,0 +1,19 @@
+{
+    "template" : "fdg-claim-review",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "claimReviewed":{"type":"string"},
+            "reviewAspect":{"type":"string"},
+            "reviewBody":{"type":"string"},
+            "dateCreated":{"type":"date"},
+            "dateModified":{"type":"date"},
+            "datePublished":{"type":"date"},
+            "aggregateRating":{"type":"float"},
+            "itemReviewed":{"type":"long"},
+            "references":{"type":"long"}
+        }
+        }
+    }
+}

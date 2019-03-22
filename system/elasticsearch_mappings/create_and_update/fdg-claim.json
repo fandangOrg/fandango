@@ -1,0 +1,21 @@
+{
+    "template" : "fdg-claim",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "appearance":{"type":"long"},
+            "firstAppearance":{"type":"long"},
+            "string":{"type":"string"},
+            "dateCreated":{"type":"date"},
+            "dateModified":{"type":"date"},
+            "datePublished":{"type":"date"},
+            "calculatedRating":{"type":"float"},
+            "calculatedRatingDetail":{"type":"object"},
+            "about":{"type":"string"},  
+            "mentions":{"type":"long"},
+            "possiblyRelatesTo":{"type":"long"}     
+        }
+        }
+    }
+}

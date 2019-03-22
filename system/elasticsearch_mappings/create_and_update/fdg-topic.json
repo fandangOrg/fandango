@@ -1,0 +1,13 @@
+{
+    "template" : "fdg-topic",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "name":{"type":"string"},
+            "News":{"type":"object"},
+            "ClaimReviews":{"type":"object"},
+            "Facts":{"type":"object"}      
+        }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+    "template" : "fdg-article",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "headline":{"type":"string"},
+            "articleBody":{"type":"string"},
+            "dateCreated":{"type":"date"},
+            "dateModified":{"type":"date"},
+            "datePublished":{"type":"date"},
+            "author":{"type":"string"},
+            "publisher":{"type":"string"},
+            "calculatedRating":{"type":"float"},
+            "calculatedRatingDetail":{"type":"object"},
+            "about":{"type":"string"}    ,
+            "mentions":{"type":"long"},
+            "contains":{"type":"long"}     
+        }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "template" : "fdg-media",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "contentUrl":{"type":"string"},
+            "contentSize":{"type":"string"},
+            "uploadDate":{"type":"date"},
+            "encodingFormat":{"type":"string"},
+            "type":{"type":"string"},
+            "calculatedRating":{"type":"float"}    
+        }
+        }
+    }
+}

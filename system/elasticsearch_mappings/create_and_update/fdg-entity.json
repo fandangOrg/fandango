@@ -1,0 +1,12 @@
+{
+    "template" : "fdg-entity",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "name":{"type":"string"},
+            "type":{"type":"string"}      
+        }
+        }
+    }
+}

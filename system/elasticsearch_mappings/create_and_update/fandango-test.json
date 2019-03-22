@@ -1,0 +1,17 @@
+{
+    "template" : "test*",
+    "mappings" : {
+      "_doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "name":{"type":"text"},
+            "url":{"type":"text"},
+            "nationality":{"type":"text"},
+            "bias":{"type":"text"},
+            "jobTitle":{"type":"text"},
+            "gender":{"type":"text"},
+            "affiliation":{"type":"array"}         
+        }
+        }
+    }
+}

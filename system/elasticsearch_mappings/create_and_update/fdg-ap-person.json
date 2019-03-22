@@ -1,0 +1,17 @@
+{
+    "template" : "fdg-person",
+    "mappings" : {
+      "doc" : {
+        "properties": {
+            "identifier":{"type":"long"},
+            "name":{"type":"string"},
+            "url":{"type":"string"},
+            "nationality":{"type":"string"},
+            "bias":{"type":"string"},
+            "jobTitle":{"type":"string"},
+            "gender":{"type":"string"},
+            "affiliation":{"type":"long"}         
+        }
+        }
+    }
+}
