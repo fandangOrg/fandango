@@ -1,5 +1,39 @@
 {
     "properties": {
-            "neil":{"type":"long"}     
+        "identifier":{"type":"long"},
+        "contentUrl":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "contentSize":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "uploadDate":{"type":"date"},
+        "encodingFormat":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "type":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "calculatedRating":{"type":"float"}    
         }
 }

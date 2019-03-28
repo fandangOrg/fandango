@@ -3,10 +3,17 @@
     "mappings" : {
       "doc" : {
         "properties": {
-            "name":{"type":"string"},
+            "name":{
+                "type":"string",
+                "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+                }
+            },
             "News":{"type":"object"},
             "ClaimReviews":{"type":"object"},
-            "Facts":{"type":"object"}      
+            "Facts":{"type":"object"}        
         }
         }
     }

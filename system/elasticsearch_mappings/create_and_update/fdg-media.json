@@ -4,12 +4,40 @@
       "doc" : {
         "properties": {
             "identifier":{"type":"long"},
-            "contentUrl":{"type":"string"},
-            "contentSize":{"type":"string"},
-            "uploadDate":{"type":"date"},
-            "encodingFormat":{"type":"string"},
-            "type":{"type":"string"},
-            "calculatedRating":{"type":"float"}    
+        "contentUrl":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "contentSize":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "uploadDate":{"type":"date"},
+        "encodingFormat":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "type":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "calculatedRating":{"type":"float"}     
         }
         }
     }

@@ -8,7 +8,7 @@ setupConf=$(echo "$MY_DIR" | sed 's/ /\\ /g')
 #URL construction components
 delimeter=":"
 slash="/"
-mappings="/_mapping/_doc"
+mappings="/_mapping/doc"
 declare -a templateUpdates=("fdg-article" "fdg-media" "fdg-claim" "fdg-claim-review" "fdg-fact" "fdg-entity" "fdg-ap-person" "fdg-ap-organization" "fdg-topic")
 
 #Loop through index names to  add new mappings as defined in idnex' corresponding update json file

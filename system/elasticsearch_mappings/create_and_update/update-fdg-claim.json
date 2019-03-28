@@ -1,5 +1,30 @@
 {
     "properties": {
-            "neil":{"type":"long"}     
+        "identifier":{"type":"long"},
+        "appearance":{"type":"long"},
+        "firstAppearance":{"type":"long"},
+        "text":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "dateCreated":{"type":"date"},
+        "dateModified":{"type":"date"},
+        "datePublished":{"type":"date"},
+        "calculatedRating":{"type":"float"},
+        "calculatedRatingDetail":{"type":"object"},
+        "about":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "mentions":{"type":"long"},
+        "possiblyRelatesTo":{"type":"long"}     
         }
 }

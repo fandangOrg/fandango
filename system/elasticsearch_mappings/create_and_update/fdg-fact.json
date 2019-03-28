@@ -1,20 +1,62 @@
 {
-    "template" : "fdg-claim-review",
+    "template" : "fdg-fact",
     "mappings" : {
       "doc" : {
         "properties": {
             "identifier":{"type":"long"},
-            "name":{"type":"string"},
-            "string":{"type":"string"},
-            "url":{"type":"string"},
-            "about":{"type":"string"},
-            "mentions":{"type":"string"},
-            "dateCreated":{"type":"date"},
-            "dateModified":{"type":"date"},
-            "datePublished":{"type":"date"},
-            "temporalCoverageStart":{"type":"date"},
-            "temporalCoverageEnd":{"type":"date"},
-            "spatialCoverage":{"type":"string"}
+        "name":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "text":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "url":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "about":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "mentions":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "dateCreated":{"type":"date"},
+        "dateModified":{"type":"date"},
+        "datePublished":{"type":"date"},
+        "temporalCoverageStart":{"type":"date"},
+        "temporalCoverageEnd":{"type":"date"},
+        "spatialCoverage":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        }
         }
         }
     }

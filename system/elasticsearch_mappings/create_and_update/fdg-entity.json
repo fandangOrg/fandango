@@ -4,8 +4,22 @@
       "doc" : {
         "properties": {
             "identifier":{"type":"long"},
-            "name":{"type":"string"},
-            "type":{"type":"string"}      
+            "name":{
+                "type":"string",
+                "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+                }
+            },
+            "type":{
+                "type":"string",
+                "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+                }
+            }       
         }
         }
     }

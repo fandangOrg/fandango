@@ -6,15 +6,29 @@
             "identifier":{"type":"long"},
             "appearance":{"type":"long"},
             "firstAppearance":{"type":"long"},
-            "string":{"type":"string"},
+            "text":{
+                "type":"string",
+                "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+                }
+            },
             "dateCreated":{"type":"date"},
             "dateModified":{"type":"date"},
             "datePublished":{"type":"date"},
             "calculatedRating":{"type":"float"},
             "calculatedRatingDetail":{"type":"object"},
-            "about":{"type":"string"},  
+            "about":{
+                "type":"string",
+                "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+                }
+            },
             "mentions":{"type":"long"},
-            "possiblyRelatesTo":{"type":"long"}     
+            "possiblyRelatesTo":{"type":"long"}    
         }
         }
     }

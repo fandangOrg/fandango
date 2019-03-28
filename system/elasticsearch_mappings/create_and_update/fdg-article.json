@@ -4,18 +4,53 @@
       "doc" : {
         "properties": {
             "identifier":{"type":"long"},
-            "headline":{"type":"string"},
-            "articleBody":{"type":"string"},
-            "dateCreated":{"type":"date"},
-            "dateModified":{"type":"date"},
-            "datePublished":{"type":"date"},
-            "author":{"type":"string"},
-            "publisher":{"type":"string"},
-            "calculatedRating":{"type":"float"},
-            "calculatedRatingDetail":{"type":"object"},
-            "about":{"type":"string"}    ,
-            "mentions":{"type":"long"},
-            "contains":{"type":"long"}     
+        "headline":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "articleBody":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "dateCreated":{"type":"date"},
+        "dateModified":{"type":"date"},
+        "datePublished":{"type":"date"},
+        "author":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "publisher":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "calculatedRating":{"type":"float"},
+        "calculatedRatingDetail":{"type":"object"},
+        "about":{
+            "type":"string",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "mentions":{"type":"long"},
+        "contains":{"type":"long"}  
         }
         }
     }
