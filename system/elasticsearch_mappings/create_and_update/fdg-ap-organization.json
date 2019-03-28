@@ -1,14 +1,38 @@
 {
-    "index_patterns" : "fdg-organization",
+    "index_patterns" : "fdg-ap-organization",
     "mappings" : {
       "doc" : {
         "properties": {
             "identifier":{"type":"long"},
-            "name":{"type":"text"},
-            "url":{"type":"text"},
-            "nationality":{"type":"text"},
-            "bias":{"type":"text"},
-            "parentOrganization":{"type":"long"}         
+        "name":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+          }},
+        "url":{
+            "type":"text",
+            "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              }},
+        "nationality":{
+            "type":"text",
+            "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              }},
+        "bias":{
+            "type":"text",
+            "fields": {
+                "keyword": {
+                  "type": "keyword"
+                }
+              }},
+        "parentOrganization":{"type":"long"}   
         }
         }
     }

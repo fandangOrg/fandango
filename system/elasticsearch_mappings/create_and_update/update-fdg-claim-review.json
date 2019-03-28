@@ -1,5 +1,35 @@
 {
     "properties": {
-            "neil":{"type":"long"}     
+        "identifier":{"type":"long"},
+        "claimReviewed":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "reviewAspect":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "reviewBody":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "dateCreated":{"type":"date"},
+        "dateModified":{"type":"date"},
+        "datePublished":{"type":"date"},
+        "aggregateRating":{"type":"float"},
+        "itemReviewed":{"type":"long"},
+        "references":{"type":"long"}  
         }
 }

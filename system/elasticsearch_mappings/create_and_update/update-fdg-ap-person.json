@@ -1,5 +1,54 @@
 {
     "properties": {
-            "neil":{"type":"long"}     
+        "identifier":{"type":"long"},
+        "name":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
         }
+        },
+        "url":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "nationality":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "bias":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "jobTitle":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "gender":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "affiliation":{"type":"long"}   
+    }
 }

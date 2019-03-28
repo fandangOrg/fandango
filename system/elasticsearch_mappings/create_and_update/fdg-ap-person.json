@@ -1,16 +1,59 @@
 {
-    "index_patterns" : "fdg-person",
+    "index_patterns" : "fdg-ap-person",
     "mappings" : {
       "doc" : {
         "properties": {
             "identifier":{"type":"long"},
-            "name":{"type":"text"},
-            "url":{"type":"text"},
-            "nationality":{"type":"text"},
-            "bias":{"type":"text"},
-            "jobTitle":{"type":"text"},
-            "gender":{"type":"text"},
-            "affiliation":{"type":"long"}         
+        "name":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "url":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "nationality":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "bias":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "jobTitle":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "gender":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+        }
+        },
+        "affiliation":{"type":"long"}   
+             
         }
         }
     }

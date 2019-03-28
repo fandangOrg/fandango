@@ -1,5 +1,21 @@
 {
     "properties": {
-            "neil":{"type":"long"}     
+        "identifier":{"type":"long"},
+        "name":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "type":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        }  
         }
 }

@@ -1,5 +1,15 @@
 {
     "properties": {
-            "neil":{"type":"long"}     
+        "name":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword"
+            }
+            }
+        },
+        "News":{"type":"object"},
+        "ClaimReviews":{"type":"object"},
+        "Facts":{"type":"object"}    
         }
 }
