@@ -9,6 +9,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 import numpy as np 
 from fake_news_detection.config.AppConfig import dataset_beta
+from dask.dataframe.io.csv import read_csv
 
 
 class DataPrep(object):
@@ -117,7 +118,10 @@ def clean_text(text):
 
 
 if __name__  == "__main__":
-    print(clean_text("casa mia oggi 34 "))
+    #print(clean_text("casa mia oggi 34 "))
+    
+    p = read_csv("/home/camila/workspace/fandango-fake-news/fake_news_detection/resources/guardian.csv",sep='|')
+    p.columns
     #===========================================================================
     # d = DataPrep() 
     # d.printInfodb()

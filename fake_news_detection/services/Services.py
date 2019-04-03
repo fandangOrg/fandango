@@ -42,8 +42,9 @@ dao_news=DAONewsElastic()
 dao_claim_output=DAOClaimsOutputElastic()
 log = getLogger(__name__)
 dao_authors = DAOAuthorOutputElastic()
+dao_training = DAOTrainingElasticByDomains()
 ###model = oo.load('test')
-nome_modello="english_first_version"
+nome_modello="english_try1_version"
 logger = getLogger(__name__) 
 
 
@@ -69,7 +70,7 @@ def train_model()->Prestazioni:
         pass
 
     if modello:
-        return "MODELLO GIÀ ESISTE"
+        return "THIS MODEL ALREADY EXISTS"
         #raise CustomHttpException(*ALREADY_EXIST(info.nome_modello))
 
     #try:
@@ -83,13 +84,20 @@ def train_model()->Prestazioni:
     #===========================================================================
     logger.info("creazione modello "+nome_modello)
     predictor_fakeness = config_factory.create_model_by_configuration("fandango","1","english")
+    print(predictor_fakeness)
     predictor=FakePredictor(predictor_fakeness,preprocessing,nome_modello,'fakeness')
+    
     list_domains = dao_news.get_domain()
+    #list_domains = [('www.cbsnews.com', 'REAL'), ('www.wikileaks.com', 'FAKE')]
+    print(list_domains)
     dao_train = DAOTrainingElasticByDomains(list_domains)
-    #training_set = train_config.load_df("/home/andrea/Scaricati/fandango_data.csv", sample_size=0.1)
-    training_set=dao_train.get_train_dataset(limit=number_item_to_train)
+    
+    training_set=dao_train.get_train_dataset(limit=10000)
+    print(training_set.shape)
+    print(training_set)
     #training_set.to_csv( '/home/daniele/resources/greenl.csv',index=False)
-    predictor.fit(training_set)
+    
+    predictor.fit(training_set.dropna())
     daopredictor.save(predictor)
     return predictor.get_prestazioni().toJSON()
 
@@ -213,7 +221,13 @@ def new_claim_annotated(new_claim: Claims_annotated) -> str:
     else:
         return('claim already in database') 
 
+def counterAnnotations() -> int:
+    j = request.get_json()
+    lang = j.get('language')
+    return(dao_news.GetCounterTemp(lang))
 
+
+########################################################à
 def crawler(url:str) -> str:
     log.debug(url)
     return crawler_news(url)
@@ -260,7 +274,7 @@ app.add_service('new_claim_annotated', new_claim_annotated, method = 'POST')
 app.add_service("info",info, method='POST')
 app.add_service("destroy",destroy, method='POST')
 app.add_service("info_domains",info_domains, method='GET')
-
+app.add_service("counter_annotations", counterAnnotations, method= 'POST')
 CORS(app)
 
 log.info("RUN ON {cfg}".format(cfg= AppConfig.BASEURL+AppConfig.BASEPORT))

@@ -47,7 +47,7 @@ class DAONewsElastic(DAONews):
         self.docType_domain = domain_docType
         
     def GetCounterDef(self):
-        body = {"query": {"exists" : { "label" : "user" }}}
+        body = {"query": {"exists" : { "VALUE" : "label" }}}
         try:
             print(body)
             res = self.es_client.search(index=self.index_name_output, body= body,doc_type=self.docType)
@@ -57,9 +57,37 @@ class DAONewsElastic(DAONews):
         
         return res['hits']['total']
     
-    def GetCounterTemp(self):
+    def GetCounterTemp(self, language):
         
-        return(random.randint(1,1001)) 
+        
+        body = {
+                "query": {
+                    "bool": {
+                        "must": [
+                          {
+                            "exists": {
+                                "field": "label"
+                                      }
+                                },
+                          {
+                            "match_phrase": {
+                              "language": language
+                            }
+                          }
+                              ]
+                            }
+                          }
+            }
+
+        
+        try:
+            #print(body)
+            res = self.es_client.count(index=self.index_name_output, body= body,doc_type=self.docType)
+            print(self.docType,self.index_name_output)
+        except Exception as e:
+            log.error("Could not query against elasticsearch: {err}".format(err=e))
+            raise FandangoException("Could not query against elasticsearch: {err}".format(err=e))
+        return(int(res['count']))
     
     def create_source(self,news):
         """
@@ -258,7 +286,7 @@ class FSMemoryPredictorDAO(FSPredictorDAO):
             
 if __name__ == '__main__':
     dao=DAONewsElastic()
-    print(dao.get_domain())
+    print(dao.GetCounterTemp('en'))
     
         
         

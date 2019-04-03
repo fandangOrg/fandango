@@ -2,7 +2,8 @@ from fake_news_detection.business.textPreprocessing import TextPreprocessor
 from fake_news_detection.config.constants import QUOTES
 from fake_news_detection.business.featuresExtraction2 import  CharsCounter, PunctuationCounter,\
     StopwordCounter, LexicalDiversity, AveWordxParagraph, FleschReadingEase,\
-    FKGRadeLevel, SentencesCounter
+    FKGRadeLevel, SentencesCounter, CountAdv, CountAdj, CountPrep_conj,\
+    countVerbs
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
 from ds4biz_predictor_core.model.creation_requests import CreationRequest,\
@@ -35,17 +36,26 @@ def new_features_mapping(lang_code):
                                 ('text', FleschReadingEase(lang = lang_code)),
                                 ('text', FKGRadeLevel(lang = lang_code)),
                                 ('text', SentencesCounter(lang=lang_code)),
+                                ('text', StopwordCounter(lang = lang_code)),
+                                ('text', LexicalDiversity(lang = lang_code)),
+                                ('text', AveWordxParagraph(lang = lang_code)),
+                                ('text', CountAdv(lang = lang_code)),
+                                ('text', CountAdj(lang = lang_code)),
+                                ('text', CountPrep_conj(lang = lang_code)),
+                                ('text', countVerbs(lang = lang_code))
+            
                                 #('text', PositiveWordsCounter(lang=lang_code)),
                                 #('text', NegativeWordsCounter(lang=lang_code)),
                                 #('text', SentimentWordsCounter(lang=lang_code)),
                                 #('text', EntitiesCounter(lang=lang_code))
-                                #('title', EntitiesCounter(lang=lang_code))
-                            ]
-
+                                #('title', EntitiesCounter(lang=lang_code)                ]
+            ]
 #(min_df=10, ngram_range=(1, 2), stop_words=lang_name, lowercase=True)
 transforming_mapping = {
-                         'title': TfidfVectorizer,
-                         'text': TfidfVectorizer,
+                         #'title': TfidfVectorizer,
+                         #'text': TfidfVectorizer,
+                         
+                         'text_StopwordCounter' : MinMaxScaler(feature_range=(0, 1)),
                          'text_CharsCounter' : MinMaxScaler(feature_range=(0, 1)),
                          'title_CharsCounter' : MinMaxScaler(feature_range=(0, 1)),
                          'text_PunctuationCounter': MinMaxScaler(feature_range=(0, 1)),
@@ -56,6 +66,10 @@ transforming_mapping = {
                          'text_FleschReadingEase' : MinMaxScaler(feature_range=(0, 1)),
                          'text_FKGRadeLevel' : MinMaxScaler(feature_range=(0, 1)),
                          'text_SentencesCounter' : MinMaxScaler(feature_range=(0, 1)),
+                         'text_CountAdv' : MinMaxScaler(feature_range=(0, 1)),
+                         'text_CountAdj': MinMaxScaler(feature_range=(0, 1)),
+                         'text_CountPrep_conj' : MinMaxScaler(feature_range=(0, 1)),
+                         'text_countVerbs' : MinMaxScaler(feature_range=(0, 1))
                          #'text_PositiveWordsCounter' : MinMaxScaler(feature_range=(0, 1)),
                          #'text_NegativeWordsCounter' : MinMaxScaler(feature_range=(0, 1)),
                          #'text_EntitiesCounter' : MinMaxScaler(feature_range=(0, 1)),

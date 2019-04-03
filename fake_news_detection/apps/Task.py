@@ -30,26 +30,26 @@ class Task_1(Task):
         
         
         self.daopredictor = FSMemoryPredictorDAO(picklepath)
-
+    
         
     def do(self,msg):
         print("applico l'analizer e trovo lo score di ",msg)
         #id_document
         #score_ml %
-        info_news=InterfaceInputModel(title=msg["description"], text=msg["text"], source=msg["source_domain"])
-        #nome_modello="english_try_version"+msg.language
-        nome_modello="modello_en_newdata.mdl"
+        info_news=InterfaceInputModel(title=msg["headline"], text=msg["articleBody"], source=msg["publisher"])
+        nome_modello="modello_en_newdata"
         output= analyzer(info_news,self.daopredictor,nome_modello) 
         print(output)
-        self.publisher.publish(self.topic, {"texthash":msg.texthash,"score":output})
-        #self.publisher.push("")        
+        self.publisher.publish(self.topic, {"id_news":msg.id_news,"calculatedRating":output, "headline":msg.headline,"articleBody": msg.articleBody,"dateCreated": msg.dataCreated, "dateModified" : msg.dateModified, "datePublished":msg.datePublished})
+        self.publisher.push("")        
         
                  
 
 
 if __name__ == '__main__':
-    pass
     
-    #c = Task_1(topic="test_articles", group_id="cami2", bootstrap_servers=["localhost:9092"])
-    #c.do()      
-
+    pass
+    '''
+    c = Task_1(topic="test_lvt" , group_id="cami", bootstrap_servers=["localhost:9092"])
+    c.do()      
+    '''

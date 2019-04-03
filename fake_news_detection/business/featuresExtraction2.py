@@ -9,6 +9,9 @@ from nltk.corpus import stopwords
 from fake_news_detection.utils.SyllabCount import syllcounten
 import string 
 from itertools import count
+from fake_news_detection.utils.DataPrep import clean_text
+from fake_news_detection.utils.TreeTaggerConf import LemmaTokenizer
+import treetaggerwrapper
 
 
 class FeaturesExtractor(ABC):
@@ -40,7 +43,9 @@ class StopwordCounter(FeaturesExtractor):
 class LexicalDiversity(FeaturesExtractor):
     def __call__(self, txt:str) -> float:
         try:
-            doc = Text(txt, hint_language_code=self.lang)     
+            print(txt)
+            doc = Text(txt, hint_language_code=self.lang)
+            print(doc) 
             return (len(set(doc.words)) / len(doc.words))
         except:
             return np.nan
@@ -123,7 +128,7 @@ class GunningFog(FeaturesExtractor):
             c = syllcounten(word)
             tot_syl += c
         
-        print('total  vowels :',tot_syl)
+        print('total  syllabes :',tot_syl)
         total_words = len(doc.words)
         ratio1 = total_words / len(doc.sentences)
         ratio2 = tot_syl / total_words
@@ -166,6 +171,7 @@ class WordsCounter(FeaturesExtractor):
 class SentencesCounter(FeaturesExtractor):
     def __call__(self, text:str) -> float:
         try:
+            text = clean_text(text)
             doc = Text(text, hint_language_code=self.lang)
             return log(len([sentence for sentence in doc.sentences]) + 1)
         except:
@@ -175,6 +181,7 @@ class SentencesCounter(FeaturesExtractor):
 class PositiveWordsCounter(FeaturesExtractor):
     def __call__(self, text:str) -> float:
         try:
+            text = clean_text(text)
             doc = Text(text, hint_language_code=self.lang)
             return log(len([word for sentence in doc.sentences for word in sentence.words if word.polarity == 1]) + 1)
         except:
@@ -184,6 +191,7 @@ class PositiveWordsCounter(FeaturesExtractor):
 class NegativeWordsCounter(FeaturesExtractor):
     def __call__(self, text:str) -> float:
         try:
+            text = clean_text(text)
             doc = Text(text, hint_language_code=self.lang)
             return log(len([word for sentence in doc.sentences for word in sentence.words if word.polarity == -1]) + 1)
         except:
@@ -193,6 +201,7 @@ class NegativeWordsCounter(FeaturesExtractor):
 class SentimentWordsCounter(FeaturesExtractor):
     def __call__(self, text:str) -> float:
         try:
+            text = clean_text(text)
             doc = Text(text, hint_language_code=self.lang)
             pos = 0
             neg = 0
@@ -215,23 +224,82 @@ class EntitiesCounter(FeaturesExtractor):
             return np.nan
         
         
-if __name__ == "__main__":
-    
+class CountAdj(FeaturesExtractor):
+    def __call__(self, text:str) -> float:
+        try:
+            tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang, TAGDIR="/home/camila/TreeTag",TAGPARFILE="/home/camila/TreeTag/lib/english.par")                                            
+            tagger.tag_text("doc")
+            #print(tagger)
+            count = 0 
+            for tag in tagger.tag_text(text):
+                tt = tag.split('\t')
+                if tt[1] == 'JJ' or tt[1] == 'JJR' or tt[1] == 'JJS':
+                    count += 1
+          
+            return count
+        except:
+            return np.nan
+                
+class CountAdv(FeaturesExtractor):
+    def __call__(self, text:str) -> float:
+        try:
+            tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang, TAGDIR="/home/camila/TreeTag",TAGPARFILE="/home/camila/TreeTag/lib/english.par")                                            
+            tagger.tag_text("doc")
+            count = 0 
+            adv_list_tag = ['RB', 'RBR', 'RBS', 'WRB']
+            for tag in tagger.tag_text(text):
+                tt = tag.split('\t')
+                #print(tt)
+                if tt[1] in adv_list_tag:
+                    count += 1
+          
+            return count
+        except:
+            return np.nan
+            
+        
+class CountPrep_conj(FeaturesExtractor):
+    def __call__(self, text:str) -> float:
+        try:
+            tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang, TAGDIR="/home/camila/TreeTag",TAGPARFILE="/home/camila/TreeTag/lib/english.par")                                            
+            tagger.tag_text("doc")
+            count = 0 
+            for tag in tagger.tag_text(text):
+                tt = tag.split('\t')
+                #print(tt)
+                if tt[1] == 'IN' or tt[1] == "CC":
+                    count += 1
+          
+            return count
+        except:
+            return np.nan
+        
+class countVerbs(FeaturesExtractor):
+    def __call__(self, text:str) -> float:
+        try:
+            tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang, TAGDIR="/home/camila/TreeTag",TAGPARFILE="/home/camila/TreeTag/lib/english.par")                                            
+            tagger.tag_text("doc")
+            count = 0 
+            verbs_list = ["VB","VBD","VBG","VBN","VBZ","VBP","VD","VDD","VDG","VDN","VDZ","VDP","VHD","VHG","VHN","VHZ","VHP","VV","VVD","VVG","VVN","VVZ","VVP"]
+            for tag in tagger.tag_text(text):
+                tt = tag.split('\t')
+                #print(tt)
+                if tt[1] in verbs_list:
+                    count += 1
+          
+            return count
+        except:
+            return np.nan
+        
 
+           
+        
+if __name__ == "__main__":
     #l = StopwordCounter(lang='en')
     #print(l('hi, how are you? and you me feel for the fine and and and for then at at '))
     #s = AveWordxParagraph(lang = 'en')
-    d = AveWordxParagraph(lang = 'en')
-    print(d('''Police in the Basque Country region of northern Spain say they have failed to find the owners of three drones that got in the way of a commercial flight landing at Bilbao airport on Saturday.
-
-            The captain of the Lufthansa flight alerted ground control to the fact that the devices were operating inside protected airspace and flying at an altitude of 900 meters. The airplane was forced to dodge the drones to avoid a collision, say police.
-
-            Last March, a drone nearly crashed into an airplane at Paris Charles de Gaulle airport
-            
-
-            There is no accurate description of the drones, but a device capable of flying at an altitude of nearly one kilometer is necessarily a professional aerial vehicle that could weigh at least two or three kilograms, representing a serious threat in the event of a collision against an aircraft flying at 250km/h.
-
-            The Airbus 320, which was covering the Frankfurt-Bilbao route, was forced to make an evasive maneuver after spotting the drones in skies that happened to be clear that day.'''))
-    
+    d = countVerbs(lang = 'en')
+    print(d('stop please to dance be follow done come '))
+   
     
     

@@ -50,8 +50,7 @@ class News_domain:
         self.label = label
         self.list_url = list_url
         self.lang = lang
-        
-        
+    
         
         
 class New_news_annotated:

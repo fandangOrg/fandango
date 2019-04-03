@@ -11,7 +11,7 @@ from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.utils.Exception import FandangoException
 import os
 from pip._vendor.html5lib.treebuilders import dom
-from elasticsearch_dsl.search import Search
+from elasticsearch_dsl.search import Search, TransportError
 import itertools
 from fake_news_detection.dao.DAO import DAONewsElastic
 #from fake_news_detection.services.Services import dao_news
@@ -28,7 +28,7 @@ class DAOTraining:
 
 class DAOTrainingPD:
     #dataset_beta togliere commento e metterlo nel path 
-    def __init__(self, path, delimiter='\t'):
+    def __init__(self, path = "/home/camila/workspace/fandango-fake-news/fake_news_detection/resources", delimiter='|'):
         self.path = path
         self.delimiter = delimiter
         
@@ -83,6 +83,8 @@ class DAOTrainingPD:
         print("final shape -->", df.shape)
         print(df.groupby(['label']).agg(['count']))
         print("> end of 'get_train_dataset()'\n")
+        #df.to_csv('/home/camila/Scrivania/data_4F.csv', sep = '|', index = False )
+                  
         return df
 
 
@@ -164,7 +166,7 @@ class DAOTrainingElasticByDomains():
         self.docType = docType_article
         self.list_domains=list_domains
     
-    def get_train_dataset(self,limit=3000):
+    def get_train_dataset(self,limit=1000):
         '''
         from a given file, it converts articles labeled into rows of a dataframe
         @param path_domain: str
@@ -178,6 +180,7 @@ class DAOTrainingElasticByDomains():
             if len(list_documents)==0:
                 continue
             print(domain[0],len(list_documents))
+            
             df1 = pd.DataFrame.from_dict(list_documents)
             df1['label'] = label
             df1.dropna(inplace=True)
@@ -191,19 +194,23 @@ class DAOTrainingElasticByDomains():
         print("> end of 'get_train_dataset()'\n")
         return dataf
  
-    def __get_news_from_domain(self,domain,limit=3000):
-        search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType)\
-                .query("term", source_domain=domain)
-        response = search.execute()
-        result_list=[]
-        print("RESPONSE TOTAL:", response.hits.total)
-        for c,hit in enumerate(itertools.islice(search.scan(),limit)):
-            if len(hit.title.strip())>10 and len(hit.text.strip())>20:
-                result_list.append({"title":hit.title.strip(),  "text" : hit.text.strip()})
-            else:
-                print("scarto")
-        return result_list
-         
+    def __get_news_from_domain(self,domain,limit=1000):
+        
+        try:
+            search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType).query("term", source_domain=domain)
+            response = search.execute()
+            result_list=[]
+            print("RESPONSE TOTAL:", response.hits.total)
+            for c,hit in enumerate(itertools.islice(search.scan(),limit)):
+                if len(hit.title.strip())>10 and len(hit.text.strip())>20:
+                    result_list.append({"title":hit.title.strip(),  "text" : hit.text.strip()})
+                else:
+                    print("scarto")
+            return result_list
+        except TransportError as e:
+            print(e.info)
+            
+             
 
     
  
@@ -298,19 +305,28 @@ class DAOTrainingElasticByDomains():
 
 if __name__ == '__main__':
     
+    
     dao_news=DAONewsElastic()
-    list_domains = dao_news.get_domain()
-    print(list_domains)
-    #list_domains = [('www.wikileaks.com', 'FAKE')]
+    #list_domains = dao_news.get_domain()
+    #print( list_domains)
+    list_domains = [('www.cbsnews.com', 'FAKE'), ('www.intrepidreport.com', 'FAKE')]
+
+    #print(list_domains)
     ii = DAOTrainingElasticByDomains(list_domains)
-    l= ii.get_train_dataset(limit=100000)
-    print(l.shape, l.columns)
+    l= ii.get_train_dataset(limit = 10000)
+    print(l.shape)
+    #print( l['text'].iloc[3000])
+    #l.to_csv('/home/camila/Scrivania/fakedata1.csv')
+    
+    
+    
+
+    #print(l.shape, l.columns)
     #oo = DAOTrainingPD(dataset_beta)
     #print(oo.get_train_dataset())
     #ii = DAOTrainingElasticByDomains()
     #p.to_csv("/home/camila/Scrivania/Fandango_data.tsv",index = False, sep= "\t"
 
 
-    
     
     

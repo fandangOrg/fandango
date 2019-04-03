@@ -21,24 +21,28 @@ from fake_news_detection.business.featureEngineering import preprocess_features_
 from fake_news_detection.config.MLprocessConfig import new_features_mapping,\
     text_preprocessing_mapping
 from fake_news_detection.model.InterfacceComunicazioni import Prestazioni
+from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
+from fake_news_detection.business.training_model_prove import concatenate_df_split
 
 
 class Preprocessing:
     def __init__(self, language:str="it"):
         self.language = language
-        self.preprocess=TextPreprocessor(lang=language, mode="lemmatization", rm_stopwords=True, invalid_chars=QUOTES, encoding="utf-8")
+        self.preprocess=TextPreprocessor(lang=language, mode="lemmatization", rm_stopwords=False, invalid_chars=QUOTES, encoding="utf-8")
 
     def _preprocessing(self, X):
         X=preprocess_features_of_df(df=X, mapping=text_preprocessing_mapping(self.preprocess))
+        print('preprocessed done')
         return X
     
     def _add_features(self, X):
         X=add_new_features_to_df(df=X, mapping=new_features_mapping(self.language))
+        print(' features added')
         return X    
 
     def execution(self,X):
         X=self._preprocessing(X)
-        return self._add_features(X) 
+        return self._add_features(X)
     
     
 class FakePredictor(DS4BizPredictor):
@@ -144,5 +148,31 @@ class FakePredictor(DS4BizPredictor):
 #         else:
 #             y_test_addative.append(y_test[i][0])
 #     y_test_addative= pd.Series(y_test_addative)
-#     return prestazioni(y_test_addative,y_pred)
+#     return prestazioni(y_test_aòddative,y_pred)
 #===============================================================================
+
+if __name__ == '__main__':    
+    
+    '''
+    list_domains = [('www.wikileaks.com', 'FAKE')]
+    print(list_domains)
+    dao_train = DAOTrainingElasticByDomains(list_domains)
+    training_set=dao_train.get_train_dataset(limit=100000000)
+     '''
+    
+    
+    training_set, test_set = concatenate_df_split()
+    print(training_set)
+    preprocessing = Preprocessing("en")
+    X = preprocessing.execution(training_set)
+    print(X.columns) 
+
+    X1 = X._get_numeric_data()
+    print( X1, "without numeric ")
+    X2 = pd.concat([X1 , X['label']], axis = 1)
+    print( "adding label", X2. columns)
+    X2.to_csv("/home/camila/Scrivania/forcorrelation.csv")     
+    
+    
+    
+    

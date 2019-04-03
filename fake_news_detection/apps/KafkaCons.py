@@ -10,8 +10,9 @@ import time
 import json
 import random
 import os
-from fake_news_detection.apps.consumers import Task, Task_1
+#from fake_news_detection.apps.consumers import Task, Task_1
 from brokermanager.model.publishers import KafkaPublisher
+from fake_news_detection.apps.Task import Task,Task_1
 
 
 class Consumer:
@@ -72,15 +73,16 @@ class InjectableJSONConsumer(JsonConsumer):
         return self.fun(obj)
     
     #take some tasks together
-class InjectableTASKJSONConsumer(JsonConsumer):
+class InjectableTASKJSONConsumer(JsonConsumer):  
     def __init__(self,topic,group_id,bootstrap_servers,task:Task,auto_offset_reset="earliest",enable_auto_commit=True,retry_interval=1):
         super().__init__(topic,group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
         self.task=task
-        
+    
+       
     def process(self, obj):
         return self.task.do(obj)
     
-    
+
     def init_system(self):
     #load (carica modelli)    
     #{"it":modello,"en":modello}
@@ -93,16 +95,22 @@ class InjectableTASKJSONConsumer(JsonConsumer):
 if __name__ == '__main__':
     def print_f(obj):
         print("new record", obj)
-              
+        
+    '''    
+    queue_output=KafkaPublisher("localhost","9092")#provo se la coda è stata creata
+    consumer=InjectableJSONConsumer(topic="input_preprocessed", group_id="cami2", bootstrap_servers=["localhost:9092"], fun=print_f)
+    consumer.consume_forever()
+ 
+    '''      
     #consumer=InjectableJSONConsumer(topic="score_ml", group_id="cami2", bootstrap_servers=["localhost:9092"], fun=print_f)
     #consumer.consume_forever()
-    print("errore")
+    #print("errore")
     queue_output=KafkaPublisher("localhost","9092")#provo se la coda è stata creata
-    topic="score_ml"
-    consumer=InjectableTASKJSONConsumer(topic="test_articles", group_id="cami5", bootstrap_servers=["localhost:9092"], task=Task_1(queue_output,topic))
+    topic="test_preprocessed"
+    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt5", bootstrap_servers=["localhost:9092"], task=Task_1(queue_output,topic))
     print("in ascolto")
     consumer.consume_forever()
-    
+
     
     
     
