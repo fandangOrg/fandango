@@ -1,7 +1,7 @@
-create stream analyzed_text (identifier bigint, headline string, articleBody string, dateCreated string, dateModified string, datePublished string) with (kafka_topic='analyzed_text', value_format='JSON');
-create stream analyzed_auth_org (identifier bigint, author array<bigint>, publisher array<bigint>, calculatedRatingDetail struct<publishRating double, authorRating double>) with (kafka_topic='analyzed_auth_org', value_format='JSON');
-create stream analyzed_media (identifier bigint, contains array<bigint>) with (kafka_topic='analyzed_media', value_format='JSON');
-create stream analyzed_ner_topic (identifier bigint, about array<string>, mentions array<bigint>) with (kafka_topic='analyzed_ner_topic', value_format='JSON');
+create stream analyzed_text (identifier string, headline string, articleBody string, dateCreated string, dateModified string, datePublished string) with (kafka_topic='analyzed_text', value_format='JSON');
+create stream analyzed_auth_org (identifier string, author array<string>, publisher array<string>, calculatedRatingDetail struct<publishRating double, authorRating double>) with (kafka_topic='analyzed_auth_org', value_format='JSON');
+create stream analyzed_media (identifier string, contains array<string>) with (kafka_topic='analyzed_media', value_format='JSON');
+create stream analyzed_ner_topic (identifier string, about array<string>, mentions array<string>) with (kafka_topic='analyzed_ner_topic', value_format='JSON');
 
 create stream join_tao with (partitions=1) as select t.identifier as identifier, t.headline, t.articleBody, t.dateCreated, t.dateModified, t.datePublished, ao.author, ao.publisher, ao.calculatedRatingDetail from analyzed_text t inner join analyzed_auth_org ao within 24 hours on t.identifier = ao.identifier;
 create stream join_taont with (partitions=1) as select t.identifier as identifier, t.headline, t.articleBody, t.dateCreated, t.dateModified, t.datePublished, t.author, t.publisher, t.calculatedRatingDetail, nt.about, nt.mentions from join_tao t inner join analyzed_ner_topic nt within 24 hours on t.identifier = nt.identifier;
