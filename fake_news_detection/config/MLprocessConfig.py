@@ -43,7 +43,6 @@ def new_features_mapping(lang_code):
                                 ('text', CountAdj(lang = lang_code)),
                                 ('text', CountPrep_conj(lang = lang_code)),
                                 ('text', countVerbs(lang = lang_code))
-            
                                 #('text', PositiveWordsCounter(lang=lang_code)),
                                 #('text', NegativeWordsCounter(lang=lang_code)),
                                 #('text', SentimentWordsCounter(lang=lang_code)),

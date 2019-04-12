@@ -51,9 +51,10 @@ class Consumer:
 
     def parse(self,msg):
         raise Exception("Not implemented")
-
+    
     def process(self,obj):
         raise Exception("Not implemented")
+    
     
 
 class JsonConsumer(Consumer):
@@ -77,9 +78,10 @@ class InjectableTASKJSONConsumer(JsonConsumer):
     def __init__(self,topic,group_id,bootstrap_servers,task:Task,auto_offset_reset="earliest",enable_auto_commit=True,retry_interval=1):
         super().__init__(topic,group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
         self.task=task
-    
+        
        
     def process(self, obj):
+        print(self.task.do(obj))
         return self.task.do(obj)
     
 
@@ -106,10 +108,12 @@ if __name__ == '__main__':
     #consumer.consume_forever()
     #print("errore")
     queue_output=KafkaPublisher("localhost","9092")#provo se la coda è stata creata
-    topic="test_preprocessed"
-    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt5", bootstrap_servers=["localhost:9092"], task=Task_1(queue_output,topic))
-    print("in ascolto")
+    topic="input_preprocessed"
+    output_topic =  "analyzed_text"
+    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt_group", bootstrap_servers=["localhost:9092"], task=Task_1(queue_output,output_topic))
     consumer.consume_forever()
+    print("in ascolto")
+
 
     
     

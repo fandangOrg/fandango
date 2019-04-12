@@ -45,7 +45,7 @@ class LexicalDiversity(FeaturesExtractor):
         try:
             print(txt)
             doc = Text(txt, hint_language_code=self.lang)
-            print(doc) 
+            #print(doc) 
             return (len(set(doc.words)) / len(doc.words))
         except:
             return np.nan
@@ -59,7 +59,6 @@ class AveWordxParagraph(FeaturesExtractor):
             x = txt.split('.\n\n')
             list_word_par = []
             translator = str.maketrans('', '', string.punctuation)
-            print(len(x)) 
             #print(len(x))
             for parag in x:
                 parag = parag.translate(translator)
@@ -128,7 +127,7 @@ class GunningFog(FeaturesExtractor):
             c = syllcounten(word)
             tot_syl += c
         
-        print('total  syllabes :',tot_syl)
+        #print('total  syllabes :',tot_syl)
         total_words = len(doc.words)
         ratio1 = total_words / len(doc.sentences)
         ratio2 = tot_syl / total_words

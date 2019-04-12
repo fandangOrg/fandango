@@ -6,7 +6,8 @@ Created on Oct 18, 2018
 
 from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel, \
     InterfaceInputFeedBack, News, News_annotated, News_domain,\
-    New_news_annotated, Claims_annotated, Prestazioni, Info
+    New_news_annotated, Claims_annotated, Prestazioni, Info, News_DataModel,\
+    Author_org_DataModel, Images_DataModel, Videos_DataModel, Topics_DataModel
 from flask_cors.extension import CORS
 import json
 from flask import json
@@ -50,6 +51,10 @@ logger = getLogger(__name__)
 
 
 #-----------------> MODEL SERVICES--------------------------------------------------------------
+
+
+
+
 def train_model_old() -> str:
     #training_set = daotrainingset.get_train_dataset(sample_size=0.01)
     train_config=None#Train_model()
@@ -227,7 +232,7 @@ def counterAnnotations() -> int:
     return(dao_news.GetCounterTemp(lang))
 
 
-########################################################à
+#############################################################
 def crawler(url:str) -> str:
     log.debug(url)
     return crawler_news(url)
@@ -254,7 +259,9 @@ def popolate_claims() -> str:
     popola_all(dao_claim_output)
     return "DONE"
 
-    
+#########################################################################################
+
+
     
 app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="/web")
 app.root="/fandango/v0.3/fakeness"
@@ -275,8 +282,13 @@ app.add_service("info",info, method='POST')
 app.add_service("destroy",destroy, method='POST')
 app.add_service("info_domains",info_domains, method='GET')
 app.add_service("counter_annotations", counterAnnotations, method= 'POST')
+
 CORS(app)
 
 log.info("RUN ON {cfg}".format(cfg= AppConfig.BASEURL+AppConfig.BASEPORT))
 app.setup()
-app.run(host="0.0.0.0", port=AppConfig.BASEPORT,debug=False)
+app.run(host = "0.0.0.0", port = AppConfig.BASEPORT,debug=False)
+
+
+
+
