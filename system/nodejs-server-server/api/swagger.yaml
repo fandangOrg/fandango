@@ -1,0 +1,677 @@
+---
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: "Siren"
+host: "localhost:8080"
+basePath: "/fandango/v0.1/siren"
+schemes:
+- "http"
+paths:
+  /FindSimilarClaims:
+    post:
+      summary: "Find claims similar to existing claim, and similar to optional topics"
+      description: "Response will return top 5 Claims closest to user provided criteria.\
+        \ Each claim in result will contain the claim itself, and a list of all claim\
+        \ reviews of that claim."
+      operationId: "findSimilarClaims"
+      parameters:
+      - in: "body"
+        name: "info"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Claim_Request_Interface"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Claim_Response_Interface"
+      x-swagger-router-controller: "Default"
+  /FindSimilarArticles:
+    post:
+      summary: "Find articles similar to an existing article"
+      description: "Response will return top 5 Articles closest to user provided criteria."
+      operationId: "findSimilarArticles"
+      parameters:
+      - in: "body"
+        name: "info"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Article_Request_Interface"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Article_Response_Interface"
+      x-swagger-router-controller: "Default"
+  /FindFact:
+    post:
+      summary: "Find Facts similar to text input, specific category, and similar to\
+        \ optional topics"
+      description: "Response will return top 5 Fact documents closest to user provided\
+        \ criteria. A Fact is an Open Data creative work containing data, published\
+        \ by a recognized institution to make information available publicly."
+      operationId: "findFact"
+      parameters:
+      - in: "body"
+        name: "info"
+        description: ""
+        required: true
+        schema:
+          $ref: "#/definitions/Fact_Request_Interface"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Fact_Response_Interface"
+      x-swagger-router-controller: "Default"
+definitions:
+  Claim_Request_Interface:
+    type: "object"
+    required:
+    - "identifier"
+    properties:
+      identifier:
+        type: "string"
+      topics:
+        type: "array"
+        items:
+          type: "string"
+  Claim_Response_Interface:
+    type: "object"
+    required:
+    - "identifier"
+    - "results"
+    properties:
+      identifier:
+        type: "string"
+      topics:
+        type: "array"
+        items:
+          type: "string"
+      results:
+        type: "array"
+        items:
+          $ref: "#/definitions/Claim_Response_Interface_results"
+    example:
+      identifier: "identifier"
+      topics:
+      - "topics"
+      - "topics"
+      results:
+      - claimReviews:
+        - datePublished: "datePublished"
+          identifier: 3
+          reviewAspect: "reviewAspect"
+          claimReviewed: "claimReviewed"
+          dateCreated: "dateCreated"
+          references:
+          - 7
+          - 7
+          reviewBody: "reviewBody"
+          itemReviewed: 4
+          dateModified: "dateModified"
+          aggregateRating: 2.027123023002321833274663731572218239307403564453125
+        - datePublished: "datePublished"
+          identifier: 3
+          reviewAspect: "reviewAspect"
+          claimReviewed: "claimReviewed"
+          dateCreated: "dateCreated"
+          references:
+          - 7
+          - 7
+          reviewBody: "reviewBody"
+          itemReviewed: 4
+          dateModified: "dateModified"
+          aggregateRating: 2.027123023002321833274663731572218239307403564453125
+        claim:
+          calculatedRating: 6.02745618307040320615897144307382404804229736328125
+          datePublished: "datePublished"
+          firstAppearance: 5
+          identifier: 2.3021358869347654518833223846741020679473876953125
+          appearance:
+          - 0
+          - 0
+          dateCreated: "dateCreated"
+          mentions:
+          - 7
+          - 7
+          about:
+          - "about"
+          - "about"
+          calculatedRatingDetail:
+            authorRating: 5.962133916683182377482808078639209270477294921875
+            publishRating: 1.46581298050294517310021547018550336360931396484375
+          dateModified: "dateModified"
+          text: "text"
+          possiblyRelatesTo:
+          - 9
+          - 9
+      - claimReviews:
+        - datePublished: "datePublished"
+          identifier: 3
+          reviewAspect: "reviewAspect"
+          claimReviewed: "claimReviewed"
+          dateCreated: "dateCreated"
+          references:
+          - 7
+          - 7
+          reviewBody: "reviewBody"
+          itemReviewed: 4
+          dateModified: "dateModified"
+          aggregateRating: 2.027123023002321833274663731572218239307403564453125
+        - datePublished: "datePublished"
+          identifier: 3
+          reviewAspect: "reviewAspect"
+          claimReviewed: "claimReviewed"
+          dateCreated: "dateCreated"
+          references:
+          - 7
+          - 7
+          reviewBody: "reviewBody"
+          itemReviewed: 4
+          dateModified: "dateModified"
+          aggregateRating: 2.027123023002321833274663731572218239307403564453125
+        claim:
+          calculatedRating: 6.02745618307040320615897144307382404804229736328125
+          datePublished: "datePublished"
+          firstAppearance: 5
+          identifier: 2.3021358869347654518833223846741020679473876953125
+          appearance:
+          - 0
+          - 0
+          dateCreated: "dateCreated"
+          mentions:
+          - 7
+          - 7
+          about:
+          - "about"
+          - "about"
+          calculatedRatingDetail:
+            authorRating: 5.962133916683182377482808078639209270477294921875
+            publishRating: 1.46581298050294517310021547018550336360931396484375
+          dateModified: "dateModified"
+          text: "text"
+          possiblyRelatesTo:
+          - 9
+          - 9
+  Article_Request_Interface:
+    type: "object"
+    required:
+    - "identifier"
+    properties:
+      identifier:
+        type: "string"
+  Article_Response_Interface:
+    type: "object"
+    required:
+    - "identifier"
+    - "results"
+    properties:
+      identifier:
+        type: "string"
+      results:
+        type: "array"
+        items:
+          $ref: "#/definitions/Article_Response_Interface_results"
+    example:
+      identifier: "identifier"
+      results:
+      - article:
+          identifier: 0
+          articleBody: "articleBody"
+          author:
+          - 6
+          - 6
+          about:
+          - "about"
+          - "about"
+          dateModified: "dateModified"
+          calculatedRatingDetail:
+            authorRating: 5.962133916683182377482808078639209270477294921875
+            publishRating: 1.46581298050294517310021547018550336360931396484375
+          datePublished: "datePublished"
+          calculatedRating: 2.3021358869347654518833223846741020679473876953125
+          contains:
+          - 5
+          - 5
+          dateCreated: "dateCreated"
+          mentions:
+          - 5
+          - 5
+          publisher:
+          - 1
+          - 1
+          headline: "headline"
+      - article:
+          identifier: 0
+          articleBody: "articleBody"
+          author:
+          - 6
+          - 6
+          about:
+          - "about"
+          - "about"
+          dateModified: "dateModified"
+          calculatedRatingDetail:
+            authorRating: 5.962133916683182377482808078639209270477294921875
+            publishRating: 1.46581298050294517310021547018550336360931396484375
+          datePublished: "datePublished"
+          calculatedRating: 2.3021358869347654518833223846741020679473876953125
+          contains:
+          - 5
+          - 5
+          dateCreated: "dateCreated"
+          mentions:
+          - 5
+          - 5
+          publisher:
+          - 1
+          - 1
+          headline: "headline"
+  Fact_Request_Interface:
+    type: "object"
+    required:
+    - "category"
+    - "text"
+    properties:
+      text:
+        type: "string"
+      category:
+        type: "string"
+      topics:
+        type: "array"
+        items:
+          type: "string"
+  Fact_Response_Interface:
+    type: "object"
+    required:
+    - "category"
+    - "results"
+    - "text"
+    properties:
+      text:
+        type: "string"
+      category:
+        type: "string"
+      topics:
+        type: "array"
+        items:
+          type: "string"
+      results:
+        type: "array"
+        items:
+          $ref: "#/definitions/Fact_Response_Interface_results"
+    example:
+      topics:
+      - "topics"
+      - "topics"
+      text: "text"
+      category: "category"
+      results:
+      - fact:
+          datePublished: "datePublished"
+          identifier: 0
+          dateCreated: "dateCreated"
+          temporalCoverageStart: "temporalCoverageStart"
+          dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
+          mentions:
+          - 6
+          - 6
+          name: "name"
+          about:
+          - "about"
+          - "about"
+          dateModified: "dateModified"
+          text: "text"
+          spatialCoverage: "spatialCoverage"
+          url: "url"
+      - fact:
+          datePublished: "datePublished"
+          identifier: 0
+          dateCreated: "dateCreated"
+          temporalCoverageStart: "temporalCoverageStart"
+          dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
+          mentions:
+          - 6
+          - 6
+          name: "name"
+          about:
+          - "about"
+          - "about"
+          dateModified: "dateModified"
+          text: "text"
+          spatialCoverage: "spatialCoverage"
+          url: "url"
+  Claim_Response_Interface_claim_calculatedRatingDetail:
+    properties:
+      publishRating:
+        type: "number"
+      authorRating:
+        type: "number"
+    example:
+      authorRating: 5.962133916683182377482808078639209270477294921875
+      publishRating: 1.46581298050294517310021547018550336360931396484375
+  Claim_Response_Interface_claim:
+    properties:
+      about:
+        type: "array"
+        items:
+          type: "string"
+      appearance:
+        type: "array"
+        items:
+          type: "integer"
+      calculatedRating:
+        type: "number"
+      calculatedRatingDetail:
+        $ref: "#/definitions/Claim_Response_Interface_claim_calculatedRatingDetail"
+      dateCreated:
+        type: "string"
+      dateModified:
+        type: "string"
+      datePublished:
+        type: "string"
+      firstAppearance:
+        type: "integer"
+      identifier:
+        type: "number"
+      mentions:
+        type: "array"
+        items:
+          type: "integer"
+      possiblyRelatesTo:
+        type: "array"
+        items:
+          type: "integer"
+      text:
+        type: "string"
+    example:
+      calculatedRating: 6.02745618307040320615897144307382404804229736328125
+      datePublished: "datePublished"
+      firstAppearance: 5
+      identifier: 2.3021358869347654518833223846741020679473876953125
+      appearance:
+      - 0
+      - 0
+      dateCreated: "dateCreated"
+      mentions:
+      - 7
+      - 7
+      about:
+      - "about"
+      - "about"
+      calculatedRatingDetail:
+        authorRating: 5.962133916683182377482808078639209270477294921875
+        publishRating: 1.46581298050294517310021547018550336360931396484375
+      dateModified: "dateModified"
+      text: "text"
+      possiblyRelatesTo:
+      - 9
+      - 9
+  Claim_Response_Interface_claimReviews:
+    properties:
+      identifier:
+        type: "integer"
+      claimReviewed:
+        type: "string"
+      reviewAspect:
+        type: "string"
+      reviewBody:
+        type: "string"
+      dateCreated:
+        type: "string"
+      dateModified:
+        type: "string"
+      datePublished:
+        type: "string"
+      aggregateRating:
+        type: "number"
+      itemReviewed:
+        type: "integer"
+      references:
+        type: "array"
+        items:
+          type: "integer"
+    example:
+      datePublished: "datePublished"
+      identifier: 3
+      reviewAspect: "reviewAspect"
+      claimReviewed: "claimReviewed"
+      dateCreated: "dateCreated"
+      references:
+      - 7
+      - 7
+      reviewBody: "reviewBody"
+      itemReviewed: 4
+      dateModified: "dateModified"
+      aggregateRating: 2.027123023002321833274663731572218239307403564453125
+  Claim_Response_Interface_results:
+    properties:
+      claim:
+        $ref: "#/definitions/Claim_Response_Interface_claim"
+      claimReviews:
+        type: "array"
+        items:
+          $ref: "#/definitions/Claim_Response_Interface_claimReviews"
+    example:
+      claimReviews:
+      - datePublished: "datePublished"
+        identifier: 3
+        reviewAspect: "reviewAspect"
+        claimReviewed: "claimReviewed"
+        dateCreated: "dateCreated"
+        references:
+        - 7
+        - 7
+        reviewBody: "reviewBody"
+        itemReviewed: 4
+        dateModified: "dateModified"
+        aggregateRating: 2.027123023002321833274663731572218239307403564453125
+      - datePublished: "datePublished"
+        identifier: 3
+        reviewAspect: "reviewAspect"
+        claimReviewed: "claimReviewed"
+        dateCreated: "dateCreated"
+        references:
+        - 7
+        - 7
+        reviewBody: "reviewBody"
+        itemReviewed: 4
+        dateModified: "dateModified"
+        aggregateRating: 2.027123023002321833274663731572218239307403564453125
+      claim:
+        calculatedRating: 6.02745618307040320615897144307382404804229736328125
+        datePublished: "datePublished"
+        firstAppearance: 5
+        identifier: 2.3021358869347654518833223846741020679473876953125
+        appearance:
+        - 0
+        - 0
+        dateCreated: "dateCreated"
+        mentions:
+        - 7
+        - 7
+        about:
+        - "about"
+        - "about"
+        calculatedRatingDetail:
+          authorRating: 5.962133916683182377482808078639209270477294921875
+          publishRating: 1.46581298050294517310021547018550336360931396484375
+        dateModified: "dateModified"
+        text: "text"
+        possiblyRelatesTo:
+        - 9
+        - 9
+  Article_Response_Interface_article:
+    properties:
+      identifier:
+        type: "integer"
+      headline:
+        type: "string"
+      articleBody:
+        type: "string"
+      dateCreated:
+        type: "string"
+      dateModified:
+        type: "string"
+      datePublished:
+        type: "string"
+      author:
+        type: "array"
+        items:
+          type: "integer"
+      publisher:
+        type: "array"
+        items:
+          type: "integer"
+      mentions:
+        type: "array"
+        items:
+          type: "integer"
+      contains:
+        type: "array"
+        items:
+          type: "integer"
+      about:
+        type: "array"
+        items:
+          type: "string"
+      calculatedRating:
+        type: "number"
+      calculatedRatingDetail:
+        $ref: "#/definitions/Claim_Response_Interface_claim_calculatedRatingDetail"
+    example:
+      identifier: 0
+      articleBody: "articleBody"
+      author:
+      - 6
+      - 6
+      about:
+      - "about"
+      - "about"
+      dateModified: "dateModified"
+      calculatedRatingDetail:
+        authorRating: 5.962133916683182377482808078639209270477294921875
+        publishRating: 1.46581298050294517310021547018550336360931396484375
+      datePublished: "datePublished"
+      calculatedRating: 2.3021358869347654518833223846741020679473876953125
+      contains:
+      - 5
+      - 5
+      dateCreated: "dateCreated"
+      mentions:
+      - 5
+      - 5
+      publisher:
+      - 1
+      - 1
+      headline: "headline"
+  Article_Response_Interface_results:
+    properties:
+      article:
+        $ref: "#/definitions/Article_Response_Interface_article"
+    example:
+      article:
+        identifier: 0
+        articleBody: "articleBody"
+        author:
+        - 6
+        - 6
+        about:
+        - "about"
+        - "about"
+        dateModified: "dateModified"
+        calculatedRatingDetail:
+          authorRating: 5.962133916683182377482808078639209270477294921875
+          publishRating: 1.46581298050294517310021547018550336360931396484375
+        datePublished: "datePublished"
+        calculatedRating: 2.3021358869347654518833223846741020679473876953125
+        contains:
+        - 5
+        - 5
+        dateCreated: "dateCreated"
+        mentions:
+        - 5
+        - 5
+        publisher:
+        - 1
+        - 1
+        headline: "headline"
+  Fact_Response_Interface_fact:
+    properties:
+      identifier:
+        type: "integer"
+      name:
+        type: "string"
+      text:
+        type: "string"
+      url:
+        type: "string"
+      about:
+        type: "array"
+        items:
+          type: "string"
+      mentions:
+        type: "array"
+        items:
+          type: "integer"
+      dateCreated:
+        type: "string"
+      dateModified:
+        type: "string"
+      datePublished:
+        type: "string"
+      temporalCoverageStart:
+        type: "string"
+      dateMtemporalCoverageEnd:
+        type: "string"
+      spatialCoverage:
+        type: "string"
+    example:
+      datePublished: "datePublished"
+      identifier: 0
+      dateCreated: "dateCreated"
+      temporalCoverageStart: "temporalCoverageStart"
+      dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
+      mentions:
+      - 6
+      - 6
+      name: "name"
+      about:
+      - "about"
+      - "about"
+      dateModified: "dateModified"
+      text: "text"
+      spatialCoverage: "spatialCoverage"
+      url: "url"
+  Fact_Response_Interface_results:
+    properties:
+      fact:
+        $ref: "#/definitions/Fact_Response_Interface_fact"
+    example:
+      fact:
+        datePublished: "datePublished"
+        identifier: 0
+        dateCreated: "dateCreated"
+        temporalCoverageStart: "temporalCoverageStart"
+        dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
+        mentions:
+        - 6
+        - 6
+        name: "name"
+        about:
+        - "about"
+        - "about"
+        dateModified: "dateModified"
+        text: "text"
+        spatialCoverage: "spatialCoverage"
+        url: "url"
