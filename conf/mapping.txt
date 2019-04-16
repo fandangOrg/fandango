@@ -1,0 +1,16 @@
+IDENTIFIER	identifier
+HEADLINE	headline
+ARTICLEBODY	articleBody
+DATECREATED	dateCreated
+DATEMODIFIED	dateModified
+DATEPUBLISHED	datePublished
+AUTHOR	author
+PUBLISHER	publisher
+CALCULATEDRATING	calculatedRating
+CALCULATEDRATINGDETAIL	calculatedRatingDetail
+ABOUT	about
+MENTIONS	mentions
+CONTAINS	contains
+PUBLISHRATING	publishRating
+AUTHORRATING	authorRating
+
