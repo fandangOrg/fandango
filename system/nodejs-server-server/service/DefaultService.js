@@ -1,5 +1,7 @@
 'use strict';
 
+var fetch = require('node-fetch');
+
 
 /**
  * Find Facts similar to text input, specific category, and similar to optional topics
