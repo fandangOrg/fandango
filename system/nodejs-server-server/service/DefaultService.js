@@ -1,6 +1,6 @@
 'use strict';
 
-var fetch = require('node-fetch');
+const fetch = require('node-fetch');
 
 
 /**
@@ -169,7 +169,7 @@ exports.findSimilarArticles = function(info) {
                 })
                 .then(function(json){
 
-                  console.log(json.hits.hits);
+                  resolve( json.hits.hits);
                   var examples = {};
                   examples['application/json'] = [ {
                 "identifier" : 0,
@@ -417,7 +417,7 @@ exports.findSimilarClaims = function(info) {
 
    if (info.topics){
      es.query.more_like_this = {};
-     es.query.more_like_this.fields = ["topics"]
+     es.query.more_like_this.fields = ["*"]
      es.query.more_like_this.like = info.topics;
    }
    else{
@@ -437,14 +437,30 @@ exports.findSimilarClaims = function(info) {
            }
        })
        .then(function(result){
-           console.log(result.json())
+          //  console.log(result.json())
            return result.json();
        })
        .then(function(json){
+         console.log("hererer")
          
              if (info.topics){
                console.log("topics")
-               resolve(json);
+               // 
+               var claims = json.hits.hits;
+                   var claimPromises = [];
+
+                   claims.forEach(function(claim){
+                    var claimPromise = new Promise(function(resolve, reject) {
+                      resolve(getClaimReviews(claim._source));
+                    });
+                    claimPromises.push(claimPromise);
+                   })
+
+                   return Promise.all(claimPromises)
+                   .then(function(results){
+                     console.log(results)
+                     resolve (results);
+                   })
              }
              else{
                console.log("id")
@@ -452,11 +468,13 @@ exports.findSimilarClaims = function(info) {
                moreLikeThis.size = 5;
                moreLikeThis.query = {};
                moreLikeThis.query.more_like_this = {};
+               moreLikeThis.query.more_like_this.min_term_freq = 1;
+               moreLikeThis.query.more_like_this.min_doc_freq = 1;
                moreLikeThis.query.more_like_this.fields = [];
                moreLikeThis.query.more_like_this.fields.push("*");
                moreLikeThis.query.more_like_this.like = {};
                moreLikeThis.query.more_like_this.like._index = "fdg-claim";
-               moreLikeThis.query.more_like_this.like._type = "fdg-claim";
+               moreLikeThis.query.more_like_this.like._type = "doc";
                moreLikeThis.query.more_like_this.like._id = json.hits.hits[0]._id;
 
                console.log(JSON.stringify(moreLikeThis))
@@ -474,186 +492,33 @@ exports.findSimilarClaims = function(info) {
                      return result.json();
                  })
                  .then(function(json){
-                   console.log(json.hits.hits);
-                    var examples = {};
-                    examples['application/json'] = [ {
-                  "identifier" : 0,
-                  "topics" : [ "topics", "topics" ],
-                  "results" : [ {
-                    "claim" : {
-                      "firstAppearance" : 2,
-                      "identifier" : 7,
-                      "claimReviews" : [ {
-                        "datePublished" : "datePublished",
-                        "identifier" : 2,
-                        "reviewAspect" : "reviewAspect",
-                        "claimReviewed" : "claimReviewed",
-                        "dateCreated" : "dateCreated",
-                        "references" : [ 1, 1 ],
-                        "reviewBody" : "reviewBody",
-                        "itemReviewed" : 7,
-                        "dateModified" : "dateModified",
-                        "aggregateRating" : 4.1456080298839363962315474054776132106781005859375
-                      }, {
-                        "datePublished" : "datePublished",
-                        "identifier" : 2,
-                        "reviewAspect" : "reviewAspect",
-                        "claimReviewed" : "claimReviewed",
-                        "dateCreated" : "dateCreated",
-                        "references" : [ 1, 1 ],
-                        "reviewBody" : "reviewBody",
-                        "itemReviewed" : 7,
-                        "dateModified" : "dateModified",
-                        "aggregateRating" : 4.1456080298839363962315474054776132106781005859375
-                      } ],
-                      "about" : [ "about", "about" ],
-                      "calculatedRatingDetail" : {
-                        "authorRating" : 5.63737665663332876420099637471139430999755859375,
-                        "publishRating" : 5.962133916683182377482808078639209270477294921875
-                      },
-                      "dateModified" : "dateModified",
-                      "calculatedRating" : 1.46581298050294517310021547018550336360931396484375,
-                      "datePublished" : "datePublished",
-                      "appearance" : [ 6, 6 ],
-                      "dateCreated" : "dateCreated",
-                      "mentions" : [ 9, 9 ],
-                      "text" : "text",
-                      "possiblyRelatesTo" : [ 3, 3 ]
-                    }
-                  }, {
-                    "claim" : {
-                      "firstAppearance" : 2,
-                      "identifier" : 7,
-                      "claimReviews" : [ {
-                        "datePublished" : "datePublished",
-                        "identifier" : 2,
-                        "reviewAspect" : "reviewAspect",
-                        "claimReviewed" : "claimReviewed",
-                        "dateCreated" : "dateCreated",
-                        "references" : [ 1, 1 ],
-                        "reviewBody" : "reviewBody",
-                        "itemReviewed" : 7,
-                        "dateModified" : "dateModified",
-                        "aggregateRating" : 4.1456080298839363962315474054776132106781005859375
-                      }, {
-                        "datePublished" : "datePublished",
-                        "identifier" : 2,
-                        "reviewAspect" : "reviewAspect",
-                        "claimReviewed" : "claimReviewed",
-                        "dateCreated" : "dateCreated",
-                        "references" : [ 1, 1 ],
-                        "reviewBody" : "reviewBody",
-                        "itemReviewed" : 7,
-                        "dateModified" : "dateModified",
-                        "aggregateRating" : 4.1456080298839363962315474054776132106781005859375
-                      } ],
-                      "about" : [ "about", "about" ],
-                      "calculatedRatingDetail" : {
-                        "authorRating" : 5.63737665663332876420099637471139430999755859375,
-                        "publishRating" : 5.962133916683182377482808078639209270477294921875
-                      },
-                      "dateModified" : "dateModified",
-                      "calculatedRating" : 1.46581298050294517310021547018550336360931396484375,
-                      "datePublished" : "datePublished",
-                      "appearance" : [ 6, 6 ],
-                      "dateCreated" : "dateCreated",
-                      "mentions" : [ 9, 9 ],
-                      "text" : "text",
-                      "possiblyRelatesTo" : [ 3, 3 ]
-                    }
-                  } ]
-                }, {
-                  "identifier" : 0,
-                  "topics" : [ "topics", "topics" ],
-                  "results" : [ {
-                    "claim" : {
-                      "firstAppearance" : 2,
-                      "identifier" : 7,
-                      "claimReviews" : [ {
-                        "datePublished" : "datePublished",
-                        "identifier" : 2,
-                        "reviewAspect" : "reviewAspect",
-                        "claimReviewed" : "claimReviewed",
-                        "dateCreated" : "dateCreated",
-                        "references" : [ 1, 1 ],
-                        "reviewBody" : "reviewBody",
-                        "itemReviewed" : 7,
-                        "dateModified" : "dateModified",
-                        "aggregateRating" : 4.1456080298839363962315474054776132106781005859375
-                      }, {
-                        "datePublished" : "datePublished",
-                        "identifier" : 2,
-                        "reviewAspect" : "reviewAspect",
-                        "claimReviewed" : "claimReviewed",
-                        "dateCreated" : "dateCreated",
-                        "references" : [ 1, 1 ],
-                        "reviewBody" : "reviewBody",
-                        "itemReviewed" : 7,
-                        "dateModified" : "dateModified",
-                        "aggregateRating" : 4.1456080298839363962315474054776132106781005859375
-                      } ],
-                      "about" : [ "about", "about" ],
-                      "calculatedRatingDetail" : {
-                        "authorRating" : 5.63737665663332876420099637471139430999755859375,
-                        "publishRating" : 5.962133916683182377482808078639209270477294921875
-                      },
-                      "dateModified" : "dateModified",
-                      "calculatedRating" : 1.46581298050294517310021547018550336360931396484375,
-                      "datePublished" : "datePublished",
-                      "appearance" : [ 6, 6 ],
-                      "dateCreated" : "dateCreated",
-                      "mentions" : [ 9, 9 ],
-                      "text" : "text",
-                      "possiblyRelatesTo" : [ 3, 3 ]
-                    }
-                  }, {
-                    "claim" : {
-                      "firstAppearance" : 2,
-                      "identifier" : 7,
-                      "claimReviews" : [ {
-                        "datePublished" : "datePublished",
-                        "identifier" : 2,
-                        "reviewAspect" : "reviewAspect",
-                        "claimReviewed" : "claimReviewed",
-                        "dateCreated" : "dateCreated",
-                        "references" : [ 1, 1 ],
-                        "reviewBody" : "reviewBody",
-                        "itemReviewed" : 7,
-                        "dateModified" : "dateModified",
-                        "aggregateRating" : 4.1456080298839363962315474054776132106781005859375
-                      }, {
-                        "datePublished" : "datePublished",
-                        "identifier" : 2,
-                        "reviewAspect" : "reviewAspect",
-                        "claimReviewed" : "claimReviewed",
-                        "dateCreated" : "dateCreated",
-                        "references" : [ 1, 1 ],
-                        "reviewBody" : "reviewBody",
-                        "itemReviewed" : 7,
-                        "dateModified" : "dateModified",
-                        "aggregateRating" : 4.1456080298839363962315474054776132106781005859375
-                      } ],
-                      "about" : [ "about", "about" ],
-                      "calculatedRatingDetail" : {
-                        "authorRating" : 5.63737665663332876420099637471139430999755859375,
-                        "publishRating" : 5.962133916683182377482808078639209270477294921875
-                      },
-                      "dateModified" : "dateModified",
-                      "calculatedRating" : 1.46581298050294517310021547018550336360931396484375,
-                      "datePublished" : "datePublished",
-                      "appearance" : [ 6, 6 ],
-                      "dateCreated" : "dateCreated",
-                      "mentions" : [ 9, 9 ],
-                      "text" : "text",
-                      "possiblyRelatesTo" : [ 3, 3 ]
-                    }
-                  } ]
-                } ];
-                    if (Object.keys(examples).length > 0) {
-                      resolve(examples[Object.keys(examples)[0]]);
-                    } else {
-                      resolve();
-                    }
+                   //console.log(json.hits.hits)
+                   // For Each claim we get in result set, fetch associated claim reviews
+                   var claims = json.hits.hits;
+                   var claimPromises = [];
+
+                   claims.forEach(function(claim){
+                    var claimPromise = new Promise(function(resolve, reject) {
+                      resolve(getClaimReviews(claim._source));
+                    });
+                    claimPromises.push(claimPromise);
+                   })
+
+                   return Promise.all(claimPromises)
+                   .then(function(results){
+                     console.log(results)
+                     resolve (results);
+                   })
+
+
+                  //  resolve(json.hits.hits);
+
+                    
+                  //   if (Object.keys(examples).length > 0) {
+                  //     resolve(examples[Object.keys(examples)[0]]);
+                  //   } else {
+                  //     resolve();
+                  //   }
                   })
                   .catch(function(error){
                     console.log(error)
@@ -663,6 +528,36 @@ exports.findSimilarClaims = function(info) {
                 }
        })
       })
+    }
+
+    function getClaimReviews(claim){
+     // console.log(claim)
+      console.log("---------------")
+      var claimQuery = {};
+      claimQuery.query = {};
+      claimQuery.query.match = {};
+      claimQuery.query.match.itemReviewed = claim.identifier;
+
+      console.log(claimQuery)
+
+      var url = "http://localhost:9220/fdg-claim-review/doc/_search"
+      return fetch(url,
+        {
+            method: 'POST',
+            body: JSON.stringify(claimQuery),
+            headers:{
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(function(result){
+          // console.log(result.json())
+            return result.json();
+        })
+        .then(function(json){
+          //console.log(json.hits.hits)
+          claim.claimReviews = json.hits.hits;
+          return Promise.resolve(claim);
+        })
     }
 
 
