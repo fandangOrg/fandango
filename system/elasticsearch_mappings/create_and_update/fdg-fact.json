@@ -36,14 +36,7 @@
             }
             }
         },
-        "mentions":{
-            "type":"text",
-            "fields": {
-            "keyword": {
-              "type": "keyword"
-            }
-            }
-        },
+        "mentions":{"type":"long"},
         "dateCreated":{"type":"date"},
         "dateModified":{"type":"date"},
         "datePublished":{"type":"date"},

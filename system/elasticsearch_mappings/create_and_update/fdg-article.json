@@ -23,22 +23,8 @@
         "dateCreated":{"type":"date"},
         "dateModified":{"type":"date"},
         "datePublished":{"type":"date"},
-        "author":{
-            "type":"text",
-            "fields": {
-            "keyword": {
-              "type": "keyword"
-            }
-            }
-        },
-        "publisher":{
-            "type":"text",
-            "fields": {
-            "keyword": {
-              "type": "keyword"
-            }
-            }
-        },
+        "author":{"type":"long"},
+        "publisher":{"type":"long"},
         "calculatedRating":{"type":"float"},
         "calculatedRatingDetail":{"type":"object"},
         "about":{
