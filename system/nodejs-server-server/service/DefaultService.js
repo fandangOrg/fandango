@@ -42,7 +42,6 @@ exports.findFact = function(info) {
             return result.json();
         })
         .then(function(json){
-          console.log(json.hits.hits)
           resolve(createFactResponse(info, json));
         })
         .catch(function(error){
