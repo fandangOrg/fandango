@@ -10,7 +10,7 @@ from fake_news_detection.utils.DataPrep import clean_text
 class LemmaTokenizer(object): 
     
     def __init__(self):
-        self.tagger = treetaggerwrapper.TreeTagger(TAGLANG='en', TAGDIR="/home/camila/TreeTag",TAGPARFILE="/home/camila/TreeTag/lib/english.par")                                            
+        self.tagger = treetaggerwrapper.TreeTagger(TAGLANG='en')                                            
         
         self.tagger.tag_text("doc")
          

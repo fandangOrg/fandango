@@ -22,7 +22,6 @@ from fake_news_detection.config.MLprocessConfig import new_features_mapping,\
     text_preprocessing_mapping
 from fake_news_detection.model.InterfacceComunicazioni import Prestazioni
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
-from fake_news_detection.business.training_model_prove import concatenate_df_split
 
 
 class Preprocessing:
@@ -80,7 +79,7 @@ class FakePredictor(DS4BizPredictor):
     def predict_proba(self,X):
         X=self.preprocessing.execution(X)
         labels_fakeness= self.predictor_fakeness.predict_proba(X)
-        return labels_fakeness
+        return labels_fakeness,X
     
     def is_partially_fittable(self):
         return True

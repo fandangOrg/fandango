@@ -32,7 +32,7 @@ class News_raw:
 class News_DataModel:
     
     def __init__(self,language:str,identifier:str,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,
-                 calculateRatingDetail:str,images:list, video:list, sourceDomain:list):
+                 calculateRatingDetail:str,images:list, video:list, sourceDomain:list,video_analizer:bool=False,image_analizer:bool=False):
         self.headline = headline
         self.articleBody = articleBody
         self.dateCreated = dateCreated
@@ -47,6 +47,9 @@ class News_DataModel:
         self.calculateRating = calculateRating
         self.identifier = identifier
         self.language = language
+        self.video_analizer=video_analizer
+        self.image_analizer=image_analizer
+        
     '''
     def __str__(self):
         return "headline:"+self.headline+";articleBody:"+self.articleBody+";dateCreated:"+self.dateCreated+";dateModified:"+self.dateModified+";datePublished:"+self.datePublished+";author:"+self.author+";publisher:"+self.publisher
@@ -61,8 +64,7 @@ class Author_org_DataModel:
         return "identifier:"+self.identifier+";author:"+self.author+";publisher:"+self.publisher
     
 class Media_DataModel:
-    def __init__(self,identifier:str, images:list, videos:list):
-        self.identifier = identifier
+    def __init__(self, images:list, videos:list):
         self.images = images
         self.videos = videos
 

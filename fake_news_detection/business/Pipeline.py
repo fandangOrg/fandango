@@ -1,0 +1,146 @@
+'''
+Created on 30 apr 2019
+
+@author: daniele
+'''
+import pandas as pd 
+from fake_news_detection.config.AppConfig import url_service_certh,\
+    url_service_upm, picklepath
+from ds4biz_commons.utils.requests_utils import URLRequest
+from fake_news_detection.utils.logger import getLogger
+import json
+from fake_news_detection.model.InterfacceComunicazioni import News_raw,\
+    News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel
+from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
+log = getLogger(__name__)
+
+class ScrapyService:
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, url_media_service=url_service_certh,url_prepocessing=url_service_upm):
+        '''
+        Constructor
+        '''
+        self.url_media_service = url_media_service
+        self.url_prepocessing=url_prepocessing
+        self.headers = {'content-type': "application/json",'accept': "application/json"}
+
+    
+    def _crawling(self,url):
+        log.info("CRAWLING CERTH "+url)
+        u = URLRequest(self.url_media_service+"/api/retrieve_article")
+        payload= {"url": url}
+        j = json.dumps(payload)
+        response = u.post(data=j, headers=self.headers)
+        news=News_raw(**response)
+        print("VIDEO->",news.videos)
+        print("IMMAGINI->",news.images)
+        return news
+    
+    
+    def _preprocessing(self,raw_news:News_raw) -> News_DataModel:
+        payload = raw_news.__dict__
+        payload["fakeness" ]= ""
+        u = URLRequest(self.url_prepocessing+"/preprocess/article")
+        j = json.dumps(payload)
+        response = u.post(data=j, headers=self.headers)
+        return News_DataModel(**response)
+
+    def scrapy(self,url)-> News_DataModel:
+        raw_article = self._crawling(url) 
+        prepo_article = self._preprocessing(raw_article)
+        return(prepo_article)
+
+         
+
+class AnalyticsService:
+    '''
+    classdocs
+    '''
+
+
+    def __init__(self, url_media_service=url_service_certh,url_authors=url_service_upm):
+        '''
+        Constructor
+        '''
+        self.url_media_service = url_media_service
+        self.url_authors = url_authors
+        self.headers = {'content-type': "application/json",'accept': "application/json"}
+        self.daopredictor = FSMemoryPredictorDAO(picklepath)
+        self.nome_modello={"en":"english_try1_version"}
+        self.dao = DAONewsElastic()
+
+    def _text_analysis(self,news_preprocessed:News_DataModel) -> News_DataModel:
+        log.info('''ANALISI NEWS IN LINGUA '''+ news_preprocessed.language)
+        model =self.daopredictor.get_by_id(self.nome_modello.get(news_preprocessed.language,"english_try1_version"))
+        df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
+        prest,features = model.predict_proba(df)
+        prest = pd.DataFrame(prest, columns=model.predictor_fakeness.predictor.predictor.classes_)
+        prest=pd.concat([prest,features],axis=1)
+        return prest
+    
+    def _get_authors_org_ids(self,news_preprocessed:News_DataModel)-> Author_org_DataModel:
+        u = URLRequest(self.url_authors+"/graph/article")
+        payload = news_preprocessed.__dict__
+        j = json.dumps(payload)
+        response = u.post(data=j, headers=self.headers)
+        return Author_org_DataModel(**response)
+        
+    def _get_media_ids(self,news_preprocessed:News_DataModel) -> Media_DataModel:
+        
+        u = URLRequest(self.url_media_service+"/api/media_analysis")
+        payload = {"images": news_preprocessed.images,"videos": news_preprocessed.videos,"identifier": news_preprocessed.identifier}
+        j = json.dumps(payload)
+        response = u.post(data=j, headers=self.headers)
+        #response['identifier'] = news_preprocessed.identifier
+        return Media_DataModel(**response)
+    
+    def _get_topics_ids(self,news_preprocessed:News_DataModel) -> Topics_DataModel:
+        u = URLRequest(self.url_media_service+"/api/extract_topics")
+        payload = {"articleBody": news_preprocessed.articleBody,
+                   "headline": news_preprocessed.headline,
+                   "identifier": news_preprocessed.identifier,
+                   "language" : "language" }#####---->modify when ready from upm preprocessing 
+        j = json.dumps(payload)
+        response = u.post(data=j, headers=self.headers)
+        return Topics_DataModel(**response)
+
+    def _save_news(self,news_preprocessed:News_DataModel,score_fake=0.0):
+        d = {"headline": news_preprocessed.headline,
+            "articleBody" : news_preprocessed.articleBody,
+            "dateCreated": news_preprocessed.dateCreated,
+            "dateModified": news_preprocessed.dateModified,
+            "datePublished": news_preprocessed.datePublished,
+            "author": news_preprocessed.author,
+            "publisher": news_preprocessed.publisher,
+            "sourceDomain": news_preprocessed.sourceDomain,
+            "calculatedRatingDetail": news_preprocessed.calculateRatingDetail,
+            "calculatedRating": score_fake,
+            #"calculatedRating": analyzer(news_preprocessed)[0]['REAL'],
+            "identifier": news_preprocessed.identifier}
+    
+        autors_org=self._get_authors_org_ids(news_preprocessed)
+        if not news_preprocessed.video_analizer:
+            news_preprocessed.video=[]
+        if not news_preprocessed.image_analizer:
+            news_preprocessed.images=[]
+            
+        media= self._get_media_ids(news_preprocessed)
+        tp_entity=self._get_topics_ids(news_preprocessed)
+        d['author'] = autors_org.author
+        d['publisher'] = autors_org.publisher
+        d['images'] = media.images
+        d['videos'] = media.videos
+        d['mentions'] = tp_entity.mentions
+        d['about'] = tp_entity.about
+        self.dao.create_doc_news(d)
+            
+    def analyzer(self,news_preprocessed:News_DataModel) -> str:
+        pd_text=self._text_analysis(news_preprocessed)
+        score=pd_text[0]['REAL']
+        self._save_news(score)
+        return pd_text 
+         

@@ -226,7 +226,7 @@ class EntitiesCounter(FeaturesExtractor):
 class CountAdj(FeaturesExtractor):
     def __call__(self, text:str) -> float:
         try:
-            tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang, TAGDIR="/home/camila/TreeTag",TAGPARFILE="/home/camila/TreeTag/lib/english.par")                                            
+            tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang)                                            
             tagger.tag_text("doc")
             #print(tagger)
             count = 0 
@@ -241,54 +241,45 @@ class CountAdj(FeaturesExtractor):
                 
 class CountAdv(FeaturesExtractor):
     def __call__(self, text:str) -> float:
-        try:
-            tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang, TAGDIR="/home/camila/TreeTag",TAGPARFILE="/home/camila/TreeTag/lib/english.par")                                            
-            tagger.tag_text("doc")
-            count = 0 
-            adv_list_tag = ['RB', 'RBR', 'RBS', 'WRB']
-            for tag in tagger.tag_text(text):
-                tt = tag.split('\t')
-                #print(tt)
-                if tt[1] in adv_list_tag:
-                    count += 1
-          
-            return count
-        except:
-            return np.nan
+        tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang)                                            
+        tagger.tag_text("doc")
+        count = 0 
+        adv_list_tag = ['RB', 'RBR', 'RBS', 'WRB']
+        for tag in tagger.tag_text(text):
+            tt = tag.split('\t')
+            #print(tt)
+            if tt[1] in adv_list_tag:
+                count += 1
+      
+        return count
             
         
 class CountPrep_conj(FeaturesExtractor):
     def __call__(self, text:str) -> float:
-        try:
-            tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang, TAGDIR="/home/camila/TreeTag",TAGPARFILE="/home/camila/TreeTag/lib/english.par")                                            
-            tagger.tag_text("doc")
-            count = 0 
-            for tag in tagger.tag_text(text):
-                tt = tag.split('\t')
-                #print(tt)
-                if tt[1] == 'IN' or tt[1] == "CC":
-                    count += 1
-          
-            return count
-        except:
-            return np.nan
+        tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang)                                            
+        tagger.tag_text("doc")
+        count = 0 
+        for tag in tagger.tag_text(text):
+            tt = tag.split('\t')
+            #print(tt)
+            if tt[1] == 'IN' or tt[1] == "CC":
+                count += 1
+      
+        return count
         
 class countVerbs(FeaturesExtractor):
     def __call__(self, text:str) -> float:
-        try:
-            tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang, TAGDIR="/home/camila/TreeTag",TAGPARFILE="/home/camila/TreeTag/lib/english.par")                                            
-            tagger.tag_text("doc")
-            count = 0 
-            verbs_list = ["VB","VBD","VBG","VBN","VBZ","VBP","VD","VDD","VDG","VDN","VDZ","VDP","VHD","VHG","VHN","VHZ","VHP","VV","VVD","VVG","VVN","VVZ","VVP"]
-            for tag in tagger.tag_text(text):
-                tt = tag.split('\t')
-                #print(tt)
-                if tt[1] in verbs_list:
-                    count += 1
-          
-            return count
-        except:
-            return np.nan
+        tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang)                                            
+        tagger.tag_text("doc")
+        count = 0 
+        verbs_list = ["VB","VBD","VBG","VBN","VBZ","VBP","VD","VDD","VDG","VDN","VDZ","VDP","VHD","VHG","VHN","VHZ","VHP","VV","VVD","VVG","VVN","VVZ","VVP"]
+        for tag in tagger.tag_text(text):
+            tt = tag.split('\t')
+            #print(tt)
+            if tt[1] in verbs_list:
+                count += 1
+      
+        return count
         
 
            
