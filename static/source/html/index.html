@@ -74,24 +74,30 @@
                                 <div class="col-7" style="padding-right: 0">
                                     <h3 class="mb-0">Current selection</h3>
                                 </div>
-                                <div class="col-5 text-right">
-                                    <div class="dropdown" ng-if="selectedText">
-                                        <button href="#" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"
-                                                aria-expanded="true">
-                                            Save Claim
-                                            <b class="caret"></b>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-right">
-                                            <li class="dropdown-item" ng-click="saveClaim('true')"><i class="fas fa-check text-green pointer"></i><a href="#">Save as <strong>Real</strong></a></li>
-                                            <li class="dropdown-item" ng-click="saveClaim('false')"><i class="fas fa-times text-red pointer"></i><a href="#">Save as <strong>Fake</strong></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+
+                                <!-- RIMOSSO DOPO MEETING MADRID -->
+
+                                <!--<div class="col-5 text-right">-->
+                                    <!--<div class="dropdown" ng-if="selectedText">-->
+                                        <!--<button href="#" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"-->
+                                                <!--aria-expanded="true">-->
+                                            <!--Save Claim-->
+                                            <!--<b class="caret"></b>-->
+                                        <!--</button>-->
+                                        <!--<ul class="dropdown-menu dropdown-menu-right">-->
+                                            <!--<li class="dropdown-item" ng-click="saveClaim('true')"><i class="fas fa-check text-green pointer"></i><a href="#">Save as <strong>Real</strong></a></li>-->
+                                            <!--<li class="dropdown-item" ng-click="saveClaim('false')"><i class="fas fa-times text-red pointer"></i><a href="#">Save as <strong>Fake</strong></a></li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+
+                                <!-- RIMOSSO DOPO MEETING MADRID -->
+
                             </div>
                         </div>
                         <div class="card-body h300" style="padding: 5px">
-                            <textarea resize='none' ng-bind="selectedText"
-                                      class="form-control form-control-alternative bg-white" disabled
+                            <textarea resize='none' ng-model="selectedText"
+                                      class="form-control form-control-alternative bg-white"
                                       style="min-height: 235px"></textarea>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">

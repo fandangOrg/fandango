@@ -196,6 +196,15 @@
     background-size: 100% 100%;
 }
 
+.copyright {
+    font-size: 11px;
+}
+
+.copyright .copyright-image {
+    height: 40px;
+    margin-right: 5px
+}
+
 @media (max-width: 575.98px) {
     .navbar-expand-sm > .container,
     .navbar-expand-sm > .container-fluid {

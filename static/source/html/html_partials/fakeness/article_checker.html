@@ -7,19 +7,50 @@
                         <h3 class="mb-0">Article Checker</h3>
                     </div>
                     <div class="col-6 text-right">
-                        <h3 class="mb-0"><span class="hidden-xs">Language selected </span>
-                            <div class="dropdown">
-                                <img class="pl-1 default-flag" ng-src="img/flags/{{selectedLanguage}}.png" alt="flag">
-                                <div class="dropdown-content">
-                                    <a ng-repeat="language in languages" ng-click="changeLanguage(language)" ng-attr-title="{{language.active == 'False' ? 'Not available' : undefined}}"
-                                       ng-class="{'languageDisabled': language.active == 'False'}">{{language.name}} <img ng-src="img/flags/{{language.language}}.png"></a>
-                                </div>
+                        <a href="http://www.google.it" target="_blank">
+                            <div class="btn btn-sm btn-icon btn-info">
+                                <i class="fas fa-file-video mr-0"></i>
+                                <span class="btn-inner--text">Video Analysis</span>
                             </div>
-                        </h3>
+                        </a>
+
+                        <img ng-if="page.lang" class="ml-3 default-flag" ng-src="img/flags/{{page.lang}}.png" alt="Language">
+
                     </div>
                 </div>
             </div>
         </div>
+
+        <!--<div class="col-12 px-0">-->
+        <!--<div class="row">-->
+        <!--<div class="col-6">-->
+        <!--<h3 class="mb-0">Article Checker</h3>-->
+        <!--</div>-->
+        <!--<div class="col-md-6 col-12 text-md-right text-center">-->
+        <!--<div class="custom-control custom-control-alternative custom-checkbox d-inline-block">-->
+        <!--<input class="custom-control-input" id="videoAnalysisCb" type="checkbox" ng-model="isVideoAnalysisEnabled">-->
+        <!--<label class="custom-control-label" for="videoAnalysisCb">-->
+        <!--Video Analysis service-->
+        <!--</label>-->
+        <!--</div>-->
+
+        <!--<div class="h3 mb-0 d-inline-block">-->
+        <!--&lt;!&ndash;<span class="hidden-xs">Language selected </span>&ndash;&gt;-->
+        <!--<div class="dropdown">-->
+        <!--<img class="pl-1 default-flag" ng-src="img/flags/{{selectedLanguage}}.png"-->
+        <!--alt="flag">-->
+        <!--<div class="dropdown-content">-->
+        <!--<a ng-repeat="language in languages" ng-click="changeLanguage(language)"-->
+        <!--ng-attr-title="{{language.active == 'False' ? 'Not available' : undefined}}"-->
+        <!--ng-class="{'languageDisabled': language.active == 'False'}">{{language.name}}-->
+        <!--<img ng-src="img/flags/{{language.language}}.png"></a>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</div>-->
+
     </div>
     <div class="card-body">
         <form>
@@ -28,7 +59,7 @@
                     <div class="form-group">
                         <input class="form-control form-control-alternative"
                                ng-model="page.url" placeholder="Enter a URL to analyze"
-                               type="text">
+                               type="url">
                     </div>
                 </div>
                 <div class="col-md-1 col-3 url_analyze">

@@ -3,28 +3,50 @@
         <div class="card-header bg-white border-0">
             <div class="row align-items-center">
                 <div class="col-12">
-                    <h3 class="mb-0">Article Analysis</h3>
+                    <div class="row">
+                        <div class="col-6 my-auto">
+                            <div class="h3 mb-0">Article Analysis</div>
+                        </div>
+                        <div class="col-6 text-right">
+                            <a href="https://www.siren.io" target="_blank">
+                                <button ng-if="fakenessDone === true" class="btn btn-sm btn-icon btn-outline-default animated fadeIn faster">
+                                    <span class="btn-inner--icon"><img src="img/siren.png"></span>
+                                    <!--                                    <span class="btn-inner&#45;&#45;text">Open Siren</span>-->
+                                </button>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="card-body" style="padding: 5px;min-height: auto;">
             <div class="mt-2 mb-2">
                 <ul class="list-unstyled">
+
+                    <li><strong>Date</strong> {{page.date}}</li>
+
                     <li><strong>Authors</strong>
                         <ul class="list-unstyled">
                             <li ng-repeat="author in page.authors">
-                                <a ng-click="checkAuthorScore(author)">{{author.author}}<span class="ml-2 font-weight-bold" ng-class="getAuthorColor(author.score)" ng-if="author.score > 0 "> {{author.score}} %</span></a>
+                                <a ng-click="checkAuthorScore(author)">{{author}}<span
+                                        class="ml-2 font-weight-bold" ng-class="getAuthorColor(author.score)"
+                                        ng-if="author.score > 0 "> {{author.score}} %</span></a>
                             </li>
                         </ul>
                     </li>
 
-                    <li><strong>Publisher</strong> {{page.publisher}}</li>
-                    <li><strong>Related Article Pubblication</strong>
+                    <li><strong>Publisher</strong>
                         <ul class="list-unstyled">
-                            <!--<li ng-repeat="article in pubblication"></li>-->
-                            <li class="text-gray">Not available</li>
+                            <li ng-repeat="publisher in page.publisher">
+                                {{publisher}}
+                            </li>
                         </ul>
                     </li>
+                    <!--<li><strong>Related Article Pubblication</strong>-->
+                    <!--<ul class="list-unstyled">-->
+                    <!--<li class="text-gray">Not available</li>-->
+                    <!--</ul>-->
+                    <!--</li>-->
                 </ul>
                 <div class="col-12 text-center">
                     <button ng-click="sendFakeness()" ng-if="loadingFakeness === false"
@@ -32,6 +54,7 @@
                         <span class="btn-inner--icon"><img src="img/verify.png"></span>
                         <span class="btn-inner--text">Check Fakeness</span>
                     </button>
+
                     <div ng-if="loadingFakeness === true" class="loadingFakeness"></div>
                 </div>
             </div>

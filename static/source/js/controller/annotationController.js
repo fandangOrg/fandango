@@ -1,10 +1,10 @@
-app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotation','alert', function ($scope, $http, crUrl, lang, annotation, alert) {
+app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotation', 'alert', function ($scope, $http, crUrl, lang, annotation, alert) {
 
     $scope.alertLabel = ''; // STRING TO SHOW ON SUCCESS ALERT
     $scope.selectedLanguage = "en"; // DEFAULT LANGUAGE FOR MENU ON ARTICLE CHECKER
     $scope.optionLanguage = ''; // LANGUAGE ON ANNOTATION OPTION MENU
     $scope.tabSelected = 1; // 1 = AUTO - 2 = - MANUAL - 3 = DOMAIN
-
+    $scope.countAnnotation = 0; // NUMBER OF NEWS ANNOTATED
     $scope.loadingAnalyzeUrl = false; // FLAG FOR SPINNER ON URL ANALYZING
     $scope.analyzeOk = false; // FLAG FOR SHOW ERROR ON URL ANALYZING
     $scope.newExist = true; // FLAG FOR CHECK IF IS LAST NEWS
@@ -39,7 +39,6 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
         $scope.page.url = '';
         $scope.page.publisher = '';
     }
-
 
 
     angular.element(function () {
@@ -101,10 +100,19 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
         } else {
             $scope.selectedLanguage = language.language;
 
+            var to_send = {
+                'language': $scope.selectedLanguage
+            };
+
+            annotation.getCountAnnotation(to_send).then(function (response) {
+                $scope.countAnnotation = response.data;
+            });
+
             annotation.goNext($scope.selectedLanguage).then(function (response) {
 
                 $scope.changeTextNews(response);
 
+                // CONTROLLO SE ESISTE UNA NEWS PER LA LINGUA SELEZIONATA
                 if (response.data.hasOwnProperty('END')) {
                     $scope.newExist = false;
                     return;
@@ -141,6 +149,16 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
                 annotation.getAutoAnnotation(to_send).then(function (response) {
                     resetRadio();
                     alert.showAlert('Success');
+
+                    // TODO TRANSFORMARE IN POST E INVIARE LA LINGUA
+                    var to_send = {
+                        'language': $scope.selectedLanguage
+                    };
+
+                    annotation.getCountAnnotation(to_send).then(function (response) {
+                        $scope.countAnnotation = response.data;
+                    });
+
                     annotation.goNext($scope.selectedLanguage).then(function (response) {
                         $scope.changeTextNews(response);
 
@@ -169,6 +187,15 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
                 annotation.getManualAnnotation(to_send).then(function (response) {
                     alert.showAlert('Success');
+
+                    to_send = {
+                        'language':$scope.optionLanguage
+                    };
+
+                    annotation.getCountAnnotation(to_send).then(function (response) {
+                        $scope.countAnnotation = response.data;
+                    });
+
                     resetRadio();
                     resetLanguage();
                     resetField();
@@ -208,17 +235,27 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
     };
 
     $scope.startAnalyze = function () {
-        annotation.goNext($scope.selectedLanguage).then(function (response) {
-            $("#btnStartAnalyze").addClass("animated fadeOut faster");
 
-            setTimeout(function () {
-                $("#btnStartAnalyze").remove();
-            }, 500);
+        var to_send = {
+          'language': $scope.selectedLanguage
+        };
 
-            $scope.changeTextNews(response);
-            $scope.analyzeStarted = true;
-        }, function (response) {
-            alert.showAlert('Error');
+        annotation.getCountAnnotation(to_send).then(function (response) {
+
+            $scope.countAnnotation = response.data;
+
+            annotation.goNext($scope.selectedLanguage).then(function (response) {
+                $("#btnStartAnalyze").addClass("animated fadeOut faster");
+
+                setTimeout(function () {
+                    $("#btnStartAnalyze").remove();
+                }, 500);
+
+                $scope.changeTextNews(response);
+                $scope.analyzeStarted = true;
+            }, function (response) {
+                alert.showAlert('Error');
+            });
         });
     };
 
@@ -228,16 +265,16 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
         $scope.loadingAnalyzeUrl = true;
 
-        crUrl.analyzeUrl($scope.page.url).then(function (response) {
-            $scope.changeTextNews(response);
-            console.log($scope.page);
-            $scope.analyzeOk = true;
-            $scope.loadingAnalyzeUrl = false;
-        }, function (response) {
-            alert.showAlert('Error');
-            resetField();
-            $scope.analyzeOk = false;
-            $scope.loadingAnalyzeUrl = false;
-        });
-    };
+            crUrl.analyzeUrl($scope.page.url).then(function (response) {
+                $scope.changeTextNews(response);
+                console.log($scope.page);
+                $scope.analyzeOk = true;
+                $scope.loadingAnalyzeUrl = false;
+            }, function (response) {
+                alert.showAlert('Error');
+                resetField();
+                $scope.analyzeOk = false;
+                $scope.loadingAnalyzeUrl = false;
+            });
+        };
 }]);
