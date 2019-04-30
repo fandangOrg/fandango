@@ -32,7 +32,7 @@ headers = {'content-type': "application/json",'accept': "application/json"}
 
 
 def analyzer(news_preprocessed:News_DataModel) -> str:
-    log.info('''ANALISI NEWS''')
+    log.info('''ANALISI NEWS'''+str(news_preprocessed.sourceDomain))
     prest=service_analyzer.analyzer(news_preprocessed)
     log.info(json.loads(prest.to_json(orient='records')))
     return json.loads(prest.to_json(orient='records'))
@@ -66,10 +66,12 @@ def get_languages() -> List[Language]:
 
 def feedback(info:InterfaceInputFeedBack) -> str:
     log.info(info)
-    model=daopredictor.get_by_id(nome_modello)
-    df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")],'label': [info.label.replace("\n", " ")]})
-    model.partial_fit(df)
-    daopredictor.update(model)
+    #===========================================================================
+    # model=daopredictor.get_by_id(nome_modello)
+    # df = pd.DataFrame(data={'title': [info.title], 'text': [info.text.replace("\n", " ")],'label': [info.label.replace("\n", " ")]})
+    # model.partial_fit(df)
+    # daopredictor.update(model)
+    #===========================================================================
     return "OK"
 
 
@@ -223,10 +225,10 @@ app.name="FANDANGO"
 #app.add_service("crawl_online", crawl_online, method= 'POST')
 #app.add_service("preprocessing_online", preprocessing_online, method = 'POST')
 app.add_service("crawl_and_preprocessing",crawl_prep, method = 'POST')
-app.add_service("author_and_organizations",author_org_getter, method = 'POST')
-app.add_service("Medias", media_getter, method = 'POST')
-app.add_service("topics and entities",topics_getter , method = 'POST' )
-app.add_service("aggregator", finalaggr, method= 'POST')
+#app.add_service("author_and_organizations",author_org_getter, method = 'POST')
+#app.add_service("Medias", media_getter, method = 'POST')
+#app.add_service("topics and entities",topics_getter , method = 'POST' )
+#app.add_service("aggregator", finalaggr, method= 'POST')
 app.add_service("get_languages",get_languages, method = 'GET')
 app.add_service("analyzer",analyzer, method='POST')
 app.add_service("feedback",feedback, method='POST')

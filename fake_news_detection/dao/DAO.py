@@ -192,7 +192,7 @@ class DAONewsElastic(DAONews):
         doc_up=  {
            '_op_type': 'index',
            '_index': self.index_name_article,
-           #'_type': self.docType,
+           '_type': 'doc',
            '_source' : dic_final
         }
         print(doc_up)

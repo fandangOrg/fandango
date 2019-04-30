@@ -19,6 +19,7 @@ class News_raw:
         self.keywords = keywords
         self.language = language
         self.source_domain = source_domain
+        print(source_domain)
         self.summary = summary
         self.text = text
         self.texthash = texthash
@@ -43,6 +44,7 @@ class News_DataModel:
         self.images = images
         self.video = video
         self.sourceDomain = sourceDomain
+        print(publisher,sourceDomain)
         self.calculateRatingDetail = calculateRatingDetail
         self.calculateRating = calculateRating
         self.identifier = identifier

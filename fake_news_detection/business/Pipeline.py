@@ -11,7 +11,7 @@ from fake_news_detection.utils.logger import getLogger
 import json
 from fake_news_detection.model.InterfacceComunicazioni import News_raw,\
     News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel
-from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
+from fake_news_detection.dao.DAO import FSMemoryPredictorDAO, DAONewsElastic
 log = getLogger(__name__)
 
 class ScrapyService:
@@ -52,6 +52,7 @@ class ScrapyService:
     def scrapy(self,url)-> News_DataModel:
         raw_article = self._crawling(url) 
         prepo_article = self._preprocessing(raw_article)
+        prepo_article.sourceDomain=[prepo_article.sourceDomain]
         return(prepo_article)
 
          
@@ -92,7 +93,7 @@ class AnalyticsService:
     def _get_media_ids(self,news_preprocessed:News_DataModel) -> Media_DataModel:
         
         u = URLRequest(self.url_media_service+"/api/media_analysis")
-        payload = {"images": news_preprocessed.images,"videos": news_preprocessed.videos,"identifier": news_preprocessed.identifier}
+        payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
         j = json.dumps(payload)
         response = u.post(data=j, headers=self.headers)
         #response['identifier'] = news_preprocessed.identifier
@@ -108,6 +109,10 @@ class AnalyticsService:
         response = u.post(data=j, headers=self.headers)
         return Topics_DataModel(**response)
 
+
+    def _clear(self,data):
+        return str(data).split(" ")[0]
+                                
     def _save_news(self,news_preprocessed:News_DataModel,score_fake=0.0):
         d = {"headline": news_preprocessed.headline,
             "articleBody" : news_preprocessed.articleBody,
@@ -136,11 +141,15 @@ class AnalyticsService:
         d['videos'] = media.videos
         d['mentions'] = tp_entity.mentions
         d['about'] = tp_entity.about
+        d['dateCreated'] = self._clear(news_preprocessed.dateCreated)
+        d['dateModified'] =self._clear(news_preprocessed.dateModified)
+        d['datePublished'] =self._clear(news_preprocessed.datePublished)
+           
         self.dao.create_doc_news(d)
             
     def analyzer(self,news_preprocessed:News_DataModel) -> str:
         pd_text=self._text_analysis(news_preprocessed)
-        score=pd_text[0]['REAL']
-        self._save_news(score)
+        score=pd_text['REAL'][0]
+        self._save_news(news_preprocessed,score)
         return pd_text 
          
