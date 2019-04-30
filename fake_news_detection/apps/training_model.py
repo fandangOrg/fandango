@@ -7,11 +7,11 @@ from fake_news_detection.config.AppConfig import picklepath
 from pandas import DataFrame, read_csv
 from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
 from fake_news_detection.config.MLprocessConfig import text_preprocessing_mapping,\
-    new_features_mapping
+    new_features_mapping, transforming_mapping
 
 class Train_model:
     def load_df(self,path_to_dataset:str, sample_size:float=0.05) -> DataFrame:
-        df = read_csv(path_to_dataset, index_col=0)
+        df = read_csv(path_to_dataset, sep = '|')
         print("\n > load dataframe from \'", path_to_dataset, "\'" )
         if sample_size < 1.0:
             sample = df.sample(frac=sample_size)
@@ -39,6 +39,8 @@ class Train_model:
         print("Shape of X:", X.shape)
         print("Columns of X:", X.columns)
         request_transformer = ColumnTransformer(transforming_mapping)
+        name_classifier = 'RandomForestClassifier'
+        params_classifier = {"n_estimators" : 10 , 'criterion' : 'gini'}
         request_model = CreationRequest(name_classifier, params_classifier)
         model = TransformingPredictorFactory().create(request_model, request_transformer)
         model.id = model_name
@@ -66,7 +68,7 @@ class Train_model:
 
 if __name__ == '__main__':
     daopredictor = FSMemoryPredictorDAO(picklepath)
-
+    train = Train_model()
     ##### TRAINING #####
 
     # LOAD RAW TRAIN SET AND PREPROCESS IT #
@@ -74,10 +76,10 @@ if __name__ == '__main__':
     #training_set_final = preprocess_df(training_set, path_for_store_preprocessed_df="/home/andrea/Scaricati/fandango_data_preprocessed.csv", store=True)
 
     # LOAD ALREADY PREPROCESSED TRAIN SET #
-    training_set_final = load_df("/home/andrea/Scaricati/fandango_data_preprocessed.csv", sample_size=1)
+    training_set_final = train.load_df("/home/camila/Scrivania/newdata_forlime.csv", sample_size=0.5) 
     print(training_set_final.columns)
 
-    training("modello_en_all", training_set_final, daopredictor)
+    #training("modello_en_all", training_set_final, daopredictor)
 
 
     ##### EVALUATION #####
@@ -87,7 +89,7 @@ if __name__ == '__main__':
     #test_set_final = preprocess_df(test_set, path_for_store_preprocessed_df="/home/andrea/Scaricati/fandango_test_preprocessed.csv", store=True)
 
     # LOAD ALREADY PREPROCESSED TEST SET #
-    test_set_final = load_df("/home/andrea/Scaricati/fandango_test_preprocessed_all.csv", sample_size=1)
-    print(test_set_final.columns)
+    #test_set_final = load_df("/home/andrea/Scaricati/fandango_test_preprocessed_all.csv", sample_size=1)
+    #print(test_set_final.columns)
 
-    evaluate("modello_en_all", test_set_final, daopredictor)
+    #evaluate("modello_en_all", test_set_final, daopredictor)

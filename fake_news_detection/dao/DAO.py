@@ -3,11 +3,14 @@ Created on Jan 8, 2019
 
 @author: daniele
 '''
+
+
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
     index_name_news, docType_article, domain_index, domain_docType,\
-    index_name_output
-from fake_news_detection.model.InterfacceComunicazioni import News
+    index_name_output, index_name_article
+from fake_news_detection.model.InterfacceComunicazioni import News,\
+    News_DataModel
 import random
 from elasticsearch import helpers
 from fake_news_detection.utils.Exception import FandangoException
@@ -45,6 +48,7 @@ class DAONewsElastic(DAONews):
         self.docType = docType_article
         self.domain_name_index = domain_index
         self.docType_domain = domain_docType
+        self.index_name_article = index_name_article
         
     def GetCounterDef(self):
         body = {"query": {"exists" : { "VALUE" : "label" }}}
@@ -108,6 +112,9 @@ class DAONewsElastic(DAONews):
            '_source': source
            })
         self.bulk_on_elastic(lista_operazioni)
+        
+        
+    
 
     def get_domain(self):
         """
@@ -158,7 +165,7 @@ class DAONewsElastic(DAONews):
             '_source' : news
         }
         self.bulk_on_elastic(doc_up)
-
+    '''
     def create_doc_news(self, news):
         """
         prepare a bulk query to index a new document
@@ -173,7 +180,23 @@ class DAONewsElastic(DAONews):
         }
         print(doc_up)
         self.bulk_on_elastic(doc_up)
+    '''
         
+    def create_doc_news(self,dic_final):
+        """
+        prepare a bulk query to index a new document
+        @param news: str
+        """
+        
+    
+        doc_up=  {
+           '_op_type': 'index',
+           '_index': self.index_name_article,
+           #'_type': self.docType,
+           '_source' : dic_final
+        }
+        print(doc_up)
+        self.bulk_on_elastic(doc_up)   
         
     def bulk_on_elastic(self, doc_up):
         """
@@ -285,8 +308,7 @@ class FSMemoryPredictorDAO(FSPredictorDAO):
             del self.predictors[nome_modello]
             
 if __name__ == '__main__':
-    dao=DAONewsElastic()
-    print(dao.GetCounterTemp('en'))
+    pass
     
         
         

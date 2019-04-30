@@ -25,6 +25,7 @@ def crawler_news(url):
     article = Article(url)
     article.download()
     article.parse()
+    print(article)
     d=dict()
     d['url']=url
     d['title']=article.title
@@ -47,7 +48,7 @@ def crawler_news(url):
 
         
 if __name__ == '__main__':
-    d= crawler_news("http://www.ansa.it/puglia/notizie/2018/10/26/bimbi-maltrattati-a-scuola-arrestate-4-maestre_1db48b10-4d5a-461e-832e-be63f66db10a.html")
+    d= crawler_news("https://www.theguardian.com/world/2019/apr/22/us-un-resolution-rape-weapon-of-war-veto")
     print(d)
     
     

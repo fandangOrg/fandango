@@ -7,7 +7,7 @@ Created on Oct 18, 2018
 from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel, \
     InterfaceInputFeedBack, News, News_annotated, News_domain,\
     New_news_annotated, Claims_annotated, Prestazioni, Info, News_DataModel,\
-    Author_org_DataModel, Images_DataModel, Videos_DataModel, Topics_DataModel
+    Author_org_DataModel, Topics_DataModel
 from flask_cors.extension import CORS
 import json
 from flask import json

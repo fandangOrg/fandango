@@ -1,6 +1,6 @@
 attrs==19.1.0
 beautifulsoup4==4.7.1
-certifi==2018.4.16
+certifi==2018.11.29
 chardet==3.0.4
 Click==7.0
 clickclick==1.2.2
@@ -29,7 +29,7 @@ Flask-Cors==3.0.6
 flask-swagger-ui==3.18.0
 graphviz==0.10.1
 HeapDict==1.0.0
-idna==2.6
+idna==2.8
 inflection==0.3.1
 it-core-news-sm==2.0.0
 itsdangerous==1.1.0
@@ -70,7 +70,7 @@ python-dateutil==2.7.5
 pytz==2018.7
 PyYAML==3.13
 regex==2018.1.10
-requests==2.18.4
+requests==2.21.0
 requests-file==1.4.3
 scikit-learn==0.20.0
 scipy==1.1.0
@@ -90,11 +90,11 @@ tinysegmenter==0.3
 tldextract==2.2.0
 toolz==0.9.0
 tornado==5.1.1
-tqdm==4.31.1
+tqdm==4.28.1
 treetaggerwrapper==2.2.7
 typing==3.6.6
 ujson==1.35
-urllib3==1.22
+urllib3==1.24.1
 Werkzeug==0.14.1
 wrapt==1.10.11
 xgboost==0.82

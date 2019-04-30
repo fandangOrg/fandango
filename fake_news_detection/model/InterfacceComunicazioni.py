@@ -8,13 +8,13 @@ Created on Oct 18, 2018
    
 ######################ONLINE SERVICES TEST##############
 class News_raw:
-    def __init__(self,authors:list,date_created:str,date_modified:str,date_published:str,description:str,fakeness:str,images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,title:str,top_image:str,url:str, version:str, video:list):
+    def __init__(self,date_published: str,authors:list,date_created:str,date_modified:str,description:str,images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,title:str,top_image:str,url:str, videos:list, spider:str):
         self.authors = authors
         self.date_created = date_created
         self.date_modified = date_modified
-        self.date_published = date_published
+        self.date_published = date_published 
         self.description = description
-        self.fakeness = fakeness
+        #self.fakeness = fakeness
         self.images = images
         self.keywords = keywords
         self.language = language
@@ -25,13 +25,13 @@ class News_raw:
         self.title = title
         self.top_image = top_image
         self.url = url
-        self.version = version
-        self.video = video
+        self.videos = videos
+        self.spider = spider
 
 
 class News_DataModel:
     
-    def __init__(self,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,
+    def __init__(self,language:str,identifier:str,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,
                  calculateRatingDetail:str,images:list, video:list, sourceDomain:list):
         self.headline = headline
         self.articleBody = articleBody
@@ -45,9 +45,12 @@ class News_DataModel:
         self.sourceDomain = sourceDomain
         self.calculateRatingDetail = calculateRatingDetail
         self.calculateRating = calculateRating
+        self.identifier = identifier
+        self.language = language
+    '''
     def __str__(self):
-        return "headline:"+self.headline+";articleBody:"+self.articleBody+";dateCreated:"+self.dateCreated+";dateModified:"+self.dateModified+";datePublished:"+self.datePublished+";author:"+self.author+";publisher:"+self.publisher+";about:"+self.about+";mentions:"+self.mentions+";contains:"+self.contains
-
+        return "headline:"+self.headline+";articleBody:"+self.articleBody+";dateCreated:"+self.dateCreated+";dateModified:"+self.dateModified+";datePublished:"+self.datePublished+";author:"+self.author+";publisher:"+self.publisher
+    '''
 class Author_org_DataModel:
     def __init__(self,identifier:str,author:list,publisher:list):
         self.identifier = identifier
@@ -57,28 +60,42 @@ class Author_org_DataModel:
     def __str__(self):
         return "identifier:"+self.identifier+";author:"+self.author+";publisher:"+self.publisher
     
-class Images_DataModel:
-    def __init__(self,identifier:str, images:list):
+class Media_DataModel:
+    def __init__(self,identifier:str, images:list, videos:list):
         self.identifier = identifier
         self.images = images
+        self.videos = videos
+
     
     def __str__(self):
         return "identifier:"+self.identifier+";images:"+self.images
 
-
-class Videos_DataModel:
-    def __init__(self, identifier:str, videos:list):
-        self.identifier = identifier
-        self.videos = videos
-        
         
 class Topics_DataModel:
-    def __init__(self, identifier:str,mentions:list,contains:list):
-        self.identifier = identifier
+    def __init__(self, id:str,mentions:list,about:list):
+        self.id = id
         self.mentions = mentions
-        self.contains = contains
+        self.about = about
         
-
+class Final_DataModel:
+    def __init__(self,identifier:str,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,
+                 calculateRatingDetail:str,images:list, videos:list, sourceDomain:str,mentions:list, about:list, videosanal:dict, imagesanal:dict):
+        self.identifier = identifier
+        self.headline = headline
+        self.articleBody = articleBody
+        self.dateCreated = dateCreated
+        self.dateModified = dateModified
+        self.datePublished = datePublished
+        self.author = author
+        self.publisher = publisher
+        self.calculateRating = calculateRating
+        self.calculateRatingDetail = calculateRatingDetail
+        self.images = images
+        self.videos = videos
+        self.sourceDomain = sourceDomain
+        self.mentions = mentions
+        self.about = about
+        
 
 ###############################################################
     

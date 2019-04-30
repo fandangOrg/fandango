@@ -191,10 +191,10 @@ class DAOTrainingElasticByDomains():
         #print(dataf.shape)
         #print( df1.head(5))
         print(dataf.groupby(['label']).agg(['count']))
-        print("> end of 'get_train_dataset()'\n")
+        print("> end of 'get_train_dataset()'\n", dataf.columns)
         return dataf
  
-    def __get_news_from_domain(self,domain,limit=1000):
+    def __get_news_from_domain(self,domain,limit=100000):
         
         try:
             search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType).query("term", source_domain=domain)
@@ -204,6 +204,7 @@ class DAOTrainingElasticByDomains():
             for c,hit in enumerate(itertools.islice(search.scan(),limit)):
                 if len(hit.title.strip())>10 and len(hit.text.strip())>20:
                     result_list.append({"title":hit.title.strip(),  "text" : hit.text.strip()})
+                    print(hit.title, hit.text)
                 else:
                     print("scarto")
             return result_list
@@ -309,18 +310,19 @@ if __name__ == '__main__':
     dao_news=DAONewsElastic()
     #list_domains = dao_news.get_domain()
     #print( list_domains)
-    list_domains = [('www.cbsnews.com', 'FAKE'), ('www.intrepidreport.com', 'FAKE')]
-
-    #print(list_domains)
+    list_domains = [('www.thesun.co.uk','FAKE'),('sputniknews.com', 'FAKE')]
+    
+    print(list_domains)
     ii = DAOTrainingElasticByDomains(list_domains)
     l= ii.get_train_dataset(limit = 10000)
     print(l.shape)
-    #print( l['text'].iloc[3000])
-    #l.to_csv('/home/camila/Scrivania/fakedata1.csv')
+    print( l['title'].iloc[100])
+    print( l['text'].iloc[100])
+    #l.to_csv('/home/camila/Scrivania/fakedata1.csv', sep = '\t', index = False)
     
     
     
-
+    
     #print(l.shape, l.columns)
     #oo = DAOTrainingPD(dataset_beta)
     #print(oo.get_train_dataset())

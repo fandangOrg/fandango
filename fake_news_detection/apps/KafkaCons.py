@@ -84,6 +84,7 @@ class InjectableTASKJSONConsumer(JsonConsumer):
         print(self.task.do(obj))
         return self.task.do(obj)
     
+    
 
     def init_system(self):
     #load (carica modelli)    
@@ -95,25 +96,39 @@ class InjectableTASKJSONConsumer(JsonConsumer):
 
 
 if __name__ == '__main__':
+    '''
     def print_f(obj):
         print("new record", obj)
+    
+    consumer=InjectableJSONConsumer(topic="input_preprocessed", group_id="cami2", bootstrap_servers=["localhost:9092"], fun=print_f)
+    consumer.consume_forever()
+    
         
-    '''    
+   
     queue_output=KafkaPublisher("localhost","9092")#provo se la coda è stata creata
     consumer=InjectableJSONConsumer(topic="input_preprocessed", group_id="cami2", bootstrap_servers=["localhost:9092"], fun=print_f)
     consumer.consume_forever()
  
-    '''      
+    '''
+    
+    
+    
+          
     #consumer=InjectableJSONConsumer(topic="score_ml", group_id="cami2", bootstrap_servers=["localhost:9092"], fun=print_f)
     #consumer.consume_forever()
     #print("errore")
+    
+    
+    print('  1      ')
     queue_output=KafkaPublisher("localhost","9092")#provo se la coda è stata creata
     topic="input_preprocessed"
     output_topic =  "analyzed_text"
-    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt_group", bootstrap_servers=["localhost:9092"], task=Task_1(queue_output,output_topic))
+    print('     2                ')
+    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt_group2", bootstrap_servers=["localhost:9092"], task=Task_1(queue_output,output_topic))
+    print('          3            ')
     consumer.consume_forever()
+    print('                4           ')
     print("in ascolto")
-
 
     
     

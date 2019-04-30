@@ -11,7 +11,8 @@ from kafka.consumer.group import KafkaConsumer
 import logging, time, json
 from fake_news_detection.utils.Exception import FandangoException
 from brokermanager.model.publishers import KafkaPublisher
-from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel
+from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel,\
+    News_DataModel
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 from fake_news_detection.config.AppConfig import picklepath
 from fake_news_detection.business.Analyzer import analyzer, log
@@ -31,17 +32,20 @@ class Task_1(Task):
         
         
         self.daopredictor = FSMemoryPredictorDAO(picklepath)
-    
         
     def do(self,msg):
         print("applico l'analizer e trovo lo score di ",msg)
         #id_document
         #score_ml %
-        info_news = InterfaceInputModel(title=msg["headline"], text = msg["articleBody"], source = msg['publisher'])
+        info_news = News_DataModel(headline= msg["headline"], articleBody = msg["articleBody"], sourceDomain = msg['sourceDomain'],identifier = msg['identifier'], dateCreated = msg['dateCreated'] , dateModified= msg['dateModified'], datePublished = msg['datePublished'], author = msg['author'], publisher = msg['publisher'], calculatedRating = msg['calculateRating'], calculatedRatingDetail = msg['calculateRatingDetail'], images = msg['images'], videos = msg['video'])
+        #info_news = InterfaceInputModel(title=msg["headline"], text = msg["articleBody"], source = msg['publisher'])
+        print(msg['headline'])
+        print(msg['articleBody'])
         nome_modello="english_try_version"
-        output= analyzer(info_news,self.daopredictor,nome_modello) 
+        output= analyzer(news_preprocessed = info_news,daopredictor=self.daopredictor,nome_modello= nome_modello) 
+        output = output[0]['REAL']
         print(output)
-        dict_output = {"id_news":msg['id_news'],"calculatedRating":output, "headline":msg['headline'],"articleBody": msg['articleBody'],"dateCreated": msg['dateCreated'], "dateModified" : msg['dateModified'], "datePublished":msg['datePublished']}
+        dict_output = {"identifier":msg['identifier'],"calculatedRating": output, "headline":msg['headline'],"articleBody": msg['articleBody'],"dateCreated": msg['dateCreated'], "dateModified" : msg['dateModified'], "datePublished":msg['datePublished'],"calculatedRatingDetail":msg['calculateRatingDetail'], "images" : msg['images'], "videos":msg['video']}
         print(dict_output)
         try:
             self.publisher.publish(self.topic, dict_output)
@@ -55,7 +59,10 @@ class Task_1(Task):
 
 if __name__ == '__main__':
     
+    
     pass
+    
+    
     '''
     c = Task_1(topic="test_lvt" , group_id="cami", bootstrap_servers=["localhost:9092"])
     c.do()      

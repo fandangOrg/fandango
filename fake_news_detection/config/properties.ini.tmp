@@ -26,3 +26,17 @@ index_author_org = test_author_org_index
 [service]
 url = http://0.0.0.0:9800/
 port = 9800
+
+
+[configurationservice]
+upm_service_url = 138.4.47.33:5006
+certh_service_url = 195.251.117.141:5006
+
+
+
+
+
+
+
+
+

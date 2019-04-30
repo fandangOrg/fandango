@@ -51,9 +51,8 @@ def new_features_mapping(lang_code):
             ]
 #(min_df=10, ngram_range=(1, 2), stop_words=lang_name, lowercase=True)
 transforming_mapping = {
-                         #'title': TfidfVectorizer,
-                         #'text': TfidfVectorizer,
-                         
+                         'title': TfidfVectorizer,
+                         'text': TfidfVectorizer,
                          'text_StopwordCounter' : MinMaxScaler(feature_range=(0, 1)),
                          'text_CharsCounter' : MinMaxScaler(feature_range=(0, 1)),
                          'title_CharsCounter' : MinMaxScaler(feature_range=(0, 1)),

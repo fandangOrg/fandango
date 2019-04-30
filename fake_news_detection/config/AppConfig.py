@@ -58,9 +58,6 @@ mapping_claim= pkg_resources.resource_filename("fake_news_detection.config", "ne
 domains_train= pkg_resources.resource_filename("fake_news_detection.resources", "url_list_labeled.txt")  # @UndefinedVariable
 docType = os.environ.get("INDEX_ELASTIC") or config.get("elasticsearch", "doctype")
 index_name_claims = os.environ.get("NEW_MAPPED_INDEX") or config.get("elasticsearch", "claim_index")
-
-
-
 domain_index= os.environ.get("DOMAIN_INDEX") or config.get("elasticsearch", "domain_index")
 domain_docType= os.environ.get("DOMAIN_DOCTYPE") or config.get("elasticsearch", "domain_docType")
 domain_file=pkg_resources.resource_filename("fake_news_detection.resources", "new_mapping.json") 
@@ -69,6 +66,18 @@ index_author_org = os.environ.get("INDEX_ELASTIC_AUTHORS") or config.get("elasti
 #mapping_domain_index = pkg_resources.resource_filename("fake_news_detection.config", "mapping_domain.json") # @UndefinedVariable
 #mapping_claim = os.environ.get("MAPPING_CLAIM") or config.get("elasticsearch", "mapping_claim")
 #dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")
+index_name_article = os.environ.get("INDEX_NAME_ARTICLE") or config.get("elasticsearch", "article_index") 
+
+
+
+#--------------------------->EXTERNAL SERVICES VARIABLES<-------------------------------------------------------------------------
+url_service_upm = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "upm_service_url") 
+url_service_certh = os.environ.get("URL_SERVICE_CERTH") or config.get("configurationservice", "certh_service_url") 
+
+######################################################################################
+
+
+
 
 if __name__ == '__main__':
     print(static_folder)

@@ -37,7 +37,7 @@ class Preprocessing:
     
     def _add_features(self, X):
         X=add_new_features_to_df(df=X, mapping=new_features_mapping(self.language))
-        print(' features added')
+        print('features added')
         return X    
 
     def execution(self,X):
@@ -161,9 +161,8 @@ if __name__ == '__main__':
      '''
     
     
-    training_set, test_set = concatenate_df_split()
-    print(training_set)
     preprocessing = Preprocessing("en")
+    training_set = pd.read_csv("/home/camila/Scrivania/csv_fandango/final_df_1503.csv", delimiter = '\t')
     X = preprocessing.execution(training_set)
     print(X.columns) 
 
@@ -172,6 +171,10 @@ if __name__ == '__main__':
     X2 = pd.concat([X1 , X['label']], axis = 1)
     print( "adding label", X2. columns)
     X2.to_csv("/home/camila/Scrivania/forcorrelation.csv")     
+    
+    
+    
+    
     
     
     

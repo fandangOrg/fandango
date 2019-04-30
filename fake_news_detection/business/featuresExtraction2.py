@@ -43,7 +43,7 @@ class StopwordCounter(FeaturesExtractor):
 class LexicalDiversity(FeaturesExtractor):
     def __call__(self, txt:str) -> float:
         try:
-            print(txt)
+            #print(txt)
             doc = Text(txt, hint_language_code=self.lang)
             #print(doc) 
             return (len(set(doc.words)) / len(doc.words))
