@@ -6,41 +6,58 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     $scope.loadingFakeness = false;
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
-    $scope.selectedLanguage = "en";
+    $scope.isVideoAnalysisEnabled = false;
     $(".alert").hide();
+
+    $scope.full_response = {};
 
     $scope.page = {
         'authors': [],
-        'publisher': '',
+        'publisher': [],
         'url': '',
         'text': '',
-        'title': ''
+        'title': '',
+        'date': '',
+        'lang': ''
     };
 
     var levelReal = ['true', 'mostly-true', 'half-true'];
     // var levelFalse = ['false', 'pants-fire'];
 
     angular.element(function () {
-        lang.getLanguages().then(function (response) {
-            $scope.languages = response.data;
-            $scope.loading = false;
-        });
+        $scope.loading = false;
     });
 
     $("#gaugeFakeness").on("contextmenu", function () {
         return false;
     });
 
-    $scope.showSelectedText = function () {
-        $scope.selectedText = $scope.getSelectionText();
+    $scope.analyzeUrl = function () {
+        if (!$scope.page.url)
+            return false;
+
+        $scope.loadingAnalyzeUrl = true;
+
+        var to_send = $scope.page.url;
+        crUrl.analyzeUrl(to_send).then(function (response) {
+            console.log(response.data);
+
+            $scope.full_response = response.data;
+
+            $scope.page.title = response.data.headline;
+            $scope.page.text = response.data.articleBody;
+            $scope.page.publisher = response.data.publisher;
+            $scope.page.authors = response.data.author;
+            $scope.page.date = response.data.dateCreated;
+            $scope.page.lang = response.data.language;
+            $scope.loadingAnalyzeUrl = false;
+        }, function (response) {
+            $scope.loadingAnalyzeUrl = false;
+        });
     };
 
-    $scope.changeLanguage = function (language) {
-        if (language.active === 'False') {
-            return;
-        } else {
-            $scope.selectedLanguage = language.language;
-        }
+    $scope.showSelectedText = function () {
+        $scope.selectedText = $scope.getSelectionText();
     };
 
     $scope.getSelectionText = function () {
@@ -62,6 +79,12 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     };
 
     $scope.sendClaim = function () {
+
+        console.log($scope.selectedText);
+
+        if ($scope.selectedText.trim() === '' || !$scope.selectedText)
+            return;
+
         var to_send = {
             'text': $scope.selectedText
         };
@@ -134,39 +157,14 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         });
     };
 
-    $scope.analyzeUrl = function () {
-        if (!$scope.page.url)
-            return false;
-
-        $scope.loadingAnalyzeUrl = true;
-
-        var to_send = $scope.page.url;
-        crUrl.analyzeUrl(to_send).then(function (response) {
-            console.log(response.data);
-            $scope.page.title = response.data.title;
-            $scope.page.text = response.data.text;
-            $scope.page.publisher = response.data.source_domain;
-            $scope.page.authors = response.data.authors;
-            $scope.loadingAnalyzeUrl = false;
-        }, function (response) {
-            $scope.loadingAnalyzeUrl = false;
-        });
-    };
-
     $scope.sendFakeness = function () {
         $scope.feedbackSelected = false;
         $scope.fakenessDone = false;
         $('#gaugeFakeness').removeClass('animated fadeIn');
         zingchart.exec('gaugeFakeness', 'destroy');
 
-        var to_send = {
-            'title': $scope.page.title,
-            'text': $scope.page.text,
-            'source': ''
-        };
-
         $scope.loadingFakeness = true;
-        fakeness.getFakeness(to_send).then(function (response) {
+        fakeness.getFakeness($scope.full_response).then(function (response) {
             $scope.value = response.data[0];
             $scope.fakeValue = parseInt($scope.value.FAKE * 100);
             $scope.realValue = parseInt($scope.value.REAL * 100);

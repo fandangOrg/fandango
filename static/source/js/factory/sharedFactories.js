@@ -17,7 +17,7 @@ app.factory('errorCode',function () {
 app.factory('crUrl',['$http', function ($http) {
     return {
         analyzeUrl: function (to_send) {
-            return $http.post(base + "/cr_url?url="+to_send);
+            return $http.post(base + "/crawl_and_preprocessing?url="+to_send);
         }
     };
 }]);
