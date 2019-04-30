@@ -12,6 +12,6 @@ app.directive("appFooter", function () {
 
 app.directive("articleAnalysis", function () {
     return {
-        templateUrl: 'article_analysis.html'
+        templateUrl: 'articleAnalysis.html'
     }
 });

@@ -17,6 +17,9 @@
 <app-navbar></app-navbar>
 <div class="main-content">
     <div class="col-12 pt-3 pb-3">
+
+        <chart-modal></chart-modal>
+
         <div class="row">
             <div class="col-lg-9 col-sm-12">
                 <div class="alert alert-success" id="alertSuccess" role="alert">
@@ -32,6 +35,7 @@
             </div>
             <div class="col-lg-3 col-sm-12 box">
                 <article-analysis></article-analysis>
+                <!--                <media-analysis></media-analysis>-->
                 <div ng-show="fakenessDone === true" class="col-xs-12 mt-2 animated fadeInDown">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
@@ -42,9 +46,8 @@
                             </div>
                         </div>
                         <div class="card-body gaugeBox" style="height: auto;padding: 0">
-                            <div id='gaugeFakeness' class="h300 animated fadeIn delay-1s">
-                            </div>
-                            <div ng-if="fakenessDone === true" id="feedback" class="col-sm-12 animated fadeIn delay-1s">
+                            <div id='gaugeFakeness' class="chart animated fadeIn delay-1s" data-toggle="modal" data-target="#chartModal"></div>
+                            <div ng-if="fakenessDone === true" id="feedback" class="col-12 animated fadeIn delay-1s">
                                 <div class="row">
                                     <div class="col-7">
                                         <label class="form-control-label">Real or fake?</label>
@@ -59,8 +62,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-if="feedbackSelected === true" class="alert alert-success" role="alert" id="alert"
-                                 style="margin-bottom: 0">
+                            <div ng-if="feedbackSelected === true" class="alert alert-success mb-0" role="alert"
+                                 id="alert">
                                 <strong>Thank you for the feedback!</strong> Click again on 'Check Fakeness' to see the
                                 new Fakeness Level.
                             </div>
@@ -70,30 +73,26 @@
                 <div class="col-xs-12 mt-2">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
-                            <div class="row align-items-center">
-                                <div class="col-7" style="padding-right: 0">
-                                    <h3 class="mb-0">Current selection</h3>
-                                </div>
+                            <h3 class="mb-0">Current selection</h3>
 
-                                <!-- RIMOSSO DOPO MEETING MADRID -->
 
-                                <!--<div class="col-5 text-right">-->
-                                    <!--<div class="dropdown" ng-if="selectedText">-->
-                                        <!--<button href="#" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"-->
-                                                <!--aria-expanded="true">-->
-                                            <!--Save Claim-->
-                                            <!--<b class="caret"></b>-->
-                                        <!--</button>-->
-                                        <!--<ul class="dropdown-menu dropdown-menu-right">-->
-                                            <!--<li class="dropdown-item" ng-click="saveClaim('true')"><i class="fas fa-check text-green pointer"></i><a href="#">Save as <strong>Real</strong></a></li>-->
-                                            <!--<li class="dropdown-item" ng-click="saveClaim('false')"><i class="fas fa-times text-red pointer"></i><a href="#">Save as <strong>Fake</strong></a></li>-->
-                                        <!--</ul>-->
-                                    <!--</div>-->
-                                <!--</div>-->
+                            <!-- RIMOSSO DOPO MEETING MADRID -->
 
-                                <!-- RIMOSSO DOPO MEETING MADRID -->
+                            <!--<div class="col-5 text-right">-->
+                            <!--<div class="dropdown" ng-if="selectedText">-->
+                            <!--<button href="#" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"-->
+                            <!--aria-expanded="true">-->
+                            <!--Save Claim-->
+                            <!--<b class="caret"></b>-->
+                            <!--</button>-->
+                            <!--<ul class="dropdown-menu dropdown-menu-right">-->
+                            <!--<li class="dropdown-item" ng-click="saveClaim('true')"><i class="fas fa-check text-green pointer"></i><a href="#">Save as <strong>Real</strong></a></li>-->
+                            <!--<li class="dropdown-item" ng-click="saveClaim('false')"><i class="fas fa-times text-red pointer"></i><a href="#">Save as <strong>Fake</strong></a></li>-->
+                            <!--</ul>-->
+                            <!--</div>-->
+                            <!--</div>-->
 
-                            </div>
+                            <!-- RIMOSSO DOPO MEETING MADRID -->
                         </div>
                         <div class="card-body h300" style="padding: 5px">
                             <textarea resize='none' ng-model="selectedText"

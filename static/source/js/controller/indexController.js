@@ -6,7 +6,9 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     $scope.loadingFakeness = false;
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
-    $scope.isVideoAnalysisEnabled = false;
+    $scope.isVideoEnabled = false;
+    $scope.isImagesEnabled = false;
+    $scope.mediaLoading = false;
     $(".alert").hide();
 
     $scope.full_response = {};
@@ -157,6 +159,10 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         });
     };
 
+    $scope.getMedia = function () {
+
+    };
+
     $scope.sendFakeness = function () {
         $scope.feedbackSelected = false;
         $scope.fakenessDone = false;
@@ -165,6 +171,9 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
         $scope.loadingFakeness = true;
         fakeness.getFakeness($scope.full_response).then(function (response) {
+
+            console.log(response);
+
             $scope.value = response.data[0];
             $scope.fakeValue = parseInt($scope.value.FAKE * 100);
             $scope.realValue = parseInt($scope.value.REAL * 100);

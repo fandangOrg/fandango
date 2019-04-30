@@ -14,7 +14,8 @@
                             </div>
                         </a>
 
-                        <img ng-if="page.lang" class="ml-3 default-flag" ng-src="img/flags/{{page.lang}}.png" alt="Language">
+                        <img ng-if="page.lang" class="ml-3 default-flag" ng-src="img/flags/{{page.lang}}.png"
+                             alt="Language" style="cursor: default !important;">
 
                     </div>
                 </div>
@@ -61,6 +62,19 @@
                                ng-model="page.url" placeholder="Enter a URL to analyze"
                                type="url">
                     </div>
+
+                    <!--                    <div class="input-group">-->
+<!--                        <input class="form-control"-->
+<!--                               ng-model="page.url" placeholder="Enter a URL to analyze"-->
+<!--                               type="url">-->
+<!--                        <div class="input-group-append">-->
+<!--                            <button class="btn bg-gray" type="button" ng-class="{'bg-gradient-teal pointer': page.url || !page.url == 'bg-gray'}">-->
+<!--                                <span class="btn-inner&#45;&#45;icon">-->
+<!--                                    <img ng-if="!loadingAnalyzeUrl" title="URL Analyze" src="img/url_analyze.png"></span>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
                 </div>
                 <div class="col-md-1 col-3 url_analyze">
                     <div ng-click="analyzeUrl()"
@@ -74,7 +88,6 @@
                     </div>
                 </div>
             </div>
-            <hr class="my-4"/>
             <div class="form-group">
                 <div class="row">
                     <div class="col-lg-12">
@@ -86,9 +99,18 @@
                         </div>
                     </div>
                 </div>
+                <label class="form-control-label" for="body">Body</label>
                 <textarea ng-model="page.text" class="form-control form-control-alternative"
-                          placeholder="Copy and paste or write an article"
+                          placeholder="Copy and paste or write an article" id="body"
                           ng-mouseup="showSelectedText()"></textarea>
+            </div>
+
+            <div ng-if="full_response.images">
+                <label class="form-control-label">Images</label><br>
+                <div class="img-list">
+                    <img ng-repeat="image in full_response.images" class="img-rounded" ng-src="{{image}}"
+                         alt="News image">
+                </div>
             </div>
         </form>
     </div>

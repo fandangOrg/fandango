@@ -347,3 +347,8 @@ pre code {
 .url_analyze {
     text-align: right;
 }
+
+.chart {
+    cursor: pointer;
+    height: 300px;
+}
