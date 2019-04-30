@@ -8,8 +8,8 @@
                             <div class="h3 mb-0">Article Analysis</div>
                         </div>
                         <div class="col-6 text-right">
-                            <a href="https://www.siren.io" target="_blank">
-                                <button ng-if="fakenessDone === true" class="btn btn-sm btn-icon btn-outline-default animated fadeIn faster">
+                            <a href="https://www.siren.io" target="_blank" ng-if="fakenessDone === true">
+                                <button class="btn btn-sm btn-icon btn-outline-default animated fadeIn faster" rel="tooltip" title="Open Siren" onmouseenter="$(this).tooltip('show')">
                                     <span class="btn-inner--icon"><img src="img/siren.png"></span>
                                     <!--                                    <span class="btn-inner&#45;&#45;text">Open Siren</span>-->
                                 </button>

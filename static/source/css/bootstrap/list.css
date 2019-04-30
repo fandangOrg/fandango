@@ -382,3 +382,12 @@
 .list-inline-item:not(:last-child) {
     margin-right: .5rem;
 }
+
+.img-list {
+    white-space: nowrap;
+    overflow-x: auto;
+}
+.img-list > img {
+    height: 75px;
+    margin-right: .25rem;
+}
