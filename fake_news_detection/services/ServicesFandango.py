@@ -32,17 +32,18 @@ headers = {'content-type': "application/json",'accept': "application/json"}
 
 
 def analyzer(news_preprocessed:News_DataModel) -> str:
-<<<<<<< HEAD
     log.info('''ANALISI NEWS'''+str(news_preprocessed.sourceDomain))
     prest=service_analyzer.analyzer(news_preprocessed)
-=======
-    log.info('''ANALISI NEWS''')
-    model = daopredictor.get_by_id(nome_modello)
-    df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
-    
-    prest = model.predict_proba(df)
-    prest = pd.DataFrame(prest, columns=model.predictor_fakeness.predictor.predictor.classes_)
->>>>>>> develop-0.4
+#===============================================================================
+# =======
+#     log.info('''ANALISI NEWS''')
+#     model = daopredictor.get_by_id(nome_modello)
+#     df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
+#     
+#     prest = model.predict_proba(df)
+#     prest = pd.DataFrame(prest, columns=model.predictor_fakeness.predictor.predictor.classes_)
+# >>>>>>> develop-0.4
+#===============================================================================
     log.info(json.loads(prest.to_json(orient='records')))
     return json.loads(prest.to_json(orient='records'))
 
@@ -122,14 +123,7 @@ def feedback(info:InterfaceInputFeedBack) -> str:
 #===============================================================================
 
 def crawl_prep(url:str) -> News_DataModel:
-<<<<<<< HEAD
     return service_scrapy.scrapy(url)
-=======
-    print(url)
-    raw_article = crawl_online(url) 
-    print(raw_article.videos)
-    prepo_article = preprocessing_online(raw_article)
-    return(prepo_article)
 
 def author_org_getter(news_preprocessed:News_DataModel) -> Author_org_DataModel:
     
@@ -177,30 +171,31 @@ def topics_getter(news_preprocessed:News_DataModel) -> Topics_DataModel:
     response = u.post(data=j, headers=headers)
     return Topics_DataModel(**response)
 
-def finalaggr(news_preprocessed:News_DataModel)-> str:
-    
-    d = {"headline": news_preprocessed.headline,
-            "articleBody" : news_preprocessed.articleBody,
-               "dateCreated": news_preprocessed.dateCreated,
-               "dateModified": news_preprocessed.dateModified,
-               "datePublished": news_preprocessed.datePublished,
-               "author": news_preprocessed.author,
-               "publisher": news_preprocessed.publisher,
-               "sourceDomain": news_preprocessed.sourceDomain,
-               "calculatedRatingDetail": news_preprocessed.calculateRatingDetail,
-               "calculatedRating": analyzer(news_preprocessed)[0]['REAL'],
-               "identifier": news_preprocessed.identifier}
-    
-    
-    d['author'] = author_org_getter(news_preprocessed).author
-    d['publisher'] = author_org_getter(news_preprocessed).publisher
-    d['images'] = media_getter(news_preprocessed).images
-    d['videos'] = media_getter(news_preprocessed).videos
-    d['mentions'] = topics_getter(news_preprocessed).mentions
-    d['about'] = topics_getter(news_preprocessed).about
-    dao.create_doc_news(d)
-    #print(d, Final_DataModel(**d))
->>>>>>> develop-0.4
+#===============================================================================
+# def finalaggr(news_preprocessed:News_DataModel)-> str:
+#     
+#     d = {"headline": news_preprocessed.headline,
+#             "articleBody" : news_preprocessed.articleBody,
+#                "dateCreated": news_preprocessed.dateCreated,
+#                "dateModified": news_preprocessed.dateModified,
+#                "datePublished": news_preprocessed.datePublished,
+#                "author": news_preprocessed.author,
+#                "publisher": news_preprocessed.publisher,
+#                "sourceDomain": news_preprocessed.sourceDomain,
+#                "calculatedRatingDetail": news_preprocessed.calculateRatingDetail,
+#                "calculatedRating": analyzer(news_preprocessed)[0]['REAL'],
+#                "identifier": news_preprocessed.identifier}
+#     
+#     
+#     d['author'] = author_org_getter(news_preprocessed).author
+#     d['publisher'] = author_org_getter(news_preprocessed).publisher
+#     d['images'] = media_getter(news_preprocessed).images
+#     d['videos'] = media_getter(news_preprocessed).videos
+#     d['mentions'] = topics_getter(news_preprocessed).mentions
+#     d['about'] = topics_getter(news_preprocessed).about
+#     dao.create_doc_news(d)
+#     #print(d, Final_DataModel(**d))
+#===============================================================================
 
 #===============================================================================
 # def author_org_getter(news_preprocessed:News_DataModel) -> Author_org_DataModel:
