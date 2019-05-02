@@ -8,7 +8,7 @@ Created on Jan 8, 2019
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
     index_name_news, docType_article, domain_index, domain_docType,\
-    index_name_output, index_name_article
+    index_name_output, index_name_article, index_name
 from fake_news_detection.model.InterfacceComunicazioni import News,\
     News_DataModel
 import random
@@ -43,12 +43,14 @@ class DAONewsElastic(DAONews):
     
     def __init__(self):
         self.es_client = get_elastic_connector()
-        self.index_name = index_name_news
+        self.index_name = index_name
         self.index_name_output = index_name_output
         self.docType = docType_article
         self.domain_name_index = domain_index
         self.docType_domain = domain_docType
         self.index_name_article = index_name_article
+        self.mapping_path = None
+        self.check_index_exists()
         
     def GetCounterDef(self):
         body = {"query": {"exists" : { "VALUE" : "label" }}}
@@ -188,22 +190,36 @@ class DAONewsElastic(DAONews):
         @param news: str
         """
         
-    
         doc_up=  {
            '_op_type': 'index',
            '_index': self.index_name_article,
+
            '_type': 'doc',
            '_source' : dic_final
         }
         print(doc_up)
         self.bulk_on_elastic(doc_up)   
-        
+    
+    def check_index_exists(self):
+
+        if not self.es_client.indices.exists(index=self.index_name, ignore=404):
+            if self.mapping_path is not None:
+                with open(self.mapping_path, "r") as g:
+                    index_def = g.read()
+                    self.es_client.indices.create(index=self.index_name, body=index_def)
+                    log.info("{ind} Index settings and mapping process completed".format(ind=self.index_name))
+            else:
+                self.es_client.indices.create(index=self.index_name)
+                log.info("{ind} Index settings and mapping process completed".format(ind=self.index_name))
+    
+        return self.es_client.indices.exists(index=self.index_name, ignore=404)
+    
     def bulk_on_elastic(self, doc_up):
         """
         perform a bulk query in elastic
         @param doc_up: dict
         """
-        if type(doc_up) is not list:
+        if not isinstance(doc_up, list):
             doc_up = [doc_up]
         try:
             helpers.bulk(self.es_client, doc_up)
