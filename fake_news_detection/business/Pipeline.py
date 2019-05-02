@@ -157,12 +157,20 @@ class AnalyticsService(metaclass=Singleton):
         d['datePublished'] =self._clear(news_preprocessed.datePublished)
            
         self.dao.create_doc_news(d)
+        return d
             
+            
+    def ask_video_score(self,id_video:str)-> str:
+        url = URLRequest(url_service_certh+"/api/analyze_video/"+id_video)
+        response = requests.request("GET", url)
+        return response.text
+ 
     def analyzer(self,news_preprocessed:News_DataModel,save=True) -> str:
         pd_text=self._text_analysis(news_preprocessed)
         if save:
             score=pd_text['REAL'][0]
-            self._save_news(news_preprocessed,score)
+            news=self._save_news(news_preprocessed,score)
+            
         return pd_text 
          
 def running(name):
