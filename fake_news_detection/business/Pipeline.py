@@ -12,6 +12,8 @@ import json
 from fake_news_detection.model.InterfacceComunicazioni import News_raw,\
     News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO, DAONewsElastic
+from fake_news_detection.model.singleton_filter import Singleton
+from threading import Thread
 log = getLogger(__name__)
 
 class ScrapyService:
@@ -57,7 +59,7 @@ class ScrapyService:
 
          
 
-class AnalyticsService:
+class AnalyticsService(metaclass=Singleton):
     '''
     classdocs
     '''
@@ -72,8 +74,12 @@ class AnalyticsService:
         self.headers = {'content-type': "application/json",'accept': "application/json"}
         self.daopredictor = FSMemoryPredictorDAO(picklepath)
         self.nome_modello={"en":"english_try1_version"}
-        self.dao = DAONewsElastic()
+        
+        self.dao =None# DAONewsElastic()
 
+    def _test(self,id):
+        model =self.daopredictor.get_by_id(self.nome_modello.get(id,"english_try1_version"))
+        
     def _text_analysis(self,news_preprocessed:News_DataModel) -> News_DataModel:
         log.info('''ANALISI NEWS IN LINGUA '''+ news_preprocessed.language)
         model =self.daopredictor.get_by_id(self.nome_modello.get(news_preprocessed.language,"english_try1_version"))
@@ -154,3 +160,21 @@ class AnalyticsService:
             self._save_news(news_preprocessed,score)
         return pd_text 
          
+def running(name):
+    print("name", name)
+    a = AnalyticsService()
+    b = AnalyticsService()
+    print("nstopo", a._test('en'))
+    print("nstopo", b._test('en'))
+
+    
+if __name__ == '__main__':
+    threads = []
+    process = Thread(target=running,kwargs={"name": "ciao"})
+    process.start()
+    threads.append(process)
+    
+    process = Thread(target=running,kwargs={"name": "2"})
+    process.start()
+    threads.append(process)
+    
