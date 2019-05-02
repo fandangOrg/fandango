@@ -3,22 +3,18 @@ Created on 23 apr 2019
 
 @author: camila
 '''
-import pandas as pd 
-from fake_news_detection.model.InterfacceComunicazioni import News_raw,\
-    News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel,\
-    Final_DataModel, InterfaceInputFeedBack
-from fake_news_detection.utils.Crawler import crawler_news
+from fake_news_detection.model.InterfacceComunicazioni import News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel,\
+ InterfaceInputFeedBack
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.config.AppConfig import url_service_upm,\
-    url_service_certh, static_folder, picklepath
+    url_service_certh, static_folder
 import json
 from flask_cors.extension import CORS
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
 from fake_news_detection.config import AppConfig
-from typing import Dict, List
+from typing import List
 import requests
 from fake_news_detection.utils.logger import getLogger
-from fake_news_detection.dao.DAO import FSMemoryPredictorDAO, DAONewsElastic
 from fake_news_detection.model.Language import Language
 from fake_news_detection.business.Pipeline import ScrapyService,\
     AnalyticsService

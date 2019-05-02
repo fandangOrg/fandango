@@ -147,9 +147,10 @@ class AnalyticsService:
            
         self.dao.create_doc_news(d)
             
-    def analyzer(self,news_preprocessed:News_DataModel) -> str:
+    def analyzer(self,news_preprocessed:News_DataModel,save=True) -> str:
         pd_text=self._text_analysis(news_preprocessed)
-        score=pd_text['REAL'][0]
-        self._save_news(news_preprocessed,score)
+        if save:
+            score=pd_text['REAL'][0]
+            self._save_news(news_preprocessed,score)
         return pd_text 
          

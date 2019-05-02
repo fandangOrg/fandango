@@ -33,9 +33,12 @@ port = 9800
 upm_service_url = 138.4.47.33:5006
 certh_service_url = 195.251.117.141:5006
 
-
-
-
+[kafka]
+url_ = localhost
+port = 9092
+topic_input = input_preprocessed
+topic_output = analyzed_text
+consumer = 10
 
 
 

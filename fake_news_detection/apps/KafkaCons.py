@@ -28,10 +28,8 @@ class Consumer:
         consumer=None
         while True:
             try:
-                
                 consumer=KafkaConsumer(self.topic,group_id=self.group_id,bootstrap_servers=self.bootstrap_servers,auto_offset_reset=self.auto_offset_reset,enable_auto_commit=self.enable_auto_commit)
                 consumer.poll()
-                
                 for msg in consumer:
                     try:
                         obj=self.parse(msg)

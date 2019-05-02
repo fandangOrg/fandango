@@ -17,6 +17,7 @@ from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 from fake_news_detection.config.AppConfig import picklepath
 from fake_news_detection.business.Analyzer import analyzer, log
 from numpy.lib.utils import source
+from fake_news_detection.business.Pipeline import AnalyticsService
 
 
 log = getLogger(__name__)
@@ -25,24 +26,18 @@ class Task:
     def do(self,msg):
         raise NotImplemented
     
-class Task_1(Task):
-    def __init__(self,publisher:KafkaPublisher,topic,*arg,**args):
+class Task_Analyzer(Task):
+    def __init__(self,publisher:KafkaPublisher,topic,**args):
         self.publisher = publisher
         self.topic=topic
-        
-        
-        self.daopredictor = FSMemoryPredictorDAO(picklepath)
+        self.analytics=AnalyticsService()
         
     def do(self,msg):
         print("applico l'analizer e trovo lo score di ",msg)
-        #id_document
-        #score_ml %
-        info_news = News_DataModel(headline= msg["headline"], articleBody = msg["articleBody"], sourceDomain = msg['sourceDomain'],identifier = msg['identifier'], dateCreated = msg['dateCreated'] , dateModified= msg['dateModified'], datePublished = msg['datePublished'], author = msg['author'], publisher = msg['publisher'], calculatedRating = msg['calculateRating'], calculatedRatingDetail = msg['calculateRatingDetail'], images = msg['images'], videos = msg['video'])
-        #info_news = InterfaceInputModel(title=msg["headline"], text = msg["articleBody"], source = msg['publisher'])
+        news_preprocessed = News_DataModel(headline= msg["headline"], articleBody = msg["articleBody"], sourceDomain = msg['sourceDomain'],identifier = msg['identifier'], dateCreated = msg['dateCreated'] , dateModified= msg['dateModified'], datePublished = msg['datePublished'], author = msg['author'], publisher = msg['publisher'], calculatedRating = msg['calculateRating'], calculatedRatingDetail = msg['calculateRatingDetail'], images = msg['images'], videos = msg['video'])
         print(msg['headline'])
         print(msg['articleBody'])
-        nome_modello="english_try_version"
-        output= analyzer(news_preprocessed = info_news,daopredictor=self.daopredictor,nome_modello= nome_modello) 
+        output=self.analytics.analyzer(news_preprocessed,False) 
         output = output[0]['REAL']
         print(output)
         dict_output = {"identifier":msg['identifier'],"calculatedRating": output, "headline":msg['headline'],"articleBody": msg['articleBody'],"dateCreated": msg['dateCreated'], "dateModified" : msg['dateModified'], "datePublished":msg['datePublished'],"calculatedRatingDetail":msg['calculateRatingDetail'], "images" : msg['images'], "videos":msg['video']}
