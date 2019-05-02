@@ -49,6 +49,7 @@ static_folder = pkg_resources.resource_filename("static", "")  # @UndefinedVaria
 #dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
  
 #---------------------------->ELASTIC VARIABLES<----------------------------------------------------------------------------
+index_name = config.get("elasticsearch", "index_name")
 index_name_news = os.environ.get("INDEX_ELASTIC_NEWS") or config.get("elasticsearch", "index_news") or "news_article_current"
 index_name_output= os.environ.get("INDEX_ELASTIC_NEWS_ANNOTATION") or config.get("elasticsearch", "index_news_annotation") or "news_annotation_lvt"
 docType_article = os.environ.get("DOCTYPE_NEWS") or config.get("elasticsearch", "doctype_news") or "article"

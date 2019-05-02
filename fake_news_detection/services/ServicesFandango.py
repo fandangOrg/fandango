@@ -32,6 +32,7 @@ def analyzer(news_preprocessed:News_DataModel) -> str:
     log.info('''ANALISI NEWS''')
     model = daopredictor.get_by_id(nome_modello)
     df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
+    
     prest = model.predict_proba(df)
     prest = pd.DataFrame(prest, columns=model.predictor_fakeness.predictor.predictor.classes_)
     log.info(json.loads(prest.to_json(orient='records')))
@@ -154,7 +155,7 @@ def author_org_getter(news_preprocessed:News_DataModel) -> Author_org_DataModel:
 def media_getter(news_preprocessed:News_DataModel) -> Media_DataModel :
     
     u = URLRequest(url_service_certh+"/api/media_analysis")
-    payload = {"images": news_preprocessed.images,"videos": news_preprocessed.videos,"identifier": news_preprocessed.identifier}
+    payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
     j = json.dumps(payload)
     headers = {'content-type': "application/json",'accept': "application/json"}
     response = u.post(data=j, headers=headers)
