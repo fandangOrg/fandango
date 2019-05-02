@@ -18,11 +18,15 @@ from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.model.Language import Language
 from fake_news_detection.business.Pipeline import ScrapyService,\
     AnalyticsService
+from fake_news_detection.apps.daemon import daemon_run
 
 
 log = getLogger(__name__)
 service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
+###run deamon
+daemon_run()
+
 headers = {'content-type': "application/json",'accept': "application/json"}
 
 

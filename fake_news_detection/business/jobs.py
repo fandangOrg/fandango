@@ -35,7 +35,7 @@ class Job_consumer(threading.Thread):
 
 def run_job(input_queue,task:Task,output_queue=None,n_job=10,**args):
     print("N_JOB ", n_job)
-    for n in range(n_job):
+    for n in range(int(n_job)):
         thread1 = Job_consumer("Thread-Scodatore-"+str(n),input_queue ,output_queue,task, **args)
         thread1.start()
     print("======================")

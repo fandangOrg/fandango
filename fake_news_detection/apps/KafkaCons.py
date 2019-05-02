@@ -12,11 +12,12 @@ import random
 import os
 #from fake_news_detection.apps.consumers import Task, Task_1
 from brokermanager.model.publishers import KafkaPublisher
-from fake_news_detection.apps.Task import Task,Task_1
+from fake_news_detection.apps.Task import Task, Task_Analyzer
 
 
 class Consumer:
     def __init__(self,topic,group_id,bootstrap_servers,auto_offset_reset="earliest",enable_auto_commit=False,retry_interval=1):
+        print("bootstrap_servers",bootstrap_servers)
         self.group_id = group_id
         self.bootstrap_servers = bootstrap_servers
         self.auto_offset_reset = auto_offset_reset
@@ -122,7 +123,7 @@ if __name__ == '__main__':
     topic="input_preprocessed"
     output_topic =  "analyzed_text"
     print('     2                ')
-    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt_group2", bootstrap_servers=["localhost:9092"], task=Task_1(queue_output,output_topic))
+    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt_group2", bootstrap_servers=["localhost:9092"], task=Task_Analyzer(queue_output,output_topic))
     print('          3            ')
     consumer.consume_forever()
     print('                4           ')

@@ -74,7 +74,9 @@ class AnalyticsService(metaclass=Singleton):
         self.headers = {'content-type': "application/json",'accept': "application/json"}
         self.daopredictor = FSMemoryPredictorDAO(picklepath)
         self.nome_modello={"en":"english_try1_version"}
-        
+        for k in self.nome_modello:
+            print("load model",k)
+            self.daopredictor.get_by_id(self.nome_modello.get(k,"english_try1_version"))
         self.dao =None# DAONewsElastic()
 
     def _test(self,id):
@@ -94,6 +96,7 @@ class AnalyticsService(metaclass=Singleton):
         payload = news_preprocessed.__dict__
         j = json.dumps(payload)
         response = u.post(data=j, headers=self.headers)
+        print(response)
         return Author_org_DataModel(**response)
         
     def _get_media_ids(self,news_preprocessed:News_DataModel) -> Media_DataModel:

@@ -30,18 +30,19 @@ class Task_Analyzer(Task):
     def __init__(self,publisher:KafkaPublisher,topic,**args):
         self.publisher = publisher
         self.topic=topic
-        self.analytics=AnalyticsService()
+        self.analytics= AnalyticsService()
         
     def do(self,msg):
         print("applico l'analizer e trovo lo score di ",msg)
-        news_preprocessed = News_DataModel(headline= msg["headline"], articleBody = msg["articleBody"], sourceDomain = msg['sourceDomain'],identifier = msg['identifier'], dateCreated = msg['dateCreated'] , dateModified= msg['dateModified'], datePublished = msg['datePublished'], author = msg['author'], publisher = msg['publisher'], calculatedRating = msg['calculateRating'], calculatedRatingDetail = msg['calculateRatingDetail'], images = msg['images'], videos = msg['video'])
+        news_preprocessed = News_DataModel(language=msg.get('language','en'),headline= msg["headline"], articleBody = msg["articleBody"], sourceDomain = msg['sourceDomain'],identifier = msg['identifier'], dateCreated = msg['dateCreated'] , dateModified= msg['dateModified'], datePublished = msg['datePublished'], author = msg['author'], publisher = msg['publisher'], calculateRating = msg['calculateRating'], calculateRatingDetail = msg['calculateRatingDetail'], images = msg['images'], video = msg['video'])
         print(msg['headline'])
         print(msg['articleBody'])
         output=self.analytics.analyzer(news_preprocessed,False) 
-        output = output[0]['REAL']
+        print(output)
+        output = output['REAL'][0]
         print(output)
         dict_output = {"identifier":msg['identifier'],"calculatedRating": output, "headline":msg['headline'],"articleBody": msg['articleBody'],"dateCreated": msg['dateCreated'], "dateModified" : msg['dateModified'], "datePublished":msg['datePublished'],"calculatedRatingDetail":msg['calculateRatingDetail'], "images" : msg['images'], "videos":msg['video']}
-        print(dict_output)
+        print("dict_output",dict_output)
         try:
             self.publisher.publish(self.topic, dict_output)
             print("document added to the kafka topic")
