@@ -232,8 +232,9 @@ class CountAdj(FeaturesExtractor):
             count = 0 
             for tag in tagger.tag_text(text):
                 tt = tag.split('\t')
-                if tt[1] == 'JJ' or tt[1] == 'JJR' or tt[1] == 'JJS':
-                    count += 1
+                if len(tt)>1:
+                    if tt[1] == 'JJ' or tt[1] == 'JJR' or tt[1] == 'JJS':
+                        count += 1
           
             return count
         except:
@@ -247,9 +248,10 @@ class CountAdv(FeaturesExtractor):
         adv_list_tag = ['RB', 'RBR', 'RBS', 'WRB']
         for tag in tagger.tag_text(text):
             tt = tag.split('\t')
-            #print(tt)
-            if tt[1] in adv_list_tag:
-                count += 1
+            if len(tt)>1:
+                #print(tt)
+                if tt[1] in adv_list_tag:
+                    count += 1
       
         return count
             
@@ -262,8 +264,9 @@ class CountPrep_conj(FeaturesExtractor):
         for tag in tagger.tag_text(text):
             tt = tag.split('\t')
             #print(tt)
-            if tt[1] == 'IN' or tt[1] == "CC":
-                count += 1
+            if len(tt)>1:
+                if tt[1] == 'IN' or tt[1] == "CC":
+                    count += 1
       
         return count
         
@@ -275,9 +278,10 @@ class countVerbs(FeaturesExtractor):
         verbs_list = ["VB","VBD","VBG","VBN","VBZ","VBP","VD","VDD","VDG","VDN","VDZ","VDP","VHD","VHG","VHN","VHZ","VHP","VV","VVD","VVG","VVN","VVZ","VVP"]
         for tag in tagger.tag_text(text):
             tt = tag.split('\t')
-            #print(tt)
-            if tt[1] in verbs_list:
-                count += 1
+            if len(tt)>1:
+                #print(tt)
+                if tt[1] in verbs_list:
+                    count += 1
       
         return count
         
