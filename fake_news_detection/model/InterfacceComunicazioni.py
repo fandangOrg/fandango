@@ -99,6 +99,30 @@ class Final_DataModel:
         self.sourceDomain = sourceDomain
         self.mentions = mentions
         self.about = about
+
+
+class OutputVideoService:
+    def __init__(self,status:str, video_id:str, url:str,fakeness: float, video_url :str,reasoning:list,first_frame:int,last_frame:int,fps:int, prograssMax:float):
+        self.status = status
+        self.video_id = video_id
+        self.url = url
+        self.fakeness = fakeness
+        self.video_url = video_url
+        self.reasoning = reasoning
+        self.first_frame = first_frame
+        self.last_frame = last_frame
+        self.fps = fps
+        self.prograssMax = prograssMax
+        
+        
+class OutputImageService:
+    def __init__(self, status:str, image_id:str, url:str,fakeness:float):
+        self.status = status
+        self.image_id = image_id
+        self.url = url
+        self.fakeness = fakeness
+    
+        
         
 
 ###############################################################
