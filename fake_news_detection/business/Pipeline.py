@@ -165,10 +165,13 @@ def running(name):
     a = AnalyticsService()
     b = AnalyticsService()
     print("nstopo", a._test('en'))
-    print("nstopo", b._test('en'))
+    print("nstopo", a._test('en'))
 
     
 if __name__ == '__main__':
+    a = AnalyticsService()
+    print("nstopo", a._test('en'))
+
     threads = []
     process = Thread(target=running,kwargs={"name": "ciao"})
     process.start()
