@@ -25,7 +25,7 @@ log = getLogger(__name__)
 service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon
-daemon_run()
+#daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -270,22 +270,6 @@ def topics_getter(news_preprocessed:News_DataModel) -> Topics_DataModel:
 #===============================================================================
 
 
-def ask_video_score(id_video:str)-> str:
-    
-    
-    url = URLRequest(url_service_certh+"/api/analyze_video/"+id_video)
-    response = requests.request("GET", url)
-    
-
-    return response.text
-
-
-def ask_image_score(id_image)-> str:
-    
-    url = URLRequest(url_service_certh+"/api/analyze_image/"+id_image)
-    response = requests.request("GET",url)
-
-    return response.text
 
 
 

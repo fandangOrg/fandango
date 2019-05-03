@@ -10,7 +10,8 @@ from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.utils.logger import getLogger
 import json
 from fake_news_detection.model.InterfacceComunicazioni import News_raw,\
-    News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel
+    News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel,\
+    OutputVideoService, OutputImageService
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO, DAONewsElastic
 from fake_news_detection.model.singleton_filter import Singleton
 from threading import Thread
@@ -160,17 +161,33 @@ class AnalyticsService(metaclass=Singleton):
         return d
             
             
-    def ask_video_score(self,id_video:str)-> str:
-        url = URLRequest(url_service_certh+"/api/analyze_video/"+id_video)
-        response = requests.request("GET", url)
-        return response.text
+    def _info_video_analysis(self,id_video:str)-> str:
+        u = URLRequest(self.url_media_service+"/api/analyze_video/"+id_video)
+        response = u.get(headers=self.headers)
+        info_video=OutputVideoService(**response)
+        return info_video
+    
+    
+    def _info_image_analysis(self,id_image)-> str:
+        u = URLRequest(self.url_media_service+"/api/analyze_image/"+id_image)
+        response = u.get(headers=self.headers)
+        info_image=OutputImageService(**response)
+        return info_image
+    
  
     def analyzer(self,news_preprocessed:News_DataModel,save=True) -> str:
         pd_text=self._text_analysis(news_preprocessed)
         if save:
             score=pd_text['REAL'][0]
             news=self._save_news(news_preprocessed,score)
-            
+            ##
+            for image in news['images']:
+                print(image,self._info_image_analysis(image))
+            ##    
+            for video in news['videos']:
+                print(image,self._info_video_analysis(video))
+            ##    
+                
         return pd_text 
          
 def running(name):
