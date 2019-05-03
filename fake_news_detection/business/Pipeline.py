@@ -202,7 +202,10 @@ class AnalyticsService(metaclass=Singleton):
             ##
             pd_video=pd.DataFrame(list_images)
             pd_image=pd.DataFrame(list_videos)
-            return {"text":pd_text,"videos":pd_video,"images":pd_image} 
+            js_t=json.loads(pd_text.to_json(orient='records'))
+            js_V=json.loads(pd_video.to_json(orient='records'))
+            js_i=json.loads(pd_image.to_json(orient='records'))
+            return {"text":js_t,"videos":js_V,"images":js_i} 
         else:      
             return pd_text
          
