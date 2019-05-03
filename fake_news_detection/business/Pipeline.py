@@ -198,8 +198,8 @@ class AnalyticsService(metaclass=Singleton):
             for video in news['videos']:
                 list_videos.append(self._info_video_analysis(video).__dict__)
             ##
-            pd_video=pd.DataFrame(list_images)
-            pd_image=pd.DataFrame(list_videos)
+            pd_video=pd.DataFrame(list_videos)
+            pd_image=pd.DataFrame(list_images)
             js_t=json.loads(pd_text.to_json(orient='records'))
             js_V=json.loads(pd_video.to_json(orient='records'))
             js_i=json.loads(pd_image.to_json(orient='records'))
