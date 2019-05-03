@@ -169,9 +169,9 @@ class AnalyticsService(metaclass=Singleton):
     def _info_video_analysis(self,id_video:str)-> str:
         u = URLRequest(self.url_media_service+"/api/analyze_video/"+id_video)
         response = u.get(headers=self.headers)
-        info_video=OutputVideoService(**response)
         if  'error' in response:
             return OutputVideoService(id_video)
+        info_video=OutputVideoService(**response)
         return info_video
     
     
