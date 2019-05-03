@@ -190,7 +190,7 @@ class DAONewsElastic(DAONews):
         @param news: str
         """
         
-        doc_up=  {
+        doc_up =  {
            '_op_type': 'index',
            '_index': self.index_name_article,
 

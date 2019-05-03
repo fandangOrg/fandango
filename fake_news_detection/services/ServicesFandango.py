@@ -18,7 +18,7 @@ from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.model.Language import Language
 from fake_news_detection.business.Pipeline import ScrapyService,\
     AnalyticsService
-from fake_news_detection.apps.daemon import daemon_run
+#from fake_news_detection.apps.daemon import daemon_run
 
 
 log = getLogger(__name__)

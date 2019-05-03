@@ -50,12 +50,14 @@ class ScrapyService:
         u = URLRequest(self.url_prepocessing+"/preprocess/article")
         j = json.dumps(payload)
         response = u.post(data=j, headers=self.headers)
+        
         return News_DataModel(**response)
 
     def scrapy(self,url)-> News_DataModel:
         raw_article = self._crawling(url) 
         prepo_article = self._preprocessing(raw_article)
         prepo_article.sourceDomain=[prepo_article.sourceDomain]
+        prepo_article.video = ["https://www.youtube.com/watch?v=wZZ7oFKsKzY","https://www.youtube.com/watch?v=w0AOGeqOnFY"]
         return(prepo_article)
 
          
@@ -134,7 +136,7 @@ class AnalyticsService(metaclass=Singleton):
             "author": news_preprocessed.author,
             "publisher": news_preprocessed.publisher,
             "sourceDomain": news_preprocessed.sourceDomain,
-            "calculatedRatingDetail": news_preprocessed.calculateRatingDetail,
+            "calculatedRatingDetail": "",
             "calculatedRating": score_fake,
             #"calculatedRating": analyzer(news_preprocessed)[0]['REAL'],
             "identifier": news_preprocessed.identifier}
