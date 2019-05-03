@@ -168,11 +168,8 @@ class AnalyticsService(metaclass=Singleton):
         u = URLRequest(self.url_media_service+"/api/analyze_video/"+id_video)
         response = u.get(headers=self.headers)
         info_video=OutputVideoService(**response)
-        print(u)
-        print(response)
-
         if  'error' in response:
-            return None
+            return OutputVideoService(id_video)
         return info_video
     
     
@@ -182,7 +179,7 @@ class AnalyticsService(metaclass=Singleton):
         print(u)
         print(response)
         if  'error' in response:
-            return None
+            return OutputImageService(id_image)
         info_image=OutputImageService(**response)
         return info_image
     
@@ -190,17 +187,22 @@ class AnalyticsService(metaclass=Singleton):
     def analyzer(self,news_preprocessed:News_DataModel,save=True) -> str:
         pd_text=self._text_analysis(news_preprocessed)
         if save:
+            list_images=[]
+            list_videos=[]
             score=pd_text['REAL'][0]
             news=self._save_news(news_preprocessed,score)
             ##
             for image in news['images']:
-                print(image,self._info_image_analysis(image))
+                list_images.append(self._info_image_analysis(image).__dict__)
             ##    
             for video in news['videos']:
-                print(video,self._info_video_analysis(video))
-            ##    
-                
-        return pd_text 
+                list_videos.append(self._info_video_analysis(video).__dict__)
+            ##
+            pd_video=pd.DataFrame(list_images)
+            pd_image=pd.DataFrame(list_videos)
+            return {"text":pd_text,"videos":pd_video,"images":pd_image} 
+        else:      
+            return pd_text
          
 def running(name):
     print("name", name)

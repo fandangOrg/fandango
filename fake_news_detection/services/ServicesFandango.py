@@ -46,9 +46,14 @@ def analyzer(news_preprocessed:News_DataModel) -> str:
 #     prest = model.predict_proba(df)
 #     prest = pd.DataFrame(prest, columns=model.predictor_fakeness.predictor.predictor.classes_)
 # >>>>>>> develop-0.4
-#===============================================================================
-    log.info(json.loads(prest.to_json(orient='records')))
-    return json.loads(prest.to_json(orient='records'))
+#===============================================================================    
+    print(prest)
+    #log.info(json.loads(prest))
+    return prest
+    #===========================================================================
+    # log.info(json.loads(prest.to_json(orient='records')))
+    # return json.loads(prest.to_json(orient='records'))
+    #===========================================================================
 
 
 #===============================================================================

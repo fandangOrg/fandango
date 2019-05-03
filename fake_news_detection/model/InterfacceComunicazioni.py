@@ -102,7 +102,8 @@ class Final_DataModel:
 
 
 class OutputVideoService:
-    def __init__(self,status:str, video_id:str, url:str,fakeness: float, video_url :str,reasoning:list,first_frame:int,last_frame:int,fps:int, prograssMax:float):
+    def __init__(self,video_id:str, status:str="UNKNOW", url:str="UNKNOW",fakeness: float=0.0, video_url:str="UNKNOW"
+                 ,reasoning:list=["UNKNOW","UNKNOW"],first_frame:int=0,last_frame:int=100,fps:int=12, prograssMax:float=0.0):
         self.status = status
         self.video_id = video_id
         self.url = url
@@ -116,7 +117,7 @@ class OutputVideoService:
         
         
 class OutputImageService:
-    def __init__(self, status:str, image_id:str, url:str,fakeness:float):
+    def __init__(self, image_id:str,status:str="UNKNOW",  url:str="UNKNOW",fakeness:float=0.0):
         self.status = status
         self.image_id = image_id
         self.url = url
