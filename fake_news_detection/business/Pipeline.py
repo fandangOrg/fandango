@@ -15,6 +15,7 @@ from fake_news_detection.model.InterfacceComunicazioni import News_raw,\
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO, DAONewsElastic
 from fake_news_detection.model.singleton_filter import Singleton
 from threading import Thread
+import os
 log = getLogger(__name__)
 
 class ScrapyService:
@@ -138,10 +139,12 @@ class AnalyticsService(metaclass=Singleton):
             "sourceDomain": news_preprocessed.sourceDomain,
             "calculatedRatingDetail": "",
             "calculatedRating": score_fake,
-            #"calculatedRating": analyzer(news_preprocessed)[0]['REAL'],
             "identifier": news_preprocessed.identifier}
     
         autors_org=self._get_authors_org_ids(news_preprocessed)
+        news_preprocessed.video_analizer=True
+        news_preprocessed.image_analizer=True
+        print("analizza video e immagini",news_preprocessed.video_analizer,news_preprocessed.image_analizer)
         if not news_preprocessed.video_analizer:
             news_preprocessed.video=[]
         if not news_preprocessed.image_analizer:
@@ -167,12 +170,18 @@ class AnalyticsService(metaclass=Singleton):
         u = URLRequest(self.url_media_service+"/api/analyze_video/"+id_video)
         response = u.get(headers=self.headers)
         info_video=OutputVideoService(**response)
+        if  'error' in response:
+            return OutputVideoService(id_video)
         return info_video
     
     
     def _info_image_analysis(self,id_image)-> str:
         u = URLRequest(self.url_media_service+"/api/analyze_image/"+id_image)
         response = u.get(headers=self.headers)
+        print(u)
+        print(response)
+        if  'error' in response:
+            return OutputImageService(id_image)
         info_image=OutputImageService(**response)
         return info_image
     
@@ -180,17 +189,22 @@ class AnalyticsService(metaclass=Singleton):
     def analyzer(self,news_preprocessed:News_DataModel,save=True) -> str:
         pd_text=self._text_analysis(news_preprocessed)
         if save:
+            list_images=[]
+            list_videos=[]
             score=pd_text['REAL'][0]
             news=self._save_news(news_preprocessed,score)
             ##
             for image in news['images']:
-                print(image,self._info_image_analysis(image))
+                list_images.append(self._info_image_analysis(image).__dict__)
             ##    
             for video in news['videos']:
-                print(image,self._info_video_analysis(video))
-            ##    
-                
-        return pd_text 
+                list_videos.append(self._info_video_analysis(video).__dict__)
+            ##
+            pd_video=pd.DataFrame(list_images)
+            pd_image=pd.DataFrame(list_videos)
+            return {"text":pd_text,"videos":pd_video,"images":pd_image} 
+        else:      
+            return pd_text
          
 def running(name):
     print("name", name)
@@ -201,15 +215,9 @@ def running(name):
 
     
 if __name__ == '__main__':
-    a = AnalyticsService()
-    print("nstopo", a._test('en'))
-
-    threads = []
-    process = Thread(target=running,kwargs={"name": "ciao"})
-    process.start()
-    threads.append(process)
-    
-    process = Thread(target=running,kwargs={"name": "2"})
-    process.start()
-    threads.append(process)
+    print(os.environ)
+    if 'TREETAGGER' in os.environ:
+        founddir = os.environ['TREETAGGER']
+    elif 'TREETAGGER_HOME' in os.environ:
+        founddir = os.environ['TREETAGGER_HOME']
     

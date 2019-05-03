@@ -30,6 +30,9 @@ service_analyzer=AnalyticsService()
 headers = {'content-type': "application/json",'accept': "application/json"}
 
 
+def start_daemon() -> str:
+    daemon_run()
+    return "done"
 
 def analyzer(news_preprocessed:News_DataModel) -> str:
     log.info('''ANALISI NEWS'''+str(news_preprocessed.sourceDomain))
@@ -43,9 +46,14 @@ def analyzer(news_preprocessed:News_DataModel) -> str:
 #     prest = model.predict_proba(df)
 #     prest = pd.DataFrame(prest, columns=model.predictor_fakeness.predictor.predictor.classes_)
 # >>>>>>> develop-0.4
-#===============================================================================
-    log.info(json.loads(prest.to_json(orient='records')))
-    return json.loads(prest.to_json(orient='records'))
+#===============================================================================    
+    print(prest)
+    #log.info(json.loads(prest))
+    return prest
+    #===========================================================================
+    # log.info(json.loads(prest.to_json(orient='records')))
+    # return json.loads(prest.to_json(orient='records'))
+    #===========================================================================
 
 
 #===============================================================================
@@ -298,6 +306,7 @@ app.add_service("crawl_and_preprocessing",crawl_prep, method = 'POST')
 app.add_service("get_languages",get_languages, method = 'GET')
 app.add_service("analyzer",analyzer, method='POST')
 app.add_service("feedback",feedback, method='POST')
+app.add_service("start_daemon",start_daemon, method='POST')
 
 CORS(app)
 
