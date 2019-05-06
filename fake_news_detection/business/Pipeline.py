@@ -152,15 +152,16 @@ class AnalyticsService(metaclass=Singleton):
         tp_entity=self._get_topics_ids(news_preprocessed)
         d['author'] = autors_org.author
         d['publisher'] = autors_org.publisher
-        d['images'] = media.images
-        d['videos'] = media.videos
+        #d['images'] = media.images
+        d['contains'] = media.videos+ media.images
         d['mentions'] = tp_entity.mentions
         d['about'] = tp_entity.about
         d['dateCreated'] = self._clear(news_preprocessed.dateCreated)
         d['dateModified'] =self._clear(news_preprocessed.dateModified)
         d['datePublished'] =self._clear(news_preprocessed.datePublished)
-           
         self.dao.create_doc_news(d)
+        d['images'] = media.images
+        d['videos'] = media.videos
         return d
             
             

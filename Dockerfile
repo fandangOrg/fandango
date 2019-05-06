@@ -22,14 +22,14 @@ ADD $SOURCE/install-tagger.sh /treetagger
 ADD $SOURCE/tree-tagger-linux-3.2.1.tar.gz /treetagger
 ADD $SOURCE/tagger-scripts.tar.gz /treetagger
 #ADD $SOURCE/french-par-linux-3.2-utf8.bin.gz /treetagger
-ADD $SOURCE/italian-par-linux-3.2-utf8.bin.gz /treetagger
-ADD $SOURCE/english-par-linux-3.2-utf8.bin.gz /treetagger
-ADD $SOURCE/spanish-par-linux-3.2-utf8.bin.gz /treetagger
-ADD $SOURCE/german-par-linux-3.2-utf8.bin.gz /treetagger
-#ADD $SOURCE/french-chunker-par-linux-3.2-utf8.bin.gz /treetagger
-ADD $SOURCE/english-chunker-par-linux-3.2-utf8.bin.gz /treetagger
-ADD $SOURCE/german-chunker-par-linux-3.2-utf8.bin.gz /treetagger
-ADD $SOURCE/spanish-chunker-par-linux-3.2-utf8.bin.gz /treetagger
+ADD $SOURCE/italian.par.gz /treetagger
+ADD $SOURCE/english.par.gz /treetagger
+ADD $SOURCE/spanish.par.gz /treetagger
+#ADD $SOURCE/german-par-linux-3.2-utf8.bin.gz /treetagger
+#ADD $SOURCE/french-chunker-par.gz /treetagger
+ADD $SOURCE/english-chunker.par.gz /treetagger
+#ADD $SOURCE/german-chunker-par.gz /treetagger
+ADD $SOURCE/spanish-chunker.par.gz /treetagger
 RUN chmod u+x /treetagger/install-tagger.sh
 WORKDIR /treetagger
 RUN /treetagger/install-tagger.sh
