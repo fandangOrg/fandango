@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Fandango Fake news</title>
-    <link href="img/favicon.png" rel="icon" type="image/png">
+    <link href="img/favicon.ico" rel="icon" type="image/ico">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
@@ -16,7 +16,7 @@
 <div ng-if="loading === true" id="preloader"></div>
 <app-navbar></app-navbar>
 <div class="main-content">
-    <div class="col-12 pt-3 pb-3">
+    <div class="col-12 py-3">
 
         <chart-modal></chart-modal>
 
@@ -35,18 +35,58 @@
             </div>
             <div class="col-lg-3 col-sm-12 box">
                 <article-analysis></article-analysis>
-                <!--                <media-analysis></media-analysis>-->
+                <!--                                <media-analysis></media-analysis>-->
                 <div ng-show="fakenessDone === true" class="col-xs-12 mt-2 animated fadeInDown">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <div class="row align-items-center">
-                                <div class="col-12">
-                                    <h3 class="mb-0">Fakeness Level</h3>
+                                <div class="col-6 my-auto">
+                                    <div class="h3 mb-0">Fakeness Level</div>
+                                </div>
+                                <div class="col-6 text-right">
+
+                                    <div ng-if="fakenessDone === true">
+
+                                        <button class="btn btn-sm btn-icon mr-2 btn-outline-default animated fadeIn faster"
+                                                rel="tooltip" title="Similiar news"
+                                                onmouseenter="$(this).tooltip('show')">
+                                            <span class="btn-inner--icon">                                    <i
+                                                    class="fas fa-newspaper" style="font-size: 18px"></i></span>
+                                            <!--                                    <span class="btn-inner&#45;&#45;text">Open Siren</span>-->
+                                        </button>
+
+                                        <a href="https://www.siren.io" target="_blank">
+                                            <button class="btn btn-sm btn-icon btn-outline-default animated fadeIn faster"
+                                                    rel="tooltip" title="Open Siren"
+                                                    onmouseenter="$(this).tooltip('show')">
+                                                <span class="btn-inner--icon"><img src="img/siren.png"></span>
+                                                <!--                                    <span class="btn-inner&#45;&#45;text">Open Siren</span>-->
+                                            </button>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body gaugeBox" style="height: auto;padding: 0">
-                            <div id='gaugeFakeness' class="chart animated fadeIn delay-1s" data-toggle="modal" data-target="#chartModal"></div>
+                            <div id='gaugeFakeness' class="chart animated fadeIn delay-1s" data-toggle="modal"
+                                 data-target="#chartModal"></div>
+
+
+                            <!--                            TEST PER PROGRESS BAR -->
+<!--                                                        <div class="progress-wrapper">-->
+<!--                                                            <div class="progress-info">-->
+<!--                                                                <div class="progress-label">-->
+<!--                                                                    <span>Fakeness level</span>-->
+<!--                                                                </div>-->
+<!--                                                                <div class="progress-percentage">-->
+<!--                                                                    <span>60%</span>-->
+<!--                                                                </div>-->
+<!--                                                            </div>-->
+<!--                                                            <div class="progress">-->
+<!--                                                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+
                             <div ng-if="fakenessDone === true" id="feedback" class="col-12 animated fadeIn delay-1s">
                                 <div class="row">
                                     <div class="col-7">
@@ -74,8 +114,6 @@
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
                             <h3 class="mb-0">Current selection</h3>
-
-
                             <!-- RIMOSSO DOPO MEETING MADRID -->
 
                             <!--<div class="col-5 text-right">-->
@@ -100,21 +138,26 @@
                                       style="min-height: 235px"></textarea>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">
-                                    <div ng-click="sendClaim()"
-                                         class="btn btn-sm btn-icon btn-success"
-                                         ng-class="{'disabled': !selectedText}">
+                                    <!--                                    <button ng-click="sendClaim()" class="btn btn-sm btn-icon btn-success" ng-disabled="!selectedText">-->
+                                    <!--                                        <span class="btn-inner&#45;&#45;icon"><img src="img/text_check.png"></span>-->
+                                    <!--                                        <span class="btn-inner&#45;&#45;text">Check</span>-->
+                                    <!--                                    </button>-->
+
+                                    <button ng-click="showWarning()"
+                                            class="btn btn-sm btn-icon btn-success warning-tooltip"
+                                            ng-disabled="!selectedText" data-placement="top" data-toggle="tooltip"
+                                            onclick="$(this).tooltip({title: 'Function not available'}),$(this).tooltip('show')">
                                         <span class="btn-inner--icon"><img src="img/text_check.png"></span>
                                         <span class="btn-inner--text">Check</span>
-                                    </div>
+                                    </button>
                                 </div>
                                 <div class="col-6 text-center">
-                                    <div ng-click="clear()"
-                                         class="btn btn-sm btn-icon btn-success"
-                                         ng-class="{'disabled': !selectedText}">
+                                    <button ng-click="clear()"
+                                            class="btn btn-sm btn-icon btn-success" ng-disabled="!selectedText">
                                         <span class="btn-inner--icon"><i class="fas fa-broom"
                                                                          style="font-size: 17px"></i></span>
                                         <span class="btn-inner--text">Clear</span>
-                                    </div>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -151,7 +194,7 @@
                                     <!--</span>-->
                                     <!--&lt;!&ndash;<span style="white-space: pre-line;" class="badge badge-dot mr-4"><i ng-class="claim.label"></i> {{claim.label | dashless | capitalize}}</span>&ndash;&gt;-->
                                     <!--</td>-->
-                                    <td style="padding: 0;text-align: center">
+                                    <td class="p-0 text-center">
                                         <span class="font-weight-bold " ng-if="claim.score <= 15">Low</span>
                                         <span class="font-weight-bold " ng-if="claim.score > 15 && claim.score <= 30">Medium</span>
                                         <span class="font-weight-bold " ng-if="claim.score > 30">High</span>

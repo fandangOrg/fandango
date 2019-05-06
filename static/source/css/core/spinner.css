@@ -1,13 +1,14 @@
 
-.loadingFakeness-white {
+.loadingFakeness-small {
     display: inline-block;
     position: relative;
     vertical-align: middle;
-    width: 40px;
-    height: 40px;
+    width: 47px;
+    height: 47px;
+    margin-left: 1rem;
 }
 
-.loadingFakeness-white:after {
+.loadingFakeness-small:after {
     content: " ";
     display: block;
     border-radius: 50%;
@@ -15,12 +16,12 @@
     height: 0;
     margin: 6px;
     box-sizing: border-box;
-    border: 14px solid #fff;
-    border-color: white transparent white transparent;
+    border: 18px solid #fff;
+    border-color: #11cdef transparent #1171ef transparent;
     animation: loadingFakeness 1.2s infinite;
 }
 
-@keyframes loadingFakeness-white {
+@keyframes loadingFakeness-small {
     0% {
         transform: rotate(0);
         animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
@@ -50,7 +51,7 @@
     margin: 6px;
     box-sizing: border-box;
     border: 26px solid #fff;
-    border-color: #2dce89 transparent #2dce89 transparent;
+    border-color: #11cdef transparent #1171ef transparent;
     animation: loadingFakeness 1.2s infinite;
 }
 

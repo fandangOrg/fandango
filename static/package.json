@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Fandango fake news",
   "main": "gulpfile.js",
-  "author": "LiveTech",
+  "author": "Live Tech",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -27,10 +27,5 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {},
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
-  "homepage": ""
+  "license": "MIT"
 }
