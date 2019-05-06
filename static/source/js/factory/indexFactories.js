@@ -2,6 +2,9 @@ app.factory('fakeness',['$http', function ($http) {
     return {
         getFakeness: function (to_send) {
             return $http.post(base + "/analyzer",to_send);
+        },
+        getInfoScore: function (to_send) {
+            return $http.get(base + "/info_score?label="+to_send)
         }
     };
 }]);
