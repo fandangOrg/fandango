@@ -81,6 +81,7 @@ gulp.task('libs:build', function () {
 
 gulp.task('image:build', function () {
     gulp.src(path.source.img)
+        .pipe(rename({dirname: ''}))
         .pipe(gulp.dest(path.dist.img))
 });
 

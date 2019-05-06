@@ -1,4 +1,5 @@
-<div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="chartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,18 +16,22 @@
                         <th scope="col" class="text-center">Value</th>
                     </tr>
                     </thead>
-                    <tbody style="background-color: white">
+                    <tbody class="bg-white">
                     <tr ng-repeat="(key, field) in value" ng-if="key.includes('_')">
                         <td class="text-center">{{key}}</td>
-                        <td class="text-center">{{field}}</td>
+                        <td class="text-center">{{field}}
+                            <a ng-click="getDesc(key)" class="float-right" style="cursor: pointer">
+                                <span id="{{key}}" class="fas fa-info-circle" style="line-height: inherit"></span>
+                            </a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
             </div>
-<!--            <div class="modal-footer">-->
-<!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-<!--                <button type="button" class="btn btn-primary">Save changes</button>-->
-<!--            </div>-->
+            <!--            <div class="modal-footer">-->
+            <!--                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+            <!--                <button type="button" class="btn btn-primary">Save changes</button>-->
+            <!--            </div>-->
         </div>
     </div>
 </div>

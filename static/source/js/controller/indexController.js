@@ -23,6 +23,11 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         'lang': ''
     };
 
+    $scope.media = {
+        'images': [],
+        'video': []
+    };
+
     var levelReal = ['true', 'mostly-true', 'half-true'];
     // var levelFalse = ['false', 'pants-fire'];
 
@@ -84,8 +89,8 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
         console.log($scope.selectedText);
 
-        if ($scope.selectedText.trim() === '' || !$scope.selectedText)
-            return;
+        // if ($scope.selectedText.trim() === '' || !$scope.selectedText)
+        //     return;
 
         var to_send = {
             'text': $scope.selectedText
@@ -159,8 +164,19 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         });
     };
 
-    $scope.getMedia = function () {
+    $scope.clickCb = function (event, tipo, value) {
+        if (event.target.checked) {
+            $scope.media[tipo].push(value)
+        } else {
+            let index = $scope.media[tipo].indexOf(value);
+            if (index !== -1) $scope.media[tipo].splice(index, 1);
+        }
+        console.log($scope.media);
+    };
 
+    $scope.getDesc = function (key) {
+        $('#' + key).prop('title', key);
+        $('#' + key).tooltip('show');
     };
 
     $scope.sendFakeness = function () {
@@ -170,11 +186,19 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         zingchart.exec('gaugeFakeness', 'destroy');
 
         $scope.loadingFakeness = true;
-        fakeness.getFakeness($scope.full_response).then(function (response) {
+
+        let to_send = angular.copy($scope.full_response);   // PREVENT TWO WAY DATA BINDING
+
+        to_send['images'] = $scope.media.images;
+        to_send['video'] = $scope.media.video;
+
+        console.log(to_send);
+
+        fakeness.getFakeness(to_send).then(function (response) {
 
             console.log(response);
 
-            $scope.value = response.data[0];
+            $scope.value = response.data.text[0];
             $scope.fakeValue = parseInt($scope.value.FAKE * 100);
             $scope.realValue = parseInt($scope.value.REAL * 100);
 

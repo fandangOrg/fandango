@@ -386,8 +386,9 @@
 .img-list {
     white-space: nowrap;
     overflow-x: auto;
+    margin-bottom: 20px;
 }
-.img-list > img {
+
+.img-list img {
     height: 75px;
-    margin-right: .25rem;
 }
