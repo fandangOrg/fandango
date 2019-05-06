@@ -22,5 +22,7 @@ LABEL_SCORE={    'text_StopwordCounter'    : 'Count stopwords, usually refers to
     'text_CountAdv'           : 'Count all the adverbs in body\'s article',
     'text_CountAdj'          : 'Count all the adjectives in body\'s article',
     'text_CountPrep_conj'          : 'Count all the preposition and conjuction in body\'s article',
-    'text_countVerbs'              : 'Count allt he verbs in body\'s article'
+    'text_countVerbs'              : 'Count all the verbs in body\'s article',
+    "text_SentencesCounter"         : 'Count all the sentences in body\'s article'
+    
 }
