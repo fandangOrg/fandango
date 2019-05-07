@@ -14,7 +14,7 @@
                             </div>
                         </a>
 
-                        <img ng-if="page.lang" class="ml-3 default-flag" ng-src="img/flags/{{page.lang}}.png"
+                        <img ng-if="page.lang" class="ml-3 default-flag" ng-src="img/{{page.lang}}.png"
                              alt="Language" style="cursor: default !important;">
 
                     </div>
@@ -56,37 +56,41 @@
     <div class="card-body">
         <form>
             <div class="row">
-                <div class="col-md-11 col-9 urlContainer" style="padding-right: 0 !important;">
-                    <div class="form-group">
+                <div class="col-12">
+                    <!--                    <div class="form-group">-->
+                    <!--                        <input class="form-control form-control-alternative"-->
+                    <!--                               ng-model="page.url" placeholder="Enter a URL to analyze"-->
+                    <!--                               type="url">-->
+                    <!--                    </div>-->
+
+                    <div class="input-group">
                         <input class="form-control form-control-alternative"
                                ng-model="page.url" placeholder="Enter a URL to analyze"
                                type="url">
+                        <div class="input-group-append" ng-if="!loadingAnalyzeUrl">
+                            <button class="btn bg-gray" ng-click="analyzeUrl()"
+                                    ng-class="{'bg-gradient-teal pointer': page.url}" ng-disabled="!page.url">
+                                <span class="btn-inner--icon">
+                                    <img title="URL Analyze"
+                                         src="img/url_analyze.png"></span>
+                            </button>
+                        </div>
+
+                        <div ng-if="loadingAnalyzeUrl" class="loadingFakeness-small"></div>
                     </div>
 
-                    <!--                    <div class="input-group">-->
-<!--                        <input class="form-control"-->
-<!--                               ng-model="page.url" placeholder="Enter a URL to analyze"-->
-<!--                               type="url">-->
-<!--                        <div class="input-group-append">-->
-<!--                            <button class="btn bg-gray" type="button" ng-class="{'bg-gradient-teal pointer': page.url || !page.url == 'bg-gray'}">-->
-<!--                                <span class="btn-inner&#45;&#45;icon">-->
-<!--                                    <img ng-if="!loadingAnalyzeUrl" title="URL Analyze" src="img/url_analyze.png"></span>-->
-<!--                            </button>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
                 </div>
-                <div class="col-md-1 col-3 url_analyze">
-                    <div ng-click="analyzeUrl()"
-                         class="icon bg-gray icon-shape text-white rounded-15 shadow"
-                         ng-class="{'bg-gradient-teal pointer': page.url || !page.url == 'bg-gray'}">
-                                        <span class="btn-inner--icon"><img ng-if="!loadingAnalyzeUrl"
-                                                                           title="URL Analyze"
-                                                                           src="img/url_analyze.png">
-                                            <div ng-if="loadingAnalyzeUrl" class="loadingFakeness-white"></div>
-                                        </span>
-                    </div>
-                </div>
+                <!--                <div class="col-md-1 col-3 url_analyze">-->
+                <!--                    <div ng-click="analyzeUrl()"-->
+                <!--                         class="icon bg-gray icon-shape text-white rounded-15 shadow"-->
+                <!--                         ng-class="{'bg-gradient-teal pointer': page.url || !page.url == 'bg-gray'}">-->
+                <!--                                        <span class="btn-inner&#45;&#45;icon"><img ng-if="!loadingAnalyzeUrl"-->
+                <!--                                                                           title="URL Analyze"-->
+                <!--                                                                           src="img/url_analyze.png">-->
+                <!--                                            <div ng-if="loadingAnalyzeUrl" class="loadingFakeness-white"></div>-->
+                <!--                                        </span>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
             <div class="form-group">
                 <div class="row">
@@ -105,11 +109,41 @@
                           ng-mouseup="showSelectedText()"></textarea>
             </div>
 
-            <div ng-if="full_response.images">
+            <div ng-if="full_response.images.length > 0">
                 <label class="form-control-label">Images</label><br>
+                <p class="card-subtitle mb-1">Select images to analyze</p>
                 <div class="img-list">
-                    <img ng-repeat="image in full_response.images" class="img-rounded" ng-src="{{image}}"
-                         alt="News image">
+                    <div class="d-flex">
+                        <div ng-repeat="image in full_response.images" class="mr-3">
+                            <a href="{{image}}" target="_blank">
+                                <img class="img-thumbnail" ng-src="{{image}}"
+                                     alt="News image">
+                            </a>
+                            <div class="custom-control custom-checkbox ml-1">
+                                <input class="custom-control-input" id="{{image}}" type="checkbox"
+                                       ng-click="clickCb($event, 'images', image)">
+                                <label class="custom-control-label" for="{{image}}">Select</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-if="full_response.video.length > 0">
+                <label class="form-control-label">Videos</label><br>
+                <p class="card-subtitle mb-1">Select videos to analyze</p>
+                <div class="img-list">
+                    <div class="d-flex">
+                        <div ng-repeat="video in full_response.video" class="mr-3">
+                            <iframe class="img-thumbnail video"
+                                    ng-src="https://www.youtube.com/embed/lDIRySZn2m0"></iframe>
+                            <div class="custom-control custom-checkbox ml-1">
+                                <input class="custom-control-input" id="{{video}}" type="checkbox"
+                                       ng-click="clickCb($event, 'video', video)">
+                                <label class="custom-control-label" for="{{video}}">Select</label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
