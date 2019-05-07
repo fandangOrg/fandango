@@ -204,7 +204,9 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
   var resultPayload = {};
   resultPayload.identifier = identifier;
   console.log(articles)
-  //console.log(authorsAndPublishers)
+  console.log(authorsAndPublishers)
+
+  console.log("article listed")
 
   var authors = [];
   var publishers = [];
@@ -234,8 +236,11 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
   })
   })
 
+  console.log("hereererer")
+
   var articleResponses = [];
   articles.forEach(function(article){
+    console.log(article)
     // Here we construct the response as defined in the API
     var articleResponse = {};
     articleResponse.identifier = article._source.identifier || null;
@@ -245,8 +250,21 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
     articleResponse.dateModified = article._source.dateModified || null;
     articleResponse.datePublished = article._source.datePublished || null;
 
-    articleResponse.author = setAuthorList(article, authors);
-    articleResponse.publisher = setPublisherList(article, publishers);
+    try{
+      articleResponse.author = setAuthorList(article, authors);
+    }
+    catch(e){
+      articleResponse.author = null;
+    }
+    
+    console.log("auth")
+    console.log(articleResponse.author)
+    try{
+      articleResponse.publisher = setPublisherList(article, publishers);
+    }
+    catch(e){
+      articleResponse.publisher = null;
+    }
 
     articleResponse.mentions = article._source.mentions || [null];
     articleResponse.contains = article._source.contains || null;
@@ -282,7 +300,13 @@ function createClaimResponse(identifier, topics, claims){
     claimResponse.mentions = claim.mentions || null;
     claimResponse.possiblyRelatesTo = claim.possiblyRelatesTo || null;
     claimResponse.text = claim.text || null;
-    claimResponse.claimReviews = setClaimReviews(claim.claimReviews);
+
+    try{
+      claimResponse.claimReviews = setClaimReviews(claim.claimReviews);
+    }
+    catch(e){
+      claimResponse.claimReviews = null;
+    }
     claimResponses.push(claimResponse)
   })
   resultPayload.results = claimResponses;
