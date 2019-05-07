@@ -15,7 +15,7 @@
   "dependencies": {
     "connect": "^3.2.0",
     "js-yaml": "^3.3.0",
-    "node-fetch": "^2.3.0",
-    "swagger-tools": "^0.10.4"
+    "node-fetch": "^2.5.0",
+    "swagger-tools": "0.10.1"
   }
 }

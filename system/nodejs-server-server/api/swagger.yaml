@@ -80,7 +80,7 @@ definitions:
     - "identifier"
     properties:
       identifier:
-        type: "integer"
+        type: "string"
       topics:
         type: "array"
         items:
@@ -92,7 +92,7 @@ definitions:
     - "results"
     properties:
       identifier:
-        type: "integer"
+        type: "string"
       topics:
         type: "array"
         items:
@@ -102,114 +102,114 @@ definitions:
         items:
           $ref: "#/definitions/Claim_Response_Interface_results"
     example:
-      identifier: 0
+      identifier: "identifier"
       topics:
       - "topics"
       - "topics"
       results:
       - claim:
-          firstAppearance: 2
-          identifier: 7
+          firstAppearance: "firstAppearance"
+          identifier: "identifier"
           claimReviews:
           - datePublished: "datePublished"
-            identifier: 2
+            identifier: "identifier"
             reviewAspect: "reviewAspect"
             claimReviewed: "claimReviewed"
             dateCreated: "dateCreated"
             references:
-            - 1
-            - 1
+            - "references"
+            - "references"
             reviewBody: "reviewBody"
-            itemReviewed: 7
+            itemReviewed: "itemReviewed"
             dateModified: "dateModified"
-            aggregateRating: 4.1456080298839363962315474054776132106781005859375
+            aggregateRating: 5.962133916683182377482808078639209270477294921875
           - datePublished: "datePublished"
-            identifier: 2
+            identifier: "identifier"
             reviewAspect: "reviewAspect"
             claimReviewed: "claimReviewed"
             dateCreated: "dateCreated"
             references:
-            - 1
-            - 1
+            - "references"
+            - "references"
             reviewBody: "reviewBody"
-            itemReviewed: 7
+            itemReviewed: "itemReviewed"
             dateModified: "dateModified"
-            aggregateRating: 4.1456080298839363962315474054776132106781005859375
+            aggregateRating: 5.962133916683182377482808078639209270477294921875
           about:
           - "about"
           - "about"
           calculatedRatingDetail:
-            authorRating: 5.63737665663332876420099637471139430999755859375
-            publishRating: 5.962133916683182377482808078639209270477294921875
+            authorRating: 1.46581298050294517310021547018550336360931396484375
+            publishRating: 6.02745618307040320615897144307382404804229736328125
           dateModified: "dateModified"
-          calculatedRating: 1.46581298050294517310021547018550336360931396484375
+          calculatedRating: 0.80082819046101150206595775671303272247314453125
           datePublished: "datePublished"
           appearance:
-          - 6
-          - 6
+          - "appearance"
+          - "appearance"
           dateCreated: "dateCreated"
           mentions:
-          - 9
-          - 9
+          - "mentions"
+          - "mentions"
           text: "text"
           possiblyRelatesTo:
-          - 3
-          - 3
+          - "possiblyRelatesTo"
+          - "possiblyRelatesTo"
       - claim:
-          firstAppearance: 2
-          identifier: 7
+          firstAppearance: "firstAppearance"
+          identifier: "identifier"
           claimReviews:
           - datePublished: "datePublished"
-            identifier: 2
+            identifier: "identifier"
             reviewAspect: "reviewAspect"
             claimReviewed: "claimReviewed"
             dateCreated: "dateCreated"
             references:
-            - 1
-            - 1
+            - "references"
+            - "references"
             reviewBody: "reviewBody"
-            itemReviewed: 7
+            itemReviewed: "itemReviewed"
             dateModified: "dateModified"
-            aggregateRating: 4.1456080298839363962315474054776132106781005859375
+            aggregateRating: 5.962133916683182377482808078639209270477294921875
           - datePublished: "datePublished"
-            identifier: 2
+            identifier: "identifier"
             reviewAspect: "reviewAspect"
             claimReviewed: "claimReviewed"
             dateCreated: "dateCreated"
             references:
-            - 1
-            - 1
+            - "references"
+            - "references"
             reviewBody: "reviewBody"
-            itemReviewed: 7
+            itemReviewed: "itemReviewed"
             dateModified: "dateModified"
-            aggregateRating: 4.1456080298839363962315474054776132106781005859375
+            aggregateRating: 5.962133916683182377482808078639209270477294921875
           about:
           - "about"
           - "about"
           calculatedRatingDetail:
-            authorRating: 5.63737665663332876420099637471139430999755859375
-            publishRating: 5.962133916683182377482808078639209270477294921875
+            authorRating: 1.46581298050294517310021547018550336360931396484375
+            publishRating: 6.02745618307040320615897144307382404804229736328125
           dateModified: "dateModified"
-          calculatedRating: 1.46581298050294517310021547018550336360931396484375
+          calculatedRating: 0.80082819046101150206595775671303272247314453125
           datePublished: "datePublished"
           appearance:
-          - 6
-          - 6
+          - "appearance"
+          - "appearance"
           dateCreated: "dateCreated"
           mentions:
-          - 9
-          - 9
+          - "mentions"
+          - "mentions"
           text: "text"
           possiblyRelatesTo:
-          - 3
-          - 3
+          - "possiblyRelatesTo"
+          - "possiblyRelatesTo"
   Article_Request_Interface:
     type: "object"
     required:
     - "identifier"
     properties:
       identifier:
-        type: "integer"
+        type: "string"
   Article_Response_Interface:
     type: "object"
     required:
@@ -217,34 +217,34 @@ definitions:
     - "results"
     properties:
       identifier:
-        type: "integer"
+        type: "string"
       results:
         type: "array"
         items:
           $ref: "#/definitions/Article_Response_Interface_results"
     example:
-      identifier: 0
+      identifier: "identifier"
       results:
       - article:
-          identifier: 6
+          identifier: "identifier"
           articleBody: "articleBody"
           author:
-          - identifier: 1
+          - identifier: "identifier"
             nationality: "nationality"
             gender: "gender"
             affiliation:
-            - 5
-            - 5
+            - "affiliation"
+            - "affiliation"
             bias: "bias"
             jobTitle: "jobTitle"
             name: "name"
             url: "url"
-          - identifier: 1
+          - identifier: "identifier"
             nationality: "nationality"
             gender: "gender"
             affiliation:
-            - 5
-            - 5
+            - "affiliation"
+            - "affiliation"
             bias: "bias"
             jobTitle: "jobTitle"
             name: "name"
@@ -254,55 +254,55 @@ definitions:
           - "about"
           dateModified: "dateModified"
           calculatedRatingDetail:
-            authorRating: 5.63737665663332876420099637471139430999755859375
-            publishRating: 5.962133916683182377482808078639209270477294921875
+            authorRating: 1.46581298050294517310021547018550336360931396484375
+            publishRating: 6.02745618307040320615897144307382404804229736328125
           datePublished: "datePublished"
-          calculatedRating: 3.61607674925191080461672754609026014804840087890625
+          calculatedRating: 0.80082819046101150206595775671303272247314453125
           contains:
-          - 9
-          - 9
+          - "contains"
+          - "contains"
           dateCreated: "dateCreated"
           mentions:
-          - 7
-          - 7
+          - "mentions"
+          - "mentions"
           publisher:
-          - identifier: 5
+          - identifier: "identifier"
             nationality: "nationality"
             bias: "bias"
             name: "name"
             parentOrganization:
-            - 2
-            - 2
+            - "parentOrganization"
+            - "parentOrganization"
             url: "url"
-          - identifier: 5
+          - identifier: "identifier"
             nationality: "nationality"
             bias: "bias"
             name: "name"
             parentOrganization:
-            - 2
-            - 2
+            - "parentOrganization"
+            - "parentOrganization"
             url: "url"
           headline: "headline"
       - article:
-          identifier: 6
+          identifier: "identifier"
           articleBody: "articleBody"
           author:
-          - identifier: 1
+          - identifier: "identifier"
             nationality: "nationality"
             gender: "gender"
             affiliation:
-            - 5
-            - 5
+            - "affiliation"
+            - "affiliation"
             bias: "bias"
             jobTitle: "jobTitle"
             name: "name"
             url: "url"
-          - identifier: 1
+          - identifier: "identifier"
             nationality: "nationality"
             gender: "gender"
             affiliation:
-            - 5
-            - 5
+            - "affiliation"
+            - "affiliation"
             bias: "bias"
             jobTitle: "jobTitle"
             name: "name"
@@ -312,33 +312,33 @@ definitions:
           - "about"
           dateModified: "dateModified"
           calculatedRatingDetail:
-            authorRating: 5.63737665663332876420099637471139430999755859375
-            publishRating: 5.962133916683182377482808078639209270477294921875
+            authorRating: 1.46581298050294517310021547018550336360931396484375
+            publishRating: 6.02745618307040320615897144307382404804229736328125
           datePublished: "datePublished"
-          calculatedRating: 3.61607674925191080461672754609026014804840087890625
+          calculatedRating: 0.80082819046101150206595775671303272247314453125
           contains:
-          - 9
-          - 9
+          - "contains"
+          - "contains"
           dateCreated: "dateCreated"
           mentions:
-          - 7
-          - 7
+          - "mentions"
+          - "mentions"
           publisher:
-          - identifier: 5
+          - identifier: "identifier"
             nationality: "nationality"
             bias: "bias"
             name: "name"
             parentOrganization:
-            - 2
-            - 2
+            - "parentOrganization"
+            - "parentOrganization"
             url: "url"
-          - identifier: 5
+          - identifier: "identifier"
             nationality: "nationality"
             bias: "bias"
             name: "name"
             parentOrganization:
-            - 2
-            - 2
+            - "parentOrganization"
+            - "parentOrganization"
             url: "url"
           headline: "headline"
   Fact_Request_Interface:
@@ -383,13 +383,13 @@ definitions:
       results:
       - fact:
           datePublished: "datePublished"
-          identifier: 0
+          identifier: "identifier"
           dateCreated: "dateCreated"
           temporalCoverageStart: "temporalCoverageStart"
           dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
           mentions:
-          - 6
-          - 6
+          - "mentions"
+          - "mentions"
           name: "name"
           about:
           - "about"
@@ -400,13 +400,13 @@ definitions:
           url: "url"
       - fact:
           datePublished: "datePublished"
-          identifier: 0
+          identifier: "identifier"
           dateCreated: "dateCreated"
           temporalCoverageStart: "temporalCoverageStart"
           dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
           mentions:
-          - 6
-          - 6
+          - "mentions"
+          - "mentions"
           name: "name"
           about:
           - "about"
@@ -422,12 +422,12 @@ definitions:
       authorRating:
         type: "number"
     example:
-      authorRating: 5.63737665663332876420099637471139430999755859375
-      publishRating: 5.962133916683182377482808078639209270477294921875
+      authorRating: 1.46581298050294517310021547018550336360931396484375
+      publishRating: 6.02745618307040320615897144307382404804229736328125
   Claim_Response_Interface_claim_claimReviews:
     properties:
       identifier:
-        type: "integer"
+        type: "string"
       claimReviewed:
         type: "string"
       reviewAspect:
@@ -443,24 +443,24 @@ definitions:
       aggregateRating:
         type: "number"
       itemReviewed:
-        type: "integer"
+        type: "string"
       references:
         type: "array"
         items:
-          type: "integer"
+          type: "string"
     example:
       datePublished: "datePublished"
-      identifier: 2
+      identifier: "identifier"
       reviewAspect: "reviewAspect"
       claimReviewed: "claimReviewed"
       dateCreated: "dateCreated"
       references:
-      - 1
-      - 1
+      - "references"
+      - "references"
       reviewBody: "reviewBody"
-      itemReviewed: 7
+      itemReviewed: "itemReviewed"
       dateModified: "dateModified"
-      aggregateRating: 4.1456080298839363962315474054776132106781005859375
+      aggregateRating: 5.962133916683182377482808078639209270477294921875
   Claim_Response_Interface_claim:
     properties:
       about:
@@ -470,7 +470,7 @@ definitions:
       appearance:
         type: "array"
         items:
-          type: "integer"
+          type: "string"
       calculatedRating:
         type: "number"
       calculatedRatingDetail:
@@ -482,17 +482,17 @@ definitions:
       datePublished:
         type: "string"
       firstAppearance:
-        type: "integer"
+        type: "string"
       identifier:
-        type: "integer"
+        type: "string"
       mentions:
         type: "array"
         items:
-          type: "integer"
+          type: "string"
       possiblyRelatesTo:
         type: "array"
         items:
-          type: "integer"
+          type: "string"
       text:
         type: "string"
       claimReviews:
@@ -500,110 +500,110 @@ definitions:
         items:
           $ref: "#/definitions/Claim_Response_Interface_claim_claimReviews"
     example:
-      firstAppearance: 2
-      identifier: 7
+      firstAppearance: "firstAppearance"
+      identifier: "identifier"
       claimReviews:
       - datePublished: "datePublished"
-        identifier: 2
+        identifier: "identifier"
         reviewAspect: "reviewAspect"
         claimReviewed: "claimReviewed"
         dateCreated: "dateCreated"
         references:
-        - 1
-        - 1
+        - "references"
+        - "references"
         reviewBody: "reviewBody"
-        itemReviewed: 7
+        itemReviewed: "itemReviewed"
         dateModified: "dateModified"
-        aggregateRating: 4.1456080298839363962315474054776132106781005859375
+        aggregateRating: 5.962133916683182377482808078639209270477294921875
       - datePublished: "datePublished"
-        identifier: 2
+        identifier: "identifier"
         reviewAspect: "reviewAspect"
         claimReviewed: "claimReviewed"
         dateCreated: "dateCreated"
         references:
-        - 1
-        - 1
+        - "references"
+        - "references"
         reviewBody: "reviewBody"
-        itemReviewed: 7
+        itemReviewed: "itemReviewed"
         dateModified: "dateModified"
-        aggregateRating: 4.1456080298839363962315474054776132106781005859375
+        aggregateRating: 5.962133916683182377482808078639209270477294921875
       about:
       - "about"
       - "about"
       calculatedRatingDetail:
-        authorRating: 5.63737665663332876420099637471139430999755859375
-        publishRating: 5.962133916683182377482808078639209270477294921875
+        authorRating: 1.46581298050294517310021547018550336360931396484375
+        publishRating: 6.02745618307040320615897144307382404804229736328125
       dateModified: "dateModified"
-      calculatedRating: 1.46581298050294517310021547018550336360931396484375
+      calculatedRating: 0.80082819046101150206595775671303272247314453125
       datePublished: "datePublished"
       appearance:
-      - 6
-      - 6
+      - "appearance"
+      - "appearance"
       dateCreated: "dateCreated"
       mentions:
-      - 9
-      - 9
+      - "mentions"
+      - "mentions"
       text: "text"
       possiblyRelatesTo:
-      - 3
-      - 3
+      - "possiblyRelatesTo"
+      - "possiblyRelatesTo"
   Claim_Response_Interface_results:
     properties:
       claim:
         $ref: "#/definitions/Claim_Response_Interface_claim"
     example:
       claim:
-        firstAppearance: 2
-        identifier: 7
+        firstAppearance: "firstAppearance"
+        identifier: "identifier"
         claimReviews:
         - datePublished: "datePublished"
-          identifier: 2
+          identifier: "identifier"
           reviewAspect: "reviewAspect"
           claimReviewed: "claimReviewed"
           dateCreated: "dateCreated"
           references:
-          - 1
-          - 1
+          - "references"
+          - "references"
           reviewBody: "reviewBody"
-          itemReviewed: 7
+          itemReviewed: "itemReviewed"
           dateModified: "dateModified"
-          aggregateRating: 4.1456080298839363962315474054776132106781005859375
+          aggregateRating: 5.962133916683182377482808078639209270477294921875
         - datePublished: "datePublished"
-          identifier: 2
+          identifier: "identifier"
           reviewAspect: "reviewAspect"
           claimReviewed: "claimReviewed"
           dateCreated: "dateCreated"
           references:
-          - 1
-          - 1
+          - "references"
+          - "references"
           reviewBody: "reviewBody"
-          itemReviewed: 7
+          itemReviewed: "itemReviewed"
           dateModified: "dateModified"
-          aggregateRating: 4.1456080298839363962315474054776132106781005859375
+          aggregateRating: 5.962133916683182377482808078639209270477294921875
         about:
         - "about"
         - "about"
         calculatedRatingDetail:
-          authorRating: 5.63737665663332876420099637471139430999755859375
-          publishRating: 5.962133916683182377482808078639209270477294921875
+          authorRating: 1.46581298050294517310021547018550336360931396484375
+          publishRating: 6.02745618307040320615897144307382404804229736328125
         dateModified: "dateModified"
-        calculatedRating: 1.46581298050294517310021547018550336360931396484375
+        calculatedRating: 0.80082819046101150206595775671303272247314453125
         datePublished: "datePublished"
         appearance:
-        - 6
-        - 6
+        - "appearance"
+        - "appearance"
         dateCreated: "dateCreated"
         mentions:
-        - 9
-        - 9
+        - "mentions"
+        - "mentions"
         text: "text"
         possiblyRelatesTo:
-        - 3
-        - 3
+        - "possiblyRelatesTo"
+        - "possiblyRelatesTo"
   Article_Response_Interface_article_author:
     properties:
       identifier:
-        type: "integer"
+        type: "string"
       name:
         type: "string"
       url:
@@ -619,14 +619,14 @@ definitions:
       affiliation:
         type: "array"
         items:
-          type: "integer"
+          type: "string"
     example:
-      identifier: 1
+      identifier: "identifier"
       nationality: "nationality"
       gender: "gender"
       affiliation:
-      - 5
-      - 5
+      - "affiliation"
+      - "affiliation"
       bias: "bias"
       jobTitle: "jobTitle"
       name: "name"
@@ -634,7 +634,7 @@ definitions:
   Article_Response_Interface_article_publisher:
     properties:
       identifier:
-        type: "integer"
+        type: "string"
       name:
         type: "string"
       url:
@@ -646,20 +646,20 @@ definitions:
       parentOrganization:
         type: "array"
         items:
-          type: "integer"
+          type: "string"
     example:
-      identifier: 5
+      identifier: "identifier"
       nationality: "nationality"
       bias: "bias"
       name: "name"
       parentOrganization:
-      - 2
-      - 2
+      - "parentOrganization"
+      - "parentOrganization"
       url: "url"
   Article_Response_Interface_article:
     properties:
       identifier:
-        type: "integer"
+        type: "string"
       headline:
         type: "string"
       articleBody:
@@ -681,11 +681,11 @@ definitions:
       mentions:
         type: "array"
         items:
-          type: "integer"
+          type: "string"
       contains:
         type: "array"
         items:
-          type: "integer"
+          type: "string"
       about:
         type: "array"
         items:
@@ -695,25 +695,25 @@ definitions:
       calculatedRatingDetail:
         $ref: "#/definitions/Claim_Response_Interface_claim_calculatedRatingDetail"
     example:
-      identifier: 6
+      identifier: "identifier"
       articleBody: "articleBody"
       author:
-      - identifier: 1
+      - identifier: "identifier"
         nationality: "nationality"
         gender: "gender"
         affiliation:
-        - 5
-        - 5
+        - "affiliation"
+        - "affiliation"
         bias: "bias"
         jobTitle: "jobTitle"
         name: "name"
         url: "url"
-      - identifier: 1
+      - identifier: "identifier"
         nationality: "nationality"
         gender: "gender"
         affiliation:
-        - 5
-        - 5
+        - "affiliation"
+        - "affiliation"
         bias: "bias"
         jobTitle: "jobTitle"
         name: "name"
@@ -723,33 +723,33 @@ definitions:
       - "about"
       dateModified: "dateModified"
       calculatedRatingDetail:
-        authorRating: 5.63737665663332876420099637471139430999755859375
-        publishRating: 5.962133916683182377482808078639209270477294921875
+        authorRating: 1.46581298050294517310021547018550336360931396484375
+        publishRating: 6.02745618307040320615897144307382404804229736328125
       datePublished: "datePublished"
-      calculatedRating: 3.61607674925191080461672754609026014804840087890625
+      calculatedRating: 0.80082819046101150206595775671303272247314453125
       contains:
-      - 9
-      - 9
+      - "contains"
+      - "contains"
       dateCreated: "dateCreated"
       mentions:
-      - 7
-      - 7
+      - "mentions"
+      - "mentions"
       publisher:
-      - identifier: 5
+      - identifier: "identifier"
         nationality: "nationality"
         bias: "bias"
         name: "name"
         parentOrganization:
-        - 2
-        - 2
+        - "parentOrganization"
+        - "parentOrganization"
         url: "url"
-      - identifier: 5
+      - identifier: "identifier"
         nationality: "nationality"
         bias: "bias"
         name: "name"
         parentOrganization:
-        - 2
-        - 2
+        - "parentOrganization"
+        - "parentOrganization"
         url: "url"
       headline: "headline"
   Article_Response_Interface_results:
@@ -758,25 +758,25 @@ definitions:
         $ref: "#/definitions/Article_Response_Interface_article"
     example:
       article:
-        identifier: 6
+        identifier: "identifier"
         articleBody: "articleBody"
         author:
-        - identifier: 1
+        - identifier: "identifier"
           nationality: "nationality"
           gender: "gender"
           affiliation:
-          - 5
-          - 5
+          - "affiliation"
+          - "affiliation"
           bias: "bias"
           jobTitle: "jobTitle"
           name: "name"
           url: "url"
-        - identifier: 1
+        - identifier: "identifier"
           nationality: "nationality"
           gender: "gender"
           affiliation:
-          - 5
-          - 5
+          - "affiliation"
+          - "affiliation"
           bias: "bias"
           jobTitle: "jobTitle"
           name: "name"
@@ -786,39 +786,39 @@ definitions:
         - "about"
         dateModified: "dateModified"
         calculatedRatingDetail:
-          authorRating: 5.63737665663332876420099637471139430999755859375
-          publishRating: 5.962133916683182377482808078639209270477294921875
+          authorRating: 1.46581298050294517310021547018550336360931396484375
+          publishRating: 6.02745618307040320615897144307382404804229736328125
         datePublished: "datePublished"
-        calculatedRating: 3.61607674925191080461672754609026014804840087890625
+        calculatedRating: 0.80082819046101150206595775671303272247314453125
         contains:
-        - 9
-        - 9
+        - "contains"
+        - "contains"
         dateCreated: "dateCreated"
         mentions:
-        - 7
-        - 7
+        - "mentions"
+        - "mentions"
         publisher:
-        - identifier: 5
+        - identifier: "identifier"
           nationality: "nationality"
           bias: "bias"
           name: "name"
           parentOrganization:
-          - 2
-          - 2
+          - "parentOrganization"
+          - "parentOrganization"
           url: "url"
-        - identifier: 5
+        - identifier: "identifier"
           nationality: "nationality"
           bias: "bias"
           name: "name"
           parentOrganization:
-          - 2
-          - 2
+          - "parentOrganization"
+          - "parentOrganization"
           url: "url"
         headline: "headline"
   Fact_Response_Interface_fact:
     properties:
       identifier:
-        type: "integer"
+        type: "string"
       name:
         type: "string"
       text:
@@ -832,7 +832,7 @@ definitions:
       mentions:
         type: "array"
         items:
-          type: "integer"
+          type: "string"
       dateCreated:
         type: "string"
       dateModified:
@@ -847,13 +847,13 @@ definitions:
         type: "string"
     example:
       datePublished: "datePublished"
-      identifier: 0
+      identifier: "identifier"
       dateCreated: "dateCreated"
       temporalCoverageStart: "temporalCoverageStart"
       dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
       mentions:
-      - 6
-      - 6
+      - "mentions"
+      - "mentions"
       name: "name"
       about:
       - "about"
@@ -869,13 +869,13 @@ definitions:
     example:
       fact:
         datePublished: "datePublished"
-        identifier: 0
+        identifier: "identifier"
         dateCreated: "dateCreated"
         temporalCoverageStart: "temporalCoverageStart"
         dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
         mentions:
-        - 6
-        - 6
+        - "mentions"
+        - "mentions"
         name: "name"
         about:
         - "about"
