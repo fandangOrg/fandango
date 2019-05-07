@@ -3,7 +3,13 @@
     "mappings" : {
       "doc" : {
         "properties": {
-            "identifier":{"type":"long"},
+            "identifier":{
+              "type":"text",
+              "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }},
             "name":{
                 "type":"text",
                 "fields": {

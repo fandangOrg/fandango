@@ -3,9 +3,27 @@
     "mappings" : {
       "doc" : {
         "properties": {
-            "identifier":{"type":"long"},
-            "appearance":{"type":"long"},
-            "firstAppearance":{"type":"long"},
+            "identifier":{
+              "type":"text",
+              "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }},
+            "appearance":{
+              "type":"text",
+              "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }},
+            "firstAppearance":{
+              "type":"text",
+              "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }},
             "text":{
                 "type":"text",
                 "fields": {
@@ -27,8 +45,20 @@
                 }
                 }
             },
-            "mentions":{"type":"long"},
-            "possiblyRelatesTo":{"type":"long"}    
+            "mentions":{
+              "type":"text",
+              "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }},
+            "possiblyRelatesTo":{
+              "type":"text",
+              "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }}    
         }
         }
     }

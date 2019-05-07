@@ -3,7 +3,13 @@
     "mappings" : {
       "doc" : {
         "properties": {
-            "identifier":{"type":"long"},
+            "identifier":{
+              "type":"text",
+              "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }},
         "claimReviewed":{
             "type":"text",
             "fields": {
@@ -32,8 +38,20 @@
         "dateModified":{"type":"date"},
         "datePublished":{"type":"date"},
         "aggregateRating":{"type":"float"},
-        "itemReviewed":{"type":"long"},
-        "references":{"type":"long"}  
+        "itemReviewed":{
+          "type":"text",
+          "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }},
+        "references":{
+          "type":"text",
+          "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }}
         }
         }
     }
