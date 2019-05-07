@@ -9,6 +9,8 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     $scope.isVideoEnabled = false;
     $scope.isImagesEnabled = false;
     $scope.mediaLoading = false;
+    $scope.showChart = true;
+    $scope.fakenessColor = '';
     $(".alert").hide();
 
     $scope.full_response = {};
@@ -175,8 +177,13 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     };
 
     $scope.getDesc = function (key) {
-        $('#' + key).prop('title', key);
-        $('#' + key).tooltip('show');
+
+        fakeness.getInfoScore(key).then(function (response) {
+            $('#' + key).prop('title', response.data);
+            $('#' + key).tooltip('show');
+        });
+
+
     };
 
     $scope.sendFakeness = function () {
@@ -202,6 +209,19 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             $scope.fakeValue = parseInt($scope.value.FAKE * 100);
             $scope.realValue = parseInt($scope.value.REAL * 100);
 
+            switch (true) {
+                case $scope.realValue <= 25:
+                    $scope.fakenessColor = 'bg-danger';
+                    break;
+                case $scope.realValue <= 50:
+                    $scope.fakenessColor = 'bg-warning';
+                    break;
+                case $scope.realValue <= 75:
+                    $scope.fakenessColor = 'bg-yellow';
+                    break;
+                default:
+                    $scope.fakenessColor = 'bg-success'
+            }
             zingchart.render({
                 id: 'gaugeFakeness',
                 data: {

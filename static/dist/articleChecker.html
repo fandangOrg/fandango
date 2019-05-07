@@ -111,6 +111,7 @@
 
             <div ng-if="full_response.images.length > 0">
                 <label class="form-control-label">Images</label><br>
+                <p class="card-subtitle mb-1">Select images to analyze</p>
                 <div class="img-list">
                     <div class="d-flex">
                         <div ng-repeat="image in full_response.images" class="mr-3">
@@ -130,6 +131,7 @@
 
             <div ng-if="full_response.video.length > 0">
                 <label class="form-control-label">Videos</label><br>
+                <p class="card-subtitle mb-1">Select videos to analyze</p>
                 <div class="img-list">
                     <div class="d-flex">
                         <div ng-repeat="video in full_response.video" class="mr-3">

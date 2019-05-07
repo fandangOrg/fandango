@@ -48,7 +48,7 @@
                                     <div ng-if="fakenessDone === true">
 
                                         <button class="btn btn-sm btn-icon mr-2 btn-outline-default animated fadeIn faster"
-                                                rel="tooltip" title="Similiar news"
+                                                rel="tooltip" title="Similiar news (NOT AVAILABLE)"
                                                 onmouseenter="$(this).tooltip('show')">
                                             <span class="btn-inner--icon">                                    <i
                                                     class="fas fa-newspaper" style="font-size: 18px"></i></span>
@@ -68,24 +68,29 @@
                             </div>
                         </div>
                         <div class="card-body gaugeBox" style="height: auto;padding: 0">
-                            <div id='gaugeFakeness' class="chart animated fadeIn delay-1s" data-toggle="modal"
-                                 data-target="#chartModal"></div>
+                            <div id='gaugeFakeness' class="chart animated fadeIn delay-05s" data-toggle="modal"
+                                 data-target="#chartModal" ng-show="showChart"></div>
+                            <i class="fas fa-chart-pie"
+                               style="top: 75px; right: 15px; position: absolute; cursor: pointer; z-index: 3"
+                               ng-click="showChart = !showChart"></i>
 
 
                             <!--                            TEST PER PROGRESS BAR -->
-<!--                                                        <div class="progress-wrapper">-->
-<!--                                                            <div class="progress-info">-->
-<!--                                                                <div class="progress-label">-->
-<!--                                                                    <span>Fakeness level</span>-->
-<!--                                                                </div>-->
-<!--                                                                <div class="progress-percentage">-->
-<!--                                                                    <span>60%</span>-->
-<!--                                                                </div>-->
-<!--                                                            </div>-->
-<!--                                                            <div class="progress">-->
-<!--                                                                <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>-->
-<!--                                                            </div>-->
-<!--                                                        </div>-->
+                            <div class="progress-wrapper" ng-show="!showChart">
+                                <div class="progress-info">
+                                    <div class="progress-label">
+                                        <span>Fakeness level</span>
+                                    </div>
+                                    <div class="progress-percentage">
+                                        <span>{{realValue}}%</span>
+                                    </div>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" ng-class="fakenessColor" role="progressbar"
+                                         aria-valuenow="{{realValue}}" aria-valuemin="0" aria-valuemax="100"
+                                         ng-style="{width: realValue+'%'}"></div>
+                                </div>
+                            </div>
 
                             <div ng-if="fakenessDone === true" id="feedback" class="col-12 animated fadeIn delay-1s">
                                 <div class="row">

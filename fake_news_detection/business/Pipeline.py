@@ -175,10 +175,10 @@ class AnalyticsService(metaclass=Singleton):
     
     
     def _info_image_analysis(self,id_image)-> str:
-        u = URLRequest(self.url_media_service+"/api/analyze_image/"+id_image)
-        response = u.get(headers=self.headers)
+        u = URLRequest(self.url_media_service)#+"/api/analyze_image/"+id_image)
+        response = u.api.analyze_image[id_image] 
         print(u)
-        print(response)
+        print(response.status)
         if  'error' in response:
             return OutputImageService(id_image)
         info_image=OutputImageService(**response)
@@ -195,7 +195,7 @@ class AnalyticsService(metaclass=Singleton):
             ##
             for image in news['images']:
                 list_images.append(self._info_image_analysis(image).__dict__)
-            ##    
+            ##    []
             for video in news['videos']:
                 list_videos.append(self._info_video_analysis(video).__dict__)
             ##
@@ -207,7 +207,7 @@ class AnalyticsService(metaclass=Singleton):
             return {"text":js_t,"videos":js_V,"images":js_i} 
         else:      
             return pd_text
-         
+          
 def running(name):
     print("name", name)
     a = AnalyticsService()
