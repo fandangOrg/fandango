@@ -111,7 +111,6 @@ class AnalyticsService(metaclass=Singleton):
         payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
         j = json.dumps(payload)
         response = u.post(data=j, headers=self.headers)
-        #response['identifier'] = news_preprocessed.identifier
         return Media_DataModel(**response)
     
     def _get_topics_ids(self,news_preprocessed:News_DataModel) -> Topics_DataModel:

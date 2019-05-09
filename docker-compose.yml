@@ -8,8 +8,8 @@ fandango:
     - URL_ELASTIC=FandangoEdge01:9220
     #http://0.0.0.0:9220
 #    - MODEL_PATH=data/model
-    - KAFKA_PORT =0.0.0.0
-    - KAFKA_URL = 9092
+    - KAFKA_URL =0.0.0.0
+    - KAFKA_PORT = 9092
     - N_CONSUMER = 10
     - TAGDIR=/treetagger/
     #- URL_SERVICE_CERTH

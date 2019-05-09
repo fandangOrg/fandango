@@ -21,8 +21,6 @@ ds4biz-predictor-core==0.0.3.dev0
 elasticsearch==6.3.1
 elasticsearch-dsl==6.3.1
 eli5==0.8.1
-en-core-web-md==2.0.0
-es-core-news-md==2.0.0
 feedfinder2==0.0.4
 feedparser==5.2.1
 Flask==1.0.2
@@ -32,7 +30,6 @@ graphviz==0.10.1
 HeapDict==1.0.0
 idna==2.8
 inflection==0.3.1
-it-core-news-sm==2.0.0
 itsdangerous==1.1.0
 jieba3k==0.35.1
 Jinja2==2.10
@@ -51,7 +48,6 @@ msgpack==0.5.6
 msgpack-numpy==0.4.3.2
 murmurhash==1.0.1
 newspaper3k==0.2.8
-nl-core-news-sm==2.0.0
 nltk==3.4
 numba==0.42.1
 numpy==1.15.4
@@ -59,7 +55,6 @@ pandas==0.23.4
 partd==0.3.9
 pika==0.11.2
 Pillow==5.4.1
-pkg-resources==0.0.0
 plac==0.9.6
 polyglot==16.7.4
 preshed==2.0.1
