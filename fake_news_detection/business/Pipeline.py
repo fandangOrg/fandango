@@ -59,7 +59,7 @@ class ScrapyService:
         raw_article = self._crawling(url) 
         prepo_article = self._preprocessing(raw_article)
         prepo_article.sourceDomain=[prepo_article.sourceDomain]
-        prepo_article.video = ["https://www.youtube.com/watch?v=wZZ7oFKsKzY","https://www.youtube.com/watch?v=w0AOGeqOnFY"]
+        #prepo_article.video = ["https://www.youtube.com/watch?v=wZZ7oFKsKzY","https://www.youtube.com/watch?v=w0AOGeqOnFY"]
         return(prepo_article)
 
          
@@ -175,7 +175,7 @@ class AnalyticsService(metaclass=Singleton):
     def _info_video_analysis(self,id_video:str)-> str:
         u = URLRequest(self.url_media_service+"/api/analyze_video/"+id_video)
         response = u.get(headers=self.headers)
-        print("INFOvideo->",**response)
+        print("INFOvideo->",response)
         if  'error' in response:
             return OutputVideoService(id_video)
         info_video=OutputVideoService(**response)
