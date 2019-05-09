@@ -99,12 +99,15 @@ class AnalyticsService(metaclass=Singleton):
         u = URLRequest(self.url_authors+"/graph/article")
         payload = news_preprocessed.__dict__
         j = json.dumps(payload)
-        response = u.post(data=j, headers=self.headers)
-        print("response->",response)
-        if  'error' in response:
+        try:
+            response = u.post(data=j, headers=self.headers)
+            print("response->",response)
+            if  'error' in response:
+                return Author_org_DataModel('',[],[])
+            return Author_org_DataModel(**response)
+        except:
             return Author_org_DataModel('',[],[])
-        return Author_org_DataModel(**response)
-        
+         
     def _get_media_ids(self,news_preprocessed:News_DataModel) -> Media_DataModel:
         
         u = URLRequest(self.url_media_service+"/api/media_analysis")
@@ -153,15 +156,18 @@ class AnalyticsService(metaclass=Singleton):
         tp_entity=self._get_topics_ids(news_preprocessed)
         d['author'] = autors_org.author
         d['publisher'] = autors_org.publisher
-        d['images'] = media.images
-        d['videos'] = media.videos
+        #d['images'] = media.images
+        d['contains'] = media.videos+ media.images
         d['mentions'] = tp_entity.mentions
         d['about'] = tp_entity.about
         d['dateCreated'] = self._clear(news_preprocessed.dateCreated)
         d['dateModified'] =self._clear(news_preprocessed.dateModified)
         d['datePublished'] =self._clear(news_preprocessed.datePublished)
-           
         self.dao.create_doc_news(d)
+        d['images'] = media.images
+        d['videos'] = media.videos
+        
+        
         return d
             
             
