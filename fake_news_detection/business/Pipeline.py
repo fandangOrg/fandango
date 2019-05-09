@@ -11,7 +11,8 @@ from fake_news_detection.utils.logger import getLogger
 import json
 from fake_news_detection.model.InterfacceComunicazioni import News_raw,\
     News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel,\
-    OutputVideoService, OutputImageService
+    OutputVideoService, OutputImageService, OutputAuthorService,\
+    OutputPublishService
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO, DAONewsElastic
 from fake_news_detection.model.singleton_filter import Singleton
 from threading import Thread
@@ -174,18 +175,35 @@ class AnalyticsService(metaclass=Singleton):
     def _info_video_analysis(self,id_video:str)-> str:
         u = URLRequest(self.url_media_service+"/api/analyze_video/"+id_video)
         response = u.get(headers=self.headers)
+        print("INFOvideo->",**response)
         if  'error' in response:
             return OutputVideoService(id_video)
         info_video=OutputVideoService(**response)
         return info_video
     
+    #138.4.47.33:5006/author/<author_id>
     
+    def _info_authors_and_pub_analysis(self,id_item:str,service:str)-> str:
+        u = URLRequest(self.url_authors+"/"+service+"/"+id_item)
+        response = u.get(headers=self.headers)
+        if service=="author":
+            class_response =  OutputAuthorService
+        else:
+            class_response = OutputPublishService
+        print("AUTORESID",id_item,response)
+
+
+        if  'error' in response:
+            return class_response(id_item)
+        return class_response(**response)
+        
     def _info_image_analysis(self,id_image)-> str:
         u = URLRequest(self.url_media_service+"/api/analyze_image/"+id_image)
         response = u.get(headers=self.headers)
         print(u)
-        print(response)
+        print("INFOIMAGE->",response)
         if  'error' in response:
+            print("INFOIMAGE_ERRORE->",response)
             return OutputImageService(id_image)
         info_image=OutputImageService(**response)
         return info_image
@@ -194,6 +212,9 @@ class AnalyticsService(metaclass=Singleton):
     def analyzer(self,news_preprocessed:News_DataModel,save=True) -> str:
         pd_text=self._text_analysis(news_preprocessed)
         if save:
+            
+            list_authors=[]
+            list_publishs=[]
             list_images=[]
             list_videos=[]
             score=pd_text['REAL'][0]
@@ -204,13 +225,29 @@ class AnalyticsService(metaclass=Singleton):
             ##    
             for video in news['videos']:
                 list_videos.append(self._info_video_analysis(video).__dict__)
-            ##
+            
+            print("NEWS-->>",news)
+            for authos in news['author']:
+                
+                list_authors.append(self._info_authors_and_pub_analysis(authos, 'author').__dict__)
+            
+            for organization in news['publisher']:
+                list_publishs.append(self._info_authors_and_pub_analysis(organization, 'organization').__dict__)
+            
             pd_video=pd.DataFrame(list_videos)
             pd_image=pd.DataFrame(list_images)
+            pd_authors=pd.DataFrame(list_authors)
+            print(list_authors)
+            print(pd_authors)
+            pd_publish=pd.DataFrame(list_publishs)
             js_t=json.loads(pd_text.to_json(orient='records'))
             js_V=json.loads(pd_video.to_json(orient='records'))
             js_i=json.loads(pd_image.to_json(orient='records'))
-            return {"text":js_t,"videos":js_V,"images":js_i} 
+            js_a=json.loads(pd_authors.to_json(orient='records'))
+            js_p=json.loads(pd_publish.to_json(orient='records'))
+
+
+            return {"text":js_t,"videos":js_V,"images":js_i,"authors":js_a,"publishers":js_p} 
         else:      
             return pd_text
          

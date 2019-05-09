@@ -125,7 +125,20 @@ class OutputImageService:
         self.fakeness = fakeness
     
         
-        
+class OutputAuthorService:
+    def __init__(self, name:str,jobTitle:str="UNKNOW",  url:str="UNKNOW",affiliation:str="",fakenessScore:float=0.0,**args):
+        self.name = name
+        self.jobTitle = jobTitle
+        self.url = url
+        self.affiliation = affiliation
+        self.fakenessScore = fakenessScore
+            
+class OutputPublishService:
+    def __init__(self, name:str, url:str="UNKNOW",affiliation:str="",fakenessScore:float=0.0,**args):
+        self.name = name
+        self.url = url
+        self.affiliation = affiliation
+        self.fakenessScore = fakenessScore
 
 ###############################################################
     
