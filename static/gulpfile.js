@@ -9,6 +9,7 @@ var gulp = require('gulp'),
     uncss = require('gulp-uncss'),
     uglify = require('gulp-uglify-es').default,
     rimraf = require('rimraf'),
+    replace = require('gulp-replace'),
     browserSync = require('browser-sync').create();
 
 var path = {
@@ -62,9 +63,9 @@ gulp.task('js:build', function () {
 
 gulp.task('css:build', function () {
     gulp.src(path.source.css)
-        // .pipe(uncss({
-        //     html: ['source/html/*.html', 'source/html_partials/*.html']
-        // }))
+    // .pipe(uncss({
+    //     html: ['source/html/*.html', 'source/html_partials/*.html']
+    // }))
         .pipe(cssmin())
         .pipe(prefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9'))
         .pipe(concat('style.min.css'))
@@ -89,6 +90,13 @@ gulp.task('image:build', function () {
 gulp.task('clean', function (cb) {
     rimraf('./dist', cb);
 });
+
+// gulp.task('prod', function () {
+//     // gulp.start('build');
+//     gulp.src(path.dist.js,['./app.min.js'])
+//         .pipe(replace('base=', 'devBase='))
+//         .pipe(replace('prodBase=', 'base='))
+// });
 
 gulp.task('build', [
     'js:build',

@@ -1,19 +1,20 @@
-app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl', 'fakeness', 'feedback', 'claim', 'lang', 'alert', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang, alert) {
+app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl', 'fakeness', 'feedback', 'claim', 'lang', 'alert', '$sce', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang, alert, $sce) {
 
     $scope.fakenessDone = false;
-    $scope.highlightedText = '';
-    $scope.selectedText = '';
     $scope.loadingFakeness = false;
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
-    $scope.isVideoEnabled = false;
-    $scope.isImagesEnabled = false;
-    $scope.mediaLoading = false;
     $scope.showChart = true;
+    // $scope.isVideoEnabled = false;
+    // $scope.isImagesEnabled = false;
+    // $scope.mediaLoading = false;
+    $scope.highlightedText = '';
+    $scope.selectedText = '';
     $scope.fakenessColor = '';
+    $scope.full_response = {};
     $(".alert").hide();
 
-    $scope.full_response = {};
+    $scope.videoAnalysisUrl = videoAnalysisUrl;
 
     $scope.page = {
         'authors': [],
@@ -25,7 +26,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         'lang': ''
     };
 
-    $scope.media = {
+    var media = {
         'images': [],
         'video': []
     };
@@ -46,6 +47,12 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             return false;
 
         $scope.loadingAnalyzeUrl = true;
+        $scope.fakenessDone = false;
+
+        media = {
+            'images': [],
+            'video': []
+        };
 
         var to_send = $scope.page.url;
         crUrl.analyzeUrl(to_send).then(function (response) {
@@ -141,6 +148,19 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         }
     };
 
+    $scope.getFakenessColor = function (value) {
+        switch (true) {
+            case value <= 25:
+                return 'bg-danger';
+            case value <= 50:
+                return 'bg-warning';
+            case value <= 75:
+                return 'bg-yellow';
+            default:
+                return 'bg-success'
+        }
+    };
+
 
     $scope.clear = function () {
         $scope.selectedText = '';
@@ -168,22 +188,24 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
     $scope.clickCb = function (event, tipo, value) {
         if (event.target.checked) {
-            $scope.media[tipo].push(value)
+            media[tipo].push(value)
         } else {
-            let index = $scope.media[tipo].indexOf(value);
-            if (index !== -1) $scope.media[tipo].splice(index, 1);
+            let index = media[tipo].indexOf(value);
+            if (index !== -1) media[tipo].splice(index, 1);
         }
-        console.log($scope.media);
+        console.log(media);
     };
 
     $scope.getDesc = function (key) {
-
         fakeness.getInfoScore(key).then(function (response) {
             $('#' + key).prop('title', response.data);
             $('#' + key).tooltip('show');
         });
+    };
 
-
+    $scope.embedVideo = function (urlVideo) {
+        urlVideo = urlVideo.replace("watch?v=", "embed/");
+        return $sce.trustAsResourceUrl(urlVideo);
     };
 
     $scope.sendFakeness = function () {
@@ -196,32 +218,19 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
         let to_send = angular.copy($scope.full_response);   // PREVENT TWO WAY DATA BINDING
 
-        to_send['images'] = $scope.media.images;
-        to_send['video'] = $scope.media.video;
-
-        console.log(to_send);
+        to_send['images'] = media.images;
+        to_send['video'] = media.video;
 
         fakeness.getFakeness(to_send).then(function (response) {
-
-            console.log(response);
-
+            console.log(response.data);
             $scope.value = response.data.text[0];
             $scope.fakeValue = parseInt($scope.value.FAKE * 100);
             $scope.realValue = parseInt($scope.value.REAL * 100);
+            $scope.full_response['video'] = response.data['videos'];
+            $scope.full_response['images'] = response.data['images'];
+            $scope.fakenessColor = $scope.getFakenessColor($scope.realValue);
+            console.log($scope.full_response);
 
-            switch (true) {
-                case $scope.realValue <= 25:
-                    $scope.fakenessColor = 'bg-danger';
-                    break;
-                case $scope.realValue <= 50:
-                    $scope.fakenessColor = 'bg-warning';
-                    break;
-                case $scope.realValue <= 75:
-                    $scope.fakenessColor = 'bg-yellow';
-                    break;
-                default:
-                    $scope.fakenessColor = 'bg-success'
-            }
             zingchart.render({
                 id: 'gaugeFakeness',
                 data: {
