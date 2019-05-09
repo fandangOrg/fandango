@@ -10,7 +10,7 @@ from fake_news_detection.utils.DataPrep import clean_text
 class LemmaTokenizer(object): 
     
     def __init__(self):
-        self.tagger = treetaggerwrapper.TreeTagger(TAGLANG='en')                                            
+        self.tagger = treetaggerwrapper.TreeTagger(TAGLANG='en')                             
         
         self.tagger.tag_text("doc")
          
@@ -41,7 +41,7 @@ def tokenizer(sentence):
         return []    
  
 if __name__ == '__main__':
-    print(LemmaTokenizer("you me damn so please stop sweet clown sad kind soft better happier"))
+    print(tokenizerClass("you me damn so please stop sweet clown sad kind soft better happier"))
     
     
     

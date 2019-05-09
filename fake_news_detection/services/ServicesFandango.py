@@ -18,8 +18,7 @@ from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.model.Language import Language
 from fake_news_detection.business.Pipeline import ScrapyService,\
     AnalyticsService
-from fake_news_detection.apps.daemon import daemon_run
-from fake_news_detection.config.constants import LABEL_SCORE
+#from fake_news_detection.apps.daemon import daemon_run
 
 
 log = getLogger(__name__)
@@ -34,9 +33,6 @@ headers = {'content-type': "application/json",'accept': "application/json"}
 def start_daemon() -> str:
     daemon_run()
     return "done"
-
-def info_score(label:str) -> str:
-    return LABEL_SCORE.get(label)
 
 def analyzer(news_preprocessed:News_DataModel) -> str:
     log.info('''ANALISI NEWS'''+str(news_preprocessed.sourceDomain))
@@ -311,7 +307,6 @@ app.add_service("get_languages",get_languages, method = 'GET')
 app.add_service("analyzer",analyzer, method='POST')
 app.add_service("feedback",feedback, method='POST')
 app.add_service("start_daemon",start_daemon, method='POST')
-app.add_service("info_score",info_score, method = 'GET')
 
 CORS(app)
 

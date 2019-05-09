@@ -51,12 +51,14 @@ class ScrapyService:
         u = URLRequest(self.url_prepocessing+"/preprocess/article")
         j = json.dumps(payload)
         response = u.post(data=j, headers=self.headers)
+        
         return News_DataModel(**response)
 
     def scrapy(self,url)-> News_DataModel:
         raw_article = self._crawling(url) 
         prepo_article = self._preprocessing(raw_article)
         prepo_article.sourceDomain=[prepo_article.sourceDomain]
+        prepo_article.video = ["https://www.youtube.com/watch?v=wZZ7oFKsKzY","https://www.youtube.com/watch?v=w0AOGeqOnFY"]
         return(prepo_article)
 
          
@@ -135,7 +137,7 @@ class AnalyticsService(metaclass=Singleton):
             "author": news_preprocessed.author,
             "publisher": news_preprocessed.publisher,
             "sourceDomain": news_preprocessed.sourceDomain,
-            "calculatedRatingDetail": news_preprocessed.calculateRatingDetail,
+            "calculatedRatingDetail": "",
             "calculatedRating": score_fake,
             "identifier": news_preprocessed.identifier}
     
@@ -152,16 +154,15 @@ class AnalyticsService(metaclass=Singleton):
         tp_entity=self._get_topics_ids(news_preprocessed)
         d['author'] = autors_org.author
         d['publisher'] = autors_org.publisher
-        #d['images'] = media.images
-        d['contains'] = media.videos+ media.images
+        d['images'] = media.images
+        d['videos'] = media.videos
         d['mentions'] = tp_entity.mentions
         d['about'] = tp_entity.about
         d['dateCreated'] = self._clear(news_preprocessed.dateCreated)
         d['dateModified'] =self._clear(news_preprocessed.dateModified)
         d['datePublished'] =self._clear(news_preprocessed.datePublished)
+           
         self.dao.create_doc_news(d)
-        d['images'] = media.images
-        d['videos'] = media.videos
         return d
             
             
@@ -175,10 +176,10 @@ class AnalyticsService(metaclass=Singleton):
     
     
     def _info_image_analysis(self,id_image)-> str:
-        u = URLRequest(self.url_media_service)#+"/api/analyze_image/"+id_image)
-        response = u.api.analyze_image[id_image] 
+        u = URLRequest(self.url_media_service+"/api/analyze_image/"+id_image)
+        response = u.get(headers=self.headers)
         print(u)
-        print(response.status)
+        print(response)
         if  'error' in response:
             return OutputImageService(id_image)
         info_image=OutputImageService(**response)
@@ -195,7 +196,7 @@ class AnalyticsService(metaclass=Singleton):
             ##
             for image in news['images']:
                 list_images.append(self._info_image_analysis(image).__dict__)
-            ##    []
+            ##    
             for video in news['videos']:
                 list_videos.append(self._info_video_analysis(video).__dict__)
             ##
@@ -207,7 +208,7 @@ class AnalyticsService(metaclass=Singleton):
             return {"text":js_t,"videos":js_V,"images":js_i} 
         else:      
             return pd_text
-          
+         
 def running(name):
     print("name", name)
     a = AnalyticsService()
