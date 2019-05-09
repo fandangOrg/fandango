@@ -66,7 +66,8 @@ class Author_org_DataModel:
         return "identifier:"+self.identifier+";author:"+self.author+";publisher:"+self.publisher
     
 class Media_DataModel:
-    def __init__(self, images:list, videos:list):
+    def __init__(self, identifier:str,images:list, videos:list):
+        self.identifier = identifier
         self.images = images
         self.videos = videos
 
@@ -76,8 +77,8 @@ class Media_DataModel:
 
         
 class Topics_DataModel:
-    def __init__(self, id:str,mentions:list,about:list):
-        self.id = id
+    def __init__(self, identifier:str,mentions:list,about:list):
+        self.identifier = identifier
         self.mentions = mentions
         self.about = about
         
@@ -124,7 +125,20 @@ class OutputImageService:
         self.fakeness = fakeness
     
         
-        
+class OutputAuthorService:
+    def __init__(self, name:str,jobTitle:str="UNKNOW",  url:str="UNKNOW",affiliation:str="",fakenessScore:float=0.0,**args):
+        self.name = name
+        self.jobTitle = jobTitle
+        self.url = url
+        self.affiliation = affiliation
+        self.fakenessScore = fakenessScore
+            
+class OutputPublishService:
+    def __init__(self, name:str, url:str="UNKNOW",affiliation:str="",fakenessScore:float=0.0,**args):
+        self.name = name
+        self.url = url
+        self.affiliation = affiliation
+        self.fakenessScore = fakenessScore
 
 ###############################################################
     

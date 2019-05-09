@@ -1,15 +1,21 @@
 fandango:
-  image: livetech/fandango-fake-news:0.1.0
+  image: livetech/fandango-fake-news:0.1.2
   volumes:
     - ./:/data/
   environment:
     - BASEURL_SERVICE= http://0.0.0.0
     - BASEPORT_SERVICE=9800
-    - URL_ELASTIC=http://localhost:9220
-    - MODEL_PATH=data/model
+    - URL_ELASTIC=FandangoEdge01:9220
+    #http://0.0.0.0:9220
+#    - MODEL_PATH=data/model
+    - KAFKA_URL =0.0.0.0
+    - KAFKA_PORT = 9092
+    - N_CONSUMER = 10
+    - TAGDIR=/treetagger/
+    #- URL_SERVICE_CERTH
+    #- URL_SERVICE_UPM
   ports:
     - 9800:9800
-   
 #elasticsearch:
 #   image: elasticsearch:6.4.2
 #   ports:
