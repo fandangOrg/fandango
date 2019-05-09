@@ -32,6 +32,7 @@ ADD $SOURCE/english-chunker.par.gz /treetagger
 ADD $SOURCE/spanish-chunker.par.gz /treetagger
 RUN chmod u+x /treetagger/install-tagger.sh
 WORKDIR /treetagger
+RUN tar xvzf /treetagger/tree-tagger-linux-3.2.1.tar.gz
 RUN /treetagger/install-tagger.sh
 ENV PATH $PATH:/treetagger/bin:/treetagger/cmd
 #################
