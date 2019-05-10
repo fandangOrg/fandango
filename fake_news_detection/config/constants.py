@@ -6,7 +6,7 @@ LANG_MAPPING = {
                  "du" : ["dutch", "dutch", "nl_core_news_sm"]
                 }
 
-LANG_SUPPORTED = ["en", "it", "es", "du"]
+LANG_SUPPORTED = ["en", "it", "es", "du"] 
 
 QUOTES = "\"\'`´‘’“”❛❜❝❞‹›«»„‚‛‟「」『』〝〞〟﹁﹂﹃﹄＂＇｢｣"
 
