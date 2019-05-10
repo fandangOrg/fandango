@@ -5,6 +5,30 @@ app.factory('fakeness',['$http', function ($http) {
         },
         getInfoScore: function (to_send) {
             return $http.get(base + "/info_score?label="+to_send)
+        },
+        getAuthorFakeness: function (score) {
+            switch (true) {
+                case (score < 20):
+                    return 'text-red';
+                case (score < 40):
+                    return 'text-warning';
+                case (score < 80):
+                    return 'text-yellow';
+                case (score > 80):
+                    return 'text-green';
+            }
+        },
+        getFakenessColor: function (value) {
+            switch (true) {
+                case value <= 25:
+                    return 'bg-danger';
+                case value <= 50:
+                    return 'bg-warning';
+                case value <= 75:
+                    return 'bg-yellow';
+                default:
+                    return 'bg-success'
+            }
         }
     };
 }]);
@@ -24,6 +48,14 @@ app.factory('claim',['$http', function ($http) {
         },
         saveClaim: function (to_send) {
             return $http.post(base + "/new_claim_annotated", to_send);
+        },
+        getFakeness: function (level, listLevel) {
+            if (listLevel.includes(level))
+                return 'text-green';
+            else if (level === 'barely-true')
+                return 'text-blue';
+            else
+                return 'text-red';
         }
     };
 }]);
