@@ -11,6 +11,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     $scope.highlightedText = '';
     $scope.selectedText = '';
     $scope.fakenessColor = '';
+    $scope.sirenUrlNew = '';
     $scope.full_response = {};
     $(".alert").hide();
 
@@ -71,7 +72,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             $scope.page.lang = response.data.language;
             $scope.page.media.images = response.data.images;
             $scope.page.media.video = response.data.video;
-
+            $scope.sirenUrlNew = sirenUrl.replace('QUERYDACAMBIARE',$scope.full_response.identifier[0]);
             $scope.loadingAnalyzeUrl = false;
         }, function (response) {
             $scope.loadingAnalyzeUrl = false;
@@ -184,6 +185,11 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     $scope.embedVideo = function (urlVideo) {
         urlVideo = urlVideo.replace("watch?v=", "embed/");
         return $sce.trustAsResourceUrl(urlVideo);
+    };
+
+
+    $scope.getFakenessColor = function (value) {
+        return fakeness.getFakenessColor(value);
     };
 
     $scope.sendFakeness = function () {
