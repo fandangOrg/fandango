@@ -17,7 +17,7 @@
                     </tr>
                     </thead>
                     <tbody class="bg-white">
-                    <tr ng-repeat="(key, field) in value" ng-if="key.includes('_')">
+                    <tr ng-repeat="(key, field) in fakenessValue" ng-if="key.includes('_')">
                         <td class="text-center">{{key}}</td>
                         <td class="text-center">{{field}}
                             <a ng-click="getDesc(key)" class="float-right" style="cursor: pointer">

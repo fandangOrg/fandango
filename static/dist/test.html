@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html ng-app="app" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Fandango Fake news</title>
+    <link href="img/favicon.ico" rel="icon" type="image/ico">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+          integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="libs/bootstrap.min.css">
+    <link type="text/css" href="css/style.min.css" rel="stylesheet">
+</head>
+
+<body ng-controller="testCtrl">
+<div ng-if="loading === true" id="preloader"></div>
+<app-navbar></app-navbar>
+<div class="main-content">
+    <div class="col-12 py-3">
+        <div class="row">
+            <div class="col-lg-9 col-sm-12">
+                <div class="card bg-secondary shadow">
+                    <div class="card-header bg-white border-0">
+                        <div class="row align-items-center">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <h3 class="mb-0">Article Checker</h3>
+                                    </div>
+
+                                    <div class="col-6 text-right">
+                                        <h3 class="mb-0"><span class="hidden-xs">Language selected </span>
+                                            <div class="dropdown">
+                                                <img class="pl-1 default-flag" ng-src="img/{{selectedLanguage}}.png"
+                                                     alt="flag">
+                                                <div class="dropdown-content" style="z-index: 3">
+                                                    <a ng-repeat="language in languages"
+                                                       ng-click="changeLanguage(language)"
+                                                       ng-attr-title="{{language.active == 'False' ? 'Not available' : undefined}}"
+                                                       ng-class="{'languageDisabled': language.active == 'False'}">{{language.name}}
+                                                        <img ng-src="img/{{language.language}}.png"></a>
+                                                </div>
+                                            </div>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="input-group">
+                                        <input class="form-control form-control-alternative"
+                                               ng-model="page.url" placeholder="Enter a URL to analyze"
+                                               type="url">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <label class="form-control-label" for="input-first-name">Title</label>
+                                            <input type="text" id="input-first-name"
+                                                   class="form-control form-control-alternative"
+                                                   placeholder="Insert a title" ng-model="page.title">
+                                        </div>
+                                    </div>
+                                </div>
+                                <label class="form-control-label" for="body">Body</label>
+                                <textarea ng-model="page.text" class="form-control form-control-alternative"
+                                          placeholder="Copy and paste or write an article" id="body"
+                                          ng-mouseup="showSelectedText()"></textarea>
+                            </div>
+
+                            <div ng-if="full_response.images.length > 0">
+                                <label class="form-control-label">Images</label><br>
+                                <p class="card-subtitle mb-1" ng-if="!fakenessDone">Select images to analyze</p>
+                                <div class="img-list">
+                                    <div class="d-flex">
+                                        <div ng-repeat="image in full_response.images" class="mr-3">
+                                            <ng-container ng-if="!fakenessDone">
+                                                <a href="{{image}}" target="_blank">
+                                                    <img class="img-thumbnail" ng-src="{{image}}"
+                                                         alt="News image">
+                                                </a>
+
+                                                <div class="custom-control custom-checkbox ml-1">
+                                                    <input class="custom-control-input" id="{{image}}" type="checkbox"
+                                                           ng-click="clickCb($event, 'images', image)">
+                                                    <label class="custom-control-label" for="{{image}}">Analyze</label>
+                                                </div>
+                                            </ng-container>
+
+                                            <!-- OGGETTO DIFFERENTE DOPO L ANALISI FAKENESS DELLE IMMAGINI E VIDEO -->
+                                            <ng-container ng-if="fakenessDone">
+                                                <a href="{{image.url}}" target="_blank">
+                                                    <img class="img-thumbnail" ng-src="{{image.url}}"
+                                                         alt="News image">
+                                                </a>
+
+                                                <div class="progress-wrapper">
+                                                    <div class="progress-info">
+                                                        <div class="progress-percentage">
+                                                            <span>{{100 - image.fakeness}}% REAL</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar"
+                                                             ng-class="getFakenessColor(100 - image.fakeness)"
+                                                             role="progressbar"
+                                                             aria-valuenow="100 - {{image.fakeness}}" aria-valuemin="0"
+                                                             aria-valuemax="100"
+                                                             ng-style="{width: 100 - image.fakeness+'%'}"></div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-if="full_response.video.length > 0">
+                                <label class="form-control-label">Videos</label><br>
+                                <p class="card-subtitle mb-1" ng-if="!fakenessDone">Select videos to analyze</p>
+                                <div class="img-list">
+                                    <div class="d-flex">
+                                        <div ng-repeat="video in full_response.video" class="mr-3">
+                                            <ng-container ng-if="!fakenessDone">
+                                                <iframe class="img-thumbnail video"
+                                                        ng-src="{{embedVideo(video)}}"></iframe>
+                                                <!--                            <iframe class="img-thumbnail video"-->
+                                                <!--                                    ng-src="{{video}}"></iframe>-->
+                                                <div class="custom-control custom-checkbox ml-1">
+                                                    <input class="custom-control-input" id="{{video}}" type="checkbox"
+                                                           ng-click="clickCb($event, 'video', video)">
+                                                    <label class="custom-control-label" for="{{video}}">Analyze</label>
+                                                </div>
+                                            </ng-container>
+
+                                            <ng-container ng-if="fakenessDone">
+                                                <iframe class="img-thumbnail video"
+                                                        ng-src="{{embedVideo(video.url)}}"></iframe>
+                                                <!--                            <iframe class="img-thumbnail video"-->
+                                                <!--                                    ng-src="{{video}}"></iframe>-->
+
+                                                <div class="progress-wrapper p-0">
+                                                    <div class="progress-info">
+                                                        <div class="progress-percentage">
+                                                            <span>{{100 - video.fakeness}}% REAL</span>
+                                                            <i class="fas fa-info-circle text-right"></i>
+                                                        </div>
+                                                    </div>
+                                                    <div class="progress">
+                                                        <div class="progress-bar"
+                                                             ng-class="getFakenessColor(100 - video.fakeness)"
+                                                             role="progressbar"
+                                                             aria-valuenow="{{100 - video.fakeness}}" aria-valuemin="0"
+                                                             aria-valuemax="100"
+                                                             ng-style="{width: 100 - video.fakeness+'%'}"></div>
+                                                    </div>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-lg-3 col-sm-12 box">
+                <div class="col-xs-12 mb-2">
+                    <div class="card bg-secondary shadow">
+                        <div class="card-header bg-white border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="h3 mb-0">Article Analysis</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body my-2" style="padding: 5px;min-height: auto;">
+                            <ul class="list-unstyled">
+                                <li><strong>Date</strong> {{page.date}}</li>
+                                <li><strong>Authors</strong>
+                                    <ul class="list-unstyled">
+                                        <li ng-repeat="author in page.authors">
+                                            <a ng-click="checkAuthorScore(author)">{{author}}<span
+                                                    class="ml-2 font-weight-bold"
+                                                    ng-class="getAuthorColor(author.score)"
+                                                    ng-if="author.score > 0 "> {{author.score}} %</span></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li><strong>Publisher</strong>
+                                    <ul class="list-unstyled">
+                                        <li ng-repeat="publisher in page.publisher">
+                                            {{publisher}}
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <div class="col-12 text-center">
+                                <button ng-click="sendFakeness()"
+                                        class="btn btn-lg btn-icon btn-success">
+                                    <i class="fas fa-fast-forward"></i>
+                                    <span class="ml-2">Next news</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
+<script src="libs/jquery.min.js"></script>
+<script src="libs/bootstrap.min.js"></script>
+<script src="libs/angular.min.js"></script>
+<script src="libs/angular-sanitize.min.js"></script>
+<script src="js/app.min.js"></script>
+<!-- <script src="web/module.min.js"></script> -->
+<script src="js/controller/testController.min.js"></script>
+<script src="js/directive/indexDirectives.min.js"></script>
+<script src="js/directive/sharedDirectives.min.js"></script>
+<script src="js/factory/indexFactories.min.js"></script>
+<script src="js/factory/sharedFactories.min.js"></script>
+<script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+</body>
+</html>

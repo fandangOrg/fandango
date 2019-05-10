@@ -1240,19 +1240,19 @@ button.close {
     box-shadow: 0 7px 14px rgba(50, 50, 93, .1), 0 3px 6px rgba(0, 0, 0, .08);
 }
 
-.btn:not(:last-child) {
-    margin-right: .5rem;
-}
+/*.btn:not(:last-child) {*/
+/*    margin-right: .5rem;*/
+/*}*/
 
-.btn i:not(:first-child),
-.btn svg:not(:first-child) {
-    margin-left: .5rem;
-}
+/*.btn i:not(:first-child),*/
+/*.btn svg:not(:first-child) {*/
+/*    margin-left: .5rem;*/
+/*}*/
 
-.btn i:not(:last-child),
-.btn svg:not(:last-child) {
-    margin-right: .5rem;
-}
+/*.btn i:not(:last-child),*/
+/*.btn svg:not(:last-child) {*/
+/*    margin-right: .5rem;*/
+/*}*/
 
 .btn-group .btn,
 .input-group .btn {

@@ -108,93 +108,98 @@
                           placeholder="Copy and paste or write an article" id="body"
                           ng-mouseup="showSelectedText()"></textarea>
             </div>
+            <ng-container ng-if="!loadingAnalyzeUrl && !loadingFakeness">
+                <div ng-if="page.media.images.length > 0">
+                    <label class="form-control-label">Images</label><br>
+                    <p class="card-subtitle mb-1" ng-if="!fakenessDone">Select images to analyze</p>
+                    <div class="img-list">
+                        <div class="d-flex">
+                            <div ng-repeat="image in page.media.images" class="mr-3">
+                                <ng-container ng-if="!fakenessDone">
+                                    <a href="{{image}}" target="_blank">
+                                        <img class="img-thumbnail" ng-src="{{image}}"
+                                             alt="News image">
+                                    </a>
 
-            <div ng-if="full_response.images.length > 0">
-                <label class="form-control-label">Images</label><br>
-                <p class="card-subtitle mb-1" ng-if="!fakenessDone">Select images to analyze</p>
-                <div class="img-list">
-                    <div class="d-flex">
-                        <div ng-repeat="image in full_response.images" class="mr-3">
-                            <ng-container ng-if="!fakenessDone">
-                                <a href="{{image}}" target="_blank">
-                                    <img class="img-thumbnail" ng-src="{{image}}"
-                                         alt="News image">
-                                </a>
+                                    <div class="custom-control custom-checkbox ml-1">
+                                        <input class="custom-control-input" id="{{image}}" type="checkbox"
+                                               ng-click="clickCb($event, 'images', image)">
+                                        <label class="custom-control-label" for="{{image}}">Analyze</label>
+                                    </div>
+                                </ng-container>
 
-                                <div class="custom-control custom-checkbox ml-1">
-                                    <input class="custom-control-input" id="{{image}}" type="checkbox"
-                                           ng-click="clickCb($event, 'images', image)">
-                                    <label class="custom-control-label" for="{{image}}">Select</label>
-                                </div>
-                            </ng-container>
+                                <!-- OGGETTO DIFFERENTE DOPO L ANALISI FAKENESS DELLE IMMAGINI E VIDEO -->
+                                <ng-container ng-if="fakenessDone">
+                                    <a href="{{image.url}}" target="_blank">
+                                        <img class="img-thumbnail" ng-src="{{image.url}}"
+                                             alt="News image">
+                                    </a>
 
-                            <!-- OGGETTO DIFFERENTE DOPO L ANALISI FAKENESS DELLE IMMAGINI E VIDEO -->
-                            <ng-container ng-if="fakenessDone">
-                                <a href="{{image.url}}" target="_blank">
-                                    <img class="img-thumbnail" ng-src="{{image.url}}"
-                                         alt="News image">
-                                </a>
-
-                                <div class="progress-wrapper p-0">
-                                    <div class="progress-info">
-                                        <div class="progress-percentage">
-                                            <span>{{100 - image.fakeness}}% REAL</span>
+                                    <div class="progress-wrapper">
+                                        <div class="progress-info">
+                                            <div class="progress-percentage">
+                                                <span>{{100 - image.fakeness}}% REAL</span>
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" ng-class="getFakenessColor(100 - image.fakeness)"
+                                                 role="progressbar"
+                                                 aria-valuenow="100 - {{image.fakeness}}" aria-valuemin="0"
+                                                 aria-valuemax="100"
+                                                 ng-style="{width: 100 - image.fakeness+'%'}"></div>
                                         </div>
                                     </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" ng-class="getFakenessColor(100 - image.fakeness)" role="progressbar"
-                                             aria-valuenow="100 - {{image.fakeness}}" aria-valuemin="0" aria-valuemax="100"
-                                             ng-style="{width: 100 - image.fakeness+'%'}"></div>
-                                    </div>
-                                </div>
-                            </ng-container>
+                                </ng-container>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div ng-if="full_response.video.length > 0">
-                <label class="form-control-label">Videos</label><br>
-                <p class="card-subtitle mb-1" ng-if="!fakenessDone">Select videos to analyze</p>
-                <div class="img-list">
-                    <div class="d-flex">
-                        <div ng-repeat="video in full_response.video" class="mr-3">
-                            <ng-container ng-if="!fakenessDone">
-                                <iframe class="img-thumbnail video"
-                                        ng-src="{{embedVideo(video)}}"></iframe>
-                                <!--                            <iframe class="img-thumbnail video"-->
-                                <!--                                    ng-src="{{video}}"></iframe>-->
-                                <div class="custom-control custom-checkbox ml-1">
-                                    <input class="custom-control-input" id="{{video}}" type="checkbox"
-                                           ng-click="clickCb($event, 'video', video)">
-                                    <label class="custom-control-label" for="{{video}}">Select</label>
-                                </div>
-                            </ng-container>
+                <div ng-if="page.media.video.length > 0">
+                    <label class="form-control-label">Videos</label><br>
+                    <p class="card-subtitle mb-1" ng-if="!fakenessDone">Select videos to analyze</p>
+                    <div class="img-list">
+                        <div class="d-flex">
+                            <div ng-repeat="video in page.media.video" class="mr-3">
+                                <ng-container ng-if="!fakenessDone">
+                                    <iframe class="img-thumbnail video"
+                                            ng-src="{{embedVideo(video)}}"></iframe>
+                                    <!--                            <iframe class="img-thumbnail video"-->
+                                    <!--                                    ng-src="{{video}}"></iframe>-->
+                                    <div class="custom-control custom-checkbox ml-1">
+                                        <input class="custom-control-input" id="{{video}}" type="checkbox"
+                                               ng-click="clickCb($event, 'video', video)">
+                                        <label class="custom-control-label" for="{{video}}">Analyze</label>
+                                    </div>
+                                </ng-container>
 
-                            <ng-container ng-if="fakenessDone">
-                                <iframe class="img-thumbnail video"
-                                        ng-src="{{embedVideo(video.url)}}"></iframe>
-                                <!--                            <iframe class="img-thumbnail video"-->
-                                <!--                                    ng-src="{{video}}"></iframe>-->
+                                <ng-container ng-if="fakenessDone">
+                                    <iframe class="img-thumbnail video"
+                                            ng-src="{{embedVideo(video.url)}}"></iframe>
+                                    <!--                            <iframe class="img-thumbnail video"-->
+                                    <!--                                    ng-src="{{video}}"></iframe>-->
 
-                                <div class="progress-wrapper p-0">
-                                    <div class="progress-info">
-                                        <div class="progress-percentage">
-                                            <span>{{100 - video.fakeness}}% REAL</span>
-                                            <i class="fas fa-info-circle text-right"></i>
+                                    <div class="progress-wrapper p-0">
+                                        <div class="progress-info">
+                                            <div class="progress-percentage">
+                                                <span>{{100 - video.fakeness}}% REAL</span>
+                                                <i class="fas fa-info-circle text-right"></i>
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar" ng-class="getFakenessColor(100 - video.fakeness)"
+                                                 role="progressbar"
+                                                 aria-valuenow="{{100 - video.fakeness}}" aria-valuemin="0"
+                                                 aria-valuemax="100"
+                                                 ng-style="{width: 100 - video.fakeness+'%'}"></div>
                                         </div>
                                     </div>
-                                    <div class="progress">
-                                        <div class="progress-bar" ng-class="getFakenessColor(100 - video.fakeness)" role="progressbar"
-                                             aria-valuenow="{{100 - video.fakeness}}" aria-valuemin="0" aria-valuemax="100"
-                                             ng-style="{width: 100 - video.fakeness+'%'}"></div>
-                                    </div>
-                                </div>
-                            </ng-container>
+                                </ng-container>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </ng-container>
         </form>
     </div>
 </div>

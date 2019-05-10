@@ -10,6 +10,7 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify-es').default,
     rimraf = require('rimraf'),
     replace = require('gulp-replace'),
+    babel = require('gulp-babel'),
     browserSync = require('browser-sync').create();
 
 var path = {
@@ -55,6 +56,9 @@ gulp.task('html_partials:build', function () {
 
 gulp.task('js:build', function () {
     gulp.src(path.source.js)
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
         .pipe(uglify())
         .pipe(rename({suffix: '.min'}))
         .pipe(gulp.dest(path.dist.js))
