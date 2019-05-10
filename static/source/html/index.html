@@ -68,15 +68,18 @@
                             </div>
                         </div>
                         <div class="card-body gaugeBox" style="height: auto;padding: 0">
-                            <div id='gaugeFakeness' class="chart animated fadeIn delay-05s" data-toggle="modal"
-                                 data-target="#chartModal" ng-show="showChart"></div>
+                            <div id='gaugeFakeness' class="chart animated fadeIn delay-05s" ng-show="showChart"></div>
                             <i class="fas fa-chart-pie"
-                               style="top: 75px; right: 15px; position: absolute; cursor: pointer; z-index: 3"
+                               style="top: 75px; right: 15px;font-size: 19px; position: absolute; cursor: pointer; z-index: 3"
                                ng-click="showChart = !showChart"></i>
+                            <i class="fas fa-chart-bar"
+                               style="top: 75px; right: 47px;font-size: 19px; position: absolute; cursor: pointer; z-index: 3"
+                               data-toggle="modal"
+                               data-target="#chartModal"></i>
 
 
                             <!--                            TEST PER PROGRESS BAR -->
-                            <div class="progress-wrapper" ng-show="!showChart">
+                            <div class="progress-wrapper progress-fakeness" ng-show="!showChart">
                                 <div class="progress-info">
                                     <div class="progress-label">
                                         <span>Value</span>
@@ -118,7 +121,7 @@
                 <div class="col-xs-12 mt-2">
                     <div class="card bg-secondary shadow">
                         <div class="card-header bg-white border-0">
-                            <h3 class="mb-0">Current selection</h3>
+                            <h3 class="mb-0">Current selection <strong class="float-right">NOT AVAILABLE</strong></h3>
                             <!-- RIMOSSO DOPO MEETING MADRID -->
 
                             <!--<div class="col-5 text-right">-->
@@ -137,28 +140,45 @@
 
                             <!-- RIMOSSO DOPO MEETING MADRID -->
                         </div>
-                        <div class="card-body h300" style="padding: 5px">
-                            <textarea resize='none' ng-model="selectedText"
-                                      class="form-control form-control-alternative bg-white"
-                                      style="min-height: 235px"></textarea>
+                        <div class="card-body h300 p-2">
+
+                            <!-- DISABILITATO PER MEETING GRECIA -->
+                            <!--                            <textarea resize='none' ng-model="selectedText"-->
+                            <!--                                      class="form-control form-control-alternative"-->
+                            <!--                                      style="min-height: 235px"></textarea>-->
+                            <!-- DISABILITATO PER MEETING GRECIA -->
+
+                            <textarea resize='none' class="form-control form-control-alternative"
+                                      style="min-height: 235px" disabled></textarea>
                             <div class="row mt-3">
                                 <div class="col-6 text-center">
+
+                                    <!-- DISABILITATO PER MEETING GRECIA -->
+
                                     <!--                                    <button ng-click="sendClaim()" class="btn btn-sm btn-icon btn-success" ng-disabled="!selectedText">-->
                                     <!--                                        <span class="btn-inner&#45;&#45;icon"><img src="img/text_check.png"></span>-->
                                     <!--                                        <span class="btn-inner&#45;&#45;text">Check</span>-->
                                     <!--                                    </button>-->
 
-                                    <button ng-click="showWarning()"
-                                            class="btn btn-sm btn-icon btn-success warning-tooltip"
-                                            ng-disabled="!selectedText" data-placement="top" data-toggle="tooltip"
-                                            onclick="$(this).tooltip({title: 'Function not available'}),$(this).tooltip('show')">
+                                    <!--                                    <div class="col-6 text-center">-->
+                                    <!--                                        <button ng-click="clear()"-->
+                                    <!--                                                class="btn btn-sm btn-icon btn-success" ng-disabled="!selectedText">-->
+                                    <!--                                        <span class="btn-inner&#45;&#45;icon"><i class="fas fa-broom"-->
+                                    <!--                                                                         style="font-size: 17px"></i></span>-->
+                                    <!--                                            <span class="btn-inner&#45;&#45;text">Clear</span>-->
+                                    <!--                                        </button>-->
+                                    <!--                                    </div>-->
+
+                                    <!-- DISABILITATO PER MEETING GRECIA -->
+
+                                    <button class="btn btn-sm btn-icon btn-success warning-tooltip" disabled>
                                         <span class="btn-inner--icon"><img src="img/text_check.png"></span>
                                         <span class="btn-inner--text">Check</span>
                                     </button>
                                 </div>
+
                                 <div class="col-6 text-center">
-                                    <button ng-click="clear()"
-                                            class="btn btn-sm btn-icon btn-success" ng-disabled="!selectedText">
+                                    <button class="btn btn-sm btn-icon btn-success" disabled>
                                         <span class="btn-inner--icon"><i class="fas fa-broom"
                                                                          style="font-size: 17px"></i></span>
                                         <span class="btn-inner--text">Clear</span>

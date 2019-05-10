@@ -354,6 +354,10 @@ pre code {
 }
 
 .chart {
-    cursor: pointer;
+    /*cursor: pointer;*/
     height: 300px;
+}
+
+.fa-chart-pie:hover, .fa-chart-bar:hover {
+    color: #1171EF;
 }

@@ -26,12 +26,12 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         'lang': ''
     };
 
-    var media = {
+    $scope.media = {
         'images': [],
         'video': []
     };
 
-    var levelReal = ['true', 'mostly-true', 'half-true'];
+    const levelReal = ['true', 'mostly-true', 'half-true'];
     // var levelFalse = ['false', 'pants-fire'];
 
     angular.element(function () {
@@ -49,7 +49,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         $scope.loadingAnalyzeUrl = true;
         $scope.fakenessDone = false;
 
-        media = {
+        $scope.media = {
             'images': [],
             'video': []
         };
@@ -188,12 +188,12 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
     $scope.clickCb = function (event, tipo, value) {
         if (event.target.checked) {
-            media[tipo].push(value)
+            $scope.media[tipo].push(value)
         } else {
-            let index = media[tipo].indexOf(value);
-            if (index !== -1) media[tipo].splice(index, 1);
+            let index = $scope.media[tipo].indexOf(value);
+            if (index !== -1) $scope.media[tipo].splice(index, 1);
         }
-        console.log(media);
+        console.log($scope.media);
     };
 
     $scope.getDesc = function (key) {
@@ -218,8 +218,8 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
         let to_send = angular.copy($scope.full_response);   // PREVENT TWO WAY DATA BINDING
 
-        to_send['images'] = media.images;
-        to_send['video'] = media.video;
+        to_send['images'] = $scope.media.images;
+        to_send['video'] = $scope.media.video;
 
         fakeness.getFakeness(to_send).then(function (response) {
             console.log(response.data);
