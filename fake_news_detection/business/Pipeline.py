@@ -140,7 +140,7 @@ class AnalyticsService(metaclass=Singleton):
             "author": news_preprocessed.author,
             "publisher": news_preprocessed.publisher,
             "sourceDomain": news_preprocessed.sourceDomain,
-            "calculatedRatingDetail": "",
+            "calculatedRatingDetail": {"key":"value"},
             "calculatedRating": score_fake,
             "identifier": news_preprocessed.identifier}
     
