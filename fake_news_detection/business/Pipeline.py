@@ -197,7 +197,7 @@ class AnalyticsService(metaclass=Singleton):
             return class_response(id_item)
         return class_response(**response)
         
-    def _info_image_analysis(self,id_image)-> str:
+    def _info_image_analysis(self,id_image)-> str: 
         u = URLRequest(self.url_media_service+"/api/analyze_image/"+id_image)
         response = u.get(headers=self.headers)
         print(u)
