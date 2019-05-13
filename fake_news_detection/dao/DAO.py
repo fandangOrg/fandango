@@ -7,8 +7,7 @@ Created on Jan 8, 2019
 
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article, domain_index, domain_docType,\
-    index_name_output, index_name_article
+    index_name_news, docType_article, index_name_article
 from fake_news_detection.model.InterfacceComunicazioni import News,\
     News_DataModel
 import random
@@ -44,10 +43,7 @@ class DAONewsElastic(DAONews):
     def __init__(self):
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news
-        self.index_name_output = index_name_output
         self.docType = docType_article
-        self.domain_name_index = domain_index
-        self.docType_domain = domain_docType
         self.index_name_article = index_name_article
         self.mapping_path = None
         self.check_index_exists()
