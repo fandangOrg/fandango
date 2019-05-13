@@ -15,3 +15,9 @@ app.directive("chartModal", function () {
         templateUrl: 'chartModal.html'
     }
 });
+
+app.directive("mediaModal", function () {
+    return {
+        templateUrl: 'mediaDetailsModal.html'
+    }
+});

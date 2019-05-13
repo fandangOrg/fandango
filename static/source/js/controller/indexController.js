@@ -5,17 +5,15 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
     $scope.showChart = true;
-    // $scope.isVideoEnabled = false;
-    // $scope.isImagesEnabled = false;
-    // $scope.mediaLoading = false;
     $scope.highlightedText = '';
     $scope.selectedText = '';
     $scope.fakenessColor = '';
     $scope.sirenUrlNew = '';
+    $scope.videoAnalysisUrl = videoAnalysisUrl; // CONST IN APP.JS
     $scope.full_response = {};
+    $scope.mediaDetails = {};
     $(".alert").hide();
 
-    $scope.videoAnalysisUrl = videoAnalysisUrl;
 
     $scope.page = {
         'authors': [],
@@ -37,7 +35,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     };
 
     const levelReal = ['true', 'mostly-true', 'half-true'];
-    // var levelFalse = ['false', 'pants-fire'];
+    // const levelFalse = ['false', 'pants-fire'];
 
     angular.element(function () {
         $scope.loading = false;
@@ -48,19 +46,13 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     });
 
     $scope.analyzeUrl = function () {
-        if (!$scope.page.url)
-            return false;
-
         $scope.loadingAnalyzeUrl = true;
         $scope.fakenessDone = false;
 
-        $scope.media = {
-            'images': [],
-            'video': []
-        };
+        $scope.media.images = [];
+        $scope.media.video = [];
 
-        let to_send = $scope.page.url;
-        crUrl.analyzeUrl(to_send).then(function (response) {
+        crUrl.analyzeUrl($scope.page.url).then(function (response) {
             console.log(response.data);
             $scope.full_response = response.data;
 
@@ -72,7 +64,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             $scope.page.lang = response.data.language;
             $scope.page.media.images = response.data.images;
             $scope.page.media.video = response.data.video;
-            $scope.sirenUrlNew = sirenUrl.replace('QUERYDACAMBIARE',$scope.full_response.identifier[0]);
+            $scope.sirenUrlNew = sirenUrl.replace('QUERYDACAMBIARE', $scope.full_response.identifier[0]);
             $scope.loadingAnalyzeUrl = false;
         }, function (response) {
             $scope.loadingAnalyzeUrl = false;
@@ -81,6 +73,11 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
     $scope.showSelectedText = function () {
         $scope.selectedText = $scope.getSelectionText();
+    };
+
+    $scope.showMediaDetails = function (video) {
+        $scope.mediaDetails = video;
+        $('#mediaDetailsModal').modal('show');
     };
 
     $scope.getSelectionText = function () {
@@ -103,12 +100,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
     $scope.sendClaim = function () {
 
-        console.log($scope.selectedText);
-
-        // if ($scope.selectedText.trim() === '' || !$scope.selectedText)
-        //     return;
-
-        var to_send = {
+        let to_send = {
             'text': $scope.selectedText
         };
 
@@ -116,12 +108,13 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             console.log(response.data);
             $scope.claims = response.data;
         }, function (response) {
-
+            alert.showAlert('Error');
         });
     };
 
     $scope.saveClaim = function (label) {
-        var to_send = {
+
+        let to_send = {
             'claim': $scope.selectedText,
             'label': label
         };
@@ -135,6 +128,10 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
     $scope.getClaimFakeness = function (level) {
         return claim.getFakeness(level, levelReal);
+    };
+
+    $scope.getFakenessColor = function (value) {
+        return fakeness.getFakenessColor(value);
     };
 
     $scope.getAuthorColor = function (score) {
@@ -153,7 +150,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         $("#alert").fadeIn();
         $("#feedback").fadeOut();
 
-        var to_send = {
+        let to_send = {
             'title': $scope.page.title,
             'text': $scope.page.text,
             'label': value
@@ -187,11 +184,6 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         return $sce.trustAsResourceUrl(urlVideo);
     };
 
-
-    $scope.getFakenessColor = function (value) {
-        return fakeness.getFakenessColor(value);
-    };
-
     $scope.sendFakeness = function () {
         $scope.feedbackSelected = false;
         $scope.fakenessDone = false;
@@ -216,8 +208,15 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             $scope.loadingFakeness = false;
             $('#gaugeFakeness').addClass('animated fadeIn');
 
-            console.log($scope.full_response);
+
+
+            $scope.page.authors = response.data['authors'];
+            $scope.page.publisher = response.data['publishers'];
+            console.log(response);
+            console.log('PAGE ->',$scope.page);
         }, function (response) {
+            $scope.media.images = [];
+            $scope.media.video = [];
             $scope.fakenessDone = false;
             $scope.loadingFakeness = false;
             alert.showAlert('Error');

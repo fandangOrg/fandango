@@ -139,6 +139,7 @@
                                         <div class="progress-info">
                                             <div class="progress-percentage">
                                                 <span>{{100 - image.fakeness}}% REAL</span>
+                                                <a style="cursor: pointer" ng-click="showMediaDetails(image)"><i class="fas fa-info-circle text-right"></i></a>
                                             </div>
                                         </div>
                                         <div class="progress">
@@ -164,8 +165,6 @@
                                 <ng-container ng-if="!fakenessDone">
                                     <iframe class="img-thumbnail video"
                                             ng-src="{{embedVideo(video)}}"></iframe>
-                                    <!--                            <iframe class="img-thumbnail video"-->
-                                    <!--                                    ng-src="{{video}}"></iframe>-->
                                     <div class="custom-control custom-checkbox ml-1">
                                         <input class="custom-control-input" id="{{video}}" type="checkbox"
                                                ng-click="clickCb($event, 'video', video)">
@@ -176,14 +175,11 @@
                                 <ng-container ng-if="fakenessDone">
                                     <iframe class="img-thumbnail video"
                                             ng-src="{{embedVideo(video.url)}}"></iframe>
-                                    <!--                            <iframe class="img-thumbnail video"-->
-                                    <!--                                    ng-src="{{video}}"></iframe>-->
-
                                     <div class="progress-wrapper p-0">
                                         <div class="progress-info">
                                             <div class="progress-percentage">
                                                 <span>{{100 - video.fakeness}}% REAL</span>
-                                                <i class="fas fa-info-circle text-right"></i>
+                                                <a style="cursor: pointer" ng-click="showMediaDetails(video)"><i class="fas fa-info-circle text-right"></i></a>
                                             </div>
                                         </div>
                                         <div class="progress">

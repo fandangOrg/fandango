@@ -16,17 +16,23 @@
                 <li><strong>Date</strong> {{page.date}}</li>
                 <li><strong>Authors</strong>
                     <ul class="list-unstyled">
-                        <li ng-repeat="author in page.authors">
-                            <a ng-click="checkAuthorScore(author)">{{author}}<span
-                                    class="ml-2 font-weight-bold" ng-class="getAuthorColor(author.score)"
-                                    ng-if="author.score > 0 "> {{author.score}} %</span></a>
+                        <li ng-repeat="author in page.authors" ng-if="!fakenessDone && (!loadingFakeness && !loadingAnalyzeUrl)">
+                            {{author}}
+                        </li>
+
+                        <li ng-repeat="author in page.authors" ng-if="fakenessDone">
+                            {{author.name}}<span class="ml-2 font-weight-bold" ng-class="getAuthorColor(author.fakenessScore)"> {{author.fakenessScore}} %</span>
                         </li>
                     </ul>
                 </li>
                 <li><strong>Publisher</strong>
                     <ul class="list-unstyled">
-                        <li ng-repeat="publisher in page.publisher">
+                        <li ng-repeat="publisher in page.publisher" ng-if="!fakenessDone && (!loadingFakeness && !loadingAnalyzeUrl)">
                             {{publisher}}
+                        </li>
+
+                        <li ng-repeat="publisher in page.publisher" ng-if="fakenessDone">
+                            {{publisher.name}}<span class="ml-2 font-weight-bold" ng-class="getAuthorColor(publisher.fakenessScore)"> {{publisher.fakenessScore}} %</span>
                         </li>
                     </ul>
                 </li>
@@ -47,7 +53,7 @@
 
                 <div class="h5 mt-3" ng-if="(media.images.length > 0 || media.video.length > 0) && !fakenessDone">
                     <i class="fas fa-exclamation-circle text-warning" style="font-size: 16px;"></i>
-                     Analyze images / videos may require some minutes!
+                    Analyze images / videos may require some minutes!
                 </div>
 
             </div>
