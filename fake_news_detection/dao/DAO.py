@@ -312,6 +312,23 @@ class DAONewsElastic(DAONews):
             log.debug("New doc to annotate generated: {doc}".format(doc=response_news))
             return response_news
 
+    def check_claim_existence(self, id):
+        
+        body = {
+                "query": {
+                  "match_phrase": {
+                    "identifier": id
+                  }
+                }
+              }
+        
+        res = self.es_client.search(index=self.index_name, body= body)
+        if len(res['hits']['hits']) < 1:
+            log.debug('news you want to add does not exist')
+            return True
+        else:
+            log.debug('news you want to add already exists')
+            return False
  
 ########MODELLI#############
 class FSMemoryPredictorDAO(FSPredictorDAO):
