@@ -1,4 +1,4 @@
-app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl', 'fakeness', 'feedback', 'claim', 'lang', 'alert', '$sce', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang, alert, $sce) {
+app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl', 'fakeness', 'feedback', 'claim', 'lang', 'alert', 'chart', '$sce', function ($scope, $http, $document, errorCode, crUrl, fakeness, feedback, claim, lang, alert, chart, $sce) {
 
     $scope.fakenessDone = false;
     $scope.loadingFakeness = false;
@@ -11,6 +11,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     $scope.highlightedText = '';
     $scope.selectedText = '';
     $scope.fakenessColor = '';
+    $scope.sirenUrlNew = '';
     $scope.full_response = {};
     $(".alert").hide();
 
@@ -23,7 +24,11 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         'text': '',
         'title': '',
         'date': '',
-        'lang': ''
+        'lang': '',
+        'media': {
+            'images': [],
+            'video': []
+        }
     };
 
     $scope.media = {
@@ -54,10 +59,9 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             'video': []
         };
 
-        var to_send = $scope.page.url;
+        let to_send = $scope.page.url;
         crUrl.analyzeUrl(to_send).then(function (response) {
             console.log(response.data);
-
             $scope.full_response = response.data;
 
             $scope.page.title = response.data.headline;
@@ -66,6 +70,9 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             $scope.page.authors = response.data.author;
             $scope.page.date = response.data.dateCreated;
             $scope.page.lang = response.data.language;
+            $scope.page.media.images = response.data.images;
+            $scope.page.media.video = response.data.video;
+            $scope.sirenUrlNew = sirenUrl.replace('QUERYDACAMBIARE',$scope.full_response.identifier[0]);
             $scope.loadingAnalyzeUrl = false;
         }, function (response) {
             $scope.loadingAnalyzeUrl = false;
@@ -127,40 +134,12 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     };
 
     $scope.getClaimFakeness = function (level) {
-        if (levelReal.includes(level))
-            return 'text-green';
-        else if (level === 'barely-true')
-            return 'text-blue';
-        else
-            return 'text-red';
+        return claim.getFakeness(level, levelReal);
     };
 
     $scope.getAuthorColor = function (score) {
-        switch (true) {
-            case (score < 20):
-                return 'text-red';
-            case (score < 40):
-                return 'text-warning';
-            case (score < 80):
-                return 'text-yellow';
-            case (score > 80):
-                return 'text-green';
-        }
+        return fakeness.getAuthorFakeness(score);
     };
-
-    $scope.getFakenessColor = function (value) {
-        switch (true) {
-            case value <= 25:
-                return 'bg-danger';
-            case value <= 50:
-                return 'bg-warning';
-            case value <= 75:
-                return 'bg-yellow';
-            default:
-                return 'bg-success'
-        }
-    };
-
 
     $scope.clear = function () {
         $scope.selectedText = '';
@@ -198,8 +177,8 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
     $scope.getDesc = function (key) {
         fakeness.getInfoScore(key).then(function (response) {
-            $('#' + key).prop('title', response.data);
-            $('#' + key).tooltip('show');
+            $(`#${key}`).prop('title', response.data);
+            $(`#${key}`).tooltip('show');
         });
     };
 
@@ -208,110 +187,40 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         return $sce.trustAsResourceUrl(urlVideo);
     };
 
+
+    $scope.getFakenessColor = function (value) {
+        return fakeness.getFakenessColor(value);
+    };
+
     $scope.sendFakeness = function () {
         $scope.feedbackSelected = false;
         $scope.fakenessDone = false;
         $('#gaugeFakeness').removeClass('animated fadeIn');
         zingchart.exec('gaugeFakeness', 'destroy');
 
-        $scope.loadingFakeness = true;
-
         let to_send = angular.copy($scope.full_response);   // PREVENT TWO WAY DATA BINDING
-
         to_send['images'] = $scope.media.images;
         to_send['video'] = $scope.media.video;
 
-        fakeness.getFakeness(to_send).then(function (response) {
-            console.log(response.data);
-            $scope.value = response.data.text[0];
-            $scope.fakeValue = parseInt($scope.value.FAKE * 100);
-            $scope.realValue = parseInt($scope.value.REAL * 100);
-            $scope.full_response['video'] = response.data['videos'];
-            $scope.full_response['images'] = response.data['images'];
-            $scope.fakenessColor = $scope.getFakenessColor($scope.realValue);
-            console.log($scope.full_response);
+        $scope.loadingFakeness = true;
 
-            zingchart.render({
-                id: 'gaugeFakeness',
-                data: {
-                    "type": "gauge",
-                    "background-color": "#f7fafc",
-                    "scale-r": {
-                        "markers": [
-                            {
-                                "type": "line",
-                                "range": [50],
-                                "line-color": "grey",
-                                "line-width": 2,
-                                "line-style": "dashed",
-                                "alpha": 1
-                            }
-                        ],
-                        "aperture": 200,
-                        "values": "0:100:25",
-                        "center": {
-                            "size": 5,
-                            "background-color": "#66CCFF #FFCCFF",
-                            "border-color": "none"
-                        },
-                        "ring": {
-                            "size": 10,
-                            "rules": [
-                                {
-                                    "rule": "%v >= 0 && %v <= 25",
-                                    "background-color": "green"
-                                },
-                                {
-                                    "rule": "%v >= 25 && %v <= 50",
-                                    "background-color": "yellow"
-                                },
-                                {
-                                    "rule": "%v >= 50 && %v <= 75",
-                                    "background-color": "orange"
-                                },
-                                {
-                                    "rule": "%v >= 75 && %v <=100",
-                                    "background-color": "red"
-                                }
-                            ]
-                        },
-                        "labels": ["REAL", "", "", "", "FAKE"],  //Scale Labels
-                        "item": {  //Scale Label Styling
-                            "font-color": "black",
-                            "font-family": "Open Sans, serif",
-                            "font-size": 13,
-                            "font-weight": "bold",   //or "normal"
-                            "font-style": "normal",   //or "italic"
-                            "offset-r": 0,
-                            "angle": "auto"
-                        }
-                    },
-                    gui: {
-                        contextMenu: {
-                            empty: true
-                        }
-                    },
-                    "plot": {
-                        tooltip: {
-                            visible: false
-                        },
-                        "csize": "5%",
-                        "size": "100%",
-                        "background-color": "#000000"
-                    },
-                    "series": [
-                        {"values": [$scope.fakeValue]}
-                    ]
-                },
-                height: "100%",
-                width: "100%"
-            });
+        fakeness.getFakeness(to_send).then(function (response) {
+            $scope.fakenessValue = response.data.text[0];
+            $scope.fakeValue = parseInt($scope.fakenessValue.FAKE * 100);
+            $scope.realValue = parseInt($scope.fakenessValue.REAL * 100);
+            $scope.page.media.images = response.data['images'];
+            $scope.page.media.video = response.data['videos'];
+            $scope.fakenessColor = fakeness.getFakenessColor($scope.realValue);
+            chart.renderChart($scope.fakeValue);
             $scope.fakenessDone = true;
             $scope.loadingFakeness = false;
             $('#gaugeFakeness').addClass('animated fadeIn');
+
+            console.log($scope.full_response);
         }, function (response) {
             $scope.fakenessDone = false;
             $scope.loadingFakeness = false;
+            alert.showAlert('Error');
         });
     }
 }]);

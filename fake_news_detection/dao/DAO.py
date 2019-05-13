@@ -308,6 +308,23 @@ class DAONewsElastic(DAONews):
             log.debug("New doc to annotate generated: {doc}".format(doc=response_news))
             return response_news
 
+    def is_valitade_news_existence(self, id):
+        
+        body = {
+                "query": {
+                  "match_phrase": {
+                    "identifier": id
+                  }
+                }
+              }
+        
+        res = self.es_client.search(index=self.index_name, body= body)
+        if len(res['hits']['hits']) < 1:
+            log.debug('news you want to add does not exist')
+            return True
+        else:
+            log.debug('news you want to add already exists')
+            return False
  
 ########MODELLI#############
 class FSMemoryPredictorDAO(FSPredictorDAO):
@@ -320,7 +337,8 @@ class FSMemoryPredictorDAO(FSPredictorDAO):
             del self.predictors[nome_modello]
             
 if __name__ == '__main__':
-    pass
+    dao=DAONewsElastic()
+    print(dao.is_valitade_news_existence("0df7f440a6569f78124795a2ff12d575"))
     
         
         
