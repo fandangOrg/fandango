@@ -32,7 +32,7 @@ class News_raw:
 
 class News_DataModel:
     
-    def __init__(self,language:str,identifier:str,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,
+    def __init__(self,language:str,identifier:list,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,
                  calculateRatingDetail:str,images:list, video:list, sourceDomain:list,video_analizer:bool=False,image_analizer:bool=False):
         self.headline = headline
         self.articleBody = articleBody
@@ -103,7 +103,7 @@ class Final_DataModel:
 
 
 class OutputVideoService:
-    def __init__(self,video_id:str, status:str="UNKNOW", url:str="UNKNOW",fakeness: float=0.0, video_url:str="UNKNOW"
+    def __init__(self,video_id:str, status:str="UNKNOW", url:str="UNKNOW",fakeness: float=0.5, video_url:str="UNKNOW"
                  ,reasoning:list=["UNKNOW","UNKNOW"],first_frame:int=0,last_frame:int=100,fps:int=12, prograssMax:float=0.0):
         self.status = status
         self.video_id = video_id
@@ -118,7 +118,7 @@ class OutputVideoService:
         
         
 class OutputImageService:
-    def __init__(self, image_id:str,status:str="UNKNOW",  url:str="UNKNOW",fakeness:float=0.0):
+    def __init__(self, image_id:str,status:str="UNKNOW",  url:str="UNKNOW",fakeness:float=0.5):
         self.status = status
         self.image_id = image_id
         self.url = url
