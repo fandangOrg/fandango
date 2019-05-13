@@ -35,16 +35,18 @@ class ScrapyService:
 
     
     def _crawling(self,url):
-        log.info("CRAWLING CERTH "+url)
-        u = URLRequest(self.url_media_service+"/api/retrieve_article")
-        payload= {"url": url}
-        j = json.dumps(payload)
-        response = u.post(data=j, headers=self.headers)
-        news=News_raw(**response)
-        print("VIDEO->",news.videos)
-        print("IMMAGINI->",news.images)
-        return news
-    
+        try:
+            log.info("CRAWLING CERTH "+url)
+            u = URLRequest(self.url_media_service+"/api/retrieve_article")
+            payload= {"url": url}
+            j = json.dumps(payload)
+            response = u.post(data=j, headers=self.headers)
+            news=News_raw(**response)
+            print("VIDEO->",news.videos)
+            print("IMMAGINI->",news.images)
+            return news
+        except:
+            return None
     
     def _preprocessing(self,raw_news:News_raw) -> News_DataModel:
         payload = raw_news.__dict__
@@ -113,20 +115,18 @@ class AnalyticsService(metaclass=Singleton):
             return Author_org_DataModel('',[],[])
          
     def _get_media_ids(self,news_preprocessed:News_DataModel) -> Media_DataModel:
-        #=======================================================================
-        # try:
-        #=======================================================================
-        u = URLRequest(self.url_media_service+"/api/media_analysis")
-        payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
-        j = json.dumps(payload)
-        response = u.post(data=j, headers=self.headers)
-        print("VIDEOIMMAGINI RESPOSNE",response)
-        return Media_DataModel(**response)
-        #=======================================================================
-        # except Exception as e :
-        #     log.info("ERROR SERVICE MEDIA IDS:  "+str(e))
-        #     return Media_DataModel('',[],[])
-        #=======================================================================
+        try:
+            u = URLRequest(self.url_media_service+"/api/media_analysis")
+            payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
+            print("RICHIESTA VIDEOIMMAGINI  ",payload)
+
+            j = json.dumps(payload)
+            response = u.post(data=j, headers=self.headers)
+            print("VIDEOIMMAGINI RESPOSNE",response)
+            return Media_DataModel(**response)
+        except Exception as e :
+            log.info("ERROR SERVICE MEDIA IDS:  "+str(e))
+            return Media_DataModel('',[],[])
     def _get_topics_ids(self,news_preprocessed:News_DataModel) -> Topics_DataModel:
         try:
             u = URLRequest(self.url_media_service+"/api/extract_topics")

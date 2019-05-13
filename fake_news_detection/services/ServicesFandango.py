@@ -133,9 +133,21 @@ def feedback(info:InterfaceInputFeedBack) -> str:
 #     print(response)
 #     return News_DataModel(**response)
 #===============================================================================
-
 def crawl_prep(url:str) -> News_DataModel:
     return service_scrapy.scrapy(url)
+
+#===============================================================================
+
+def ping_image(id:str) -> News_DataModel:
+    headers = {'content-type': "application/json",'accept': "application/json"}
+    u = URLRequest(url_service_certh+"/api/analyze_image/"+id)
+    return u.get(headers=headers)
+
+def ping_video(id:str) -> str:
+    headers = {'content-type': "application/json",'accept': "application/json"}
+    u = URLRequest(url_service_certh+"/api/analyze_video/"+id)
+    return u.get(headers=headers)
+      
 
 def author_org_getter(news_preprocessed:News_DataModel) -> Author_org_DataModel:
     
@@ -312,6 +324,9 @@ app.add_service("analyzer",analyzer, method='POST')
 app.add_service("feedback",feedback, method='POST')
 app.add_service("start_daemon",start_daemon, method='POST')
 app.add_service("info_score",info_score, method = 'GET')
+app.add_service("ping_image",ping_image, method = 'GET')
+app.add_service("ping_video",ping_video, method = 'GET')
+
 CORS(app)
 
 log.info("RUN ON {cfg}".format(cfg= AppConfig.BASEURL+AppConfig.BASEPORT))
