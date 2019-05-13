@@ -10,6 +10,7 @@
           integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="libs/bootstrap.min.css">
     <link type="text/css" href="css/style.min.css" rel="stylesheet">
+    <link href="libs/jquery.json-viewer.css" rel="stylesheet">
 </head>
 
 <body ng-controller="indexCtrl">
@@ -112,7 +113,7 @@
                             </div>
                             <div ng-if="feedbackSelected === true" class="alert alert-success mb-0" role="alert"
                                  id="alert">
-                                <strong>Thank you for the feedback!</strong> Click again on 'Check Fakeness' to see the
+                                <strong>Thank you for the feedback!</strong> Click again on 'Check Trustworthiness' to see the
                                 new Fakeness Level.
                             </div>
                         </div>
@@ -239,6 +240,7 @@
 <script src="libs/bootstrap.min.js"></script>
 <script src="libs/angular.min.js"></script>
 <script src="libs/angular-sanitize.min.js"></script>
+<script src="libs/jquery.json-viewer.js"></script>
 <script src="js/app.min.js"></script>
 <!-- <script src="web/module.min.js"></script> -->
 <script src="js/controller/indexController.min.js"></script>
