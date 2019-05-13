@@ -21,7 +21,7 @@
                         </li>
 
                         <li ng-repeat="author in page.authors" ng-if="fakenessDone">
-                            {{author.name}}<span class="ml-2 font-weight-bold" ng-class="getAuthorColor(author.fakenessScore)"> {{author.fakenessScore}} %</span>
+                            {{author.name}}<span class="ml-2 font-weight-bold" ng-class="getAuthorColor(author.fakenessScore)" ng-if="author.fakenessScore > 0"> {{author.fakenessScore}}%</span>
                         </li>
                     </ul>
                 </li>
@@ -32,7 +32,7 @@
                         </li>
 
                         <li ng-repeat="publisher in page.publisher" ng-if="fakenessDone">
-                            {{publisher.name}}<span class="ml-2 font-weight-bold" ng-class="getAuthorColor(publisher.fakenessScore)"> {{publisher.fakenessScore}} %</span>
+                            {{publisher.name}}<span class="ml-2 font-weight-bold" ng-class="getAuthorColor(publisher.fakenessScore)" ng-if="publisher.fakenessScore > 0"> {{publisher.fakenessScore}}%</span>
                         </li>
                     </ul>
                 </li>
