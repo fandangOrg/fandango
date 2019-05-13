@@ -135,19 +135,41 @@
                                              alt="News image">
                                     </a>
 
-                                    <div class="progress-wrapper">
+                                    <div class="progress-wrapper" ng-if="image.status === 'done'">
                                         <div class="progress-info">
                                             <div class="progress-percentage">
-                                                <span>{{100 - image.fakeness}}% REAL</span>
-                                                <a style="cursor: pointer" ng-click="showMediaDetails(image)"><i class="fas fa-info-circle text-right"></i></a>
+                                                <!--                                                <span>{{100 - image.fakeness}}% REAL</span>-->
+                                                <span>ANALYZED</span>
+                                                <a style="cursor: pointer" ng-click="showMediaDetails(image)"><i
+                                                        class="fas fa-info-circle text-right"></i></a>
                                             </div>
                                         </div>
                                         <div class="progress">
-                                            <div class="progress-bar" ng-class="getFakenessColor(100 - image.fakeness)"
+                                            <div class="progress-bar" ng-class="getFakenessColor(100)"
                                                  role="progressbar"
-                                                 aria-valuenow="100 - {{image.fakeness}}" aria-valuemin="0"
+                                                 aria-valuenow="100" aria-valuemin="0"
+                                                 aria-valuemax="100" style="width: 100%"></div>
+
+<!--                                            <div class="progress-bar" ng-class="getFakenessColor(100 - image.fakeness)"-->
+<!--                                                 role="progressbar"-->
+<!--                                                 aria-valuenow="100 - {{image.fakeness}}" aria-valuemin="0"-->
+<!--                                                 aria-valuemax="100"-->
+<!--                                                 ng-style="{width: 100 - image.fakeness+'%'}"></div>-->
+                                        </div>
+                                    </div>
+
+                                    <div class="progress-wrapper" ng-if="image.status === 'start'">
+                                        <div class="progress-info">
+                                            <div class="progress-percentage">
+                                                <span>ANALYZING...</span>
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-default"
+                                                 role="progressbar"
+                                                 aria-valuenow="100" aria-valuemin="0"
                                                  aria-valuemax="100"
-                                                 ng-style="{width: 100 - image.fakeness+'%'}"></div>
+                                                 style="width: 100%"></div>
                                         </div>
                                     </div>
                                 </ng-container>
@@ -167,8 +189,8 @@
                                             ng-src="{{embedVideo(video)}}"></iframe>
                                     <div class="custom-control custom-checkbox ml-1">
                                         <input class="custom-control-input" id="{{video}}" type="checkbox"
-                                               ng-click="clickCb($event, 'video', video)">
-                                        <label class="custom-control-label" for="{{video}}">Analyze</label>
+                                               ng-click="clickCb($event, 'video', video)" disabled>
+                                        <label class="custom-control-label" for="{{video}}">Analyze ( N/A )</label>
                                     </div>
                                 </ng-container>
 
@@ -179,7 +201,8 @@
                                         <div class="progress-info">
                                             <div class="progress-percentage">
                                                 <span>{{100 - video.fakeness}}% REAL</span>
-                                                <a style="cursor: pointer" ng-click="showMediaDetails(video)"><i class="fas fa-info-circle text-right"></i></a>
+                                                <a style="cursor: pointer" ng-click="showMediaDetails(video)"><i
+                                                        class="fas fa-info-circle text-right"></i></a>
                                             </div>
                                         </div>
                                         <div class="progress">

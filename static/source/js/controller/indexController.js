@@ -13,7 +13,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     $scope.full_response = {};
     $scope.mediaDetails = {};
     $(".alert").hide();
-
+    $scope.mediaToAnalyze = [];
 
     $scope.page = {
         'authors': [],
@@ -76,8 +76,9 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         $scope.selectedText = $scope.getSelectionText();
     };
 
-    $scope.showMediaDetails = function (video) {
-        $scope.mediaDetails = video;
+    $scope.showMediaDetails = function (media) {
+        $scope.mediaDetails = media;
+        $('#json-viewer').jsonViewer($scope.mediaDetails);
         $('#mediaDetailsModal').modal('show');
     };
 
@@ -100,7 +101,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
     $scope.sendClaim = function () {
 
-        let to_send = { 'text': $scope.selectedText };
+        let to_send = {'text': $scope.selectedText};
 
         claim.getClaim(to_send).then(function (response) {
             console.log(response.data);
@@ -192,6 +193,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
         $scope.loadingFakeness = true;
 
+        console.log("tosend", to_send);
         fakeness.getFakeness(to_send).then(function (response) {
             $scope.fakenessValue = response.data.text[0];
             $scope.fakeValue = parseInt($scope.fakenessValue.FAKE * 100);
@@ -207,9 +209,9 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             $scope.fakenessDone = true;
             $scope.loadingFakeness = false;
             $('#gaugeFakeness').addClass('animated fadeIn');
-
             console.log('FAKENESS ->', response.data);
             console.log('PAGE ->', $scope.page);
+            prepareMediaQueue($scope.page.media);
         }, function (response) {
             $scope.media.images = [];
             $scope.media.video = [];
@@ -217,5 +219,35 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             $scope.loadingFakeness = false;
             alert.showAlert('Error');
         });
+    };
+
+    function prepareMediaQueue(media) {
+        let images = media.images.map(a => a['image_id']);
+        // let videos = media.video.map(a => a['video_id']);
+
+        var refresh = setInterval(function () {
+            for (let i = 0; i < images.length; i++) {
+                fakeness.getImageFakeness(images[i]).then(function (response) {
+                    if (response.data.status === 'done') {
+                        let index = $scope.page.media.images.findIndex(x => x['image_id'] === images[i]);
+                        console.log('PRIMA', $scope.page.media.images[index]);
+                        $scope.page.media.images[index] = response.data;
+                        console.log('DOPO', $scope.page.media.images[index]);
+                        images.splice(i, 1);
+                    }
+                });
+            }
+
+            // for (let i = 0; i < videos.length; i++) {
+            //     fakeness.getVideoFakeness(images[i]).then(function (response) {
+            //         console.log(response);
+            //     });
+            // }
+
+            if (images.length === 0) {
+                clearInterval(refresh);
+            }
+        }, 5000);
+
     }
 }]);

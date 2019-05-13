@@ -1,10 +1,16 @@
-app.factory('fakeness',['$http', function ($http) {
+app.factory('fakeness', ['$http', function ($http) {
     return {
         getFakeness: function (to_send) {
-            return $http.post(base + "/analyzer",to_send);
+            return $http.post(base + "/analyzer", to_send);
         },
         getInfoScore: function (to_send) {
-            return $http.get(base + "/info_score?label="+to_send)
+            return $http.get(base + "/info_score?label=" + to_send)
+        },
+        getImageFakeness: function (media) {
+            return $http.get(base + "/ping_image?id=" + media)
+        },
+        getVideoFakeness: function (media) {
+            return $http.get(base + "/ping_image?id=" + media)
         },
         getAuthorFakeness: function (score) {
             switch (true) {
@@ -33,7 +39,7 @@ app.factory('fakeness',['$http', function ($http) {
     };
 }]);
 
-app.factory('feedback',['$http', function ($http) {
+app.factory('feedback', ['$http', function ($http) {
     return {
         sendFb: function (to_send) {
             return $http.post(base + "/feedback", to_send);
@@ -41,7 +47,7 @@ app.factory('feedback',['$http', function ($http) {
     };
 }]);
 
-app.factory('claim',['$http', function ($http) {
+app.factory('claim', ['$http', function ($http) {
     return {
         getClaim: function (to_send) {
             return $http.post(base + "/claim", to_send);
