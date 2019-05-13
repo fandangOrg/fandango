@@ -107,26 +107,32 @@ class AnalyticsService(metaclass=Singleton):
                 return Author_org_DataModel('',[],[])
             return Author_org_DataModel(**response)
         except:
+            log.info("ERROR SERVICE _get_authors_org_ids")
             return Author_org_DataModel('',[],[])
          
     def _get_media_ids(self,news_preprocessed:News_DataModel) -> Media_DataModel:
-        
-        u = URLRequest(self.url_media_service+"/api/media_analysis")
-        payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
-        j = json.dumps(payload)
-        response = u.post(data=j, headers=self.headers)
-        return Media_DataModel(**response)
-    
+        try:
+            u = URLRequest(self.url_media_service+"/api/media_analysis")
+            payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
+            j = json.dumps(payload)
+            response = u.post(data=j, headers=self.headers)
+            return Media_DataModel(**response)
+        except:
+            log.info("ERROR SERVICE MEDIA IDS")
+            return Media_DataModel('',[],[])
     def _get_topics_ids(self,news_preprocessed:News_DataModel) -> Topics_DataModel:
-        u = URLRequest(self.url_media_service+"/api/extract_topics")
-        payload = {"articleBody": news_preprocessed.articleBody,
-                   "headline": news_preprocessed.headline,
-                   "identifier": news_preprocessed.identifier,
-                   "language" : "language" }#####---->modify when ready from upm preprocessing 
-        j = json.dumps(payload)
-        response = u.post(data=j, headers=self.headers)
-        return Topics_DataModel(**response)
-
+        try:
+            u = URLRequest(self.url_media_service+"/api/extract_topics")
+            payload = {"articleBody": news_preprocessed.articleBody,
+                       "headline": news_preprocessed.headline,
+                       "identifier": news_preprocessed.identifier,
+                       "language" : "language" }#####---->modify when ready from upm preprocessing 
+            j = json.dumps(payload)
+            response = u.post(data=j, headers=self.headers)
+            return Topics_DataModel(**response)
+        except:
+            log.info("ERROR SERVICE TOPIC")
+            return Topics_DataModel('',[],[])
 
     def _clear(self,data):
         return str(data).split(" ")[0]
@@ -164,7 +170,9 @@ class AnalyticsService(metaclass=Singleton):
         d['dateCreated'] = self._clear(news_preprocessed.dateCreated)
         d['dateModified'] =self._clear(news_preprocessed.dateModified)
         d['datePublished'] =self._clear(news_preprocessed.datePublished)
-        self.dao.create_doc_news(d)
+        
+        if self.dao.is_valitade_news_existence(news_preprocessed.identifier):
+            self.dao.create_doc_news(d)
         d['images'] = media.images
         d['videos'] = media.videos
         
@@ -173,41 +181,53 @@ class AnalyticsService(metaclass=Singleton):
             
             
     def _info_video_analysis(self,id_video:str)-> str:
-        u = URLRequest(self.url_media_service+"/api/analyze_video/"+id_video)
-        response = u.get(headers=self.headers)
-        print("INFOvideo->",response)
-        if  'error' in response:
+        try:
+            u = URLRequest(self.url_media_service+"/api/analyze_video/"+id_video)
+            response = u.get(headers=self.headers)
+            print("INFOvideo->",response)
+            if  'error' in response:
+                return OutputVideoService(id_video)
+            info_video=OutputVideoService(**response)
+            return info_video
+        except:
+            log.info("ERROR SERVICE _info_video_analysis")
             return OutputVideoService(id_video)
-        info_video=OutputVideoService(**response)
-        return info_video
-    
     #138.4.47.33:5006/author/<author_id>
     
     def _info_authors_and_pub_analysis(self,id_item:str,service:str)-> str:
-        u = URLRequest(self.url_authors+"/"+service+"/"+id_item)
-        response = u.get(headers=self.headers)
-        if service=="author":
-            class_response =  OutputAuthorService
-        else:
-            class_response = OutputPublishService
-        print("AUTORESID",id_item,response)
-
-
-        if  'error' in response:
+        try:
+            u = URLRequest(self.url_authors+"/"+service+"/"+id_item)
+            response = u.get(headers=self.headers)
+            if service=="author":
+                class_response =  OutputAuthorService
+            else:
+                class_response = OutputPublishService
+            print("AUTORESID",id_item,response)
+    
+    
+            if  'error' in response:
+                return class_response(id_item)
+            return class_response(**response)
+        except:
+            log.info("ERROR SERVICE _info_authors_and_pub_analysis")
             return class_response(id_item)
-        return class_response(**response)
+        
+        
         
     def _info_image_analysis(self,id_image)-> str: 
-        u = URLRequest(self.url_media_service+"/api/analyze_image/"+id_image)
-        response = u.get(headers=self.headers)
-        print(u)
-        print("INFOIMAGE->",response)
-        if  'error' in response:
-            print("INFOIMAGE_ERRORE->",response)
-            return OutputImageService(id_image)
-        info_image=OutputImageService(**response)
-        return info_image
-    
+        try:
+            u = URLRequest(self.url_media_service+"/api/analyze_image/"+id_image)
+            response = u.get(headers=self.headers)
+            print(u)
+            print("INFOIMAGE->",response)
+            if  'error' in response:
+                print("INFOIMAGE_ERRORE->",response)
+                return OutputImageService(id_image)
+            info_image=OutputImageService(**response)
+            return info_image
+        except:
+            log.info("ERROR SERVICE _info_image_analysis")
+            return OutputImageService(id_image)   
  
     def analyzer(self,news_preprocessed:News_DataModel,save=True) -> str:
         pd_text=self._text_analysis(news_preprocessed)

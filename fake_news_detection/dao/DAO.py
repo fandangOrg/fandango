@@ -312,7 +312,7 @@ class DAONewsElastic(DAONews):
             log.debug("New doc to annotate generated: {doc}".format(doc=response_news))
             return response_news
 
-    def check_claim_existence(self, id):
+    def is_valitade_news_existence(self, id):
         
         body = {
                 "query": {
@@ -341,7 +341,8 @@ class FSMemoryPredictorDAO(FSPredictorDAO):
             del self.predictors[nome_modello]
             
 if __name__ == '__main__':
-    pass
+    dao=DAONewsElastic()
+    print(dao.is_valitade_news_existence("0df7f440a6569f78124795a2ff12d575"))
     
         
         
