@@ -4,7 +4,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     $scope.loadingFakeness = false;
     $scope.loadingAnalyzeUrl = false;
     $scope.feedbackSelected = false;
-    $scope.showChart = true;
+    $scope.showChart = false;
     $scope.highlightedText = '';
     $scope.selectedText = '';
     $scope.fakenessColor = '';
@@ -30,8 +30,8 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
     };
 
     $scope.media = {
-        'images': [],
-        'video': []
+        images: [],
+        video: []
     };
 
     const levelReal = ['true', 'mostly-true', 'half-true'];
@@ -68,6 +68,7 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             $scope.loadingAnalyzeUrl = false;
         }, function (response) {
             $scope.loadingAnalyzeUrl = false;
+            alert.showAlert('Error');
         });
     };
 
@@ -91,7 +92,6 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
                 console.log('Cant get selection text')
             }
         }
-
         // IF IE
         if (document.selection && document.selection.type != "Control") {
             $scope.highlightedText = document.selection.createRange().text;
@@ -100,14 +100,12 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
 
     $scope.sendClaim = function () {
 
-        let to_send = {
-            'text': $scope.selectedText
-        };
+        let to_send = { 'text': $scope.selectedText };
 
         claim.getClaim(to_send).then(function (response) {
             console.log(response.data);
             $scope.claims = response.data;
-        }, function (response) {
+        }, function () {
             alert.showAlert('Error');
         });
     };
@@ -157,7 +155,6 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         };
 
         feedback.sendFb(to_send).then(function (response) {
-            console.log(response)
         }, function (response) {
         });
     };
@@ -169,7 +166,6 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             let index = $scope.media[tipo].indexOf(value);
             if (index !== -1) $scope.media[tipo].splice(index, 1);
         }
-        console.log($scope.media);
     };
 
     $scope.getDesc = function (key) {
@@ -200,20 +196,20 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             $scope.fakenessValue = response.data.text[0];
             $scope.fakeValue = parseInt($scope.fakenessValue.FAKE * 100);
             $scope.realValue = parseInt($scope.fakenessValue.REAL * 100);
+
             $scope.page.media.images = response.data['images'];
             $scope.page.media.video = response.data['videos'];
+            $scope.page.authors = response.data['authors'];
+            $scope.page.publisher = response.data['publishers'];
+
             $scope.fakenessColor = fakeness.getFakenessColor($scope.realValue);
             chart.renderChart($scope.fakeValue);
             $scope.fakenessDone = true;
             $scope.loadingFakeness = false;
             $('#gaugeFakeness').addClass('animated fadeIn');
 
-
-
-            $scope.page.authors = response.data['authors'];
-            $scope.page.publisher = response.data['publishers'];
-            console.log(response);
-            console.log('PAGE ->',$scope.page);
+            console.log('FAKENESS ->', response.data);
+            console.log('PAGE ->', $scope.page);
         }, function (response) {
             $scope.media.images = [];
             $scope.media.video = [];
