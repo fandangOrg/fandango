@@ -99,27 +99,34 @@ class AnalyticsService(metaclass=Singleton):
     def _get_authors_org_ids(self,news_preprocessed:News_DataModel)-> Author_org_DataModel:
         u = URLRequest(self.url_authors+"/graph/article")
         payload = news_preprocessed.__dict__
+        payload['identifier']=payload['identifier'][0]
         j = json.dumps(payload)
+        print(j)
         try:
             response = u.post(data=j, headers=self.headers)
             print("response->",response)
             if  'error' in response:
                 return Author_org_DataModel('',[],[])
             return Author_org_DataModel(**response)
-        except:
-            log.info("ERROR SERVICE _get_authors_org_ids")
+        except Exception as e :
+            log.info("ERROR SERVICE _get_authors_org_ids: "+ str(e))
             return Author_org_DataModel('',[],[])
          
     def _get_media_ids(self,news_preprocessed:News_DataModel) -> Media_DataModel:
-        try:
-            u = URLRequest(self.url_media_service+"/api/media_analysis")
-            payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
-            j = json.dumps(payload)
-            response = u.post(data=j, headers=self.headers)
-            return Media_DataModel(**response)
-        except:
-            log.info("ERROR SERVICE MEDIA IDS")
-            return Media_DataModel('',[],[])
+        #=======================================================================
+        # try:
+        #=======================================================================
+        u = URLRequest(self.url_media_service+"/api/media_analysis")
+        payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
+        j = json.dumps(payload)
+        response = u.post(data=j, headers=self.headers)
+        print("VIDEOIMMAGINI RESPOSNE",response)
+        return Media_DataModel(**response)
+        #=======================================================================
+        # except Exception as e :
+        #     log.info("ERROR SERVICE MEDIA IDS:  "+str(e))
+        #     return Media_DataModel('',[],[])
+        #=======================================================================
     def _get_topics_ids(self,news_preprocessed:News_DataModel) -> Topics_DataModel:
         try:
             u = URLRequest(self.url_media_service+"/api/extract_topics")
@@ -208,8 +215,8 @@ class AnalyticsService(metaclass=Singleton):
             if  'error' in response:
                 return class_response(id_item)
             return class_response(**response)
-        except:
-            log.info("ERROR SERVICE _info_authors_and_pub_analysis")
+        except Exception as e :
+            log.info("ERROR SERVICE _info_authors_and_pub_analysis: "+str(e))
             return class_response(id_item)
         
         
