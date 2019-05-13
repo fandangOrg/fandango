@@ -225,14 +225,14 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
         let images = media.images.map(a => a['image_id']);
         // let videos = media.video.map(a => a['video_id']);
 
-        setInterval(function () {
+        var refresh = setInterval(function () {
             for (let i = 0; i < images.length; i++) {
                 fakeness.getImageFakeness(images[i]).then(function (response) {
                     if (response.data.status === 'done') {
                         let index = $scope.page.media.images.findIndex(x => x['image_id'] === images[i]);
-                        console.log('PRIMA',$scope.page.media.images[index]);
+                        console.log('PRIMA', $scope.page.media.images[index]);
                         $scope.page.media.images[index] = response.data;
-                        console.log('DOPO',$scope.page.media.images[index]);
+                        console.log('DOPO', $scope.page.media.images[index]);
                         images.splice(i, 1);
                     }
                 });
@@ -243,6 +243,10 @@ app.controller('indexCtrl', ['$scope', '$http', '$document', 'errorCode', 'crUrl
             //         console.log(response);
             //     });
             // }
+
+            if (images.length === 0) {
+                clearInterval(refresh);
+            }
         }, 5000);
 
     }
