@@ -6,8 +6,8 @@ Created on 23 apr 2019
 from fake_news_detection.model.InterfacceComunicazioni import News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel,\
  InterfaceInputFeedBack
 from ds4biz_commons.utils.requests_utils import URLRequest
-from fake_news_detection.config.AppConfig import url_service_upm,\
-    url_service_certh, static_folder
+from fake_news_detection.config.AppConfig import  static_folder, url_service_media,\
+    url_service_authors
 import json
 from flask_cors.extension import CORS
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
@@ -140,12 +140,12 @@ def crawl_prep(url:str) -> News_DataModel:
 
 def ping_image(id:str) -> News_DataModel:
     headers = {'content-type': "application/json",'accept': "application/json"}
-    u = URLRequest(url_service_certh+"/api/analyze_image/"+id)
+    u = URLRequest(url_service_media+"/api/analyze_image/"+id)
     return u.get(headers=headers)
 
 def ping_video(id:str) -> str:
     headers = {'content-type': "application/json",'accept': "application/json"}
-    u = URLRequest(url_service_certh+"/api/analyze_video/"+id)
+    u = URLRequest(url_service_media+"/api/analyze_video/"+id)
     return u.get(headers=headers)
       
 
@@ -165,7 +165,7 @@ def author_org_getter(news_preprocessed:News_DataModel) -> Author_org_DataModel:
                "calculateRating": -news_preprocessed.calculateRating,
                "identifier": news_preprocessed.identifier}
 
-    u = URLRequest(url_service_upm+"/graph/article")
+    u = URLRequest(url_service_authors+"/graph/article")
     
     j = json.dumps(payload)
     headers = {'content-type': "application/json",'accept': "application/json"}
@@ -176,7 +176,7 @@ def author_org_getter(news_preprocessed:News_DataModel) -> Author_org_DataModel:
 
 def media_getter(news_preprocessed:News_DataModel) -> Media_DataModel :
     
-    u = URLRequest(url_service_certh+"/api/media_analysis")
+    u = URLRequest(url_service_media+"/api/media_analysis")
     payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
     j = json.dumps(payload)
     headers = {'content-type': "application/json",'accept': "application/json"}
@@ -185,7 +185,7 @@ def media_getter(news_preprocessed:News_DataModel) -> Media_DataModel :
     return Media_DataModel(**response)
 
 def topics_getter(news_preprocessed:News_DataModel) -> Topics_DataModel:
-    u = URLRequest(url_service_certh+"/api/extract_topics")
+    u = URLRequest(url_service_media+"/api/extract_topics")
     payload = {"articleBody": news_preprocessed.articleBody,
                "headline": news_preprocessed.headline,
                "identifier": news_preprocessed.identifier,

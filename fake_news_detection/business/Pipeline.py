@@ -4,8 +4,8 @@ Created on 30 apr 2019
 @author: daniele
 '''
 import pandas as pd 
-from fake_news_detection.config.AppConfig import url_service_certh,\
-    url_service_upm, picklepath
+from fake_news_detection.config.AppConfig import picklepath, url_service_media, url_service_authors,\
+    url_service_preprocessing
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.utils.logger import getLogger
 import json
@@ -25,7 +25,7 @@ class ScrapyService:
     '''
 
 
-    def __init__(self, url_media_service=url_service_certh,url_prepocessing=url_service_upm):
+    def __init__(self, url_media_service=url_service_authors,url_prepocessing=url_service_preprocessing):
         '''
         Constructor
         '''
@@ -72,7 +72,7 @@ class AnalyticsService(metaclass=Singleton):
     '''
 
 
-    def __init__(self, url_media_service=url_service_certh,url_authors=url_service_upm):
+    def __init__(self, url_media_service=url_service_media,url_authors=url_service_authors):
         '''
         Constructor
         '''
