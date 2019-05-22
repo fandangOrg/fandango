@@ -63,8 +63,9 @@ index_name_article = os.environ.get("INDEX_NAME_ARTICLE") or config.get("elastic
 
 
 #--------------------------->EXTERNAL SERVICES VARIABLES<-------------------------------------------------------------------------
-url_service_upm = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "upm_service_url") 
-url_service_certh = os.environ.get("URL_SERVICE_CERTH") or config.get("configurationservice", "certh_service_url") 
+url_service_preprocessing = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "preprocessing_service_url") 
+url_service_media = os.environ.get("URL_SERVICE_CERTH") or config.get("configurationservice", "media_service_url") 
+url_service_authors = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "authors_service_url")
 
 ######################################################################################
 #############KAFKA CONFIG #############À
