@@ -36,7 +36,7 @@ class ScrapyService:
     
     def _crawling(self,url):
         try:
-            log.info("CRAWLING CERTH "+url)
+            print("CRAWLING CERTH "+url)
             u = URLRequest(self.url_media_service+"/api/retrieve_article")
             payload= {"url": url}
             j = json.dumps(payload)
@@ -90,7 +90,7 @@ class AnalyticsService(metaclass=Singleton):
         model =self.daopredictor.get_by_id(self.nome_modello.get(id,"english_try1_version"))
         
     def _text_analysis(self,news_preprocessed:News_DataModel) -> News_DataModel:
-        log.info('''ANALISI NEWS IN LINGUA '''+ news_preprocessed.language)
+        print('''ANALISI NEWS IN LINGUA '''+ news_preprocessed.language)
         model =self.daopredictor.get_by_id(self.nome_modello.get(news_preprocessed.language,"english_try1_version"))
         df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
         prest,features = model.predict_proba(df)
@@ -111,7 +111,7 @@ class AnalyticsService(metaclass=Singleton):
                 return Author_org_DataModel('',[],[])
             return Author_org_DataModel(**response)
         except Exception as e :
-            log.info("ERROR SERVICE _get_authors_org_ids: "+ str(e))
+            print("ERROR SERVICE _get_authors_org_ids: "+ str(e))
             return Author_org_DataModel('',[],[])
          
     def _get_media_ids(self,news_preprocessed:News_DataModel) -> Media_DataModel:
@@ -125,7 +125,7 @@ class AnalyticsService(metaclass=Singleton):
             print("VIDEOIMMAGINI RESPOSNE",response)
             return Media_DataModel(**response)
         except Exception as e :
-            log.info("ERROR SERVICE MEDIA IDS:  "+str(e))
+            print("ERROR SERVICE MEDIA IDS:  "+str(e))
             return Media_DataModel('',[],[])
     def _get_topics_ids(self,news_preprocessed:News_DataModel) -> Topics_DataModel:
         try:
@@ -133,12 +133,12 @@ class AnalyticsService(metaclass=Singleton):
             payload = {"articleBody": news_preprocessed.articleBody,
                        "headline": news_preprocessed.headline,
                        "identifier": news_preprocessed.identifier,
-                       "language" : "language" }#####---->modify when ready from upm preprocessing 
+                       "language" : news_preprocessed.language }#####---->modify when ready from upm preprocessing 
             j = json.dumps(payload)
             response = u.post(data=j, headers=self.headers)
             return Topics_DataModel(**response)
         except:
-            log.info("ERROR SERVICE TOPIC")
+            print("ERROR SERVICE TOPIC")
             return Topics_DataModel('',[],[])
 
     def _clear(self,data):
@@ -197,7 +197,7 @@ class AnalyticsService(metaclass=Singleton):
             info_video=OutputVideoService(**response)
             return info_video
         except:
-            log.info("ERROR SERVICE _info_video_analysis")
+            print("ERROR SERVICE _info_video_analysis")
             return OutputVideoService(id_video)
     #138.4.47.33:5006/author/<author_id>
     
@@ -216,7 +216,7 @@ class AnalyticsService(metaclass=Singleton):
                 return class_response(id_item)
             return class_response(**response)
         except Exception as e :
-            log.info("ERROR SERVICE _info_authors_and_pub_analysis: "+str(e))
+            print("ERROR SERVICE _info_authors_and_pub_analysis: "+str(e))
             return class_response(id_item)
         
         
@@ -233,7 +233,7 @@ class AnalyticsService(metaclass=Singleton):
             info_image=OutputImageService(**response)
             return info_image
         except:
-            log.info("ERROR SERVICE _info_image_analysis")
+            print("ERROR SERVICE _info_image_analysis",id_image)
             return OutputImageService(id_image)   
  
     def analyzer(self,news_preprocessed:News_DataModel,save=True) -> str:
@@ -287,9 +287,57 @@ def running(name):
 
     
 if __name__ == '__main__':
-    print(os.environ)
-    if 'TREETAGGER' in os.environ:
-        founddir = os.environ['TREETAGGER']
-    elif 'TREETAGGER_HOME' in os.environ:
-        founddir = os.environ['TREETAGGER_HOME']
+    headers = {'content-type': "application/json",'accept': "application/json"}
+#===============================================================================
+#     u = URLRequest(url_service_certh+"/api/media_analysis")
+#     payload = {"images": ["https://i.guim.co.uk/img/media/fc33d72d0d06b2b08d2c8e6c8ccc5879bbdb7b3d/5_343_2662_1597/master/2662.jpg?width=300&quality=85&auto=format&fit=max&s=3e45e12e82a20bc9a70c001854b44f67"],"videos": [""],"identifier": "test"}
+#     print("RICHIESTA VIDEOIMMAGINI  ",payload)
+# 
+#     j = json.dumps(payload)
+#     response = u.post(data=j, headers=headers)
+#     print("VIDEOIMMAGINI RESPOSNE",response)
+#===============================================================================
+    text='''
+They urged swift action after the first deadly 737 Max crash off Indonesia in October, according to audio obtained by CBS and the New York Times.
+
+Boeing reportedly resisted their calls but promised a software fix.
+
+But this had not been rolled out when an Ethiopian Airlines' 737 Max crashed four months later, killing 157 people.
+
+Currently 737 Max planes are grounded worldwide amid concerns that an anti-stall system may have contributed to both crashes.
+
+Boeing is in the process of updating the system, known as MCAS, but denies it was solely to blame for the disasters.
+
+    Boeing admits knowing of 737 Max problem
+    Boeing safety system not at fault, says chief executive
+    Boeing 737 Max: What went wrong?
+
+In a closed door meeting with Boeing executives last November, which was secretly recorded, American Airlines' pilots can be heard expressing concerns about the safety of MCAS.
+
+Boeing vice-president Mike Sinnett told the pilots: "No one has yet to conclude that the sole cause of this was this function on the airplane."
+
+Later in the meeting, he added: "The worst thing that can ever happen is a tragedy like this, and the even worse thing would be another one."
+
+The pilots also complained they had not been told about MCAS, which was new to the 737 Max, until after the Lion Air crash off Indonesia, which killed 189.
+
+"These guys didn't even know the damn system was on the airplane, nor did anybody else," said Mike Michaelis, head of safety for the pilots' union.
+
+Boeing declined to comment on the November meeting, saying: "We are focused on working with pilots, airlines and global regulators to certify the updates on the Max 
+
+'''
+    u = URLRequest(url_service_certh+"/api/extract_topics")
+    payload = {"articleBody": text,
+               "headline": text,
+               "identifier": "test",
+               "language" : "en" }#####---->modify when ready from upm preprocessing 
+    j = json.dumps(payload)
+    response = u.post(data=j, headers=headers)
+    print(response)
+    #===========================================================================
+    # print(os.environ)
+    # if 'TREETAGGER' in os.environ:
+    #     founddir = os.environ['TREETAGGER']
+    # elif 'TREETAGGER_HOME' in os.environ:
+    #     founddir = os.environ['TREETAGGER_HOME']
+    #===========================================================================
     
