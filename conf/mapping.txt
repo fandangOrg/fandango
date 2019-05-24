@@ -13,4 +13,7 @@ MENTIONS	mentions
 CONTAINS	contains
 PUBLISHRATING	publishRating
 AUTHORRATING	authorRating
+TEXTRATING	textRating
+MEDIARATING	mediaRating
+
 
