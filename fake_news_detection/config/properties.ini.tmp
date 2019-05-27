@@ -30,8 +30,11 @@ port = 9800
 
 
 [configurationservice]
-upm_service_url = 138.4.47.33:5006
-certh_service_url = 195.251.117.141:5006
+preprocessing_service_url = http://138.4.47.33:5006
+media_service_url = http://195.251.117.141:5006
+authors_service_url = http://138.4.47.33:5007
+
+
 
 [kafka]
 url = localhost
