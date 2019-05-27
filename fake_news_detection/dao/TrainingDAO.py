@@ -5,7 +5,7 @@ Created on Oct 24, 2018
 '''
 
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article
+    index_name_news, docType_article, dataset_beta
 import pandas as pd
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.utils.Exception import FandangoException
@@ -28,7 +28,7 @@ class DAOTraining:
 
 class DAOTrainingPD:
     #dataset_beta togliere commento e metterlo nel path 
-    def __init__(self, path = "/home/camila/workspace/fandango-fake-news/fake_news_detection/resources", delimiter='|'):
+    def __init__(self, path = dataset_beta, delimiter='|'):
         self.path = path
         self.delimiter = delimiter
         
@@ -307,25 +307,27 @@ class DAOTrainingElasticByDomains():
 if __name__ == '__main__':
     
     
-    dao_news=DAONewsElastic()
-    #list_domains = dao_news.get_domain()
-    #print( list_domains)
-    list_domains = [('www.thesun.co.uk','FAKE'),('sputniknews.com', 'FAKE')]
-    
-    print(list_domains)
-    ii = DAOTrainingElasticByDomains(list_domains)
-    l= ii.get_train_dataset(limit = 10000)
-    print(l.shape)
-    print( l['title'].iloc[100])
-    print( l['text'].iloc[100])
+    #===========================================================================
+    # dao_news=DAONewsElastic()
+    # #list_domains = dao_news.get_domain()
+    # #print( list_domains)
+    # list_domains = [('www.thesun.co.uk','FAKE'),('sputniknews.com', 'FAKE')]
+    # 
+    # print(list_domains)
+    # ii = DAOTrainingElasticByDomains(list_domains)
+    # l= ii.get_train_dataset(limit = 10000)
+    # print(l.shape)
+    # print( l['title'].iloc[100])
+    # print( l['text'].iloc[100])
+    #===========================================================================
     #l.to_csv('/home/camila/Scrivania/fakedata1.csv', sep = '\t', index = False)
     
     
     
     
     #print(l.shape, l.columns)
-    #oo = DAOTrainingPD(dataset_beta)
-    #print(oo.get_train_dataset())
+    oo = DAOTrainingPD(dataset_beta)
+    print(oo.get_train_dataset())
     #ii = DAOTrainingElasticByDomains()
     #p.to_csv("/home/camila/Scrivania/Fandango_data.tsv",index = False, sep= "\t"
 

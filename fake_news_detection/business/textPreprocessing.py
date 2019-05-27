@@ -6,6 +6,9 @@ from nltk.corpus import stopwords
 from fake_news_detection.config.constants import LANG_SUPPORTED, QUOTES, LANG_MAPPING
 import numpy as np
 import logging
+from fake_news_detection.business.featuresExtraction2 import singleton
+from fake_news_detection.model.singleton_filter import Singleton
+from fake_news_detection.test.singleton_filter import Singleton_Filter
 
 i=1
 
@@ -20,16 +23,22 @@ class TextPreprocessor():
         self.invalid_chars = invalid_chars
         self.encoding = encoding
         self.__name__ = self.__class__.__name__
-        self.stopwords = stopwords.words(LANG_MAPPING[self.lang][0])
-        self.stemmer = SnowballStemmer(LANG_MAPPING[self.lang][1])
-        self.nlp = spacy.load(LANG_MAPPING[self.lang][2], disable=["tagger", "parser", "ner"])
-        #self.i = 1
+        #=======================================================================
+        # self.stopwords = stopwords.words(LANG_MAPPING[self.lang][0])
+        # self.stemmer = SnowballStemmer(LANG_MAPPING[self.lang][1])
+        # self.nlp = spacy.load(LANG_MAPPING[self.lang][2], disable=["tagger", "parser", "ner"])
+        #=======================================================================
+        singleton=Singleton_Filter()
+        self.stopwords=singleton.stopwords
+        self.stemmer=singleton.stemmer
+        self.nlp=singleton.nlp
+        self.i = 1
 
 
     def __call__(self, text:str) -> str:
         try:
-            #print(self.i)
-            #self.i+=1
+            print(self.i)
+            self.i+=1
             text = self.encode(text)
             text = self.remove_chars(text=text, in_tab=self.invalid_chars)
 

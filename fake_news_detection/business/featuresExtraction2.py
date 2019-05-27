@@ -12,8 +12,9 @@ from itertools import count
 from fake_news_detection.utils.DataPrep import clean_text
 from fake_news_detection.utils.TreeTaggerConf import LemmaTokenizer
 import treetaggerwrapper
+from fake_news_detection.test.singleton_filter import Singleton_Filter
 
-
+singleton=Singleton_Filter()
 class FeaturesExtractor(ABC):
     
     def __init__(self, lang:str):
@@ -226,7 +227,8 @@ class EntitiesCounter(FeaturesExtractor):
 class CountAdj(FeaturesExtractor):
     def __call__(self, text:str) -> float:
         try:
-            tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang)                                            
+            #tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang)
+            tagger=singleton.tagger                                            
             tagger.tag_text("doc")
             #print(tagger)
             count = 0 
@@ -242,7 +244,8 @@ class CountAdj(FeaturesExtractor):
                 
 class CountAdv(FeaturesExtractor):
     def __call__(self, text:str) -> float:
-        tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang)                                            
+        #tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang)
+        tagger=singleton.tagger                                            
         tagger.tag_text("doc")
         count = 0 
         adv_list_tag = ['RB', 'RBR', 'RBS', 'WRB']
@@ -258,7 +261,7 @@ class CountAdv(FeaturesExtractor):
         
 class CountPrep_conj(FeaturesExtractor):
     def __call__(self, text:str) -> float:
-        tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang)                                            
+        tagger=singleton.tagger
         tagger.tag_text("doc")
         count = 0 
         for tag in tagger.tag_text(text):
@@ -272,7 +275,7 @@ class CountPrep_conj(FeaturesExtractor):
         
 class countVerbs(FeaturesExtractor):
     def __call__(self, text:str) -> float:
-        tagger = treetaggerwrapper.TreeTagger(TAGLANG=self.lang)                                            
+        tagger=singleton.tagger
         tagger.tag_text("doc")
         count = 0 
         verbs_list = ["VB","VBD","VBG","VBN","VBZ","VBP","VD","VDD","VDG","VDN","VDZ","VDP","VHD","VHG","VHN","VHZ","VHP","VV","VVD","VVG","VVN","VVZ","VVP"]
