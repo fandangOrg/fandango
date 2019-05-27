@@ -7,14 +7,16 @@
               "type":"text",
               "fields": {
               "keyword": {
-                "type": "keyword"
+                "type": "keyword",
+                "ignore_above": 10000
               }
             }},
         "name":{
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
@@ -22,7 +24,8 @@
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
@@ -30,7 +33,8 @@
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
@@ -38,7 +42,8 @@
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
@@ -46,7 +51,8 @@
           "type":"text",
           "fields": {
           "keyword": {
-            "type": "keyword"
+            "type": "keyword",
+            "ignore_above": 10000
           }
         }},
         "dateCreated":{"type":"date"},
@@ -58,7 +64,8 @@
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         }

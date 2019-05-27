@@ -7,14 +7,16 @@
               "type":"text",
               "fields": {
               "keyword": {
-                "type": "keyword"
+                "type": "keyword",
+                "ignore_above": 10000
               }
             }},
         "headline":{
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
@@ -22,7 +24,8 @@
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
@@ -33,14 +36,16 @@
           "type":"text",
           "fields": {
           "keyword": {
-            "type": "keyword"
+            "type": "keyword",
+            "ignore_above": 10000
           }
         }},
         "publisher":{
           "type":"text",
           "fields": {
           "keyword": {
-            "type": "keyword"
+            "type": "keyword",
+            "ignore_above": 10000
           }
         }},
         "calculatedRating":{"type":"float"},
@@ -49,7 +54,8 @@
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
@@ -57,14 +63,16 @@
           "type":"text",
           "fields": {
           "keyword": {
-            "type": "keyword"
+            "type": "keyword",
+            "ignore_above": 10000
           }
         }},
         "contains":{
           "type":"text",
           "fields": {
           "keyword": {
-            "type": "keyword"
+            "type": "keyword",
+            "ignore_above": 10000
           }
         }} 
         }

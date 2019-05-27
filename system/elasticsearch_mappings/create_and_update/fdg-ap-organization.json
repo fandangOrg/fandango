@@ -7,42 +7,48 @@
               "type":"text",
               "fields": {
               "keyword": {
-                "type": "keyword"
+                "type": "keyword",
+                "ignore_above": 10000
               }
             }},
         "name":{
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
           }},
         "url":{
             "type":"text",
             "fields": {
                 "keyword": {
-                  "type": "keyword"
+                  "type": "keyword",
+                  "ignore_above": 10000
                 }
               }},
         "nationality":{
             "type":"text",
             "fields": {
                 "keyword": {
-                  "type": "keyword"
+                  "type": "keyword",
+                  "ignore_above": 10000
                 }
               }},
         "bias":{
             "type":"text",
             "fields": {
                 "keyword": {
-                  "type": "keyword"
+                  "type": "keyword",
+                  "ignore_above": 10000
                 }
               }},
         "parentOrganization":{
           "type":"text",
           "fields": {
           "keyword": {
-            "type": "keyword"
+            "type": "keyword",
+            "ignore_above": 10000
           }
         }} 
         }

@@ -7,14 +7,16 @@
               "type":"text",
               "fields": {
               "keyword": {
-                "type": "keyword"
+                "type": "keyword",
+                "ignore_above": 10000
               }
             }},
         "contentUrl":{
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
@@ -22,7 +24,8 @@
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
@@ -31,7 +34,8 @@
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
@@ -39,7 +43,8 @@
             "type":"text",
             "fields": {
             "keyword": {
-              "type": "keyword"
+              "type": "keyword",
+              "ignore_above": 10000
             }
             }
         },
