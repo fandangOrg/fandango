@@ -4,6 +4,7 @@ from uuid import uuid4
 import swifter
 from _collections import defaultdict
 from fake_news_detection.business.featuresExtraction2 import Multifunction
+import pandas
 
 
 class ColumnFEExtractor:
@@ -30,10 +31,13 @@ class ColumnFEExtractor:
         if isinstance(objects, DataFrame):
             if cmd == 1:
                 for col,fun in self._multi_function():
-                    values = objects[col].apply(fun)
+                    s = objects[col].apply(fun)
                     names = fun.__name__
-                    print(names,values)
-                 
+                    #print(names,type(values),'\n',values)
+                    print("casa",len(names),len(s[0]))
+                    pd=pandas.DataFrame.from_items(zip(s.index, s.values) )
+                    print(pd)
+                    #objects[[col+"_"+name for name in names]]=values
                 return  objects  
                     
             for couple in self.mapping:

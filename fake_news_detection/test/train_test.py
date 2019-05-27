@@ -31,7 +31,7 @@ from fake_news_detection.model.predictor import Preprocessing
 
 oo = DAOTrainingPD(dataset_beta)
 X=oo.get_train_dataset()
-#X = X.head(3000)
+X = X.head(30)
 print(X.shape )
 X=Preprocessing(language='en').execution(X)
 Y = X['label']
