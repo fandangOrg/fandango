@@ -33,7 +33,7 @@ oo = DAOTrainingPD(dataset_beta)
 X=oo.get_train_dataset()
 #X = X.head(3000)
 print(X.shape )
-X=Preprocessing().execution(X)
+X=Preprocessing(language='en').execution(X)
 Y = X['label']
 X = X.drop(['label'], axis=1)
 print(X.shape )

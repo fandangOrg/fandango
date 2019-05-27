@@ -40,7 +40,7 @@ class Preprocessing:
         return X    
 
     def execution(self,X):
-        X=self._preprocessing(X)
+        #X=self._preprocessing(X)
         return self._add_features(X)
     
     

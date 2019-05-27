@@ -40,6 +40,7 @@ class DAOTrainingPD:
         df=df[['title','text']]
         df['label']='FAKE'
         print("shape after 'fake.csv' -->", df.shape)
+        return df
 
         training_set= pd.read_csv(self.path +"/"+"guardian.csv",sep='\t') # dataset
         training_set['label']='REAL'

@@ -37,7 +37,6 @@ class TextPreprocessor():
 
     def __call__(self, text:str) -> str:
         try:
-            print(self.i)
             self.i+=1
             text = self.encode(text)
             text = self.remove_chars(text=text, in_tab=self.invalid_chars)

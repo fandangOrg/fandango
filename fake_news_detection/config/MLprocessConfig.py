@@ -30,7 +30,7 @@ def new_features_mapping(lang_code):
                                 ('title', CharsCounter(lang=lang_code)),
                                 ('text', PunctuationCounter(lang=lang_code)),
                                 ('title', PunctuationCounter(lang=lang_code)),
-                                ('text', StopwordCounter(lang= lang_code)),
+                                ('title', StopwordCounter(lang= lang_code)),
                                 ('text',LexicalDiversity(lang = lang_code)),
                                 ('text', AveWordxParagraph(lang = lang_code)),
                                 ('text', FleschReadingEase(lang = lang_code)),

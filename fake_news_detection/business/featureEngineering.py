@@ -2,14 +2,40 @@ from typing import List, Tuple
 from pandas.core.frame import DataFrame
 from uuid import uuid4
 import swifter
+from _collections import defaultdict
+from fake_news_detection.business.featuresExtraction2 import Multifunction
 
 
 class ColumnFEExtractor:
     def __init__(self, mapping: List[Tuple]):
         self.mapping = mapping
 
+
+    def _multi_function(self):
+        column_to_fun=defaultdict(list)
+        for couple in  self.mapping:
+            col = couple[0]
+            fun = couple[1]
+            lang=fun.lang
+            print("-->",col,fun)
+            column_to_fun[col].append(fun)
+            
+        for col in column_to_fun:
+            print(col,column_to_fun[col])
+            yield col,Multifunction(column_to_fun[col],lang) 
+            
+            
+            
     def __call__(self, objects, cmd:bool=0):
         if isinstance(objects, DataFrame):
+            if cmd == 1:
+                for col,fun in self._multi_function():
+                    values = objects[col].apply(fun)
+                    names = fun.__name__
+                    print(names,values)
+                 
+                return  objects  
+                    
             for couple in self.mapping:
                 col = couple[0]
                 fun = couple[1]
@@ -47,7 +73,7 @@ class ColumnFEExtractor:
 
 def add_new_features_to_df(df:DataFrame, mapping:List[Tuple]) -> DataFrame:
     extractor = ColumnFEExtractor(mapping)
-    df_improved = extractor(df, 0)
+    df_improved = extractor(df, 1)
     df_improved.dropna(inplace=True)
     return df_improved
 
