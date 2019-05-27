@@ -10,6 +10,7 @@ from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputMode
     Author_org_DataModel, Topics_DataModel
 from flask_cors.extension import CORS
 import json
+
 from flask import json
 from fake_news_detection.config import AppConfig
 from fake_news_detection.config.AppConfig import static_folder, picklepath,\
