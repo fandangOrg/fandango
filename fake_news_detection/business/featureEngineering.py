@@ -34,9 +34,10 @@ class ColumnFEExtractor:
                     s = objects[col].apply(fun)
                     names = fun.__name__
                     #print(names,type(values),'\n',values)
-                    print("casa",len(names),len(s[0]))
-                    pd=pandas.DataFrame.from_items(zip(s.index, s.values) )
-                    print(pd)
+                    df=pandas.DataFrame.from_items(zip(s.index, s.values) )
+                    df=df.T
+                    df.columns =[col+"_"+name for name in names]
+                    objects=pandas.concat([df, objects], axis=1, sort=False)
                     #objects[[col+"_"+name for name in names]]=values
                 return  objects  
                     
