@@ -5,6 +5,7 @@
       "upload": {
         "repository": "fandango-fake-news"
       }
+     "company": "registry.livetech.site"
     },
     "docker-build": {
       "company": "livetech",
