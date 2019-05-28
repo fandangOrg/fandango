@@ -9,6 +9,7 @@ from fake_news_detection.dao.DAO import FSMemoryPredictorDAO, DAONewsElastic
 from fake_news_detection.apps.training_model import Train_model
 from fake_news_detection.config.AppConfig import dataset_beta
 from fake_news_detection.model.predictor import Preprocessing
+import pandas
 #
 #
 #===============================================================================
@@ -29,15 +30,29 @@ from fake_news_detection.model.predictor import Preprocessing
 
 
 
-oo = DAOTrainingPD(dataset_beta)
-X=oo.get_train_dataset()
-X = X.head(3000)
+#===============================================================================
+# oo = DAOTrainingPD(dataset_beta)
+# X=oo.get_train_dataset()
+# #X = X.head(3000)
+# print(X.shape )
+# X=Preprocessing(language='en').execution(X)
+# X.to_csv(dataset_beta+"/train.csv")
+# Y = X['label']
+# X = X.drop(['label'], axis=1)
+# X = X.drop(['text'], axis=1)
+# X = X.drop(['litle'], axis=1)
+# 
+# print(X.shape )
+# print(X.columns)
+#===============================================================================
+#X=pandas.read_csv(dataset_beta+"/train.csv").iloc[:, 1:]
+X=pandas.read_csv("/home/daniele/Scaricati"+"/data.csv")
+print(X)
+print(X.groupby(['Label']).agg(['count']))
 print(X.shape )
-X=Preprocessing(language='en').execution(X)
-Y = X['label']
-X = X.drop(['label'], axis=1)
-X = X.drop(['text'], axis=1)
-X = X.drop(['litle'], axis=1)
-
-print(X.shape )
-print(X.columns)
+y= X['Label']
+X = X.drop(['Label'], axis=1)
+X = X.drop(['Body'], axis=1)
+X = X.drop(['Headline'], axis=1)
+X=X.mean()
+print(X)

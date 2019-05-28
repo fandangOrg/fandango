@@ -45,10 +45,12 @@ class ScrapyService:
             print("VIDEO->",news.videos)
             print("IMMAGINI->",news.images)
             return news
-        except:
+        except Exception as e:
+            print(e)
             return None
     
     def _preprocessing(self,raw_news:News_raw) -> News_DataModel:
+        print(raw_news)
         payload = raw_news.__dict__
         payload["fakeness" ]= ""
         u = URLRequest(self.url_prepocessing+"/preprocess/article")
@@ -325,14 +327,16 @@ The pilots also complained they had not been told about MCAS, which was new to t
 Boeing declined to comment on the November meeting, saying: "We are focused on working with pilots, airlines and global regulators to certify the updates on the Max 
 
 '''
-    u = URLRequest(url_service_certh+"/api/extract_topics")
-    payload = {"articleBody": text,
-               "headline": text,
-               "identifier": "test",
-               "language" : "en" }#####---->modify when ready from upm preprocessing 
-    j = json.dumps(payload)
-    response = u.post(data=j, headers=headers)
-    print(response)
+    #===========================================================================
+    # u = URLRequest(url_service_certh+"/api/extract_topics")
+    # payload = {"articleBody": text,
+    #            "headline": text,
+    #            "identifier": "test",
+    #            "language" : "en" }#####---->modify when ready from upm preprocessing 
+    # j = json.dumps(payload)
+    # response = u.post(data=j, headers=headers)
+    # print(response)
+    #===========================================================================
     #===========================================================================
     # print(os.environ)
     # if 'TREETAGGER' in os.environ:

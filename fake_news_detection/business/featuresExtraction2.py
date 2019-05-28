@@ -14,6 +14,7 @@ from fake_news_detection.utils.TreeTaggerConf import LemmaTokenizer
 import treetaggerwrapper
 from fake_news_detection.test.singleton_filter import Singleton_Filter
 import time
+import numpy
 
 singleton=Singleton_Filter()
 class FeaturesExtractor(ABC):
@@ -39,7 +40,7 @@ class StopwordCounter(FeaturesExtractor):
             for word in doc.words:
                 if word in stopWords:
                     count += 1
-            return count 
+            return count/len(doc.words)
         except:
             return np.nan
 
@@ -154,10 +155,10 @@ class PunctuationCounter(FeaturesExtractor):
     def __call__(self, text:str,**kwargs) -> float:
         try:
             count = 0
-            for p in punctuation:
-                if p in text:
+            for p in text:   
+                if p in punctuation:
                     count += 1
-            return log(count + 1)
+            return count/len(text)
         except:
             return np.nan
 
@@ -181,6 +182,13 @@ class WordsCounter(FeaturesExtractor):
             return np.nan
 
 
+class AVGWordsCounter(FeaturesExtractor):
+    def __call__(self, text:str,**kwargs) -> float:
+        try:
+            return len(text.split())/len(text) 
+        except:
+            return np.nan
+        
 class SentencesCounter(FeaturesExtractor):
     def __call__(self, text:str,**kwargs) -> float:
         try:
@@ -191,7 +199,16 @@ class SentencesCounter(FeaturesExtractor):
         except:
             return np.nan
 
-
+class AVGSentencesSizeCounter(FeaturesExtractor):
+    def __call__(self, text:str,**kwargs) -> float:
+        try:
+            doc=kwargs.get('doc')
+            if doc is None:
+                doc = Text(text, hint_language_code=self.lang)
+            return numpy.mean([len(sentence.words) for sentence in doc.sentences])
+        except:
+            return np.nan
+        
 class PositiveWordsCounter(FeaturesExtractor):
     def __call__(self, text:str,**kwargs) -> float:
         try:
@@ -255,8 +272,8 @@ class CountAdj(FeaturesExtractor):
                 if len(tt)>1:
                     if tt[1] == 'JJ' or tt[1] == 'JJR' or tt[1] == 'JJS':
                         count += 1
-          
-            return count
+            if len(tag_text)==0: return 0.0
+            return count/len(tag_text)
         except:
             return np.nan
                 
@@ -276,8 +293,8 @@ class CountAdv(FeaturesExtractor):
                 #print(tt)
                 if tt[1] in adv_list_tag:
                     count += 1
-      
-        return count
+        if len(tag_text)==0: return 0.0
+        return count/len(tag_text)
             
         
 class CountPrep_conj(FeaturesExtractor):
@@ -294,8 +311,8 @@ class CountPrep_conj(FeaturesExtractor):
             if len(tt)>1:
                 if tt[1] == 'IN' or tt[1] == "CC":
                     count += 1
-      
-        return count
+        if len(tag_text)==0: return 0.0
+        return count/len(tag_text)
         
 class countVerbs(FeaturesExtractor):
     def __call__(self, text:str,**kwargs) -> float:
@@ -309,13 +326,27 @@ class countVerbs(FeaturesExtractor):
         for tag in tag_text:
             tt = tag.split('\t')
             if len(tt)>1:
-                #print(tt)
                 if tt[1] in verbs_list:
                     count += 1
-      
-        return count
+        if len(tag_text)==0: return 0.0
+        return count/len(tag_text)
         
-
+class POSDiversity(FeaturesExtractor):
+    def __call__(self, text:str,**kwargs) -> float:
+        tagger=singleton.tagger
+        tagger.tag_text("doc")
+        count = 0 
+        tag_text=kwargs.get("tag_text")
+        if tag_text is None:
+            tag_text = tagger.tag_text(text)
+        tags=[]
+        for tag in tag_text:
+            tt = tag.split('\t')
+            if len(tt)>1:
+                #print(tt)
+                tags.append(tt[1]) 
+        if len(tags)==0: return 0.0
+        return len(set(tags))/len(tags)
 class Multifunction(FeaturesExtractor):
     
     def __init__(self,functions,lang:str):
@@ -348,6 +379,32 @@ if __name__ == "__main__":
     #s = AveWordxParagraph(lang = 'en')
     d = countVerbs(lang = 'en')
     print(d('stop please to dance be follow done come '))
-   
+    d = POSDiversity(lang = 'en')
+    print(d('stop please to dance be follow done come '))
+    
+    doc = Text('''The json representation of this blob.
+    .. versionchanged:: 0.5.1
+        Made ``json`` a property instead of a method to restore backwards
+        compatibility that was broken after version 0.4.0.''', hint_language_code='en')
+    total_sentence=len(doc.sentences)
+    print(total_sentence)
+    for sentence in doc.sentences:
+        print(sentence)
+    print(numpy.mean([len(sentence.words) for sentence in doc.sentences]))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     

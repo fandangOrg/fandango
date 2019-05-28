@@ -3,7 +3,7 @@ from fake_news_detection.config.constants import QUOTES
 from fake_news_detection.business.featuresExtraction2 import  CharsCounter, PunctuationCounter,\
     StopwordCounter, LexicalDiversity, AveWordxParagraph, FleschReadingEase,\
     FKGRadeLevel, SentencesCounter, CountAdv, CountAdj, CountPrep_conj,\
-    countVerbs
+    countVerbs, AVGWordsCounter, AVGSentencesSizeCounter, POSDiversity
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import MinMaxScaler
 from ds4biz_predictor_core.model.creation_requests import CreationRequest,\
@@ -26,16 +26,21 @@ def text_preprocessing_mapping(preprocess):
 #(lang=lang_code)
 def new_features_mapping(lang_code):
     return  [
-                                ('text', CharsCounter(lang=lang_code)),
-                                ('title', CharsCounter(lang=lang_code)),
+                                #('text', CharsCounter(lang=lang_code)),
+                                #('title', CharsCounter(lang=lang_code)),
+                                ('text', AVGSentencesSizeCounter(lang=lang_code)),
+                                ('title', AVGWordsCounter(lang=lang_code)),
+                                ('title', AVGWordsCounter(lang=lang_code)),
                                 ('text', PunctuationCounter(lang=lang_code)),
                                 ('title', PunctuationCounter(lang=lang_code)),
                                 ('title', StopwordCounter(lang= lang_code)),
                                 ('text',LexicalDiversity(lang = lang_code)),
-                                ('text', AveWordxParagraph(lang = lang_code)),
                                 ('text', FleschReadingEase(lang = lang_code)),
                                 ('text', FKGRadeLevel(lang = lang_code)),
-                                ('text', SentencesCounter(lang=lang_code)),
+                                ('text', POSDiversity(lang = lang_code)),
+                                ('title', POSDiversity(lang = lang_code)),
+
+                                #('text', SentencesCounter(lang=lang_code)),
                                 ('text', StopwordCounter(lang = lang_code)),
                                 ('text', LexicalDiversity(lang = lang_code)),
                                 ('text', AveWordxParagraph(lang = lang_code)),
