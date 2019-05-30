@@ -28,6 +28,8 @@ class Task:
         raise NotImplemented
     
 class Task_Analyzer(Task):
+    def __init__(self):
+        self.analytics=AnalyticsService()
     def do(self,msg,file_output,dic_domains):
                 global c
                 c+=1
@@ -44,10 +46,9 @@ class Task_Analyzer(Task):
                 #output = 'hey'
                 
                 output=self.analytics.analyzer(news_preprocessed,False) 
-                output = output['REAL'][0]
-                print(output)
+                output = output[1][0]
+                print( msg['sourceDomain'],msg['language'],output)
                 
-                dict_output = {"identifier":msg['identifier'],"calculatedRating": "", "headline":msg['headline'],"articleBody": msg['articleBody'],"dateCreated": msg['dateCreated'], "dateModified" : msg['dateModified'], "datePublished":msg['datePublished'],"calculatedRatingDetail":{"textRating": output}, "images" : msg['images'], "videos":msg['videos']}
        
                 
                 if msg['sourceDomain'] in dic_domains['FAKE']: 
@@ -56,14 +57,17 @@ class Task_Analyzer(Task):
                     testo=testo.replace("\n","$##$")
                     file_output.write(testo+"\n")
                     print("add negative",msg['sourceDomain'] )
+                    output = 0.0
                     #={'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                 elif msg['sourceDomain'] in dic_domains['REAL']:
                     testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tREAL\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
                     testo=testo.replace("\n","$##$")
                     file_output.write(testo+"\n")
+                    output = 1.0
                     print("add  pos",msg['sourceDomain'] )
                     #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                 #print("dict_output",dict_output)
+                dict_output = {"identifier":msg['identifier'],"calculatedRating": "", "headline":msg['headline'],"articleBody": msg['articleBody'],"dateCreated": msg['dateCreated'], "dateModified" : msg['dateModified'], "datePublished":msg['datePublished'],"calculatedRatingDetail":{"textRating": output}, "images" : msg['images'], "videos":msg['videos']}
                 try:
                     #self.file_output
                     #writer.writerow(dict_for_training)
@@ -79,10 +83,10 @@ class Task_Analyzer(Task):
 
 if __name__ == '__main__':
     
-    
-    pass
-    
-    
+    dao = DAOTrainingElasticByDomains()
+    dic_domains = dao.get_domains_from_elastic()
+    print(dic_domains)
+        
     '''
     c = Task_1(topic="test_lvt" , group_id="cami", bootstrap_servers=["localhost:9092"])
     c.do()      

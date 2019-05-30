@@ -18,11 +18,11 @@ class ColumnFEExtractor:
             col = couple[0]
             fun = couple[1]
             lang=fun.lang
-            print("-->",col,fun)
+            #print("-->",col,fun)
             column_to_fun[col].append(fun)
             
         for col in column_to_fun:
-            print(col,column_to_fun[col])
+            #print(col,column_to_fun[col])
             yield col,Multifunction(column_to_fun[col],lang) 
             
             
@@ -44,7 +44,6 @@ class ColumnFEExtractor:
             for couple in self.mapping:
                 col = couple[0]
                 fun = couple[1]
-                print("applico ",couple,fun)
                 if cmd == 0:
                     values = objects[col].apply(fun)
                     objects[col + "_" + self.__getfunctionname(fun)] = values  # Add new column

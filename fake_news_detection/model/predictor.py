@@ -40,7 +40,6 @@ class Preprocessing:
     
     def _add_features(self, X):
         X=add_new_features_to_df(df=X, mapping=new_features_mapping(self.language))
-        print('features added')
         return X    
 
     def execution(self,X):
@@ -166,7 +165,7 @@ class LGBMFakePredictor(DS4BizPredictor):
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
         labels_fakeness= self.predictor_fakeness.predict_proba(X)
-        print("labels_fakeness",labels_fakeness)
+        #print("labels_fakeness",labels_fakeness)
         return labels_fakeness,X
     
     def is_partially_fittable(self):
@@ -178,7 +177,6 @@ class LGBMFakePredictor(DS4BizPredictor):
         X = X.drop(['label'], axis=1)
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
-        print(X.columns)
         self.predictor_fakeness.partial_fit(X,Y)
         return "OK"
 

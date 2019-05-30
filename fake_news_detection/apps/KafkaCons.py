@@ -11,11 +11,11 @@ import json
 import random
 import os
 #from fake_news_detection.apps.consumers import Task, Task_1
-from brokermanager.model.publishers import KafkaPublisher
 from fake_news_detection.apps.Task import Task, Task_Analyzer
 from fake_news_detection.config.AppConfig import path_training
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
-
+from brokermanager.model.publishers import KafkaPublisher
+ 
 
 class Consumer:
     def __init__(self,topic,group_id,bootstrap_servers,auto_offset_reset="earliest",enable_auto_commit=False,retry_interval=1):
@@ -131,7 +131,7 @@ if __name__ == '__main__':
     topic="input_preprocessed"
     output_topic =  "analyzed_text"
     print('     2                ')
-    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt_group11", bootstrap_servers=["localhost:9092"], task=Task_Analyzer())
+    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt_group12", bootstrap_servers=["localhost:9092"], task=Task_Analyzer())
     print('          3            ')
     consumer.consume_forever()
     print('                4           ')
