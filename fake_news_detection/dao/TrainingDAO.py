@@ -5,7 +5,7 @@ Created on Oct 24, 2018
 '''
 
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article, dataset_beta
+    index_name_news, docType_article, dataset_beta, domains_index
 import pandas as pd
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.utils.Exception import FandangoException
@@ -14,6 +14,7 @@ from pip._vendor.html5lib.treebuilders import dom
 from elasticsearch_dsl.search import Search, TransportError
 import itertools
 from fake_news_detection.dao.DAO import DAONewsElastic
+from _collections import defaultdict
 #from fake_news_detection.services.Services import dao_news
 
 
@@ -165,6 +166,9 @@ class DAOTrainingElasticByDomains():
         self.index_name = index_name_news 
         self.docType = docType_article
         self.list_domains=list_domains
+        self.domains_index = domains_index
+        
+    
     
     def get_train_dataset(self,limit=1000):
         '''
@@ -211,12 +215,24 @@ class DAOTrainingElasticByDomains():
         except TransportError as e:
             print(e.info)
             
-             
-
-    
- 
-     
-     
+        
+    def get_domains_from_elastic(self):
+        
+        domain_list = []
+        body = {"query": {"match_all": {}}}
+        dic_domain = defaultdict(list)       
+        res = self.es_client.search(index= self.domains_index, body= body)
+        for i in res['hits']['hits']:
+            domain_list.append( (i['_source']['webdomain'], i['_source']['label']))
+            if i['_source']['label'] =='FAKE':
+                dic_domain['FAKE'].append(i['_source']['webdomain'])
+            else:
+                dic_domain['REAL'].append(i['_source']['webdomain'])
+        print(dic_domain)
+        return dic_domain
+        
+                 
+        
     def __get_news_from_domainOLD(self,domain,limit = 2000):
         
         '''
@@ -323,14 +339,11 @@ if __name__ == '__main__':
     #l.to_csv('/home/camila/Scrivania/fakedata1.csv', sep = '\t', index = False)
     
     
+    oo = DAOTrainingElasticByDomains()
+    oo.get_domains_from_elastic()
+    #print(oo.get_domains_from_elastic())
     
     
-    #print(l.shape, l.columns)
-    oo = DAOTrainingPD(dataset_beta)
-    print(oo.get_train_dataset())
     #ii = DAOTrainingElasticByDomains()
     #p.to_csv("/home/camila/Scrivania/Fandango_data.tsv",index = False, sep= "\t"
 
-
-    
-    

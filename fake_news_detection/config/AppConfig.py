@@ -45,6 +45,8 @@ BASEPORT = os.environ.get("BASEPORT_SERVICE") or config["service"]["port"]
 picklepath = os.environ.get("MODEL_PATH") or  pkg_resources.resource_filename("fake_news_detection.resources.model", "")  # @UndefinedVariable
 dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
 static_folder = pkg_resources.resource_filename("static", "")  # @UndefinedVariable
+path_training = os.environ.get("PATH_FOR_TRAININGFILE") or config.get("default", "path_training")
+
 ##################################################################################################################à
 #dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
  
@@ -59,7 +61,7 @@ number_item_to_train= os.environ.get("SIZE_DOMAIN") or 1000000
 #mapping_claim = os.environ.get("MAPPING_CLAIM") or config.get("elasticsearch", "mapping_claim")
 #dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")
 index_name_article = os.environ.get("INDEX_NAME_ARTICLE") or config.get("elasticsearch", "article_index") 
-
+domains_index = os.environ.get("INDEX_NAME_DOMAIN") or config.get("elasticsearch", "domain_index") 
 
 
 #--------------------------->EXTERNAL SERVICES VARIABLES<-------------------------------------------------------------------------
@@ -69,6 +71,8 @@ url_service_authors = os.environ.get("URL_SERVICE_UPM") or config.get("configura
 
 ######################################################################################
 #############KAFKA CONFIG #############À
+
+
 url_kafka = os.environ.get("KAFKA_URL") or config.get("kafka", "url")  
 port_kafka = os.environ.get("KAFKA_PORT") or config.get("kafka", "port")  
 topic_input_kafka  = os.environ.get("TOPIC_INPUT") or config.get("kafka", "topic_input") 
