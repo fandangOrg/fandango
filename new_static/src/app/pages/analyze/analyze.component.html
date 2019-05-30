@@ -1,0 +1,14 @@
+<app-navbar (newSearch)="newSearch($event)"></app-navbar>
+
+<!-- SPINNER PRELOADING -->
+<ngx-spinner
+    bdOpacity=0.9
+    bdColor="#ffffff"
+    size="medium"
+    color="#000000"
+    type="ball-clip-rotate-multiple"
+    [fullScreen]="true">
+    <h2 style="color: black">Analyzing content...</h2>
+</ngx-spinner>
+
+<router-outlet (activate)="onActivate($event)"></router-outlet>

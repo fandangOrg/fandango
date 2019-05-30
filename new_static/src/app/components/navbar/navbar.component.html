@@ -1,0 +1,27 @@
+<nav class="navbar navbar-horizontal bg-white">
+    <div class="col-auto">
+        <a routerLink="/">
+            <img class="navbar-img" [src]="fandangoLogo" alt="Fandango">
+        </a>
+    </div>
+    <div class="col-md-4 col-8">
+        <div class="navbar-input input-group input-group-sm">
+            <input type="text" class="form-control" [placeholder]="inputPlaceholder"
+                   aria-label="Search" [(ngModel)]="url">
+            <div class="input-group-append">
+                <button class="btn btn-info btn-sm" (click)="sendInput()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <button *ngFor="let btn of buttonList"
+                class="btn btn-icon btn-sm btn-secondary"
+                [class.btn-success]="typeAnalyze===btn.type"
+                (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder">
+            <i *ngIf="btn.icon" [ngClass]="btn.icon"></i>
+            <img class="inner-img mr-2" *ngIf="btn.useImage" [src]="btn.useImage">
+            <span [class.span-fade]="typeAnalyze!==btn.type">{{btn.name}}</span>
+        </button>
+    </div>
+</nav>
