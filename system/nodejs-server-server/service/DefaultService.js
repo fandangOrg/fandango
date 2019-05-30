@@ -25,7 +25,7 @@ exports.findFact = function(info) {
         es.query.more_like_this.like = info.text + " " + info.category;
       }
 
-      console.log(es)
+     // console.log(es)
  
       var url = "http://localhost:9220/fdg-fact/_search";
 
@@ -127,7 +127,7 @@ exports.findSimilarArticles = function(info) {
               moreLikeThis.query.more_like_this.like._type = "doc";
               moreLikeThis.query.more_like_this.like._id = json.hits.hits[0]._id;
 
-              console.log(JSON.stringify(moreLikeThis))
+              //console.log(JSON.stringify(moreLikeThis))
 
 
               fetch(url,
@@ -180,7 +180,7 @@ exports.findSimilarArticles = function(info) {
               });
             }
             else{
-              console.log("here")
+              //console.log("here")
               resolve(emptyResponse(info.identifier, null));
             }           
   })
@@ -203,16 +203,16 @@ function emptyResponse(identifier, topics){
 function createArticleResponse(identifier, articles, authorsAndPublishers){
   var resultPayload = {};
   resultPayload.identifier = identifier;
-  console.log(articles)
-  console.log(authorsAndPublishers)
+ // console.log(articles)
+ // console.log(authorsAndPublishers)
 
-  console.log("article listed")
+ // console.log("article listed")
 
   var authors = [];
   var publishers = [];
   // First we separate out authors and publishers into an assoc array of objects
   authorsAndPublishers.forEach(function(ap){
-    console.log(ap)
+  //  console.log(ap)
     ap.data.forEach(function(data){
     //console.log(data)
     if (data._index == "fdg-ap-person"){ // author
@@ -236,11 +236,11 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
   })
   })
 
-  console.log("hereererer")
+  //console.log("hereererer")
 
   var articleResponses = [];
   articles.forEach(function(article){
-    console.log(article)
+  //  console.log(article)
     // Here we construct the response as defined in the API
     var articleResponse = {};
     articleResponse.identifier = article._source.identifier || null;
@@ -257,8 +257,8 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
       articleResponse.author = null;
     }
     
-    console.log("auth")
-    console.log(articleResponse.author)
+   // console.log("auth")
+   // console.log(articleResponse.author)
     try{
       articleResponse.publisher = setPublisherList(article, publishers);
     }
@@ -317,7 +317,7 @@ function setClaimReviews(claimReviews){
   var reviews = [];
 
   claimReviews.forEach(function(review){
-    console.log(review)
+  //  console.log(review)
     var claimReview = {};
     claimReview.identifier = review._source.identifier || null;
     claimReview.claimReviewed = review._source.claimReviewed || null;
@@ -388,20 +388,25 @@ exports.findSimilarClaims = function(info) {
    var es = {};
    es.query = {};
 
-   console.log("here")
+  // console.log("here")
 
-   if (info.topics){
+   if (info.identifier){
+    es.query.match = {};
+    es.query.match.identifier = info.identifier;
+  }
+  else if (info.text){
       es.query.more_like_this = {};
       es.query.more_like_this.min_term_freq = 1;
       es.query.more_like_this.min_doc_freq = 1;
-      es.query.more_like_this.fields = ["about"];
-      es.query.more_like_this.like = info.topics;
+      es.query.more_like_this.fields = ["text"];
+      es.query.more_like_this.like = [info.text];
+      if (info.topics) {
+        es.query.more_like_this.fields = ["text", "about"];
+        es.query.more_like_this.like = [info.text, info.topics.toString()];
+      }
    }
-   else{
-     es.query.match = {};
-     es.query.match.identifier = info.identifier;
-   }
-   console.log(JSON.stringify(es))
+   
+   //console.log(JSON.stringify(es))
 
    var url = "http://localhost:9220/fdg-claim/doc/_search";
    
@@ -420,10 +425,10 @@ exports.findSimilarClaims = function(info) {
        .then(function(json){
 
         if (json.hits.total > 0){
-         console.log("hererer")
+         //console.log("hererer")
          
-             if (info.topics){
-               console.log("topics")
+             if (!info.identifier){
+            //   console.log("topics")
                // 
                var claims = json.hits.hits;
                    var claimPromises = [];
@@ -445,21 +450,21 @@ exports.findSimilarClaims = function(info) {
              }
              else{
                
-                console.log("id")
+             //   console.log("id")
                 var moreLikeThis = {};
                 moreLikeThis.size = 5;
                 moreLikeThis.query = {};
                 moreLikeThis.query.more_like_this = {};
                 moreLikeThis.query.more_like_this.min_term_freq = 1;
                 moreLikeThis.query.more_like_this.min_doc_freq = 1;
-                moreLikeThis.query.more_like_this.fields = [];
-                moreLikeThis.query.more_like_this.fields.push("*");
+                moreLikeThis.query.more_like_this.fields = ["text", "about"];
+               // moreLikeThis.query.more_like_this.fields.push("text");
                 moreLikeThis.query.more_like_this.like = {};
                 moreLikeThis.query.more_like_this.like._index = "fdg-claim";
                 moreLikeThis.query.more_like_this.like._type = "doc";
                 moreLikeThis.query.more_like_this.like._id = json.hits.hits[0]._id;
  
-                console.log(JSON.stringify(moreLikeThis))
+             //   console.log(JSON.stringify(moreLikeThis))
  
                 fetch(url,
                   {
@@ -516,13 +521,13 @@ exports.findSimilarClaims = function(info) {
 
     function getClaimReviews(claim){
      // console.log(claim)
-      console.log("---------------")
+   //   console.log("---------------")
       var claimQuery = {};
       claimQuery.query = {};
       claimQuery.query.match = {};
       claimQuery.query.match.itemReviewed = claim.identifier;
 
-      console.log(claimQuery)
+     // console.log(claimQuery)
 
       var url = "http://localhost:9220/fdg-claim-review/doc/_search"
       return fetch(url,
@@ -546,13 +551,13 @@ exports.findSimilarClaims = function(info) {
 
     function getAuthors(articleID, author){
       // console.log(claim)
-       console.log(author)
+     //  console.log(author)
        var authorQuery = {};
        authorQuery.query = {};
        authorQuery.query.match = {};
        authorQuery.query.match.identifier = author;
  
-       console.log(authorQuery)
+     //  console.log(authorQuery)
  
        var url = "http://localhost:9220/fdg-ap-person/doc/_search"
        return fetch(url,
@@ -578,13 +583,13 @@ exports.findSimilarClaims = function(info) {
 
      function getPublishers(articleID, publisher){
       // console.log(claim)
-       console.log(publisher)
+      // console.log(publisher)
        var publisherQuery = {};
        publisherQuery.query = {};
        publisherQuery.query.match = {};
        publisherQuery.query.match.identifier = publisher;
  
-       console.log(publisherQuery)
+      // console.log(publisherQuery)
  
        var url = "http://localhost:9220/fdg-ap-organization/doc/_search"
        return fetch(url,

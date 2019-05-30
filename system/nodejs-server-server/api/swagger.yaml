@@ -3,7 +3,7 @@ swagger: "2.0"
 info:
   version: "0.0.1"
   title: "Siren"
-host: "localhost:8080"
+host: "localhost:3000"
 basePath: "/fandango/v0.1/siren"
 schemes:
 - "http"
@@ -76,10 +76,10 @@ paths:
 definitions:
   Claim_Request_Interface:
     type: "object"
-    required:
-    - "identifier"
     properties:
       identifier:
+        type: "string"
+      text:
         type: "string"
       topics:
         type: "array"
@@ -88,7 +88,6 @@ definitions:
   Claim_Response_Interface:
     type: "object"
     required:
-    - "identifier"
     - "results"
     properties:
       identifier:
