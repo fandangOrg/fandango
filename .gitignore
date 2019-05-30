@@ -8,6 +8,7 @@ __pycache__/
 *$py.class
 *.pyc
 /static/node_modules
+/new_static/node_modules
 /node_modules
 /fake_news_detection/resources
 log.txt

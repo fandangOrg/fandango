@@ -1,0 +1,43 @@
+<div class="row pt-5 pt-md-9">
+    <div class="col-md-6 col-sm-8 col-12 mx-auto">
+        <img [src]="fandangoLogo" class="img-logo" alt="Fandango">
+        <form #homepageForm="ngForm" (ngSubmit)="sendInput(homepageForm.value)">
+            <div class="input-group mb-3">
+                <input type="text"
+                       class="form-control form-control-alternative"
+                       [placeholder]="inputPlaceholder"
+                       aria-label="Search" ngModel name="url" required>
+                <div class="input-group-append">
+                    <button class="btn btn-info" type="submit" [disabled]="!homepageForm.valid">
+                        Analyze
+                    </button>
+                </div>
+            </div>
+        </form>
+
+        <!--        <form class="navbar-search navbar-search-dark">-->
+        <!--            <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">-->
+        <!--                <div class="input-group input-group-alternative">-->
+        <!--                    <div class="input-group-prepend">-->
+        <!--                        <span class="input-group-text"><i class="fas fa-search"></i></span>-->
+        <!--                    </div>-->
+        <!--                    <input class="form-control" placeholder="Search" type="text" (focus)="focus = true"-->
+        <!--                           (blur)="focus = false">-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </form>-->
+
+        <div class="text-center btn-group-lg">
+            <button *ngFor="let btn of buttonList"
+                    class="btn btn-icon btn-secondary"
+                    [class.btn-success]="typeAnalyze===btn.type"
+                    (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder"
+                    placement="bottom"
+                    [ngbTooltip]=btn.description>
+                <i *ngIf="btn.icon" [ngClass]="btn.icon"></i>
+                <img *ngIf="btn.useImage" [src]="btn.useImage" class="inner-img">
+                <span class="btn-inner--text">{{btn.name}}</span>
+            </button>
+        </div>
+    </div>
+</div>
