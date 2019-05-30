@@ -22,6 +22,10 @@ from fake_news_detection.config.MLprocessConfig import new_features_mapping,\
     text_preprocessing_mapping
 from fake_news_detection.model.InterfacceComunicazioni import Prestazioni
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
+from lightgbm.sklearn import LGBMClassifier
+from fake_news_detection.config.AppConfig import dataset_beta, picklepath
+import pandas
+from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 
 
 class Preprocessing:
@@ -112,6 +116,94 @@ class FakePredictor(DS4BizPredictor):
         predictor.accuracy = prestazioni.accuracy
         self.number_item = prestazioni.number_item
         
+        
+class LGBMFakePredictor(DS4BizPredictor):
+    '''
+    classdocs
+    '''
+    def __init__(self, predictor:LGBMClassifier,
+                 preprocessing:Preprocessing,id:str):
+        '''
+        Constructor
+        '''
+        now = datetime.datetime.now()
+        now_string = now.strftime(('%d/%m/%Y %H:%M'))
+        self.date=now_string
+        self.predictor_fakeness= predictor
+        self.preprocessing=preprocessing
+        self.id=id
+        self.number_item=0
+        
+    def fit(self, X=None, y=None):
+        X=pandas.read_csv(dataset_beta+"/train_kaggle.csv").iloc[:, 1:]
+        y= X['label']
+        X = X.drop(['label'], axis=1)
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
+        X = X.drop(['URLs'], axis=1)
+        self.predictor_fakeness.fit(X,y)
+        
+        #=======================================================================
+        # print("dataframe",X.columns)
+        # X=self.preprocessing.execution(X)
+        # Y = X['label']
+        # X = X.drop(['label'], axis=1)
+        # print("dataframedopo",X.columns)
+        # self.predictor_fakeness.fit(X,Y)
+        # self.number_item=len(X)
+        #=======================================================================
+        
+    def predict(self, X):
+        X=self.preprocessing.execution(X)
+        print(X.columns)
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
+        labels_fakeness= self.predictor_fakeness.predict(X)
+        return labels_fakeness
+        
+    def predict_proba(self,X):
+        X=self.preprocessing.execution(X)
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
+        labels_fakeness= self.predictor_fakeness.predict_proba(X)
+        print("labels_fakeness",labels_fakeness)
+        return labels_fakeness,X
+    
+    def is_partially_fittable(self):
+        return True
+    
+    def partial_fit(self, X,y=None):
+        X=self.preprocessing.execution(X)
+        Y = X['label']
+        X = X.drop(['label'], axis=1)
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
+        print(X.columns)
+        self.predictor_fakeness.partial_fit(X,Y)
+        return "OK"
+
+        
+    def get_language(self):
+        return self.language
+    
+    def _create_prestazioni(self,predictor):
+        # print(predictor.report)
+        #return Prestazioni(predictor.precision, predictor.recall, predictor.accuracy, 500)
+        return Prestazioni(predictor.precision, predictor.recall, predictor.accuracy, self.number_item)
+        #return Prestazioni(predictor.precision,predictor.recall,predictor.accuracy,predictor.num_items)
+         
+    
+    def get_prestazioni(self):
+        return self._create_prestazioni(self.predictor_fakeness.predictor)
+         
+   
+    def _update_prestazioni_model(self,predictor,prestazioni):
+        predictor.precision = prestazioni.precision
+        predictor.recall = prestazioni.recall
+        predictor.accuracy = prestazioni.accuracy
+        self.number_item = prestazioni.number_item
+        
+                
     #===========================================================================
     # def update_prestazioni(self,prestazioni:OutputPrestazioni):
     #     self._update_prestazioni_model(self.predictor_sentiment.predictor,prestazioni.sentiment)
@@ -151,7 +243,15 @@ class FakePredictor(DS4BizPredictor):
 #===============================================================================
 
 if __name__ == '__main__':    
-    
+    X=pandas.read_csv(dataset_beta+"/train_kaggle.csv").iloc[:, 1:]
+    print(X.columns)
+    #===========================================================================
+    # daopredictor = FSMemoryPredictorDAO(picklepath)
+    # predictor=LGBMClassifier() 
+    # model=LGBMFakePredictor(predictor=predictor,preprocessing=Preprocessing(), id="en_lgb")
+    # model.fit()
+    # daopredictor.save(model)
+    #===========================================================================
     '''
     list_domains = [('www.wikileaks.com', 'FAKE')]
     print(list_domains)
@@ -160,17 +260,19 @@ if __name__ == '__main__':
      '''
     
     
-    preprocessing = Preprocessing("en")
-    training_set = pd.read_csv("/home/camila/Scrivania/csv_fandango/final_df_1503.csv", delimiter = '\t')
-    X = preprocessing.execution(training_set)
-    print(X.columns) 
-
-    X1 = X._get_numeric_data()
-    print( X1, "without numeric ")
-    X2 = pd.concat([X1 , X['label']], axis = 1)
-    print( "adding label", X2. columns)
-    X2.to_csv("/home/camila/Scrivania/forcorrelation.csv")     
-    
+#===============================================================================
+#     preprocessing = Preprocessing("en")
+#     training_set = pd.read_csv("/home/camila/Scrivania/csv_fandango/final_df_1503.csv", delimiter = '\t')
+#     X = preprocessing.execution(training_set)
+#     print(X.columns) 
+# 
+#     X1 = X._get_numeric_data()
+#     print( X1, "without numeric ")
+#     X2 = pd.concat([X1 , X['label']], axis = 1)
+#     print( "adding label", X2. columns)
+#     X2.to_csv("/home/camila/Scrivania/forcorrelation.csv")     
+#     
+#===============================================================================
     
     
     

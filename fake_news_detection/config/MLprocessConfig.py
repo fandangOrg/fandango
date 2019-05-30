@@ -42,7 +42,6 @@ def new_features_mapping(lang_code):
 
                                 #('text', SentencesCounter(lang=lang_code)),
                                 ('text', StopwordCounter(lang = lang_code)),
-                                ('text', LexicalDiversity(lang = lang_code)),
                                 ('text', AveWordxParagraph(lang = lang_code)),
                                 ('text', CountAdv(lang = lang_code)),
                                 ('text', CountAdj(lang = lang_code)),

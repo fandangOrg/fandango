@@ -346,7 +346,9 @@ class POSDiversity(FeaturesExtractor):
                 #print(tt)
                 tags.append(tt[1]) 
         if len(tags)==0: return 0.0
-        return len(set(tags))/len(tags)
+        return len(set(tags))/58
+    
+    
 class Multifunction(FeaturesExtractor):
     
     def __init__(self,functions,lang:str):

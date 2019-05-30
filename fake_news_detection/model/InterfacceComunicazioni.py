@@ -4,8 +4,6 @@ Created on Oct 18, 2018
 @author: daniele
 '''
 
-
-   
 ######################ONLINE SERVICES TEST##############
 class News_raw:
     def __init__(self,date_published: str,authors:list,date_created:str,date_modified:str,description:str,images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,title:str,top_image:str,url:str, videos:list, spider:str):
@@ -31,9 +29,8 @@ class News_raw:
 
 
 class News_DataModel:
-    
     def __init__(self,language:str,identifier:list,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,
-                 calculateRatingDetail:str,images:list, video:list, sourceDomain:list,video_analizer:bool=False,image_analizer:bool=False):
+                 calculateRatingDetail:str,images:list, videos:list, sourceDomain:list,country:str,nationality:str,video_analizer:bool=False,image_analizer:bool=False):
         self.headline = headline
         self.articleBody = articleBody
         self.dateCreated = dateCreated
@@ -42,13 +39,15 @@ class News_DataModel:
         self.author = author
         self.publisher = publisher
         self.images = images
-        self.video = video
-        self.sourceDomain = sourceDomain
+        self.videos = videos
+        self.sourceDomain = sourceDomain[0]
         print(publisher,sourceDomain)
         self.calculateRatingDetail = calculateRatingDetail
         self.calculateRating = calculateRating
         self.identifier = identifier
         self.language = language
+        self.country=country
+        self.nationality=nationality
         self.video_analizer=video_analizer
         self.image_analizer=image_analizer
         
@@ -57,7 +56,7 @@ class News_DataModel:
         return "headline:"+self.headline+";articleBody:"+self.articleBody+";dateCreated:"+self.dateCreated+";dateModified:"+self.dateModified+";datePublished:"+self.datePublished+";author:"+self.author+";publisher:"+self.publisher
     '''
 class Author_org_DataModel:
-    def __init__(self,identifier:str,author:list,publisher:list):
+    def __init__(self,identifier:str,author:list,publisher:list,**kwargs:dict):
         self.identifier = identifier
         self.author = author #id list
         self.publisher = publisher #id list 
@@ -119,6 +118,7 @@ class OutputVideoService:
         
 class OutputImageService:
     def __init__(self, image_id:str,status:str="UNKNOW",  url:str="UNKNOW",fakeness:float=0.5):
+        
         self.status = status
         self.image_id = image_id
         self.url = url

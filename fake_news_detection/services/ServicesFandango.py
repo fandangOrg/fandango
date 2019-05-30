@@ -134,8 +134,11 @@ def feedback(info:InterfaceInputFeedBack) -> str:
 #     return News_DataModel(**response)
 #===============================================================================
 def crawl_prep(url:str) -> News_DataModel:
-    return service_scrapy.scrapy(url)
-
+    news_preprocessed= service_scrapy.scrapy(url)
+    print(news_preprocessed.__dict__)
+    prest=service_analyzer.analyzer(news_preprocessed)
+    news_preprocessed.results=prest
+    return news_preprocessed
 #===============================================================================
 
 def ping_image(id:str) -> News_DataModel:

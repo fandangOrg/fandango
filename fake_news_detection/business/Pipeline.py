@@ -25,7 +25,7 @@ class ScrapyService:
     '''
 
 
-    def __init__(self, url_media_service=url_service_authors,url_prepocessing=url_service_preprocessing):
+    def __init__(self, url_media_service=url_service_media,url_prepocessing=url_service_preprocessing):
         '''
         Constructor
         '''
@@ -82,7 +82,7 @@ class AnalyticsService(metaclass=Singleton):
         self.url_authors = url_authors
         self.headers = {'content-type': "application/json",'accept': "application/json"}
         self.daopredictor = FSMemoryPredictorDAO(picklepath)
-        self.nome_modello={"en":"english_try1_version"}
+        self.nome_modello={"en":"en_lgb"}
         for k in self.nome_modello:
             print("load model",k)
             self.daopredictor.get_by_id(self.nome_modello.get(k,"english_try1_version"))
@@ -96,13 +96,15 @@ class AnalyticsService(metaclass=Singleton):
         model =self.daopredictor.get_by_id(self.nome_modello.get(news_preprocessed.language,"english_try1_version"))
         df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
         prest,features = model.predict_proba(df)
-        prest = pd.DataFrame(prest, columns=model.predictor_fakeness.predictor.predictor.classes_)
+        print("prest->",prest)
+        prest = pd.DataFrame(prest, columns=model.predictor_fakeness.classes_)
         prest=pd.concat([prest,features],axis=1)
         return prest
     
     def _get_authors_org_ids(self,news_preprocessed:News_DataModel)-> Author_org_DataModel:
         u = URLRequest(self.url_authors+"/graph/article")
         payload = news_preprocessed.__dict__
+        print("payload",payload)
         payload['identifier']=payload['identifier'][0]
         j = json.dumps(payload)
         print(j)
@@ -119,7 +121,7 @@ class AnalyticsService(metaclass=Singleton):
     def _get_media_ids(self,news_preprocessed:News_DataModel) -> Media_DataModel:
         try:
             u = URLRequest(self.url_media_service+"/api/media_analysis")
-            payload = {"images": news_preprocessed.images,"videos": news_preprocessed.video,"identifier": news_preprocessed.identifier}
+            payload = {"images": news_preprocessed.images,"videos": news_preprocessed.videos,"identifier": news_preprocessed.identifier}
             print("RICHIESTA VIDEOIMMAGINI  ",payload)
 
             j = json.dumps(payload)
@@ -169,7 +171,9 @@ class AnalyticsService(metaclass=Singleton):
             news_preprocessed.images=[]
             
         media= self._get_media_ids(news_preprocessed)
+        print("analizzo i topic")
         tp_entity=self._get_topics_ids(news_preprocessed)
+        
         d['author'] = autors_org.author
         d['publisher'] = autors_org.publisher
         #d['images'] = media.images
@@ -180,6 +184,7 @@ class AnalyticsService(metaclass=Singleton):
         d['dateModified'] =self._clear(news_preprocessed.dateModified)
         d['datePublished'] =self._clear(news_preprocessed.datePublished)
         
+        print("VERIFICO SE SALVARE LA NEWS",d)
         if self.dao.is_valitade_news_existence(news_preprocessed.identifier):
             self.dao.create_doc_news(d)
         d['images'] = media.images
@@ -188,21 +193,6 @@ class AnalyticsService(metaclass=Singleton):
         
         return d
             
-            
-    def _info_video_analysis(self,id_video:str)-> str:
-        try:
-            u = URLRequest(self.url_media_service+"/api/analyze_video/"+id_video)
-            response = u.get(headers=self.headers)
-            print("INFOvideo->",u,response)
-            if  'error' in response:
-                return OutputVideoService(id_video)
-            info_video=OutputVideoService(**response)
-            return info_video
-        except:
-            print("ERROR SERVICE _info_video_analysis")
-            return OutputVideoService(id_video)
-    #138.4.47.33:5006/author/<author_id>
-    
     def _info_authors_and_pub_analysis(self,id_item:str,service:str)-> str:
         try:
             u = URLRequest(self.url_authors+"/"+service+"/"+id_item)
@@ -220,8 +210,21 @@ class AnalyticsService(metaclass=Singleton):
         except Exception as e :
             print("ERROR SERVICE _info_authors_and_pub_analysis: "+str(e))
             return class_response(id_item)
-        
-        
+            
+    def _info_video_analysis(self,id_video:str)-> str:
+        try:
+            u = URLRequest(self.url_media_service+"/api/analyze_video/"+id_video)
+            response = u.get(headers=self.headers)
+            print("INFOvideo->",u,response)
+            if  'error' in response:
+                return  {'identifier':id_video}# OutputVideoService(id_video)
+            #info_video=OutputVideoService(**response)
+            return response
+        #info_video
+        except:
+            print("ERROR SERVICE _info_video_analysis")
+            return {'identifier':id_video}
+        #OutputVideoService(id_video)
         
     def _info_image_analysis(self,id_image)-> str: 
         try:
@@ -231,12 +234,16 @@ class AnalyticsService(metaclass=Singleton):
             print("INFOIMAGE->",response)
             if  'error' in response:
                 print("INFOIMAGE_ERRORE->",response)
-                return OutputImageService(id_image)
-            info_image=OutputImageService(**response)
-            return info_image
+                return {'identifier':id_image}
+            #response 
+            #OutputImageService(id_image)
+            #info_image=OutputImageService(**response)
+            return response
+        #info_image
         except:
             print("ERROR SERVICE _info_image_analysis",id_image)
-            return OutputImageService(id_image)   
+            return {'identifier':id_image}
+         #OutputImageService(id_image)   
  
     def analyzer(self,news_preprocessed:News_DataModel,save=True) -> str:
         pd_text=self._text_analysis(news_preprocessed)
@@ -246,14 +253,14 @@ class AnalyticsService(metaclass=Singleton):
             list_publishs=[]
             list_images=[]
             list_videos=[]
-            score=pd_text['REAL'][0]
+            score=pd_text[1][0]
             news=self._save_news(news_preprocessed,score)
             ##
             for image in news['images']:
-                list_images.append(self._info_image_analysis(image).__dict__)
+                list_images.append(self._info_image_analysis(image))
             ##    
             for video in news['videos']:
-                list_videos.append(self._info_video_analysis(video).__dict__)
+                list_videos.append(self._info_video_analysis(video))
             
             print("NEWS-->>",news)
             for authos in news['author']:
@@ -289,6 +296,11 @@ def running(name):
 
     
 if __name__ == '__main__':
+    service_scrapy=ScrapyService()
+    service_analyzer= AnalyticsService()
+    news_preprocessed=service_scrapy.scrapy("https://www.theguardian.com/us-news/2019/feb/19/bernie-sanders-announces-2020-run-presidency")
+    prest=service_analyzer.analyzer(news_preprocessed)
+    
     headers = {'content-type': "application/json",'accept': "application/json"}
 #===============================================================================
 #     u = URLRequest(url_service_certh+"/api/media_analysis")
