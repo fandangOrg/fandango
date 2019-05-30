@@ -28,8 +28,11 @@ class Task:
         raise NotImplemented
     
 class Task_Analyzer(Task):
-    def __init__(self):
+    def __init__(self,publisher:KafkaPublisher,topic,**args):
         self.analytics=AnalyticsService()
+        self.publisher = publisher
+        self.topic=topic
+        
     def do(self,msg,file_output,dic_domains):
                 global c
                 c+=1
@@ -73,9 +76,8 @@ class Task_Analyzer(Task):
                     #writer.writerow(dict_for_training)
                     self.publisher.publish(self.topic, dict_output)
                     #print("document added to the kafka topic")
-                    pass
-                except:
-                    log.error("document not added")
+                except Exception as e:
+                    log.error("document not added",e)
                     #self.publisher.push("")      
         
                  

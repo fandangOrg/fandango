@@ -77,7 +77,7 @@ url_kafka = os.environ.get("KAFKA_URL") or config.get("kafka", "url")
 port_kafka = os.environ.get("KAFKA_PORT") or config.get("kafka", "port")  
 topic_input_kafka  = os.environ.get("TOPIC_INPUT") or config.get("kafka", "topic_input") 
 topic_output_kafka = os.environ.get("TOPIC_OUTPUT") or config.get("kafka", "topic_output")
-group_id="lvt_group2"
+group_id="lvt_group22"
 n_consumer = os.environ.get("N_CONSUMER") or config.get("kafka", "consumer")
 
 if __name__ == '__main__':
