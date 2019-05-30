@@ -13,6 +13,8 @@ import os
 #from fake_news_detection.apps.consumers import Task, Task_1
 from brokermanager.model.publishers import KafkaPublisher
 from fake_news_detection.apps.Task import Task, Task_Analyzer
+from fake_news_detection.config.AppConfig import path_training
+from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 
 
 class Consumer:
@@ -72,16 +74,22 @@ class InjectableJSONConsumer(JsonConsumer):
     def process(self, obj):
         return self.fun(obj)
     
+    
+    
     #take some tasks together
 class InjectableTASKJSONConsumer(JsonConsumer):  
     def __init__(self,topic,group_id,bootstrap_servers,task:Task,auto_offset_reset="earliest",enable_auto_commit=True,retry_interval=1):
         super().__init__(topic,group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
         self.task=task
-        
+        self.file_output=open(path_training+"/dataset_kafka.csv", mode='a+')
+        dao = DAOTrainingElasticByDomains()
+        self.dic_domains = dao.get_domains_from_elastic()
+
+
        
     def process(self, obj):
-        print(self.task.do(obj))
-        return self.task.do(obj)
+        #print(self.task.do(obj))
+        return self.task.do(obj,self.file_output,self.dic_domains )
     
     
 
@@ -123,7 +131,7 @@ if __name__ == '__main__':
     topic="input_preprocessed"
     output_topic =  "analyzed_text"
     print('     2                ')
-    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt_group2", bootstrap_servers=["localhost:9092"], task=Task_Analyzer(queue_output,output_topic))
+    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt_group11", bootstrap_servers=["localhost:9092"], task=Task_Analyzer())
     print('          3            ')
     consumer.consume_forever()
     print('                4           ')

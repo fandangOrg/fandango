@@ -18,37 +18,61 @@ from fake_news_detection.config.AppConfig import picklepath
 from fake_news_detection.business.Analyzer import analyzer, log
 from numpy.lib.utils import source
 from fake_news_detection.business.Pipeline import AnalyticsService
-
+import csv 
+from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 
 log = getLogger(__name__)
-
+c=0
 class Task:
     def do(self,msg):
         raise NotImplemented
     
 class Task_Analyzer(Task):
-    def __init__(self,publisher:KafkaPublisher,topic,**args):
-        self.publisher = publisher
-        self.topic=topic
-        self.analytics= AnalyticsService()
-        
-    def do(self,msg):
-        print("applico l'analizer e trovo lo score di ",msg)
-        news_preprocessed = News_DataModel(language=msg.get('language','en'),headline= msg["headline"], articleBody = msg["articleBody"], sourceDomain = msg['sourceDomain'],identifier = msg['identifier'], dateCreated = msg['dateCreated'] , dateModified= msg['dateModified'], datePublished = msg['datePublished'], author = msg['author'], publisher = msg['publisher'], calculateRating = msg['calculateRating'], calculateRatingDetail = msg['calculateRatingDetail'], images = msg['images'], video = msg['video'])
-        #print(msg['headline'])
-        #print(msg['articleBody'])
-        output=self.analytics.analyzer(news_preprocessed,False) 
-        #print(output)
-        output = output['REAL'][0]
-        #print(output)
-        dict_output = {"identifier":msg['identifier'],"calculatedRating": output, "headline":msg['headline'],"articleBody": msg['articleBody'],"dateCreated": msg['dateCreated'], "dateModified" : msg['dateModified'], "datePublished":msg['datePublished'],"calculatedRatingDetail":msg['calculateRatingDetail'], "images" : msg['images'], "videos":msg['video']}
-        #print("dict_output",dict_output)
-        try:
-            self.publisher.publish(self.topic, dict_output)
-            print("document added to the kafka topic")
-        except:
-            log.error("document not added")
-            #self.publisher.push("")        
+    def do(self,msg,file_output,dic_domains):
+                global c
+                c+=1
+                if c%100==0:
+                    print(c)
+                
+                #fieldnames = ['identifier', 'text', 'title','label','sourceDomian','language']
+                #writer = csv.DictWriter(file_output, delimiter='|', quotechar='"', quoting=csv.QUOTE_MINIMAL,fieldnames = fieldnames)
+                #print("applico l'analizer e trovo lo score di ",msg)
+                news_preprocessed = News_DataModel(language=msg.get('language','en'),headline= msg["headline"], articleBody = msg["articleBody"], sourceDomain = msg['sourceDomain'],identifier = msg['identifier'], dateCreated = msg['dateCreated'] , dateModified= msg['dateModified'], datePublished = msg['datePublished'], author = msg['author'], publisher = msg['publisher'], calculateRating = msg['calculateRating'], calculateRatingDetail = msg['calculateRatingDetail'], images = msg['images'], videos = msg['videos'])
+                
+                #print(msg['headline'])
+                #print(msg['articleBody'])
+                #output = 'hey'
+                
+                output=self.analytics.analyzer(news_preprocessed,False) 
+                output = output['REAL'][0]
+                print(output)
+                
+                dict_output = {"identifier":msg['identifier'],"calculatedRating": "", "headline":msg['headline'],"articleBody": msg['articleBody'],"dateCreated": msg['dateCreated'], "dateModified" : msg['dateModified'], "datePublished":msg['datePublished'],"calculatedRatingDetail":{"textRating": output}, "images" : msg['images'], "videos":msg['videos']}
+       
+                
+                if msg['sourceDomain'] in dic_domains['FAKE']: 
+                    #dict_for_training = {'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
+                    testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tFAKE\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
+                    testo=testo.replace("\n","$##$")
+                    file_output.write(testo+"\n")
+                    print("add negative",msg['sourceDomain'] )
+                    #={'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
+                elif msg['sourceDomain'] in dic_domains['REAL']:
+                    testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tREAL\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
+                    testo=testo.replace("\n","$##$")
+                    file_output.write(testo+"\n")
+                    print("add  pos",msg['sourceDomain'] )
+                    #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
+                #print("dict_output",dict_output)
+                try:
+                    #self.file_output
+                    #writer.writerow(dict_for_training)
+                    self.publisher.publish(self.topic, dict_output)
+                    #print("document added to the kafka topic")
+                    pass
+                except:
+                    log.error("document not added")
+                    #self.publisher.push("")      
         
                  
 

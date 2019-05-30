@@ -26,6 +26,9 @@ def daemon_run():
     threads.append(process)
  
     
+if __name__ == '__main__':
+
+    daemon_run()
     #===========================================================================
     # print("RUN SCHEDULER")
     # process = Thread(target=schedule_task)
