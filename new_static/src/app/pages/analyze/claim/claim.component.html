@@ -1,3 +1,48 @@
-<p>
-  claim works!
-</p>
+<div class="col-8 analyze-container" *ngIf="claims">
+    <div class="grid">
+        <div class="row">
+            <div class="col-12">
+
+                <style>
+                    .table th {
+                        white-space: normal;
+                    }
+                </style>
+                <h6 class="heading-small text-muted">Claims</h6>
+                <div class="table-responsive table-striped">
+                    <table class="table align-items-center table-flush">
+                        <thead class="bg-white">
+                        <tr>
+                            <th scope="col">Body</th>
+                            <th scope="col">Date</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <ng-container *ngFor="let claim of claims">
+                            <tr>
+                                <th scope="row">
+                                    {{claim.text}}
+                                </th>
+                                <th scope="row">
+                                    {{claim.datePublished}}
+                                </th>
+                                <th scope="row" (click)="claim.expand = !claim.expand" width="1%">
+                                    <i *ngIf="!claim.expand" class="fas fa-caret-square-down fa-2x c-pointer"></i>
+                                    <i *ngIf="claim.expand" class="fas fa-caret-square-up fa-2x c-pointer"></i>
+                                </th>
+                            </tr>
+                            <tr *ngIf="claim.expand">
+                                <td colspan="3" style="white-space: normal">
+                                    {{claim.reviewBody}}
+                                </td>
+                            </tr>
+                        </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <hr class="my-4"/>
+    </div>
+</div>

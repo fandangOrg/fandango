@@ -24,15 +24,23 @@ export class AnalyzeService {
     }
 
     analyzeImage(url: string): Observable<Object> {
-        return this.http.post('/', url);
+        return this.http.get('/url_image_score?url='+url);
+    }
+
+    getImageScore(id: string): Observable<Object> {
+        return this.http.get('/ping_image?id='+id);
     }
 
     analyzeVideo(url: string): Observable<Object> {
-        return this.http.post('/', url);
+        return this.http.get('/url_video_score?url='+url);
     }
 
-    analyzeClaim(url: string): Observable<Object> {
-        return this.http.post('/', url);
+    getVideoScore(id: string): Observable<Object> {
+        return this.http.get('/ping_video?id='+id);
+    }
+
+    analyzeClaim(to_send: object): Observable<any> {
+        return this.http.post('/similar_claims', to_send);
     }
 
 }

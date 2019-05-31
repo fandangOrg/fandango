@@ -2,13 +2,14 @@
 
 <!-- SPINNER PRELOADING -->
 <ngx-spinner
-    bdOpacity=0.9
     bdColor="#ffffff"
     size="medium"
     color="#000000"
-    type="ball-clip-rotate-multiple"
+    type="ball-scale-ripple-multiple"
     [fullScreen]="true">
     <h2 style="color: black">Analyzing content...</h2>
+
+<!--    <img src="assets/img/icons/fandango_icon.png" style="height: 55px;margin-right: 20px">-->
 </ngx-spinner>
 
 <router-outlet (activate)="onActivate($event)"></router-outlet>

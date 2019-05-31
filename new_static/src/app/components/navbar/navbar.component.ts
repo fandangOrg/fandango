@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Button, Buttons} from '../../app.component';
+import {Button, Buttons} from "../../app.config";
 
 @Component({
     selector: 'app-navbar',
@@ -17,7 +17,7 @@ export class NavbarComponent implements OnInit {
     inputPlaceholder: string;
 
     constructor(private router: ActivatedRoute) {
-        this.fandangoLogo = 'assets/img/icons/fandango_icon.png';
+        this.fandangoLogo = 'assets/img/logos/fandango.png';
         this.buttonList = Buttons;
         this.inputPlaceholder = '';
 

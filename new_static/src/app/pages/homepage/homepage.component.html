@@ -34,10 +34,16 @@
                     (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder"
                     placement="bottom"
                     [ngbTooltip]=btn.description>
-                <i *ngIf="btn.icon" [ngClass]="btn.icon"></i>
-                <img *ngIf="btn.useImage" [src]="btn.useImage" class="inner-img">
+                <i [ngClass]="btn.icon"></i>
                 <span class="btn-inner--text">{{btn.name}}</span>
             </button>
+
+            <a href="http://40.114.234.51:8080/app/kibana">
+                <button class="btn btn-lg btn-icon btn-secondary">
+                    <img class="inner-img mr-2" src="assets/img/logos/siren.png">
+                    <span>Siren</span>
+                </button>
+            </a>
         </div>
     </div>
 </div>
