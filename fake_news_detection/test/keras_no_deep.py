@@ -21,7 +21,8 @@ from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, PowerTransformer, RobustScaler
 import matplotlib.pyplot as plt
-from fake_news_detection.config.AppConfig import dataset_beta, picklepath
+from fake_news_detection.config.AppConfig import dataset_beta, picklepath,\
+    resources_path
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 from fake_news_detection.model.predictor import LGBMFakePredictor, Preprocessing
 
@@ -69,11 +70,13 @@ def create_model1():
 
 
 if __name__ == '__main__':    
-    daopredictor = FSMemoryPredictorDAO(picklepath)
-    predictor=LGBMClassifier() 
-    model=LGBMFakePredictor(predictor=predictor,preprocessing=Preprocessing(), id="en_lgb")
-    model.fit()
-    daopredictor.save(model)
+    #===========================================================================
+    # daopredictor = FSMemoryPredictorDAO(picklepath)
+    # predictor=LGBMClassifier() 
+    # model=LGBMFakePredictor(predictor=predictor,preprocessing=Preprocessing(), id="en_lgb")
+    # model.fit()
+    # daopredictor.save(model)
+    #===========================================================================
 
     warnings.filterwarnings("ignore")
 
@@ -84,16 +87,16 @@ if __name__ == '__main__':
 
 
     ########## Load and split dataset ##########
-    df = FSdataframeDAO().load("train_kaggle").iloc[:, 1:]
+    df = pandas.read_csv( resources_path+"/default_train_en.csv" ).iloc[:, 1:]
     print("\n > df shape:", df.shape)
     print("\n columns", df.columns)
 
     # df['text_content'] = df['title'].map(str) + "\n\n\n" + df["text"].map(str)
     # X = df["text_content"]
     y = df["label"]
-    df = df.drop(['title', 'text', 'label','URLs'], axis=1)
+    df = df.drop(['title', 'text', 'label'], axis=1)
     X = df
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.9)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
     print(X_train.shape, y_train.shape, X_test.shape, y_test.shape)
 
 
@@ -125,16 +128,13 @@ if __name__ == '__main__':
     #model1 = LogisticRegression()
     model1 = LGBMClassifier() 
     model1.fit(X_train_transf, y_train)
-    model1.booster_.save_model(dataset_beta+"/model/test.mdl")
-    #===========================================================================
-    # """ Plot the significance scores of feautures """
-    # feat_imp = pandas.Series(model1.feature_importances_, index=X.columns)
-    # # feat_imp = pd.Series(self.mdl.models[0].feature_importances_, index=X.columns)
-    # feat_imp.nlargest(50).plot(kind='barh', figsize=(8, 10))
-    # plt.tight_layout()
-    # plt.show()
-    # plt.close()
-    #===========================================================================
+    """ Plot the significance scores of feautures """
+    feat_imp = pandas.Series(model1.feature_importances_, index=X.columns)
+    # feat_imp = pd.Series(self.mdl.models[0].feature_importances_, index=X.columns)
+    feat_imp.nlargest(50).plot(kind='barh', figsize=(8, 10))
+    plt.tight_layout()
+    plt.show()
+    plt.close()
 
     ########## Prediction ##########
     # y_pred = model1.predict(X_test_transf)

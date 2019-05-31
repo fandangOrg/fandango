@@ -27,7 +27,7 @@ from sklearn.model_selection import train_test_split
 
 
 from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
-from fake_news_detection.config.AppConfig import dataset_beta
+from fake_news_detection.config.AppConfig import dataset_beta, resources_path
 from keras.engine.sequential import Sequential
 from keras.layers.core import Dense, Dropout
 from keras.layers.embeddings import Embedding
@@ -216,23 +216,25 @@ if __name__ == "__main__":
     # X=pandas.read_csv(dataset_beta+"/train.csv").iloc[:, 1:]
     #===========================================================================
      #print(X.shape )
-    X=pandas.read_csv("/home/daniele/Scaricati"+"/data.csv")
-    X=X.rename(index=str, columns={"Label": "label", "Body": "text","Headline":"title"})
-    print(X)
-    X=X.dropna()
-    ######
-    training_set= pandas.read_csv(dataset_beta +"/fake_or_real_news.csv") # dataset
-    df_app=training_set[['title','text','label']]
-    df_app['label'] = df_app['label'].map({'FAKE': 0, 'REAL':1})
-    print(df_app)
-    X=X.append(df_app)
-    print("shape after 'fake_or_real_news.csv' -->", X.shape)
-    ####    
-    print(X.groupby(['label']).agg(['count']))
-    print(X.shape )
-    X=Preprocessing().execution(X)
-    X.drop(['URLs'], axis=1)
-    X.to_csv(dataset_beta+"/train_kaggle.csv")
+    #===========================================================================
+    # X=pandas.read_csv("/home/daniele/Scaricati"+"/data.csv")
+    # X=X.rename(index=str, columns={"Label": "label", "Body": "text","Headline":"title"})
+    # print(X)
+    # X=X.dropna()
+    # ######
+    # training_set= pandas.read_csv(dataset_beta +"/fake_or_real_news.csv") # dataset
+    # df_app=training_set[['title','text','label']]
+    # df_app['label'] = df_app['label'].map({'FAKE': 0, 'REAL':1})
+    # print(df_app)
+    # X=X.append(df_app)
+    # print("shape after 'fake_or_real_news.csv' -->", X.shape)
+    # ####    
+    # print(X.groupby(['label']).agg(['count']))
+    # print(X.shape )
+    # X=Preprocessing().execution(X)
+    # X.drop(['URLs'], axis=1)
+    #===========================================================================
+    X=pandas.read_csv( resources_path+"/default_train_en.csv" ).iloc[:, 1:]
     #===========================================================================
     # y= X['Label']
     # X = X.drop(['Label'], axis=1)
@@ -243,7 +245,6 @@ if __name__ == "__main__":
     X = X.drop(['label'], axis=1)
     X = X.drop(['text'], axis=1)
     X = X.drop(['title'], axis=1)
-    X = X.drop(['URLs'], axis=1)
    
     print(X.shape )
     print(y)

@@ -23,7 +23,8 @@ from fake_news_detection.config.MLprocessConfig import new_features_mapping,\
 from fake_news_detection.model.InterfacceComunicazioni import Prestazioni
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 from lightgbm.sklearn import LGBMClassifier
-from fake_news_detection.config.AppConfig import dataset_beta, picklepath
+from fake_news_detection.config.AppConfig import dataset_beta, picklepath,\
+    resources_path
 import pandas
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 
@@ -134,12 +135,11 @@ class LGBMFakePredictor(DS4BizPredictor):
         self.number_item=0
         
     def fit(self, X=None, y=None):
-        X=pandas.read_csv(dataset_beta+"/train_kaggle.csv").iloc[:, 1:]
+        X=pandas.read_csv( resources_path+"/default_train_en.csv" ).iloc[:, 1:]
         y= X['label']
         X = X.drop(['label'], axis=1)
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
-        X = X.drop(['URLs'], axis=1)
         self.predictor_fakeness.fit(X,y)
         
         #=======================================================================

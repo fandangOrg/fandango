@@ -66,40 +66,12 @@ class DAOTrainingPD:
         
         #df=df_app
         df=df.dropna(subset = ['title','text','label'])
-        #df['text']=df['text'].swifter.apply(clean_text)
-        #df['title'].swifter.apply(clean_text)
-        #df1= pd.DataFrame(columns=['title','text','label'])
-        #=======================================================================
-        # for dir in os.listdir(self.path ):
-        #     if dir == "fake":
-        #         for file in os.listdir(self.path  +"/"+ dir):
-        #             with open(self.path +"/"+  dir + "/" +file) as f:
-        #                 dizio = dict()
-        #                 dizio['title'] = " ".join(f.readlines()[:1])
-        #                 dizio['text'] = " ".join(f.readlines()[2:])
-        #                 dizio['label'] = 'FAKE'
-        #                 df1  = pd.DataFrame([dizio], columns=dizio.keys())
-        #                 df = pd.concat([df, df1], axis =0)
-        #                 
-        #     elif dir == "legit":
-        #         for file in os.listdir(self.path+ "/"  + dir):
-        #             with open(self.path +"/" + dir + "/"+ file) as f:
-        #                 dizio = dict()
-        #                 dizio['title'] = " ".join(f.readlines()[:1])
-        #                 dizio['text'] = " ".join(f.readlines()[1:])
-        #                 dizio['label'] = 'REAL'
-        #                 df1  = pd.DataFrame([dizio], columns=dizio.keys())
-        #                 df = pd.concat([df, df1], axis =0)
-        #=======================================================================
-        
         if sample_size < 1.0:
             df = df.sample(frac=sample_size)
 
         print("final shape -->", df.shape)
         print(df.groupby(['label']).agg(['count']))
         print("> end of 'get_train_dataset()'\n")
-        #df.to_csv('/home/camila/Scrivania/data_4F.csv', sep = '|', index = False )
-                  
         return df
 
 

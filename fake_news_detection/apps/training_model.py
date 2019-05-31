@@ -8,8 +8,12 @@ from pandas import DataFrame, read_csv
 from sklearn.metrics import accuracy_score, f1_score, recall_score, precision_score
 from fake_news_detection.config.MLprocessConfig import text_preprocessing_mapping,\
     new_features_mapping, transforming_mapping
+from lightgbm.sklearn import LGBMClassifier
+from fake_news_detection.model.predictor import LGBMFakePredictor, Preprocessing
 
 class Train_model:
+    
+    
     def load_df(self,path_to_dataset:str, sample_size:float=0.05) -> DataFrame:
         df = read_csv(path_to_dataset, sep = '|')
         print("\n > load dataframe from \'", path_to_dataset, "\'" )
@@ -65,10 +69,15 @@ class Train_model:
         print("   - F-measure:",  f1_score(y_test, y_pred, average='macro'))
 
 
+def training_model_LGBMClassifier(id="en_lgb"):
+    daopredictor = FSMemoryPredictorDAO(picklepath)
+    predictor=LGBMClassifier() 
+    model=LGBMFakePredictor(predictor=predictor,preprocessing=Preprocessing(), id)
+    model.fit()
+    daopredictor.save(model)
 
 if __name__ == '__main__':
-    daopredictor = FSMemoryPredictorDAO(picklepath)
-    train = Train_model()
+    training_model_LGBMClassifier()
     ##### TRAINING #####
 
     # LOAD RAW TRAIN SET AND PREPROCESS IT #
@@ -76,9 +85,6 @@ if __name__ == '__main__':
     #training_set_final = preprocess_df(training_set, path_for_store_preprocessed_df="/home/andrea/Scaricati/fandango_data_preprocessed.csv", store=True)
 
     # LOAD ALREADY PREPROCESSED TRAIN SET #
-    training_set_final = train.load_df("/home/camila/Scrivania/newdata_forlime.csv", sample_size=0.5) 
-    print(training_set_final.columns)
-
     #training("modello_en_all", training_set_final, daopredictor)
 
 
