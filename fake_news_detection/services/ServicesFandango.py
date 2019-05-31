@@ -4,10 +4,10 @@ Created on 23 apr 2019
 @author: camila
 '''
 from fake_news_detection.model.InterfacceComunicazioni import News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel,\
- InterfaceInputFeedBack
+ InterfaceInputFeedBack, Claim_input, Claim_output
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.config.AppConfig import  static_folder, url_service_media,\
-    url_service_authors
+    url_service_authors, url_similar_claims
 import json
 from flask_cors.extension import CORS
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
@@ -140,21 +140,6 @@ def crawl_prep(url:str) -> News_DataModel:
     news_preprocessed.results=prest
     return news_preprocessed
 #===============================================================================
-def url_image_score(url:str) -> str:
-    headers = {'content-type': "application/json",'accept': "application/json"}
-    u = URLRequest(url_service_media+"/api/media_analysis")
-    payload = {"images": [url],"videos": [],"identifier": ['unkwon']}
-    print("RICHIESTA IMMAGINI  ",payload)
-    j = json.dumps(payload)
-    return u.post(data=j, headers= headers)
-
-def url_video_score(url:str) -> str:
-    headers = {'content-type': "application/json",'accept': "application/json"}
-    u = URLRequest(url_service_media+"/api/media_analysis")
-    payload = {"images": [],"videos": [url],"identifier": ['unkwon']}
-    print("RICHIESTA IMMAGINI  ",payload)
-    j = json.dumps(payload)
-    return u.post(data=j, headers= headers)
 
 def ping_image(id:str) -> News_DataModel:
     headers = {'content-type': "application/json",'accept': "application/json"}
@@ -202,7 +187,7 @@ def media_getter(news_preprocessed:News_DataModel) -> Media_DataModel :
     response['identifier'] = news_preprocessed.identifier
     return Media_DataModel(**response)
 
-def topics_getter(news_preprocessed:News_DataModel) -> Topics_DataModel:
+def topics_getter(news_preprocessed:News_DataModel):
     u = URLRequest(url_service_media+"/api/extract_topics")
     payload = {"articleBody": news_preprocessed.articleBody,
                "headline": news_preprocessed.headline,
@@ -213,6 +198,20 @@ def topics_getter(news_preprocessed:News_DataModel) -> Topics_DataModel:
     response = u.post(data=j, headers=headers)
     return Topics_DataModel(**response)
 
+
+def similar_claims(claim_input: Claim_input) -> list:
+    u = URLRequest(url_similar_claims+"/fandango/v0.1/siren/findSimilarClaims")
+    payload = {"identifier":"","text": claim_input.text, "topics" : []}
+    headers = {"Content-Type":  "application/json"}
+    j = json.dumps(payload)
+    response = u.post(data=j,headers = headers)
+    print(response)
+    list_claims = []
+    for i in response['results']: 
+        for j in i['claimReviews']:
+            list_claims.append({"text" : i['text'], "datePublished":i['datePublished'], "reviewBody":j['reviewBody']})
+    
+    return list_claims
 #===============================================================================
 # def finalaggr(news_preprocessed:News_DataModel)-> str:
 #     
@@ -344,8 +343,7 @@ app.add_service("start_daemon",start_daemon, method='POST')
 app.add_service("info_score",info_score, method = 'GET')
 app.add_service("ping_image",ping_image, method = 'GET')
 app.add_service("ping_video",ping_video, method = 'GET')
-app.add_service("url_image_score",url_image_score, method = 'GET')
-app.add_service("url_video_score",url_video_score, method = 'GET')
+app.add_service("similar_claims",similar_claims, method = 'POST')
 
 CORS(app)
 
