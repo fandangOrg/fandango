@@ -43,10 +43,11 @@ class Task_Analyzer(Task):
                 #writer = csv.DictWriter(file_output, delimiter='|', quotechar='"', quoting=csv.QUOTE_MINIMAL,fieldnames = fieldnames)
                 #print("applico l'analizer e trovo lo score di ",msg)
                 news_preprocessed = News_DataModel(language=msg.get('language','en'),headline= msg["headline"], articleBody = msg["articleBody"], sourceDomain = msg['sourceDomain'],identifier = msg['identifier'], dateCreated = msg['dateCreated'] , dateModified= msg['dateModified'], datePublished = msg['datePublished'], author = msg['author'], publisher = msg['publisher'], calculateRating = msg['calculateRating'], calculateRatingDetail = msg['calculateRatingDetail'], images = msg['images'], videos = msg['videos'])
+                if msg['language'] != 'en':return
                 
                 #print(msg['headline'])
                 #print(msg['articleBody'])
-                #output = 'hey'
+                output = 'hey'
                 
                 output=self.analytics.analyzer(news_preprocessed,False) 
                 output = output[1][0]
@@ -73,7 +74,6 @@ class Task_Analyzer(Task):
                 dict_output = {"identifier":msg['identifier'],"calculatedRating": "", "headline":msg['headline'],"articleBody": msg['articleBody'],"dateCreated": msg['dateCreated'], "dateModified" : msg['dateModified'], "datePublished":msg['datePublished'],"calculatedRatingDetail":{"textRating": output}, "images" : msg['images'], "videos":msg['videos']}
                 try:
                     #self.file_output
-                    #writer.writerow(dict_for_training)
                     self.publisher.publish(self.topic, dict_output)
                     #print("document added to the kafka topic")
                 except Exception as e:
