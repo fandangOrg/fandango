@@ -10,7 +10,6 @@ from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
 def create_train_file(name='default_train',path=resources_path,preprocessing=Preprocessing(),dao_dati=DAOTrainingPD(),language='en'):
     X = dao_dati.get_train_dataset()
     X=preprocessing.execution(X)
-    X.drop(['URLs'], axis=1)
     X.to_csv(path+"/"+name+"_"+language+".csv")
     
     
