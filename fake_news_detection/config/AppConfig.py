@@ -43,10 +43,10 @@ BASEURL = os.environ.get("BASEURL_SERVICE") or config["service"]["url"]
 BASEPORT = os.environ.get("BASEPORT_SERVICE") or config["service"]["port"]
 
 picklepath = os.environ.get("MODEL_PATH") or  pkg_resources.resource_filename("fake_news_detection.resources.model", "")  # @UndefinedVariable
-dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
+dataset_beta =  config.get("train", "path")  or pkg_resources.resource_filename("fake_news_detection.resources", "")   # @UndefinedVariable 
 static_folder = pkg_resources.resource_filename("static", "")  # @UndefinedVariable
 path_training = os.environ.get("PATH_FOR_TRAININGFILE") or config.get("default", "path_training")
-
+resources_path = pkg_resources.resource_filename("fake_news_detection.resources", "")
 ##################################################################################################################à
 #dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
  
@@ -68,7 +68,7 @@ domains_index = os.environ.get("INDEX_NAME_DOMAIN") or config.get("elasticsearch
 url_service_preprocessing = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "preprocessing_service_url") 
 url_service_media = os.environ.get("URL_SERVICE_CERTH") or config.get("configurationservice", "media_service_url") 
 url_service_authors = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "authors_service_url")
-
+url_similar_claims = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "url_similar_claims")
 ######################################################################################
 #############KAFKA CONFIG #############À
 
@@ -77,7 +77,7 @@ url_kafka = os.environ.get("KAFKA_URL") or config.get("kafka", "url")
 port_kafka = os.environ.get("KAFKA_PORT") or config.get("kafka", "port")  
 topic_input_kafka  = os.environ.get("TOPIC_INPUT") or config.get("kafka", "topic_input") 
 topic_output_kafka = os.environ.get("TOPIC_OUTPUT") or config.get("kafka", "topic_output")
-group_id="lvt_group2"
+group_id="lvt_group22"
 n_consumer = os.environ.get("N_CONSUMER") or config.get("kafka", "consumer")
 
 if __name__ == '__main__':

@@ -30,7 +30,7 @@ class News_raw:
 
 class News_DataModel:
     def __init__(self,language:str,identifier:list,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,
-                 calculateRatingDetail:str,images:list, videos:list, sourceDomain:list,country:str,nationality:str,video_analizer:bool=False,image_analizer:bool=False):
+                 calculateRatingDetail:str,images:list, videos:list, sourceDomain:list,country:str="",nationality:str="",video_analizer:bool=False,image_analizer:bool=False):
         self.headline = headline
         self.articleBody = articleBody
         self.dateCreated = dateCreated
@@ -41,7 +41,6 @@ class News_DataModel:
         self.images = images
         self.videos = videos
         self.sourceDomain = sourceDomain[0]
-        print(publisher,sourceDomain)
         self.calculateRatingDetail = calculateRatingDetail
         self.calculateRating = calculateRating
         self.identifier = identifier
@@ -197,11 +196,18 @@ class New_news_annotated:
         self.lang = lang
         
     
-class Claim:
-    def __init__(self, label, claim, author):
-        self.label = label
-        self.claim = claim
-        self.author = author        
+class Claim_input:
+    def __init__(self, identifier:str, text:str, topics:list ):
+        self.identifier = identifier
+        self.text = text
+        self.topics = topics
+
+class Claim_output:
+    def __init__(self, identifier:str, topics:list, results:list ):
+        self.identifier = identifier
+        self.results = results
+        self.topics = topics
+      
     
 class Claims_annotated:
     def __init__(self, claim:str, label:str):

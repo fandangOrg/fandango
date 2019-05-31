@@ -85,18 +85,17 @@ class AnalyticsService(metaclass=Singleton):
         self.nome_modello={"en":"en_lgb"}
         for k in self.nome_modello:
             print("load model",k)
-            self.daopredictor.get_by_id(self.nome_modello.get(k,"english_try1_version"))
+            self.daopredictor.get_by_id(self.nome_modello.get(k,"en_lgb"))
         self.dao =DAONewsElastic()
 
     def _test(self,id):
-        model =self.daopredictor.get_by_id(self.nome_modello.get(id,"english_try1_version"))
+        model =self.daopredictor.get_by_id(self.nome_modello.get(id,"en_lgb"))
         
     def _text_analysis(self,news_preprocessed:News_DataModel) -> News_DataModel:
-        print('''ANALISI NEWS IN LINGUA '''+ news_preprocessed.language)
-        model =self.daopredictor.get_by_id(self.nome_modello.get(news_preprocessed.language,"english_try1_version"))
+        #print('''ANALISI NEWS IN LINGUA '''+ news_preprocessed.language)
+        model =self.daopredictor.get_by_id(self.nome_modello.get(news_preprocessed.language,"en_lgb"))
         df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
         prest,features = model.predict_proba(df)
-        print("prest->",prest)
         prest = pd.DataFrame(prest, columns=model.predictor_fakeness.classes_)
         prest=pd.concat([prest,features],axis=1)
         return prest

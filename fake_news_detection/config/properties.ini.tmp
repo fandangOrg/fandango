@@ -47,9 +47,11 @@ url = localhost
 port = 9092
 topic_input = input_preprocessed
 topic_output = analyzed_text
-consumer = 10
+consumer = 1
 
 
+[train]
+path=/home/daniele/resources/fandango/train
 
 
 
