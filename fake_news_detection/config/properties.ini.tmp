@@ -50,6 +50,8 @@ topic_output = analyzed_text
 consumer = 1
 
 
+[train]
+path=/home/daniele/resources/fandango/train
 
 
 

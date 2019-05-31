@@ -31,53 +31,67 @@ class DAOTrainingPD:
     #dataset_beta togliere commento e metterlo nel path 
     def __init__(self, path = dataset_beta, delimiter='|'):
         self.path = path
+        print(self.path)
         self.delimiter = delimiter
         
     def get_train_dataset(self, sample_size:float=1.0):
         print("\n\n > start of 'get_train_dataset()'")
-        training_set= pd.read_csv(self.path +"/"+"fake.csv") # dataset
-        #print(training_set.dropna(subset = ['title'])['title'])
-        df=training_set.dropna(subset = ['title','text'])
-        df=df[['title','text']]
-        df['label']='FAKE'
-        print("shape after 'fake.csv' -->", df.shape)
- 
+        print('Read Train Guardian.csv')
         training_set= pd.read_csv(self.path +"/"+"guardian.csv",sep='\t') # dataset
-        training_set['label']='REAL'
-        df=df.append(training_set)
+        training_set['label']=1
+        df=training_set
         print("shape after 'guardian.csv' -->", df.shape)
-
+        
         training_set= pd.read_csv(self.path +"/fake_or_real_news.csv") # dataset
         df_app=training_set[['title','text','label']]
+        df_app['label'] = df_app['label'].map({'FAKE': 0, 'REAL':1})
         df=df.append(df_app)
         print("shape after 'fake_or_real_news.csv' -->", df.shape)
 
+        X=pd.read_csv(self.path+"/data.csv")
+        X=X.rename(index=str, columns={"Label": "label", "Body": "text","Headline":"title"})
+        X = X.drop(['URLs'], axis=1)
+        df=df.append(X)
+        print("shape after 'data.csv' -->", df.shape)
+        with open(self.path+"/dataset_kafka.csv","r") as file:
+            for r in file.readlines():
+                items=r.strip().split("\t")
+                if items[2]=='REAL': 
+                    label=1 
+                else: 
+                    label=0
+                title=items[3]
+                text=items[4]
+                df = df.append({'title': title,'text':text,'label':label}, ignore_index=True)
+        
         #df=df_app
         df=df.dropna(subset = ['title','text','label'])
         #df['text']=df['text'].swifter.apply(clean_text)
         #df['title'].swifter.apply(clean_text)
         #df1= pd.DataFrame(columns=['title','text','label'])
-        for dir in os.listdir(self.path ):
-            if dir == "fake":
-                for file in os.listdir(self.path  +"/"+ dir):
-                    with open(self.path +"/"+  dir + "/" +file) as f:
-                        dizio = dict()
-                        dizio['title'] = " ".join(f.readlines()[:1])
-                        dizio['text'] = " ".join(f.readlines()[2:])
-                        dizio['label'] = 'FAKE'
-                        df1  = pd.DataFrame([dizio], columns=dizio.keys())
-                        df = pd.concat([df, df1], axis =0)
-                        
-            elif dir == "legit":
-                for file in os.listdir(self.path+ "/"  + dir):
-                    with open(self.path +"/" + dir + "/"+ file) as f:
-                        dizio = dict()
-                        dizio['title'] = " ".join(f.readlines()[:1])
-                        dizio['text'] = " ".join(f.readlines()[1:])
-                        dizio['label'] = 'REAL'
-                        df1  = pd.DataFrame([dizio], columns=dizio.keys())
-                        df = pd.concat([df, df1], axis =0)
-
+        #=======================================================================
+        # for dir in os.listdir(self.path ):
+        #     if dir == "fake":
+        #         for file in os.listdir(self.path  +"/"+ dir):
+        #             with open(self.path +"/"+  dir + "/" +file) as f:
+        #                 dizio = dict()
+        #                 dizio['title'] = " ".join(f.readlines()[:1])
+        #                 dizio['text'] = " ".join(f.readlines()[2:])
+        #                 dizio['label'] = 'FAKE'
+        #                 df1  = pd.DataFrame([dizio], columns=dizio.keys())
+        #                 df = pd.concat([df, df1], axis =0)
+        #                 
+        #     elif dir == "legit":
+        #         for file in os.listdir(self.path+ "/"  + dir):
+        #             with open(self.path +"/" + dir + "/"+ file) as f:
+        #                 dizio = dict()
+        #                 dizio['title'] = " ".join(f.readlines()[:1])
+        #                 dizio['text'] = " ".join(f.readlines()[1:])
+        #                 dizio['label'] = 'REAL'
+        #                 df1  = pd.DataFrame([dizio], columns=dizio.keys())
+        #                 df = pd.concat([df, df1], axis =0)
+        #=======================================================================
+        
         if sample_size < 1.0:
             df = df.sample(frac=sample_size)
 
@@ -87,7 +101,6 @@ class DAOTrainingPD:
         #df.to_csv('/home/camila/Scrivania/data_4F.csv', sep = '|', index = False )
                   
         return df
-
 
 
 class DAOTrainingElastic:

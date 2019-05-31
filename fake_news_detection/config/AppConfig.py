@@ -43,10 +43,10 @@ BASEURL = os.environ.get("BASEURL_SERVICE") or config["service"]["url"]
 BASEPORT = os.environ.get("BASEPORT_SERVICE") or config["service"]["port"]
 
 picklepath = os.environ.get("MODEL_PATH") or  pkg_resources.resource_filename("fake_news_detection.resources.model", "")  # @UndefinedVariable
-dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
+dataset_beta =  config.get("train", "path")  or pkg_resources.resource_filename("fake_news_detection.resources", "")   # @UndefinedVariable 
 static_folder = pkg_resources.resource_filename("static", "")  # @UndefinedVariable
 path_training = os.environ.get("PATH_FOR_TRAININGFILE") or config.get("default", "path_training")
-
+resources_path = pkg_resources.resource_filename("fake_news_detection.resources", "")
 ##################################################################################################################à
 #dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
  
