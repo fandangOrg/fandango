@@ -71,7 +71,13 @@ class Task_Analyzer(Task):
                     print("add  pos",msg['sourceDomain'] )
                     #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                 #print("dict_output",dict_output)
-                dict_output = {"identifier":msg['identifier'],"calculatedRating": "", "headline":msg['headline'],"articleBody": msg['articleBody'],"dateCreated": msg['dateCreated'], "dateModified" : msg['dateModified'], "datePublished":msg['datePublished'],"calculatedRatingDetail":{"textRating": output}, "images" : msg['images'], "videos":msg['videos']}
+                dict_output = {"identifier":msg['identifier'], "headline":msg['headline'],
+                               "articleBody": msg['articleBody'],
+                               "dateCreated": msg['dateCreated'], 
+                               "dateModified" : msg['dateModified'], 
+                               "datePublished":msg['datePublished'],
+                                "textRating": output
+                             }
                 try:
                     #self.file_output
                     self.publisher.publish(self.topic, dict_output)

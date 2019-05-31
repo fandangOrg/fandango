@@ -140,6 +140,21 @@ def crawl_prep(url:str) -> News_DataModel:
     news_preprocessed.results=prest
     return news_preprocessed
 #===============================================================================
+def url_image_score(url:str) -> str:
+    headers = {'content-type': "application/json",'accept': "application/json"}
+    u = URLRequest(url_service_media+"/api/media_analysis")
+    payload = {"images": [url],"videos": [],"identifier": ['unkwon']}
+    print("RICHIESTA IMMAGINI  ",payload)
+    j = json.dumps(payload)
+    return u.post(data=j, headers= headers)
+
+def url_video_score(url:str) -> str:
+    headers = {'content-type': "application/json",'accept': "application/json"}
+    u = URLRequest(url_service_media+"/api/media_analysis")
+    payload = {"images": [],"videos": [url],"identifier": ['unkwon']}
+    print("RICHIESTA IMMAGINI  ",payload)
+    j = json.dumps(payload)
+    return u.post(data=j, headers= headers)
 
 def ping_image(id:str) -> News_DataModel:
     headers = {'content-type': "application/json",'accept': "application/json"}
@@ -329,6 +344,8 @@ app.add_service("start_daemon",start_daemon, method='POST')
 app.add_service("info_score",info_score, method = 'GET')
 app.add_service("ping_image",ping_image, method = 'GET')
 app.add_service("ping_video",ping_video, method = 'GET')
+app.add_service("url_image_score",url_image_score, method = 'GET')
+app.add_service("url_video_score",url_video_score, method = 'GET')
 
 CORS(app)
 
