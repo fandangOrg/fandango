@@ -159,7 +159,7 @@ class AnalyticsService(metaclass=Singleton):
             "calculatedRatingDetail": {"key":"value"},
             "calculatedRating": score_fake,
             "identifier": news_preprocessed.identifier}
-    
+        print("analizzo gli autori")
         autors_org=self._get_authors_org_ids(news_preprocessed)
         news_preprocessed.video_analizer=True
         news_preprocessed.image_analizer=True
@@ -168,7 +168,7 @@ class AnalyticsService(metaclass=Singleton):
             news_preprocessed.video=[]
         if not news_preprocessed.image_analizer:
             news_preprocessed.images=[]
-            
+        print("analizzo i media")    
         media= self._get_media_ids(news_preprocessed)
         print("analizzo i topic")
         tp_entity=self._get_topics_ids(news_preprocessed)
@@ -255,12 +255,18 @@ class AnalyticsService(metaclass=Singleton):
             score=pd_text[1][0]
             news=self._save_news(news_preprocessed,score)
             ##
-            for image in news['images']:
-                list_images.append(self._info_image_analysis(image))
-            ##    
-            for video in news['videos']:
-                list_videos.append(self._info_video_analysis(video))
-            
+            #
+            #
+            #===================================================================
+            # for image in news['images']:
+            #     list_images.append(self._info_image_analysis(image))
+            # ##    
+            # for video in news['videos']:
+            #     list_videos.append(self._info_video_analysis(video))
+            # 
+            #===================================================================
+            #
+            #
             print("NEWS-->>",news)
             for authos in news['author']:
                 
@@ -269,20 +275,22 @@ class AnalyticsService(metaclass=Singleton):
             for organization in news['publisher']:
                 list_publishs.append(self._info_authors_and_pub_analysis(organization, 'organization').__dict__)
             
-            pd_video=pd.DataFrame(list_videos)
-            pd_image=pd.DataFrame(list_images)
+            #pd_video=pd.DataFrame(list_videos)
+            #pd_image=pd.DataFrame(list_images)
             pd_authors=pd.DataFrame(list_authors)
             print(list_authors)
             print(pd_authors)
             pd_publish=pd.DataFrame(list_publishs)
             js_t=json.loads(pd_text.to_json(orient='records'))
-            js_V=json.loads(pd_video.to_json(orient='records'))
-            js_i=json.loads(pd_image.to_json(orient='records'))
+            #js_V=json.loads(pd_video.to_json(orient='records'))
+            #js_i=json.loads(pd_image.to_json(orient='records'))
             js_a=json.loads(pd_authors.to_json(orient='records'))
             js_p=json.loads(pd_publish.to_json(orient='records'))
 
 
-            return {"text":js_t,"videos":js_V,"images":js_i,"authors":js_a,"publishers":js_p} 
+            #return {"text":js_t,"videos":js_V,"images":js_i,"authors":js_a,"publishers":js_p} 
+            return {"text":js_t, "authors":js_a,"publishers":js_p} 
+
         else:      
             return pd_text
          

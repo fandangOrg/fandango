@@ -7,7 +7,7 @@ from fake_news_detection.model.InterfacceComunicazioni import News_DataModel, Au
  InterfaceInputFeedBack, Claim_input, Claim_output
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.config.AppConfig import  static_folder, url_service_media,\
-    url_service_authors, url_similar_claims
+    url_service_authors, url_similar_claims, template_path
 import json
 from flask_cors.extension import CORS
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
@@ -20,12 +20,13 @@ from fake_news_detection.business.Pipeline import ScrapyService,\
     AnalyticsService
 from fake_news_detection.apps.daemon import daemon_run
 from fake_news_detection.config.constants import LABEL_SCORE
+from flask.templating import render_template
 #from fake_news_detection.apps.daemon import daemon_run
 
 
 log = getLogger(__name__)
 service_scrapy=ScrapyService()
-service_analyzer= AnalyticsService()
+service_analyzer=AnalyticsService()
 ###run deamon
 
 
@@ -44,7 +45,7 @@ def analyzer(news_preprocessed:News_DataModel) -> str:
 #===============================================================================
 # =======
 #     log.info('''ANALISI NEWS''')
-#     model = daopredictor.get_by_id(nome_modello)
+#     model = daopredictor.get_by_id(nomhttp://www.ansa.it/robots.txte_modello)
 #     df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
 #     
 #     prest = model.predict_proba(df)
@@ -337,12 +338,14 @@ def similar_claims(claim_input: Claim_input) -> list:
     
 #------------------------------------>DECODING ELASTIC ID SERVICES<----------------------------------
 
+app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="",template_folder='../templates/')
 
-   
-    
 
-      
-app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="/web")
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('index.html')
+
+
 app.root="/fandango/v0.3/fakeness"
 app.name="FANDANGO"
 #app.add_service("crawl_online", crawl_online, method= 'POST')
