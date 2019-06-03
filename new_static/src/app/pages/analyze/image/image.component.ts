@@ -53,7 +53,7 @@ export class ImageComponent implements OnInit, OnDestroy {
     }
 
     getColor(score: number) {
-        return AppService.getScoreColor(score * 100);
+        return AppService.getScoreColor(score);
     }
 
     checkStatus(image) {

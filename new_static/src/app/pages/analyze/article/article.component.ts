@@ -4,6 +4,7 @@ import {AnalyzeService} from '../analyze.service';
 import {AppService} from '../../../app.service';
 import {Article} from './article';
 import {sirenUrl} from "../../../app.config";
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-article',
@@ -19,7 +20,7 @@ export class ArticleComponent implements OnInit {
     showMore: boolean;
     article: Article;
 
-    constructor(private router: ActivatedRoute, private http: AnalyzeService, private route: Router) {
+    constructor(private router: ActivatedRoute, private http: AnalyzeService, private route: Router, private sanitizer: DomSanitizer) {
 
         this.showMore = false;
         this.sirenUrl = sirenUrl;
@@ -340,10 +341,10 @@ export class ArticleComponent implements OnInit {
         // CRAWLING AND ANALYZE ARTICLE REQUEST
         this.http.analyzeArticle(this.url).subscribe(
             data => {
-                // console.log(data);
+                console.log(data);
                 this.sirenUrl = this.sirenUrl.replace('QUERYDACAMBIARE', this.url);
-                this.article = new Article(data['identifier'], data['language'], data['headline'], data['articleBody'], data['results']['images'],
-                    data['results']['videos'], data['results']['publishers'], data['results']['authors'], data['results']['text']);
+                this.article = new Article(data['identifier'], data['language'], data['headline'], data['articleBody'], data['images'],
+                    data['videos'], data['results']['publishers'], data['results']['authors'], data['results']['text']);
 
                 this.showLoading.emit(false);
                 console.log(this.article);
@@ -360,6 +361,10 @@ export class ArticleComponent implements OnInit {
         return AppService.getProgressColor(value);
     }
 
+    embedVideo(url) {
+        url = url.replace("watch?v=", "embed/");
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
     analyzeImage(urlImage: string) {
         AppService.prepareUrlToBlankPage(this.route, 'analyze/image', {url: urlImage});
     }

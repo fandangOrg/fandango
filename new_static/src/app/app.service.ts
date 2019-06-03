@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {Router} from "@angular/router";
+import {DomSanitizer} from "@angular/platform-browser";
 
 declare var $: any;
 
@@ -9,6 +11,8 @@ export class AppService {
 
     constructor() {
     }
+
+    private static sanitizer: DomSanitizer;
 
     static showNotification(type: string, message: string) {
         $.notify({
@@ -62,5 +66,10 @@ export class AppService {
             default:
                 return 'bg-success'
         }
+    }
+
+    static embedVideo(url) {
+        url = url.replace("watch?v=", "embed/");
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 }

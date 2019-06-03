@@ -151,16 +151,17 @@
                     <!--                            </div>-->
                     <!--                        </div>-->
                     <!--                    </div>-->
-                    <div class="col-12" style="
-    white-space: nowrap;
-    overflow-x: auto;
-">
-
+                    <div class="col-12" style="white-space: nowrap;overflow-x: auto;">
                         <img *ngFor="let image of article.images" class="c-pointer img-thumbnail mr-3"
-                             (click)="analyzeImage(image.contentUrl)"
-                             [src]="image.contentUrl"
+                             (click)="analyzeImage(image)"
+                             [src]="image"
                              style="max-height: 100px">
                     </div>
+
+<!--                    <div class="col-12 mt-4" style="white-space: nowrap;overflow-x: auto;">-->
+<!--                        <iframe *ngFor="let video of article.videos" class="img-thumbnail" style="height: 150px"-->
+<!--                                [src]="embedVideo(video)"></iframe>-->
+<!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -246,45 +247,5 @@
         <!--            </table>-->
         <!--        </div>-->
         <hr class="my-4"/>
-        <!--                <h6 class="heading-small text-muted">Claims</h6>-->
-        <!--                <div class="table-responsive table-striped">-->
-        <!--                    <table class="table align-items-center table-flush">-->
-        <!--                        <thead class="bg-white">-->
-        <!--                        <tr>-->
-        <!--                            <th scope="col">Claim</th>-->
-        <!--                            <th scope="col">Frequency</th>-->
-        <!--                            &lt;!&ndash;                            <th scope="col">Entities</th>&ndash;&gt;-->
-        <!--                            &lt;!&ndash;                            <th scope="col">Topics</th>&ndash;&gt;-->
-        <!--                            <th scope="col">Result</th>-->
-        <!--                        </tr>-->
-        <!--                        </thead>-->
-        <!--                        <tbody>-->
-        <!--                        <tr>-->
-        <!--                            <th scope="row">-->
-        <!--                                Says Joe Biden "deserted you. … I guess he was born here, but he left you, folks. He-->
-        <!--                                left you for another state."-->
-        <!--                            </th>-->
-        <!--                            <th scope="row">-->
-        <!--                                5-->
-        <!--                            </th>-->
-        <!--                            <th scope="row" class="text-green">-->
-        <!--                                True-->
-        <!--                            </th>-->
-        <!--                        </tr>-->
-        <!--                        <tr>-->
-        <!--                            <th scope="row">-->
-        <!--                                "You look at today, only half the 30-year-olds are doing better than their parents were-->
-        <!--                                at age 30. When I was being raised, it was 90%."-->
-        <!--                            </th>-->
-        <!--                            <th scope="row">-->
-        <!--                                2-->
-        <!--                            </th>-->
-        <!--                            <th scope="row" class="text-red">-->
-        <!--                                False-->
-        <!--                            </th>-->
-        <!--                        </tr>-->
-        <!--                        </tbody>-->
-        <!--                    </table>-->
-        <!--                </div>-->
     </div>
 </div>

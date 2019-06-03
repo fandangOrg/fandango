@@ -3,14 +3,13 @@ export class Article {
     language: string;
     headline: string;
     body: string;
-    images: object[];
-    videos: object[];
+    images: string[];
+    videos: string[];
     publishers: object[];
     authors: object[];
     textAnalysis: object[];
 
-
-    constructor(identified: string, language: string, headline: string, body: string, images: object[], videos: object[], publishers: object[], authors: object[], textAnalysis: object[]) {
+    constructor(identified: string, language: string, headline: string, body: string, images: string[], videos: string[], publishers: object[], authors: object[], textAnalysis: object[]) {
         this.identified = identified;
         this.language = language;
         this.headline = headline;

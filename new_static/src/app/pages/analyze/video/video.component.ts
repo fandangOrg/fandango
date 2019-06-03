@@ -55,7 +55,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     }
 
     getColor(score: number) {
-        return AppService.getScoreColor(score * 100);
+        return AppService.getScoreColor(score);
     }
 
     checkStatus(video) {
@@ -64,7 +64,7 @@ export class VideoComponent implements OnInit, OnDestroy {
         setTimeout(() => this.spinner.show('spinnerVideo'), 25);
 
         self.interval = window.setInterval(function () {
-            self.http.getImageScore(video).subscribe(
+            self.http.getVideoScore(video).subscribe(
                 data => {
                     if (data['status'] === 'done') {
                         self.video = data;
