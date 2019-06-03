@@ -38,7 +38,7 @@ port = 9800
 preprocessing_service_url = http://138.4.47.33:5006
 media_service_url = http://195.251.117.141:5006
 authors_service_url = http://40.114.234.51:5000
-
+url_similar_claims = http://40.114.234.51:3000
 
 
 

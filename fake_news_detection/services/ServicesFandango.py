@@ -151,6 +151,22 @@ def ping_video(id:str) -> str:
     u = URLRequest(url_service_media+"/api/analyze_video/"+id)
     return u.get(headers=headers)
       
+def url_image_score(url:str) -> str:
+    headers = {'content-type': "application/json",'accept': "application/json"}
+    u = URLRequest(url_service_media+"/api/media_analysis")
+    payload = {"images": [url],"videos": [],"identifier": ['unkwon']}
+    print("RICHIESTA IMMAGINI  ",payload)
+    j = json.dumps(payload)
+    return u.post(data=j, headers= headers)
+
+def url_video_score(url:str) -> str:
+    headers = {'content-type': "application/json",'accept': "application/json"}
+    u = URLRequest(url_service_media+"/api/media_analysis")
+    payload = {"images": [],"videos": [url],"identifier": ['unkwon']}
+    print("RICHIESTA IMMAGINI  ",payload)
+    j = json.dumps(payload)
+    return u.post(data=j, headers= headers)
+
 
 def author_org_getter(news_preprocessed:News_DataModel) -> Author_org_DataModel:
     
@@ -344,6 +360,8 @@ app.add_service("info_score",info_score, method = 'GET')
 app.add_service("ping_image",ping_image, method = 'GET')
 app.add_service("ping_video",ping_video, method = 'GET')
 app.add_service("similar_claims",similar_claims, method = 'POST')
+app.add_service("url_image_score",url_image_score, method = 'GET')
+app.add_service("url_video_score",url_video_score, method = 'GET')
 
 CORS(app)
 
