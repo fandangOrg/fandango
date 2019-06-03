@@ -1,3 +1,50 @@
-<p>
-  image works!
-</p>
+<div class="col-8 analyze-container" *ngIf="image">
+    <div class="grid">
+        <div class="row">
+            <div class="col-6">
+                <img [src]="image.contentUrl" style="height: 300px" class="img-thumbnail">
+            </div>
+            <div class="col-6">
+                <div *ngIf="image.status === 'done'">
+                    <div class="text-center my-4">
+                        <h1 class="m-0" [ngClass]="getColor(image.calculatedRating)" style="font-size: 95px">{{(image.calculatedRating * 100).toFixed(2)}}%</h1>
+                        <h3 class="text-black-50 text-capitalize mt--3">Trustworthiness</h3>
+                    </div>
+                    <div class="text-center">
+                        <h4> Image size : {{image.contentSize}}</h4>
+                        <h4> Image encoding : {{image.encodingFormat}}</h4>
+                        <h4> Upload on : {{image.uploadDate}}</h4>
+                    </div>
+                </div>
+
+                <ngx-spinner
+                    name="spinnerImage"
+                    bdOpacity=0.9
+                    bdColor="transparent"
+                    size="medium"
+                    color="#000000"
+                    type="ball-scale-ripple-multiple"
+                    [fullScreen]="false">
+                    <h2 style="color: black" class="mt-5">Analyzing image...</h2>
+                </ngx-spinner>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="row" *ngIf="image.status === 'done' && image.calculatedRatingDetail">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <div class="col">
+                            <h3>Image Rating Details</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col">
+                            <ngx-json-viewer [json]="image.calculatedRatingDetail"></ngx-json-viewer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

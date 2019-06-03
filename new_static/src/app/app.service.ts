@@ -37,4 +37,30 @@ export class AppService {
         // OPEN URL IN NEW BLANK PAGE
         window.open(url.toString(), '_blank');
     }
+
+    static getScoreColor(score: number) {
+        switch (true) {
+            case score <= 25:
+                return 'text-danger';
+            case score <= 50:
+                return 'text-warning';
+            case score <= 75:
+                return 'text-yellow';
+            default:
+                return 'text-success'
+        }
+    }
+
+    static getProgressColor(score: number) {
+        switch (true) {
+            case score <= 25:
+                return 'bg-danger';
+            case score <= 50:
+                return 'bg-warning';
+            case score <= 75:
+                return 'bg-yellow';
+            default:
+                return 'bg-success'
+        }
+    }
 }

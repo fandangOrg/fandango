@@ -1,7 +1,7 @@
-<div class="analyze-container" *ngIf="article">
+<div class="col-8 analyze-container" *ngIf="article">
     <div class="grid">
         <div class="row">
-            <div class="col-md-12 col-12">
+            <div class="col-12">
                 <h6 class="heading-small text-muted">Article</h6>
                 <label class="form-control-label">Headline</label>
                 <p>{{article.headline}}</p>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar"
+                        <div class="progress-bar bg-success" [ngClass]="getProgressColor(article.textAnalysis[0]['1'] * 100)" role="progressbar"
                              aria-valuemin="0" aria-valuemax="100" [style.width]="article.textAnalysis[0]['1'] * 100 + '%'">
                         </div>
                     </div>
@@ -62,13 +62,21 @@
                                     <span class="mr-2">{{author.fakenessScore}}%</span>
                                     <div>
                                         <div class="progress">
-                                            <div class="progress-bar bg-success" role="progressbar"
+                                            <div class="progress-bar"
+                                                 [ngClass]="getProgressColor(author.fakenessScore)"
+                                                 role="progressbar"
                                                  aria-valuemin="0" aria-valuemax="100"
                                                  [style.width]="author.fakenessScore + '%'"></div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
+                        </tr>
+
+                        <tr *ngIf="article.authors.length === 0">
+                            <th colspan="2">
+                                Not authors found
+                            </th>
                         </tr>
                         </tbody>
                     </table>
@@ -88,13 +96,21 @@
                                     <span class="mr-2">{{publisher.fakenessScore}}%</span>
                                     <div>
                                         <div class="progress">
-                                            <div class="progress-bar bg-success" role="progressbar"
+                                            <div class="progress-bar"
+                                                 [ngClass]="getProgressColor(publisher.fakenessScore)"
+                                                 role="progressbar"
                                                  aria-valuemin="0" aria-valuemax="100"
                                                  [style.width]="publisher.fakenessScore + '%'"></div>
                                         </div>
                                     </div>
                                 </div>
                             </td>
+                        </tr>
+
+                        <tr *ngIf="article.publishers.length === 0">
+                            <th colspan="2">
+                                Not publishers found
+                            </th>
                         </tr>
                         </tbody>
                     </table>

@@ -68,7 +68,7 @@ domains_index = os.environ.get("INDEX_NAME_DOMAIN") or config.get("elasticsearch
 url_service_preprocessing = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "preprocessing_service_url") 
 url_service_media = os.environ.get("URL_SERVICE_CERTH") or config.get("configurationservice", "media_service_url") 
 url_service_authors = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "authors_service_url")
-
+url_similar_claims = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "url_similar_claims")
 ######################################################################################
 #############KAFKA CONFIG #############À
 

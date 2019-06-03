@@ -7,6 +7,8 @@ import {ImageComponent} from './image/image.component';
 import {VideoComponent} from './video/video.component';
 import {ClaimComponent} from './claim/claim.component';
 import {TruncateModule} from 'ng2-truncate';
+import {NgxJsonViewerModule} from "ngx-json-viewer";
+import {NgxSpinnerModule} from "ngx-spinner";
 
 @NgModule({
     declarations: [
@@ -18,7 +20,9 @@ import {TruncateModule} from 'ng2-truncate';
     imports: [
         CommonModule,
         RouterModule.forChild(AnalyzeRoutes),
-        TruncateModule
+        TruncateModule,
+        NgxJsonViewerModule,
+        NgxSpinnerModule
     ]
 })
 export class AnalyzeModule {

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Button, Buttons} from '../../app.component';
+import {Button, Buttons} from "../../app.config";
 
 @Component({
     selector: 'app-homepage',

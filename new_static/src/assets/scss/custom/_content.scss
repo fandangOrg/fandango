@@ -54,7 +54,7 @@
 }
 
 .analyze-container {
-    @extend .col-9, .mx-auto, .p-0, .bg-secondary;
+    @extend .mx-auto, .p-0, .bg-secondary;
     border-right: 1px solid lightgray;
     border-left: 1px solid lightgray;
 

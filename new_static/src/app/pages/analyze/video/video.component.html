@@ -1,3 +1,51 @@
-<p>
-  video works!
-</p>
+<div class="col-8 analyze-container" *ngIf="video">
+    <div class="grid">
+        <div class="row">
+            <div class="col-6">
+                <iframe class="img-thumbnail" style="height: 300px;width: 100%;"
+                        [src]="embedVideo(video.contentUrl)"></iframe>
+            </div>
+            <div class="col-6">
+                <div *ngIf="video.status === 'done'">
+                    <div class="text-center my-4">
+                        <h1 class="m-0" [ngClass]="getColor(video.calculatedRating)" style="font-size: 95px">{{(video.calculatedRating * 100).toFixed(2)}}%</h1>
+                        <!--                    <h1 class="text-green m-0" style="font-size: 95px">{{(video.calculatedRating * 100).toFixed(2)}}%</h1>-->
+                        <h3 class="text-black-50 text-capitalize mt--3">Trustworthiness</h3>
+                    </div>
+                    <div class="text-center">
+                        <h4> video size : {{video.contentSize}}</h4>
+                        <h4> video encoding : {{video.encodingFormat}}</h4>
+                        <h4> Upload on : {{video.uploadDate}}</h4>
+                    </div>
+                </div>
+
+                <ngx-spinner
+                    name="spinnerVideo"
+                    bdColor="transparent"
+                    size="medium"
+                    color="#000000"
+                    type="ball-scale-ripple-multiple"
+                    [fullScreen]="false">
+                    <h3 style="color: black;margin-top: 100px">Analyzing video...</h3>
+                </ngx-spinner>
+            </div>
+        </div>
+        <hr class="my-4">
+        <!--        <div class="row">-->
+        <!--            <div class="col-12">-->
+        <!--                <div class="card shadow">-->
+        <!--                    <div class="card-header">-->
+        <!--                        <div class="col">-->
+        <!--                            <h3>video Rating Details</h3>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="card-body">-->
+        <!--                        <div class="col">-->
+        <!--                            <ngx-json-viewer [json]="video.calculatedRatingDetail"></ngx-json-viewer>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
+    </div>
+</div>

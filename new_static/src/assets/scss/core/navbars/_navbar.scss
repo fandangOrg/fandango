@@ -10,7 +10,8 @@
 }
 
 .navbar-img {
-    height: 75px;
+    //height: 75px;
+    width: 100%;
 
     @include for-phone-only() {
         height: 45px;
