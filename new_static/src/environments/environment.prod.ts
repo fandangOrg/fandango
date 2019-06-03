@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    baseUrl: ''
+    baseUrl: '/fandango/v0.3/fakeness'
 };
