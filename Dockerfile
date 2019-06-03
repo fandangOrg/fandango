@@ -7,7 +7,7 @@ RUN apt-get update
 RUN apt-get install -y build-essential
 RUN apt-get install -y libicu-dev
 ADD requirements.txt /
-RUN pip install --upgrade --extra-index-url http://$user:$password@distribution-old.livetech.site --trusted-host distribution-old.livetech.site -r /requirements.txt
+RUN pip install --upgrade --extra-index-url http://$user:$password@distribution.livetech.site --trusted-host distribution.livetech.site -r /requirements.txt
 RUN python3 -m spacy download en_core_web_md
 RUN python3 -m spacy download it_core_news_sm
 RUN python3 -m spacy download es_core_news_md

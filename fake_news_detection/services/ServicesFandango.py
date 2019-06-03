@@ -29,6 +29,7 @@ service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon
 
+daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -153,6 +154,7 @@ def ping_video(id:str) -> str:
     return u.get(headers=headers)
       
 def url_image_score(url:str) -> str:
+    
     headers = {'content-type': "application/json",'accept': "application/json"}
     u = URLRequest(url_service_media+"/api/media_analysis")
     payload = {"images": [url],"videos": [],"identifier": ['unkwon']}
