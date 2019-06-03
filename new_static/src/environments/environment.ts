@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    baseUrl: 'http://192.168.2.136:9800/fandango/v0.3/fakeness'
+    baseUrl: 'http://192.168.2.244:9800/fandango/v0.3/fakeness'
 };
 
 /*

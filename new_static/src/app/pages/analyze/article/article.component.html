@@ -1,5 +1,12 @@
-<div class="col-8 analyze-container" *ngIf="article">
+<div class="col-md-8 col-12 analyze-container" *ngIf="article">
     <div class="grid">
+
+        <a [href]="sirenUrl" target="_blank">
+            <button class="btn btn-icon btn-secondary" style="position: absolute; top: 20px;right: 20px; z-index: 2">
+                <span class="btn-inner--text span-fade" style="margin-right: 0">Open on Siren</span>
+                <img class="inner-img" src="assets/img/logos/siren.png" style="height: 20px !important;">
+            </button>
+        </a>
         <div class="row">
             <div class="col-12">
                 <h6 class="heading-small text-muted">Article</h6>
@@ -38,8 +45,10 @@
                         </div>
                     </div>
                     <div class="progress">
-                        <div class="progress-bar bg-success" [ngClass]="getProgressColor(article.textAnalysis[0]['1'] * 100)" role="progressbar"
-                             aria-valuemin="0" aria-valuemax="100" [style.width]="article.textAnalysis[0]['1'] * 100 + '%'">
+                        <div class="progress-bar bg-success"
+                             [ngClass]="getProgressColor(article.textAnalysis[0]['1'] * 100)" role="progressbar"
+                             aria-valuemin="0" aria-valuemax="100"
+                             [style.width]="article.textAnalysis[0]['1'] * 100 + '%'">
                         </div>
                     </div>
                 </div>
@@ -142,96 +151,100 @@
                     <!--                            </div>-->
                     <!--                        </div>-->
                     <!--                    </div>-->
-                    <div class="col-12">
+                    <div class="col-12" style="
+    white-space: nowrap;
+    overflow-x: auto;
+">
 
-                        <img *ngFor="let image of article.images" class="c-pointer img-thumbnail mr-3" (click)="analyzeImage(image.contentUrl)"
+                        <img *ngFor="let image of article.images" class="c-pointer img-thumbnail mr-3"
+                             (click)="analyzeImage(image.contentUrl)"
                              [src]="image.contentUrl"
                              style="max-height: 100px">
                     </div>
                 </div>
             </div>
         </div>
-        <hr class="my-4"/>
-        <h6 class="heading-small text-muted">Similiar news</h6>
-        <div class="table-responsive table-striped">
-            <table class="table table-flush">
-                <thead class="bg-white">
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">Publisher</th>
-                    <th scope="col">Text Score</th>
-                    <th scope="col">Topics</th>
-                    <th scope="col" style="width: 1%"></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">
-                        Bomb kills U.S., British soldiers in area thought to be cleared of ISISThe deaths of the
-                        two soldiers in Syria
-                    </th>
-                    <th scope="row">
-                        Sam Smith
-                    </th>
-                    <th scope="row">
-                        Cbsnews
-                    </th>
-                    <th scope="row" class="text-center text-green">
-                        80%
-                    </th>
-                    <th scope="row">
-                        soldiers
-                    </th>
-                    <th scope="row">
-                        <i class="fas fa-info-circle fa-2x text-default c-pointer" style="font-size: 18px"></i>
-                    </th>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        China is the target of economic espionage investigations in nearly all 56 of the FBI
-                        field offices.
-                    </th>
-                    <th scope="row">
-                        Adam Follett
-                    </th>
-                    <th scope="row">
-                        BBC
-                    </th>
-                    <th scope="row" class="text-center text-green">
-                        90%
-                    </th>
-                    <th scope="row">
-                        China, economic
-                    </th>
-                    <th scope="row">
-                        <i class="fas fa-info-circle fa-2x text-default c-pointer" style="font-size: 18px"></i>
-                    </th>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        Trump's threat to slap heavy tariffs on imported cars and parts may cost hundreds of
-                        thousands of American jobs
-                    </th>
-                    <th scope="row">
-                        Pam Bell
-                    </th>
-                    <th scope="row">
-                        Cbsnews
-                    </th>
-                    <th scope="row" class="text-center text-warning">
-                        65%
-                    </th>
-                    <th scope="row">
-                        tariffs, american jobs
-                    </th>
-                    <th scope="row">
-                        <i class="fas fa-info-circle fa-2x text-default c-pointer" style="font-size: 18px"></i>
-                    </th>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+        <!--        <hr class="my-4"/>-->
+        <!--        <h6 class="heading-small text-muted">Similiar news</h6>-->
+        <!--        <div class="table-responsive table-striped">-->
+        <!--            <table class="table table-flush">-->
+        <!--                <thead class="bg-white">-->
+        <!--                <tr>-->
+        <!--                    <th scope="col">Title</th>-->
+        <!--                    <th scope="col">Author</th>-->
+        <!--                    <th scope="col">Publisher</th>-->
+        <!--                    <th scope="col">Text Score</th>-->
+        <!--                    <th scope="col">Topics</th>-->
+        <!--                    <th scope="col" style="width: 1%"></th>-->
+        <!--                </tr>-->
+        <!--                </thead>-->
+        <!--                <tbody>-->
+        <!--                <tr>-->
+        <!--                    <th scope="row">-->
+        <!--                        Bomb kills U.S., British soldiers in area thought to be cleared of ISISThe deaths of the-->
+        <!--                        two soldiers in Syria-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        Sam Smith-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        Cbsnews-->
+        <!--                    </th>-->
+        <!--                    <th scope="row" class="text-center text-green">-->
+        <!--                        80%-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        soldiers-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        <i class="fas fa-info-circle fa-2x text-default c-pointer" style="font-size: 18px"></i>-->
+        <!--                    </th>-->
+        <!--                </tr>-->
+        <!--                <tr>-->
+        <!--                    <th scope="row">-->
+        <!--                        China is the target of economic espionage investigations in nearly all 56 of the FBI-->
+        <!--                        field offices.-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        Adam Follett-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        BBC-->
+        <!--                    </th>-->
+        <!--                    <th scope="row" class="text-center text-green">-->
+        <!--                        90%-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        China, economic-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        <i class="fas fa-info-circle fa-2x text-default c-pointer" style="font-size: 18px"></i>-->
+        <!--                    </th>-->
+        <!--                </tr>-->
+        <!--                <tr>-->
+        <!--                    <th scope="row">-->
+        <!--                        Trump's threat to slap heavy tariffs on imported cars and parts may cost hundreds of-->
+        <!--                        thousands of American jobs-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        Pam Bell-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        Cbsnews-->
+        <!--                    </th>-->
+        <!--                    <th scope="row" class="text-center text-warning">-->
+        <!--                        65%-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        tariffs, american jobs-->
+        <!--                    </th>-->
+        <!--                    <th scope="row">-->
+        <!--                        <i class="fas fa-info-circle fa-2x text-default c-pointer" style="font-size: 18px"></i>-->
+        <!--                    </th>-->
+        <!--                </tr>-->
+        <!--                </tbody>-->
+        <!--            </table>-->
+        <!--        </div>-->
         <hr class="my-4"/>
         <!--                <h6 class="heading-small text-muted">Claims</h6>-->
         <!--                <div class="table-responsive table-striped">-->

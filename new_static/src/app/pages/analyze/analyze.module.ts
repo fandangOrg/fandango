@@ -9,6 +9,7 @@ import {ClaimComponent} from './claim/claim.component';
 import {TruncateModule} from 'ng2-truncate';
 import {NgxJsonViewerModule} from "ngx-json-viewer";
 import {NgxSpinnerModule} from "ngx-spinner";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import {NgxSpinnerModule} from "ngx-spinner";
         RouterModule.forChild(AnalyzeRoutes),
         TruncateModule,
         NgxJsonViewerModule,
-        NgxSpinnerModule
+        NgxSpinnerModule,
+        NgbModule
     ]
 })
 export class AnalyzeModule {

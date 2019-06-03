@@ -1,0 +1,64 @@
+.main-content {
+    position: relative;
+
+    overflow-x: hidden;
+    min-height: calc(100vh - 62px);
+    background-image: url("../img/background/background_prova.png");
+    background-size: cover;
+    background-position: center top;
+
+    // Navbar
+    .navbar-top {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        z-index: 1;
+        background-color: transparent;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    // Container
+    .container-fluid {
+        @include media-breakpoint-up(md) {
+            padding-left: ($main-content-padding-x + $grid-gutter-width / 2) !important;
+            padding-right: ($main-content-padding-x + $grid-gutter-width / 2) !important;
+        }
+    }
+}
+
+
+// Offsets the main content depending on the sidebar positioning
+
+.navbar-vertical.navbar-expand {
+
+    @each $breakpoint,
+    $dimension in $grid-breakpoints {
+
+        &-#{$breakpoint} {
+
+            @include media-breakpoint-up(#{$breakpoint}) {
+
+                // Left
+                &.fixed-left + .main-content {
+                    margin-left: $navbar-vertical-width;
+                }
+                // Right
+                &.fixed-right + .main-content {
+                    margin-right: $navbar-vertical-width;
+                }
+            }
+        }
+    }
+}
+
+.analyze-container {
+    @extend .mx-auto, .p-0, .bg-secondary;
+    border-right: 1px solid lightgray;
+    border-left: 1px solid lightgray;
+
+    .grid {
+        @extend .p-4;
+    }
+}

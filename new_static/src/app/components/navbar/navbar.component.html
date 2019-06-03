@@ -4,13 +4,13 @@
             <img class="navbar-img" [src]="fandangoLogo" alt="Fandango">
         </a>
     </div>
-    <div class="col-md-4 col-8">
+    <div class="col-md-5 col-8">
         <form #navbarForm="ngForm" (ngSubmit)="sendInput()">
-            <div class="navbar-input input-group input-group-sm">
+            <div class="navbar-input input-group">
                 <input type="text" class="form-control" [placeholder]="inputPlaceholder"
                        aria-label="Search" [(ngModel)]="url" name="url">
                 <div class="input-group-append">
-                    <button class="btn btn-info btn-sm" type="submit" [disabled]="!url">
+                    <button class="btn btn-info" type="submit" [disabled]="!url">
                         <i class="fas fa-search"></i>
                     </button>
                 </div>
@@ -19,13 +19,13 @@
             <button *ngFor="let btn of buttonList"
                     class="btn btn-icon btn-sm btn-secondary"
                     [class.btn-success]="typeAnalyze===btn.type"
-                    (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder">
+                    (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder" type="button">
                 <i [ngClass]="btn.icon"></i>
                 <span>{{btn.name}}</span>
             </button>
 
             <a href="http://40.114.234.51:8080/app/kibana">
-                <button class="btn btn-icon btn-sm btn-secondary">
+                <button class="btn btn-icon btn-sm btn-secondary" type="button">
                     <img class="inner-img mr-2" src="assets/img/logos/siren.png">
                     <span>Siren</span>
                 </button>

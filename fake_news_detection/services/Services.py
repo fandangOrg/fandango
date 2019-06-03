@@ -16,7 +16,7 @@ from fake_news_detection.config import AppConfig
 from fake_news_detection.config.AppConfig import static_folder, picklepath,\
     number_item_to_train
 from fake_news_detection.utils.Crawler import crawler_news
-from flask import request
+from flask import request, render_template
 import pandas as pd
 
 from fake_news_detection.dao.DAO import DAONewsElastic, FSMemoryPredictorDAO
@@ -264,7 +264,12 @@ def popolate_claims() -> str:
 
 
     
-app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="/web")
+app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="/web", template_folder='../templates/')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('index.html')
+
 app.root="/fandango/v0.3/fakeness"
 app.name="FANDANGO"
 app.add_service("train",train_model, method='POST')
