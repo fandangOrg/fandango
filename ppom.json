@@ -1,18 +1,17 @@
 {
-  "version": "0.1.5",
-  "tasks": {
-    "build": {
-      "upload": {
-        "repository": "fandango-fake-news"
-      }
-     "company": "registry.livetech.site"
-    },
-    "docker-build": {
-      "company": "livetech",
-      "build-args": {
-        "user": "piplivetech",
-        "password": "pip2018"
-      }
-    }
-  }
-}
+	 "version": "0.2.0",
+	 "tasks": {
+	   "docker-build": {
+	     "build-args": {
+	       "password": "pip2018",
+	       "user": "piplivetech"
+	     },
+	     "company": "livetech"
+	   },
+	   "build": {
+	     "upload": {
+	       "repository": "fandango-fake-news"
+	     }
+	   }
+	 }
+} 

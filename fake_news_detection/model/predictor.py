@@ -124,7 +124,7 @@ class LGBMFakePredictor(DS4BizPredictor):
     def __init__(self, predictor:LGBMClassifier,
                  preprocessing:Preprocessing,id:str):
         '''
-        Constructor
+            Constructor
         '''
         now = datetime.datetime.now()
         now_string = now.strftime(('%d/%m/%Y %H:%M'))
@@ -135,7 +135,7 @@ class LGBMFakePredictor(DS4BizPredictor):
         self.number_item=0
         
     def fit(self, X=None, y=None):
-        X=pandas.read_csv( resources_path+"/default_train_en.csv" ).iloc[:, 1:]
+        X=pandas.read_csv( resources_path+"/default_train_v2_en.csv" ).iloc[:, 1:]
         y= X['label']
         X = X.drop(['label'], axis=1)
         X = X.drop(['text'], axis=1)

@@ -15,8 +15,9 @@ from elasticsearch_dsl.search import Search, TransportError
 import itertools
 from fake_news_detection.dao.DAO import DAONewsElastic
 from _collections import defaultdict
+from pygments.unistring import Pe
 #from fake_news_detection.services.Services import dao_news
-
+from xml.etree import cElementTree as ET
 
 log = getLogger(__name__)
 
@@ -63,7 +64,37 @@ class DAOTrainingPD:
                 title=items[3]
                 text=items[4]
                 df = df.append({'title': title,'text':text,'label':label}, ignore_index=True)
-        
+
+        print("shape after 'dataset_kafka.csv' -->", df.shape)
+
+        ###################
+        files=os.listdir(dataset_beta+"/articles")
+        print(files)
+        v=set()
+        for f in files:
+            e = ET.XML(open(dataset_beta+"/articles/"+f,"r").read())
+            title=""
+            text =""
+            value =""
+            for k in e:
+                if k.tag=="mainText":
+                    text=k.text
+                
+                if k.tag=="title":
+                    title=k.text
+    
+                if k.tag=="veracity":
+                    value=k.text
+                    
+            if value=='mostly false' or value=='mostly true':
+                if value=='mostly false':
+                    value="0"
+                else:
+                    value='1'
+                df = df.append({'title': title,'text':text,'label':value}, ignore_index=True)
+
+        print("shape after 'articles' -->", df.shape)
+                
         #df=df_app
         df=df.dropna(subset = ['title','text','label'])
         if sample_size < 1.0:
@@ -305,9 +336,35 @@ class DAOTrainingElasticByDomains():
 
                 
 
+
 if __name__ == '__main__':
-    
-    
+    files=os.listdir(dataset_beta+"/articles")
+    print(files)
+    v=set()
+    for f in files:
+        e = ET.XML(open(dataset_beta+"/articles/"+f,"r").read())
+        title=""
+        text =""
+        value =""
+        for k in e:
+            if k.tag=="mainText":
+                text=k.text
+            
+            if k.tag=="title":
+                title=k.text
+
+            if k.tag=="veracity":
+                value=k.text
+                
+        if value=='mostly false' or value=='mostly true':
+            if value=='mostly false':
+                value="0"
+            else:
+                value='1'
+            v.add(text)
+              
+    print(len(v))
+      
     #===========================================================================
     # dao_news=DAONewsElastic()
     # #list_domains = dao_news.get_domain()
@@ -323,9 +380,11 @@ if __name__ == '__main__':
     #===========================================================================
     #l.to_csv('/home/camila/Scrivania/fakedata1.csv', sep = '\t', index = False)
     
-    
-    oo = DAOTrainingElasticByDomains()
-    oo.get_domains_from_elastic()
+    #===========================================================================
+    # 
+    # oo = DAOTrainingElasticByDomains()
+    # oo.get_domains_from_elastic()
+    #===========================================================================
     #print(oo.get_domains_from_elastic())
     
     

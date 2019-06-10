@@ -17,6 +17,7 @@ from fake_news_detection.dao.DAO import FSMemoryPredictorDAO, DAONewsElastic
 from fake_news_detection.model.singleton_filter import Singleton
 from threading import Thread
 import os
+import time
 log = getLogger(__name__)
 
 class ScrapyService:
@@ -108,7 +109,10 @@ class AnalyticsService(metaclass=Singleton):
         j = json.dumps(payload)
         print(j)
         try:
+            start = time.time()
             response = u.post(data=j, headers=self.headers)
+            end = time.time()
+            print("TEMPO SPESO PER LA RICHIESTA DEGLI AUTORI ==>>>",end - start)
             print("response->",response)
             if  'error' in response:
                 return Author_org_DataModel('',[],[])
