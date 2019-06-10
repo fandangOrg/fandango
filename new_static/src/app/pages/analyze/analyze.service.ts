@@ -23,20 +23,20 @@ export class AnalyzeService {
         return this.http.post('/crawl_and_preprocessing?url=' + url, null);
     }
 
-    analyzeImage(url: string): Observable<Object> {
-        return this.http.get('/url_image_score?url='+url);
-    }
-
     getImageScore(id: string): Observable<Object> {
-        return this.http.get('/ping_image?id='+id);
+        return this.http.get('/ping_image?id=' + id);
     }
 
-    analyzeVideo(url: string): Observable<Object> {
-        return this.http.get('/url_video_score?url='+url);
+    analyzeImage(url: string): Observable<Object> {
+        return this.http.get('/url_image_score?url=' + url);
     }
 
     getVideoScore(id: string): Observable<Object> {
-        return this.http.get('/ping_video?id='+id);
+        return this.http.get('/ping_video?id=' + id);
+    }
+
+    analyzeVideo(url: string): Observable<Object> {
+        return this.http.get('/url_video_score?url=' + url);
     }
 
     analyzeClaim(to_send: object): Observable<any> {

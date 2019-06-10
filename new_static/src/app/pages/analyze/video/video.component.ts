@@ -33,6 +33,7 @@ export class VideoComponent implements OnInit, OnDestroy {
             data => {
                 console.log(data);
 
+                // GET IDENTIFIER AND SEND IT TO ANALYZER SERVICE
                 let tempVideo = data['videos'][0];
 
                 this.http.getVideoScore(data['videos'][0]).subscribe(
@@ -41,7 +42,12 @@ export class VideoComponent implements OnInit, OnDestroy {
                         console.log(this.video);
                         this.showLoading.emit(false);
 
-                        if (this.video['status'] !== 'done')
+                        // CHECK ANALYZE STATUS
+                        if (this.video['status'] === 'error') {
+                            this.route.navigate(['/homepage']);
+                            AppService.showNotification('danger', 'Error during analyzing video')
+                        } else if (this.video['status'] !== 'done')
+                            // IF STATUS NOT DONE PING SERVICE EVERY 5 SECONDS
                             this.checkStatus(tempVideo);
                     }
                 )
@@ -59,6 +65,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     }
 
     checkStatus(video) {
+        // ASSIGN THIS TO SELF FOR USE IT IN INTERVAL FUNCTION
         const self = this;
 
         setTimeout(() => this.spinner.show('spinnerVideo'), 25);
@@ -70,9 +77,13 @@ export class VideoComponent implements OnInit, OnDestroy {
                         self.video = data;
                         console.log(self.video);
                         setTimeout(() => self.spinner.hide('spinnerVideo'), 25);
+                        // EXIT FROM LOOP
                         clearInterval(self.interval);
+                    } else if (data['status'] === 'error') {
+                        self.route.navigate(['/homepage']);
+                        AppService.showNotification('danger', 'Error during analyzing video')
                     } else {
-                        console.log("ANALYZING");
+                        console.log("ANALYZING -->", data['status']);
                     }
                 }
             )

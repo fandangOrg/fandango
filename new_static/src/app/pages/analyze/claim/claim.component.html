@@ -1,5 +1,5 @@
 <div class="col-md-8 col-12 analyze-container" *ngIf="claims">
-    <div class="grid" style="min-height: 100vh">
+    <div class="grid">
         <div class="row">
             <div class="col-12">
 
@@ -8,6 +8,7 @@
                         white-space: normal;
                     }
                 </style>
+
                 <h6 class="heading-small text-muted">Claims</h6>
                 <div class="table-responsive table-striped">
                     <table class="table align-items-center table-flush">
@@ -25,11 +26,15 @@
                                     {{claim.text}}
                                 </th>
                                 <th scope="row">
-                                    {{claim.datePublished}}
+                                    {{claim.datePublished | date: 'dd-MM-yyyy'}}
                                 </th>
-                                <th scope="row" (click)="claim.expand = !claim.expand" width="1%">
-                                    <i *ngIf="!claim.expand" class="fas fa-caret-square-down fa-2x c-pointer" placement="top" ngbTooltip='Expand body'></i>
-                                    <i *ngIf="claim.expand" class="fas fa-caret-square-up fa-2x c-pointer" placement="top" ngbTooltip='Collapse body'></i>
+                                <th scope="row" width="1%">
+                                    <a (click)="claim.expand = !claim.expand">
+                                        <i *ngIf="!claim.expand" class="fas fa-caret-square-down fa-2x c-pointer"
+                                           placement="top" ngbTooltip='Expand body'></i>
+                                        <i *ngIf="claim.expand" class="fas fa-caret-square-up fa-2x c-pointer"
+                                           placement="top" ngbTooltip='Collapse body'></i>
+                                    </a>
                                 </th>
                             </tr>
                             <tr *ngIf="claim.expand">
