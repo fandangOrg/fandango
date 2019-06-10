@@ -140,8 +140,6 @@ def crawl_prep(url:str) -> News_DataModel:
     print(news_preprocessed.__dict__)
     prest=service_analyzer.analyzer(news_preprocessed)
     news_preprocessed.results=prest
-    service_analyzer.save_news(news_preprocessed)
-
     news_preprocessed.similarnews = similar_news(news_preprocessed.identifier)
     return news_preprocessed
 #===============================================================================

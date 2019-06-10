@@ -104,10 +104,9 @@ class AnalyticsService(metaclass=Singleton):
     def _get_authors_org_ids(self,news_preprocessed:News_DataModel)-> Author_org_DataModel:
         u = URLRequest(self.url_authors+"/graph/article")
         payload = news_preprocessed.__dict__
-        print("payload",payload)
+        #print("payload",payload)
         payload['identifier']=payload['identifier'][0]
         j = json.dumps(payload)
-        print(j)
         try:
             start = time.time()
             response = u.post(data=j, headers=self.headers)
@@ -134,6 +133,7 @@ class AnalyticsService(metaclass=Singleton):
         except Exception as e :
             print("ERROR SERVICE MEDIA IDS:  "+str(e))
             return Media_DataModel('',[],[])
+        
     def _get_topics_ids(self,news_preprocessed:News_DataModel) -> Topics_DataModel:
         try:
             u = URLRequest(self.url_media_service+"/api/extract_topics")
@@ -151,7 +151,8 @@ class AnalyticsService(metaclass=Singleton):
     def _clear(self,data):
         return str(data).split(" ")[0]
                                 
-    def save_news(self,news_preprocessed:News_DataModel):
+    def _save_news(self,news_preprocessed:News_DataModel,score_fake=0.0):
+        
         d = {"headline": news_preprocessed.headline,
             "articleBody" : news_preprocessed.articleBody,
             "dateCreated": news_preprocessed.dateCreated,
@@ -160,8 +161,7 @@ class AnalyticsService(metaclass=Singleton):
             "author": news_preprocessed.author,
             "publisher": news_preprocessed.publisher,
             "sourceDomain": news_preprocessed.sourceDomain,
-            "calculatedRatingDetail": self.analyzer(news_preprocessed),
-            "calculatedRating": "",
+            "calculatedRating": 0.0,
             "identifier": news_preprocessed.identifier}
         print("analizzo gli autori")
         autors_org=self._get_authors_org_ids(news_preprocessed)
@@ -177,7 +177,13 @@ class AnalyticsService(metaclass=Singleton):
         print("analizzo i topic")
         tp_entity=self._get_topics_ids(news_preprocessed)
         
-        #d['calculatedRatingDetail'] = self.analyzer(news_preprocessed, save= True)
+        ####calculatedRatingDetail
+        calculatedRatingDetail=dict()
+        calculatedRatingDetail['textRating']=score_fake
+        calculatedRatingDetail['authorRating']=autors_org.authorRating
+        calculatedRatingDetail['publisherRating']=autors_org.publisherRating
+        ####
+        d['calculatedRatingDetail']=calculatedRatingDetail
         d['author'] = autors_org.author
         d['publisher'] = autors_org.publisher
         #d['images'] = media.images
@@ -188,7 +194,6 @@ class AnalyticsService(metaclass=Singleton):
         d['dateModified'] =self._clear(news_preprocessed.dateModified)
         d['datePublished'] =self._clear(news_preprocessed.datePublished)
         
-        print("--------------------------------->VERIFICO SE SALVARE LA NEWS",d)
         if self.dao.is_valitade_news_existence(news_preprocessed.identifier):
             self.dao.create_doc_news(d)
         d['images'] = media.images
@@ -258,6 +263,7 @@ class AnalyticsService(metaclass=Singleton):
             list_images=[]
             list_videos=[]
             score=pd_text[1][0]
+            news=self._save_news(news_preprocessed,score)
             ##
             #
             #
@@ -271,19 +277,16 @@ class AnalyticsService(metaclass=Singleton):
             #===================================================================
             #
             #
-            print("NEWS-->>",news_preprocessed)
-            for authos in news_preprocessed['author']:
-                
+            #print("NEWS-->>",news)
+            for authos in news['author']:
                 list_authors.append(self._info_authors_and_pub_analysis(authos, 'author').__dict__)
             
-            for organization in news_preprocessed['publisher']:
+            for organization in news['publisher']:
                 list_publishs.append(self._info_authors_and_pub_analysis(organization, 'organization').__dict__)
             
             #pd_video=pd.DataFrame(list_videos)
             #pd_image=pd.DataFrame(list_images)
             pd_authors=pd.DataFrame(list_authors)
-            print(list_authors)
-            print(pd_authors)
             pd_publish=pd.DataFrame(list_publishs)
             js_t=json.loads(pd_text.to_json(orient='records'))
             #js_V=json.loads(pd_video.to_json(orient='records'))
@@ -291,7 +294,6 @@ class AnalyticsService(metaclass=Singleton):
             js_a=json.loads(pd_authors.to_json(orient='records'))
             js_p=json.loads(pd_publish.to_json(orient='records'))
 
-            news=self._save_news(news_preprocessed,score)
 
             #return {"text":js_t,"videos":js_V,"images":js_i,"authors":js_a,"publishers":js_p} 
             return {"text":js_t, "authors":js_a,"publishers":js_p} 
@@ -303,6 +305,7 @@ def running(name):
     print("name", name)
     a = AnalyticsService()
     b = AnalyticsService()
+    print("nstopo", a._test('en'))
     print("nstopo", a._test('en'))
 
     

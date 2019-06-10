@@ -55,10 +55,12 @@ class News_DataModel:
         return "headline:"+self.headline+";articleBody:"+self.articleBody+";dateCreated:"+self.dateCreated+";dateModified:"+self.dateModified+";datePublished:"+self.datePublished+";author:"+self.author+";publisher:"+self.publisher
     '''
 class Author_org_DataModel:
-    def __init__(self,identifier:str,author:list,publisher:list,**kwargs:dict):
+    def __init__(self,identifier:str,author:list,publisher:list,authorRating:list=[],publisherRating:list=[],**kwargs:dict):
         self.identifier = identifier
         self.author = author #id list
-        self.publisher = publisher #id list 
+        self.publisher = publisher #id list
+        self.authorRating=authorRating
+        self.publisherRating=publisherRating 
     
     def __str__(self):
         return "identifier:"+self.identifier+";author:"+self.author+";publisher:"+self.publisher
