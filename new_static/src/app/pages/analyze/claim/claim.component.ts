@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AnalyzeService} from "../analyze.service";
+import {Claim} from "./claim";
 
 @Component({
     selector: 'app-claim',
@@ -11,7 +12,7 @@ export class ClaimComponent implements OnInit {
 
     @Output() showLoading = new EventEmitter<boolean>();
     url: string;
-    claims: object[];
+    claims: Claim[];
 
     constructor(private router: ActivatedRoute, private http: AnalyzeService, private route: Router) {
         this.url = this.http.retrieveUrl(this.router);

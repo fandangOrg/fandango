@@ -44,7 +44,10 @@ export class ImageComponent implements OnInit, OnDestroy {
                         console.log(this.image);
                         this.showLoading.emit(false);
 
-                        if (this.image['status'] !== 'done')
+                        if (this.image['status'] === 'error') {
+                            this.route.navigate(['/homepage']);
+                            AppService.showNotification('danger', 'Error during analyzing image')
+                        } else if (this.image['status'] !== 'done')
                             this.checkStatus(tempImage);
                     }
                 )
@@ -69,8 +72,11 @@ export class ImageComponent implements OnInit, OnDestroy {
                         console.log(self.image);
                         setTimeout(() => self.spinner.hide('spinnerImage'), 25);
                         clearInterval(self.interval);
+                    } else if (data['status'] === 'error') {
+                        self.route.navigate(['/homepage']);
+                        AppService.showNotification('danger', 'Error during analyzing image')
                     } else {
-                        console.log("ANALYZING");
+                        console.log("ANALYZING -->", data['status']);
                     }
                 }
             )

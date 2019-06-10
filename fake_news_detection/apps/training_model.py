@@ -72,7 +72,7 @@ class Train_model:
 def training_model_LGBMClassifier(id="en_lgb"):
     daopredictor = FSMemoryPredictorDAO(picklepath)
     predictor=LGBMClassifier() 
-    model=LGBMFakePredictor(predictor=predictor,preprocessing=Preprocessing(), id)
+    model=LGBMFakePredictor(predictor=predictor,preprocessing=Preprocessing(), id=id)
     model.fit()
     daopredictor.save(model)
 

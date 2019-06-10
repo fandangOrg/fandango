@@ -344,7 +344,7 @@ export class ArticleComponent implements OnInit {
                 console.log(data);
                 this.sirenUrl = this.sirenUrl.replace('QUERYDACAMBIARE', this.url);
                 this.article = new Article(data['identifier'], data['language'], data['headline'], data['articleBody'], data['images'],
-                    data['videos'], data['results']['publishers'], data['results']['authors'], data['results']['text']);
+                    data['videos'], data['results']['publishers'], data['results']['authors'], data['results']['text'], data['similarnews']);
 
                 this.showLoading.emit(false);
                 console.log(this.article);
@@ -359,6 +359,10 @@ export class ArticleComponent implements OnInit {
 
     getProgressColor(value: number) {
         return AppService.getProgressColor(value);
+    }
+
+    getScoreColor(value: number) {
+        return AppService.getScoreColor(value);
     }
 
     embedVideo(url) {
