@@ -29,7 +29,7 @@ service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon
 
-daemon_run()
+#daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -140,6 +140,9 @@ def crawl_prep(url:str) -> News_DataModel:
     print(news_preprocessed.__dict__)
     prest=service_analyzer.analyzer(news_preprocessed)
     news_preprocessed.results=prest
+    service_analyzer.save_news(news_preprocessed)
+
+    news_preprocessed.similarnews = similar_news(news_preprocessed.identifier)
     return news_preprocessed
 #===============================================================================
 
@@ -231,6 +234,24 @@ def similar_claims(claim_input: Claim_input) -> list:
             list_claims.append({"text" : i['text'], "datePublished":i['datePublished'], "reviewBody":j['reviewBody']})
     
     return list_claims
+
+def similar_news(id_news:str) -> list:
+    
+    u = URLRequest(url_similar_claims+"/fandango/v0.1/siren/FindSimilarArticles")
+    payload = {"identifier": id_news}
+    headers = {"Content-Type":  "application/json"}
+    
+    j = json.dumps(payload)
+    response = u.post(data=j,headers = headers)
+    print(response)
+    list_news = []
+    for i in response['results']: 
+        list_news.append({"headline": i['headline'], "articleBody": i['articleBody'], "publisher" : i['publisher'], "textRating": i["calculatedRating"]})
+    
+    return list_news
+
+
+
 #===============================================================================
 # def finalaggr(news_preprocessed:News_DataModel)-> str:
 #     
@@ -367,6 +388,7 @@ app.add_service("ping_video",ping_video, method = 'GET')
 app.add_service("similar_claims",similar_claims, method = 'POST')
 app.add_service("url_image_score",url_image_score, method = 'GET')
 app.add_service("url_video_score",url_video_score, method = 'GET')
+app.add_service("similar_news",similar_news, method = 'POST')
 
 CORS(app)
 

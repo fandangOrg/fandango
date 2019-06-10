@@ -15,6 +15,7 @@ index_news=test_preprocessed_data_current_en_cleaned
 index_news_annotation=news_article_current_lvt
 article_index=fdg-article
 domain_index = domainsurl
+annotation_index = annotation_lvt
 
 
 
@@ -35,12 +36,17 @@ port = 9800
 
 
 [configurationservice]
-preprocessing_service_url = http://138.4.47.33:5006
+preprocessing_service_url = http://40.114.234.51:5001
 media_service_url = http://195.251.117.141:5006
 authors_service_url = http://40.114.234.51:5000
-url_similar_claims = http://40.114.234.51:3000
+url_similar_claims = http://40.114.234.51:3000 
 
 
+#preprocessing_service_url = http://138.4.47.33:5006
+#preprocessing_service_url = http://40.114.234.51:5001
+#media_service_url = http://195.251.117.141:5006
+#authors_service_url = http://40.114.234.51:5000
+#url_similar_claims = http://40.114.234.51:3000 
 
 [kafka]
 url = localhost

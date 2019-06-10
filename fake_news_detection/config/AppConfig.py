@@ -43,14 +43,14 @@ BASEURL = os.environ.get("BASEURL_SERVICE") or config["service"]["url"]
 BASEPORT = os.environ.get("BASEPORT_SERVICE") or config["service"]["port"]
 
 picklepath = os.environ.get("MODEL_PATH") or  pkg_resources.resource_filename("fake_news_detection.resources.model", "")  # @UndefinedVariable
-dataset_beta =  config.get("train", "path")  or pkg_resources.resource_filename("fake_news_detection.resources", "")   # @UndefinedVariable 
+#dataset_beta =  config.get("train", "path")  or pkg_resources.resource_filename("fake_news_detection.resources", "")   # @UndefinedVariable 
 static_folder = pkg_resources.resource_filename("new_static", "")  # @UndefinedVariable
 path_training = os.environ.get("PATH_FOR_TRAININGFILE") or config.get("default", "path_training")
 resources_path = pkg_resources.resource_filename("fake_news_detection.resources", "")
-template_path = pkg_resources.resource_filename("fake_news_detection.templates", "")
+template_path = pkg_resources.resource_filename("fake_news_detection.config", "mapping_annotation.json")
 
 ##################################################################################################################à
-#dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
+dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
  
 #---------------------------->ELASTIC VARIABLES<----------------------------------------------------------------------------
 index_name_news = os.environ.get("INDEX_ELASTIC_NEWS") or config.get("elasticsearch", "index_news") or "news_article_current"
@@ -64,6 +64,9 @@ number_item_to_train= os.environ.get("SIZE_DOMAIN") or 1000000
 #dataset_beta = os.environ.get("DATASET_BETA") or config.get("dataprova", "dataset_beta")
 index_name_article = os.environ.get("INDEX_NAME_ARTICLE") or config.get("elasticsearch", "article_index") 
 domains_index = os.environ.get("INDEX_NAME_DOMAIN") or config.get("elasticsearch", "domain_index") 
+index_annotation = os.environ.get("INDEX_ANNOTATION") or config.get("elasticsearch", "annotation_index")
+mapping_annotation = pkg_resources.resource_filename("fake_news_detection.config", "mapping_annotation.json")
+
 
 
 #--------------------------->EXTERNAL SERVICES VARIABLES<-------------------------------------------------------------------------
