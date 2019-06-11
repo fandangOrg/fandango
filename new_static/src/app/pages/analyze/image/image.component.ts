@@ -82,4 +82,8 @@ export class ImageComponent implements OnInit, OnDestroy {
             )
         }, 5000);
     }
+
+    isEmptyObject(obj){
+        return (Object.getOwnPropertyNames(obj).length === 0);
+    }
 }

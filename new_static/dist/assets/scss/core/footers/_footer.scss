@@ -10,9 +10,9 @@
     position: relative;
     bottom: 0;
     width: 100%;
-    background: $footer-bg;
+    background: $white;
     padding: $footer-padding-y $footer-padding-x;
-    border-top: 1px solid $gray-500;
+    border-top: 1px solid $gray-400;
 
     .col-footer {
         .heading {

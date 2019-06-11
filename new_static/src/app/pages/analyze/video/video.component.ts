@@ -111,4 +111,8 @@ export class VideoComponent implements OnInit, OnDestroy {
         return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
 
+    isEmptyObject(obj){
+        return (Object.getOwnPropertyNames(obj).length === 0);
+    }
+
 }

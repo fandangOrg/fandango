@@ -4,7 +4,7 @@
         <form #homepageForm="ngForm" (ngSubmit)="sendInput(homepageForm.value)">
             <div class="input-group mb-3">
                 <input type="text"
-                       class="form-control form-control-alternative"
+                       class="form-control"
                        [placeholder]="inputPlaceholder"
                        aria-label="Search" ngModel name="url" required>
                 <div class="input-group-append">
@@ -29,8 +29,8 @@
 
         <div class="text-center btn-group-lg">
             <button *ngFor="let btn of buttonList"
-                    class="btn btn-icon btn-secondary"
-                    [class.btn-success]="typeAnalyze===btn.type"
+                    class="btn btn-icon"
+                    [class.btn-info]="typeAnalyze===btn.type"
                     (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder"
                     placement="bottom"
                     [ngbTooltip]=btn.description>
@@ -39,7 +39,7 @@
             </button>
 
             <a href="http://40.114.234.51:8080/app/kibana">
-                <button class="btn btn-lg btn-icon btn-secondary" placement="bottom"
+                <button class="btn btn-lg btn-icon" placement="bottom"
                         ngbTooltip='OPEN SIREN DASHBOARD'>
                     <img class="inner-img mr-2" src="assets/img/logos/siren.png">
                     <span>Siren</span>

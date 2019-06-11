@@ -31,21 +31,21 @@
             </div>
         </div>
         <hr class="my-4">
-        <!--        <div class="row">-->
-        <!--            <div class="col-12">-->
-        <!--                <div class="card shadow">-->
-        <!--                    <div class="card-header">-->
-        <!--                        <div class="col">-->
-        <!--                            <h3>video Rating Details</h3>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                    <div class="card-body">-->
-        <!--                        <div class="col">-->
-        <!--                            <ngx-json-viewer [json]="video.calculatedRatingDetail"></ngx-json-viewer>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
+                <div class="row" *ngIf="video.status === 'done' && !isEmptyObject(video.calculatedRatingDetail)">
+                    <div class="col-12">
+                        <div class="card shadow">
+                            <div class="card-header">
+                                <div class="col">
+                                    <h3>Video Rating Details</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="col">
+                                    <ngx-json-viewer [json]="video.calculatedRatingDetail"></ngx-json-viewer>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
     </div>
 </div>

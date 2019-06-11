@@ -369,7 +369,22 @@ export class ArticleComponent implements OnInit {
         url = url.replace("watch?v=", "embed/");
         return this.sanitizer.bypassSecurityTrustResourceUrl(url);
     }
+
+    embedVideoThumb(url) {
+        let urlSubstring = '';
+        if (url.includes('?'))
+            urlSubstring = url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("?"));
+        else
+            urlSubstring = url.substring(url.lastIndexOf("/") + 1);
+
+        return `https://img.youtube.com/vi/${urlSubstring}/hqdefault.jpg`;
+    }
+
     analyzeImage(urlImage: string) {
         AppService.prepareUrlToBlankPage(this.route, 'analyze/image', {url: urlImage});
+    }
+
+    analyzeVideo(urlVideo: string) {
+        AppService.prepareUrlToBlankPage(this.route, 'analyze/video', {url: urlVideo});
     }
 }
