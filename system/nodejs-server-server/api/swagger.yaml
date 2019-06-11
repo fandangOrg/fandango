@@ -255,6 +255,7 @@ definitions:
           calculatedRatingDetail:
             authorRating: 1.46581298050294517310021547018550336360931396484375
             publishRating: 6.02745618307040320615897144307382404804229736328125
+          url: "url"
           datePublished: "datePublished"
           calculatedRating: 0.80082819046101150206595775671303272247314453125
           contains:
@@ -313,6 +314,7 @@ definitions:
           calculatedRatingDetail:
             authorRating: 1.46581298050294517310021547018550336360931396484375
             publishRating: 6.02745618307040320615897144307382404804229736328125
+          url: "url"
           datePublished: "datePublished"
           calculatedRating: 0.80082819046101150206595775671303272247314453125
           contains:
@@ -663,6 +665,8 @@ definitions:
         type: "string"
       articleBody:
         type: "string"
+      url:
+        type: "string"
       dateCreated:
         type: "string"
       dateModified:
@@ -724,6 +728,7 @@ definitions:
       calculatedRatingDetail:
         authorRating: 1.46581298050294517310021547018550336360931396484375
         publishRating: 6.02745618307040320615897144307382404804229736328125
+      url: "url"
       datePublished: "datePublished"
       calculatedRating: 0.80082819046101150206595775671303272247314453125
       contains:
@@ -787,6 +792,7 @@ definitions:
         calculatedRatingDetail:
           authorRating: 1.46581298050294517310021547018550336360931396484375
           publishRating: 6.02745618307040320615897144307382404804229736328125
+        url: "url"
         datePublished: "datePublished"
         calculatedRating: 0.80082819046101150206595775671303272247314453125
         contains:

@@ -96,6 +96,7 @@ exports.findSimilarArticles = function(info) {
     es.query.match = {};
     es.query.match.identifier = info.identifier;
 
+
     var url = "http://localhost:9220/fdg-article/_search";
     
     fetch(url,
@@ -236,7 +237,7 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
   })
   })
 
-  //console.log("hereererer")
+  console.log("hereererer")
 
   var articleResponses = [];
   articles.forEach(function(article){
@@ -244,6 +245,7 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
     // Here we construct the response as defined in the API
     var articleResponse = {};
     articleResponse.identifier = article._source.identifier || null;
+    articleResponse.url = article._source.url || null;
     articleResponse.headline = article._source.headline || null;
     articleResponse.articleBody = article._source.articleBody || null;
     articleResponse.dateCreated = article._source.dateCreated || null;
