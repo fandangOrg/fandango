@@ -1,81 +1,133 @@
-{
+  {
     "index_patterns" : "fdg-article",
-    "mappings" : {
-      "doc" : {
-        "properties": {
-            "identifier":{
-              "type":"text",
+      "mappings": {
+        "doc": {
+          "properties": {
+            "about": {
+              "type": "text",
               "fields": {
-              "keyword": {
-                "type": "keyword",
-                "ignore_above": 10000
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 10000
+                }
               }
-            }},
-        "headline":{
-            "type":"text",
-            "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 10000
+            },
+            "articleBody": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 10000
+                }
+              }
+            },
+            "author": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 10000
+                }
+              }
+            },
+            "calculatedRating": {
+              "type": "float"
+            },
+            "calculatedRatingDetail": {
+              "properties": {
+                "authorRating": {
+                  "type": "float"
+                },
+                "key": {
+                  "type": "text",
+                  "fields": {
+                    "keyword": {
+                      "type": "keyword",
+                      "ignore_above": 256
+                    }
+                  }
+                },
+                "publisherRating": {
+                  "type": "float"
+                },
+                "textRating": {
+                  "type": "float"
+                }
+              }
+            },
+            "contains": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 10000
+                }
+              }
+            },
+            "dateCreated": {
+              "type": "date"
+            },
+            "dateModified": {
+              "type": "date"
+            },
+            "datePublished": {
+              "type": "date"
+            },
+            "headline": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 10000
+                }
+              }
+            },
+            "identifier": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 10000
+                }
+              }
+            },
+            "mentions": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 10000
+                }
+              }
+            },
+            "publisher": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 10000
+                }
+              }
+            },
+            "sourceDomain": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "url": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 10000
+                }
+              }
             }
-            }
-        },
-        "articleBody":{
-            "type":"text",
-            "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 10000
-            }
-            }
-        },
-        "dateCreated":{"type":"date"},
-        "dateModified":{"type":"date"},
-        "datePublished":{"type":"date"},
-        "author":{
-          "type":"text",
-          "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 10000
           }
-        }},
-        "publisher":{
-          "type":"text",
-          "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 10000
-          }
-        }},
-        "calculatedRating":{"type":"float"},
-        "calculatedRatingDetail":{"type":"object"},
-        "about":{
-            "type":"text",
-            "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 10000
-            }
-            }
-        },
-        "mentions":{
-          "type":"text",
-          "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 10000
-          }
-        }},
-        "contains":{
-          "type":"text",
-          "fields": {
-          "keyword": {
-            "type": "keyword",
-            "ignore_above": 10000
-          }
-        }} 
         }
-        }
-    }
-}
+      }
+  }
