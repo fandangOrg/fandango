@@ -3,18 +3,19 @@
         <div class="row">
             <div class="col-6">
                 <iframe class="img-thumbnail" style="height: 300px;width: 100%;"
-                        [src]="embedVideo(video.contentUrl)"></iframe>
+                        [src]="embedVideo(video.contentUrl) | urlSafe"></iframe>
             </div>
             <div class="col-6">
                 <div *ngIf="video.status === 'done'">
                     <div class="text-center my-3">
-                        <h1 class="m-0" [ngClass]="getColor(video.calculatedRating.toFixed(2))" style="font-size: 95px">{{video.calculatedRating.toFixed(2)}}%</h1>
+                        <h1 class="m-0" [ngClass]="getColor(video.calculatedRating.toFixed(2))"
+                            style="font-size: 95px">{{video.calculatedRating.toFixed(2)}}%</h1>
                         <!--                    <h1 class="text-green m-0" style="font-size: 95px">{{(video.calculatedRating * 100).toFixed(2)}}%</h1>-->
                         <h3 class="text-black-50 text-capitalize mt--3">Trustworthiness</h3>
                     </div>
                     <div class="text-center">
-                        <h4> video size : {{video.contentSize}}</h4>
-                        <h4> video encoding : {{video.encodingFormat}}</h4>
+                        <h4> Video size : {{video.contentSize}}</h4>
+                        <h4> Video encoding : {{video.encodingFormat}}</h4>
                         <h4> Upload on : {{video.uploadDate | date: 'dd-MM-yyyy'}}</h4>
                     </div>
                 </div>
@@ -31,21 +32,21 @@
             </div>
         </div>
         <hr class="my-4">
-        <!--        <div class="row">-->
-        <!--            <div class="col-12">-->
-        <!--                <div class="card shadow">-->
-        <!--                    <div class="card-header">-->
-        <!--                        <div class="col">-->
-        <!--                            <h3>video Rating Details</h3>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                    <div class="card-body">-->
-        <!--                        <div class="col">-->
-        <!--                            <ngx-json-viewer [json]="video.calculatedRatingDetail"></ngx-json-viewer>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
+        <div class="row" *ngIf="video.status === 'done' && !isEmptyObject(video.calculatedRatingDetail)">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <div class="col">
+                            <h3>Video Rating Details</h3>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="col">
+                            <ngx-json-viewer [json]="video.calculatedRatingDetail"></ngx-json-viewer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

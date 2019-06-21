@@ -1,9 +1,17 @@
-import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output, Pipe, PipeTransform} from '@angular/core';
 import {AnalyzeService} from "../analyze.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
 import {NgxSpinnerService} from "ngx-spinner";
 import {AppService} from "../../../app.service";
+
+@Pipe({ name: 'urlSafe' })
+export class SafePipe implements PipeTransform {
+    constructor(private sanitizer: DomSanitizer) {}
+    transform(url) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
+}
 
 @Component({
     selector: 'app-video',
@@ -108,7 +116,11 @@ export class VideoComponent implements OnInit, OnDestroy {
 
     embedVideo(url) {
         url = url.replace("watch?v=", "embed/");
-        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        return url;
+    }
+
+    isEmptyObject(obj){
+        return (Object.getOwnPropertyNames(obj).length === 0);
     }
 
 }

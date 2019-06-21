@@ -3,9 +3,9 @@
 
     overflow-x: hidden;
     min-height: calc(100vh - 62px);
-    background-image: url("../img/background/background_prova.png");
-    background-size: cover;
-    background-position: center top;
+    //background-image: url("../img/background/background_prova.png");
+    //background-size: cover;
+    //background-position: center top;
 
     // Navbar
     .navbar-top {
@@ -55,11 +55,11 @@
 
 .analyze-container {
     @extend .mx-auto, .p-0, .bg-secondary;
-    border-right: 1px solid lightgray;
-    border-left: 1px solid lightgray;
+    //border-right: 1px solid lightgray;
+    //border-left: 1px solid lightgray;
 
     .grid {
         @extend .p-4;
-        min-height: 100vh;
+        //min-height: 100vh;
     }
 }

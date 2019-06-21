@@ -30,7 +30,7 @@
             </div>
         </div>
         <hr class="my-4">
-        <div class="row" *ngIf="image.status === 'done' && image.calculatedRatingDetail">
+        <div class="row" *ngIf="image.status === 'done' && image.calculatedRatingDetail.length > 0">
             <div class="col-12">
                 <div class="card shadow">
                     <div class="card-header">

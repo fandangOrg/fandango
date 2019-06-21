@@ -18,7 +18,7 @@
 
             <button *ngFor="let btn of buttonList"
                     class="btn btn-icon btn-sm btn-secondary"
-                    [class.btn-success]="typeAnalyze===btn.type"
+                    [class.btn-info]="typeAnalyze===btn.type"
                     (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder" type="button">
                 <i [ngClass]="btn.icon"></i>
                 <span>{{btn.name}}</span>

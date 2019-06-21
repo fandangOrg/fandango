@@ -33,7 +33,7 @@ export const Buttons = [
         type: 'claim',
         name: 'Claim',
         icon: 'fas fa-font',
-        placeholder: 'URL or a sentence',
+        placeholder: 'Sentence',
         description: 'RETRIEVE MOST SIMILAR CLAIMS'
     }
     // {
