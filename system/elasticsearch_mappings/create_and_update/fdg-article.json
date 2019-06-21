@@ -126,6 +126,15 @@
                   "ignore_above": 10000
                 }
               }
+            },
+            "publishDateEstimated": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 10000
+                }
+              }
             }
           }
         }
