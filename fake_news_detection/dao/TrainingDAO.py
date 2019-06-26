@@ -37,18 +37,21 @@ class DAOTrainingPD:
         
     def get_train_dataset(self, sample_size:float=1.0):
         print("\n\n > start of 'get_train_dataset()'")
+        '''
         print('Read Train Guardian.csv')
         training_set= pd.read_csv(self.path +"/"+"guardian.csv",sep='\t') # dataset
         training_set['label']=1
         df=training_set
         print("shape after 'guardian.csv' -->", df.shape)
-        
+        '''
         training_set= pd.read_csv(self.path +"/fake_or_real_news.csv") # dataset
+        
         df_app=training_set[['title','text','label']]
-        df_app['label'] = df_app['label'].map({'FAKE': 0, 'REAL':1})
-        df=df.append(df_app)
+        df_app['label'] = df_app['label'].map({'FAKE': int(0), 'REAL': int(1)})
+        df = df_app
+        #df=df.append(df_app)
         print("shape after 'fake_or_real_news.csv' -->", df.shape)
-
+        '''
         X=pd.read_csv(self.path+"/data.csv")
         X=X.rename(index=str, columns={"Label": "label", "Body": "text","Headline":"title"})
         X = X.drop(['URLs'], axis=1)
@@ -66,8 +69,8 @@ class DAOTrainingPD:
                 df = df.append({'title': title,'text':text,'label':label}, ignore_index=True)
 
         print("shape after 'dataset_kafka.csv' -->", df.shape)
-
-        ###################
+        '''
+        #########buzzfeed dataset
         files=os.listdir(dataset_beta+"/articles")
         print(files)
         v=set()
@@ -88,20 +91,36 @@ class DAOTrainingPD:
                     
             if value=='mostly false' or value=='mostly true':
                 if value=='mostly false':
-                    value="0"
+                    value=int(0)
                 else:
-                    value='1'
+                    value=int(1)
                 df = df.append({'title': title,'text':text,'label':value}, ignore_index=True)
 
         print("shape after 'articles' -->", df.shape)
-                
-        #df=df_app
+        
+        #############################################################################################################
+        ################################fake-news-detection another kaggle dataset#################################
+        
+        training_kaggle = pd.read_csv(self.path +"/fake-new-detection.csv")
+        #training_kaggle = pd.read_csv("/home/camila/eclipse-workspace/fandango-fake-news/fake_news_detection/resources/fake-new-detection.csv")
+        df_kaggle = training_kaggle.drop(labels='URLs', axis=1)
+        print(df_kaggle.columns) 
+        df_kaggle = df_kaggle.rename( columns={"Headline":"title", "Body": "text",'Label':'label'})
+        print(df_kaggle.columns)
+        
+        
+        df=df.append(df_kaggle)
+        print("after kaggle csv",df.shape)
+        print("missing values title", df['title'].isna().sum())
+        print("missing values text", df['text'].isna().sum())
+        print("missing values label", df['label'].isna().sum())
         df=df.dropna(subset = ['title','text','label'])
         if sample_size < 1.0:
             df = df.sample(frac=sample_size)
 
         print("final shape -->", df.shape)
         print(df.groupby(['label']).agg(['count']))
+        print("total real and total fake",df.label.value_counts())
         print("> end of 'get_train_dataset()'\n")
         return df
 
@@ -335,35 +354,44 @@ class DAOTrainingElasticByDomains():
         #return  [[res['_source']['title'], res['_source']['text']] for res in result['hits']['hits']]
 
                 
-
+        
 
 if __name__ == '__main__':
-    files=os.listdir(dataset_beta+"/articles")
-    print(files)
-    v=set()
-    for f in files:
-        e = ET.XML(open(dataset_beta+"/articles/"+f,"r").read())
-        title=""
-        text =""
-        value =""
-        for k in e:
-            if k.tag=="mainText":
-                text=k.text
-            
-            if k.tag=="title":
-                title=k.text
+    
+    
 
-            if k.tag=="veracity":
-                value=k.text
-                
-        if value=='mostly false' or value=='mostly true':
-            if value=='mostly false':
-                value="0"
-            else:
-                value='1'
-            v.add(text)
-              
-    print(len(v))
+    DAO = DAOTrainingPD()
+    t = DAO.get_train_dataset()
+    
+    
+#===============================================================================
+#     files=os.listdir(dataset_beta+"/articles")
+#     print(files)
+#     v=set()
+#     for f in files:
+#         e = ET.XML(open(dataset_beta+"/articles/"+f,"r").read())
+#         title=""
+#         text =""
+#         value =""
+#         for k in e:
+#             if k.tag=="mainText":
+#                 text=k.text
+#             
+#             if k.tag=="title":
+#                 title=k.text
+# 
+#             if k.tag=="veracity":
+#                 value=k.text
+#                 
+#         if value=='mostly false' or value=='mostly true':
+#             if value=='mostly false':
+#                 value="0"
+#             else:
+#                 value='1'
+#             v.add(text)
+#               
+#     print(len(v))
+#===============================================================================
       
     #===========================================================================
     # dao_news=DAONewsElastic()
