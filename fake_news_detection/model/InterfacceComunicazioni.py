@@ -6,11 +6,12 @@ Created on Oct 18, 2018
 
 ######################ONLINE SERVICES TEST##############
 class News_raw:
-    def __init__(self,date_published: str,authors:list,date_created:str,date_modified:str,description:str,images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,title:str,top_image:str,url:str, videos:list, spider:str):
+    def __init__(self,date_published: str,authors:list,date_created:str,date_modified:str,description:str,images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,title:str,top_image:str,url:str, videos:list, spider:str,linkNumber:str):
         self.authors = authors
         self.date_created = date_created
         self.date_modified = date_modified
         self.date_published = date_published 
+        self.linkNumber = linkNumber
         self.description = description
         #self.fakeness = fakeness
         self.images = images
@@ -34,7 +35,7 @@ class News_DataModel:
                  sourceDomain:list,country:str,nationality:str,
                  publishDateEstimated:bool,
                   video_analizer:bool=False,
-                  image_analizer:bool=False,fakeness:str="",**args):
+                  image_analizer:bool=False,fakeness:str="",**kwargs:dict):
         self.url=url
         self.headline = headline
         self.articleBody = articleBody
