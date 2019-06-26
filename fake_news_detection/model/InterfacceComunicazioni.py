@@ -34,7 +34,7 @@ class News_DataModel:
                  sourceDomain:list,country:str,nationality:str,
                  publishDateEstimated:bool,
                   video_analizer:bool=False,
-                  image_analizer:bool=False):
+                  image_analizer:bool=False,fakeness:str="",**args):
         self.url=url
         self.headline = headline
         self.articleBody = articleBody
@@ -55,6 +55,7 @@ class News_DataModel:
         self.video_analizer=video_analizer
         self.image_analizer=image_analizer
         self.publishDateEstimated = publishDateEstimated
+        self.fakeness=fakeness
     '''
     def __str__(self):
         return "headline:"+self.headline+";articleBody:"+self.articleBody+";dateCreated:"+self.dateCreated+";dateModified:"+self.dateModified+";datePublished:"+self.datePublished+";author:"+self.author+";publisher:"+self.publisher
