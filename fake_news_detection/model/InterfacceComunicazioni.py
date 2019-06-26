@@ -6,7 +6,8 @@ Created on Oct 18, 2018
 
 ######################ONLINE SERVICES TEST##############
 class News_raw:
-    def __init__(self,date_published: str,authors:list,date_created:str,date_modified:str,description:str,images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,title:str,top_image:str,url:str, videos:list, spider:str):
+    def __init__(self,identifier:str,date_published: str,authors:list,date_created:str,date_modified:str,description:str,images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,title:str,top_image:str,url:str, videos:list, spider:str):
+        self.identifier= identifier
         self.authors = authors
         self.date_created = date_created
         self.date_modified = date_modified
