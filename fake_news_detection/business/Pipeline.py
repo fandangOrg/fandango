@@ -51,12 +51,15 @@ class ScrapyService:
             return None
     
     def _preprocessing(self,raw_news:News_raw) -> News_DataModel:
-        print(raw_news)
         payload = raw_news.__dict__
-        payload["fakeness" ]= ""
+        print("payload",payload)
+        #payload["fakeness" ]= ""
         u = URLRequest(self.url_prepocessing+"/preprocess/article")
         j = json.dumps(payload)
+        
+        print(j)
         response = u.post(data=j, headers=self.headers)
+        print("response",response)
         
         return News_DataModel(**response)
 

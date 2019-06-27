@@ -29,7 +29,7 @@ service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon
 
-daemon_run()
+#daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 

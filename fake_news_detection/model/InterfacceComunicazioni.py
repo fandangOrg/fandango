@@ -5,13 +5,21 @@ Created on Oct 18, 2018
 '''
 
 ######################ONLINE SERVICES TEST##############
+
+
+
 class News_raw:
-    def __init__(self,identifier:str,date_published: str,authors:list,date_created:str,date_modified:str,description:str,images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,title:str,top_image:str,url:str, videos:list, spider:str):
-        self.identifier= identifier
+
+    def __init__(self,identifier:str, date_published: str,authors:list,date_created:str,date_modified:str,description:str,
+                 images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,
+                 title:str,top_image:str,url:str, videos:list, spider:str,publish_date_estimated:bool):
+        self.identifier = identifier
         self.authors = authors
+        self.publish_date_estimated=publish_date_estimated
         self.date_created = date_created
         self.date_modified = date_modified
         self.date_published = date_published 
+        #self.linkNumber = linkNumber
         self.description = description
         #self.fakeness = fakeness
         self.images = images
@@ -35,7 +43,7 @@ class News_DataModel:
                  sourceDomain:list,country:str,nationality:str,
                  publishDateEstimated:bool,
                   video_analizer:bool=False,
-                  image_analizer:bool=False):
+                  image_analizer:bool=False,**kwargs:dict):
         self.url=url
         self.headline = headline
         self.articleBody = articleBody
@@ -56,6 +64,7 @@ class News_DataModel:
         self.video_analizer=video_analizer
         self.image_analizer=image_analizer
         self.publishDateEstimated = publishDateEstimated
+        #self.fakeness=fakeness
     '''
     def __str__(self):
         return "headline:"+self.headline+";articleBody:"+self.articleBody+";dateCreated:"+self.dateCreated+";dateModified:"+self.dateModified+";datePublished:"+self.datePublished+";author:"+self.author+";publisher:"+self.publisher
