@@ -3,16 +3,8 @@ Created on Dec 10, 2018
 
 @author: daniele
 '''
-import string
-import unicodedata
-import pandas as pd
 from ds4biz_predictor_core.model.predictors.predictors import TransformingPredictor,\
     DS4BizPredictor
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-from sklearn import metrics
-from nltk.corpus import stopwords
-from nltk.stem.snowball import SnowballStemmer
 import datetime
 from fake_news_detection.business.textPreprocessing import TextPreprocessor
 from fake_news_detection.config.constants import QUOTES
@@ -21,23 +13,22 @@ from fake_news_detection.business.featureEngineering import preprocess_features_
 from fake_news_detection.config.MLprocessConfig import new_features_mapping,\
     text_preprocessing_mapping
 from fake_news_detection.model.InterfacceComunicazioni import Prestazioni
-from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 from lightgbm.sklearn import LGBMClassifier
-from fake_news_detection.config.AppConfig import dataset_beta, picklepath,\
-    resources_path
+from fake_news_detection.config.AppConfig import dataset_beta  
 import pandas
-from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 
 
 class Preprocessing:
     def __init__(self, language:str="it"):
         self.language = language
-        self.preprocess=TextPreprocessor(lang=language, mode="lemmatization", rm_stopwords=False, invalid_chars=QUOTES, encoding="utf-8")
+        #self.preprocess=TextPreprocessor(lang=language, mode="lemmatization", rm_stopwords=False, invalid_chars=QUOTES, encoding="utf-8")
 
-    def _preprocessing(self, X):
-        X=preprocess_features_of_df(df=X, mapping=text_preprocessing_mapping(self.preprocess))
-        print('preprocessed done')
-        return X
+    #===========================================================================
+    # def _preprocessing(self, X):
+    #     X=preprocess_features_of_df(df=X, mapping=text_preprocessing_mapping(self.preprocess))
+    #     print('preprocessed done')
+    #     return X
+    #===========================================================================
     
     def _add_features(self, X):
         X=add_new_features_to_df(df=X, mapping=new_features_mapping(self.language))
@@ -47,41 +38,47 @@ class Preprocessing:
         #X=self._preprocessing(X)
         return self._add_features(X)
     
-    
+'''
+MODELLO CHE USA SOLO FEATURES NUMERICHE, E TOGLIE LE FEATURES COME TEXT E TITLE.
+'''    
 class FakePredictor(DS4BizPredictor):
     '''
     classdocs
     '''
     def __init__(self, predictor:TransformingPredictor,
-                 preprocessing:Preprocessing,id:str,task:str):
+                 preprocessing:Preprocessing,id:str):
         '''
         Constructor
         '''
         now = datetime.datetime.now()
         now_string = now.strftime(('%d/%m/%Y %H:%M'))
         self.date=now_string
-        self.task=task
         self.predictor_fakeness=predictor
         self.preprocessing=preprocessing
         self.id=id
         self.number_item=0
         
-    def fit(self, X, y=None):
-        print("dataframe",X.columns)
-        X=self.preprocessing.execution(X)
+    def fit(self, X, y=None,preprocessing=False):
+        if preprocessing:
+            X=self.preprocessing.execution(X)
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
         Y = X['label']
         X = X.drop(['label'], axis=1)
-        print("dataframedopo",X.columns)
         self.predictor_fakeness.fit(X,Y)
         self.number_item=len(X)
         
     def predict(self, X):
         X=self.preprocessing.execution(X)
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
         labels_fakeness= self.predictor_fakeness.predict(X)
         return labels_fakeness
         
     def predict_proba(self,X):
         X=self.preprocessing.execution(X)
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
         labels_fakeness= self.predictor_fakeness.predict_proba(X)
         return labels_fakeness,X
     
@@ -91,6 +88,8 @@ class FakePredictor(DS4BizPredictor):
     def partial_fit(self, X,y=None):
         X=self.preprocessing.execution(X)
         Y = X['label']
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
         X = X.drop(['label'], axis=1)
         self.predictor_fakeness.partial_fit(X,Y)
         return "OK"
@@ -133,9 +132,9 @@ class LGBMFakePredictor(DS4BizPredictor):
         self.preprocessing=preprocessing
         self.id=id
         self.number_item=0
+        self.language=preprocessing.language
         
     def fit(self, X=None, y=None):
-        X=pandas.read_csv( resources_path+"/default_train_v2_en.csv" ).iloc[:, 1:]
         y= X['label']
         X = X.drop(['label'], axis=1)
         X = X.drop(['text'], axis=1)
@@ -199,7 +198,7 @@ class LGBMFakePredictor(DS4BizPredictor):
         predictor.precision = prestazioni.precision
         predictor.recall = prestazioni.recall
         predictor.accuracy = prestazioni.accuracy
-        self.number_item = prestazioni.number_item
+        self.number_item = prestazioni.number_item_lgb
         
                 
     #===========================================================================
@@ -232,7 +231,7 @@ class LGBMFakePredictor(DS4BizPredictor):
 # def prestazioni_multi_label(y_test,y_pred):
 #     y_test_addative=list()
 #     for i in range(len(y_test)):
-#         if y_pred[i] in y_test[i]:
+#         if y_pred[i] in y_test[i]:LGBMF
 #             y_test_addative.append(y_pred[i])
 #         else:
 #             y_test_addative.append(y_test[i][0])

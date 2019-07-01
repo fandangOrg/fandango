@@ -12,6 +12,9 @@ from fake_news_detection.test.singleton_filter import Singleton_Filter
 
 i=1
 
+
+'''tolta perchè non possiamo applicare questo preprocessing in quanto poi servono tutti i dati puliti'''
+
 class TextPreprocessor():
 
     def __init__(self, lang:str, mode:str=None, rm_stopwords:bool=False, invalid_chars:str=QUOTES, encoding:str="utf-8"):
