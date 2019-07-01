@@ -39,27 +39,11 @@ class Task_Analyzer(Task):
                 if c%100==0:
                     print(c)
                 
-                #fieldnames = ['identifier', 'text', 'title','label','sourceDomian','language']
-                #writer = csv.DictWriter(file_output, delimiter='|', quotechar='"', quoting=csv.QUOTE_MINIMAL,fieldnames = fieldnames)
-                #print("applico l'analizer e trovo lo score di ",msg)
-                #===============================================================
-                # news_preprocessed = News_DataModel(language=msg.get('language','en'),headline= msg["headline"], 
-                #                                    articleBody = msg["articleBody"], sourceDomain = msg['sourceDomain'],
-                #                                    identifier = msg['identifier'], dateCreated = msg['dateCreated'] , 
-                #                                    dateModified= msg['dateModified'], datePublished = msg['datePublished'], 
-                #                                    author = msg['author'], publisher = msg['publisher'], calculateRating = msg['calculateRating'],
-                #                                     calculateRatingDetail = msg['calculateRatingDetail'], images = msg['images'], 
-                #                                     videos = msg['videos'])
-                # 
-                #===============================================================
                 print(msg)
                 news_preprocessed = News_DataModel(**msg)
                 #if msg['language'] != 'en':return
-                
                 #print(msg['headline'])
                 #print(msg['articleBody'])
-                output = 'hey'
-                
                 output=self.analytics.analyzer(news_preprocessed,False) 
                 output = output[1][0]
                 print( msg['sourceDomain'],msg['language'],output)

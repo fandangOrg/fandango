@@ -2,8 +2,8 @@ from typing import List, Tuple
 from pandas.core.frame import DataFrame
 from uuid import uuid4
 from _collections import defaultdict
-from fake_news_detection.business.featuresExtraction2 import Multifunction
 import pandas
+from fake_news_detection.business.featuresExtraction import Multifunction
 
 
 class ColumnFEExtractor:

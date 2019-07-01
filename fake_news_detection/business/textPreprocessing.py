@@ -6,7 +6,6 @@ from nltk.corpus import stopwords
 from fake_news_detection.config.constants import LANG_SUPPORTED, QUOTES, LANG_MAPPING
 import numpy as np
 import logging
-from fake_news_detection.business.featuresExtraction2 import singleton
 from fake_news_detection.model.singleton_filter import Singleton
 from fake_news_detection.test.singleton_filter import Singleton_Filter
 

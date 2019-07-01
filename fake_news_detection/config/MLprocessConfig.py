@@ -1,6 +1,6 @@
 from fake_news_detection.business.textPreprocessing import TextPreprocessor
 from fake_news_detection.config.constants import QUOTES
-from fake_news_detection.business.featuresExtraction2 import  CharsCounter, PunctuationCounter,\
+from fake_news_detection.business.featuresExtraction import  CharsCounter, PunctuationCounter,\
     StopwordCounter, LexicalDiversity, AveWordxParagraph, FleschReadingEase,\
     FKGRadeLevel, SentencesCounter, CountAdv, CountAdj, CountPrep_conj,\
     countVerbs, AVGWordsCounter, AVGSentencesSizeCounter, POSDiversity

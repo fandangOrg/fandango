@@ -49,7 +49,7 @@ def get_performance(y_test:List, y_pred:List):
     print("\t - F-measure:", f1, "\n")
 
 
-def create_model1():
+def create_model1(input_dim):
     """
     Densely (fully) connected Neural Network with 3 layers and light dropout
     (Dropout consists in randomly setting a fraction 'rate' of input units to 0
