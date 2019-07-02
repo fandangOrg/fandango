@@ -108,6 +108,7 @@ class AnalyticsService(metaclass=Singleton):
             model =self.daopredictor.get_by_id("en")
         df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
         prest,features = model.predict_proba(df)
+        print("model.predictor_fakeness.classes_",model.predictor_fakeness.classes_)
         prest = pd.DataFrame(prest, columns=model.predictor_fakeness.classes_)
         prest=pd.concat([prest,features],axis=1)
         return prest

@@ -30,24 +30,29 @@ class Task_Analyzer(Task):
                 if c%100==0:
                     print(c)
                 
-                print(msg)
                 news_preprocessed = News_DataModel(**msg)
                 #if msg['language'] != 'en':return
                 #print(msg['headline'])
                 #print(msg['articleBody'])
                 output=self.analytics.analyzer(news_preprocessed,False) 
-                output = output[1][0]
-                print( msg['sourceDomain'],msg['language'],output)
+                output = str(output[1][0])
+                
                 try:
-                    model =self.daopredictor.get_by_id(msg['language'])
+                    model =self.analytics.daopredictor.get_by_id(msg['language'])
                 except:
                     model = None
                     
+                print("model",model)
        
                 
-                l=[{'title': msg['headline'], 'text':msg['articleBody'] ,'label': 'FAKE'}]
                 if model:
+                    l=[{'title': msg['headline'], 'text':msg['articleBody'] ,'label': 1}]
+                    df = pd.DataFrame(l)
+                    model.partial_fit(df)
+                    print("add negative fit",msg['sourceDomain'] )
+                              
                     if msg['sourceDomain'] in dic_domains['FAKE']: 
+                        l=[{'title': msg['headline'], 'text':msg['articleBody'] ,'label': 1}]
                         #dict_for_training = {'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                         #testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tFAKE\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
                         df = pd.DataFrame(l)
@@ -61,10 +66,12 @@ class Task_Analyzer(Task):
                         #testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tREAL\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
                         #testo=testo.replace("\n","$##$")
                         #file_output.write(testo+"\n")
+                        l=[{'title': msg['headline'], 'text':msg['articleBody'] ,'label':0}]
                         df = pd.DataFrame(l)
                         model.partial_fit(df)
                         print("add  positive fit",msg['sourceDomain'] )
                         output = 1.0
+                print( msg['sourceDomain'],msg['language'],output)
                 #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                 #print("dict_output",dict_output)
                 dict_output = {"identifier":msg['identifier'], "headline":msg['headline'],

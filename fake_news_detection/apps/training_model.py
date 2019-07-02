@@ -3,7 +3,7 @@ from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 from fake_news_detection.config.AppConfig import picklepath, resources_path
 from lightgbm.sklearn import LGBMClassifier
 from fake_news_detection.model.predictor import Preprocessing, FakePredictor,\
-    KerasFakePredictor
+    KerasFakePredictor, VotingClassifierPredictor
 from keras.wrappers.scikit_learn import KerasClassifier
 from fake_news_detection.test.keras_no_deep import create_model1
 
@@ -18,8 +18,7 @@ def training_model_LGBMClassifier(lang,X):
 
 def training_model_KerasClassifier(lang,X):
     input_dim = X.shape[1]-3
-    use_dense_vectors = True
-    epochs = 200
+    epochs = 20
     batch_size = int(8507/20)+1
 
     daopredictor = FSMemoryPredictorDAO(picklepath)
@@ -29,7 +28,12 @@ def training_model_KerasClassifier(lang,X):
     model.fit(X)
     daopredictor.save(model)
 
-
+def training_model_VotingClassifier(lang,X):
+    daopredictor = FSMemoryPredictorDAO(picklepath)
+    print("crea modello")
+    model=VotingClassifierPredictor(preprocessing=Preprocessing(lang), id=lang)
+    model.fit(X)
+    daopredictor.save(model)
 
 if __name__ == '__main__':
     
@@ -37,3 +41,4 @@ if __name__ == '__main__':
         print("leggi train")
         X=pandas.read_csv(resources_path+"/"+train ).iloc[:, 1:]
         training_model_KerasClassifier(lang,X)
+        print("---")
