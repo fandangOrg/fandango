@@ -4,22 +4,13 @@ Created on 11 mar 2019
 @author: camila
 '''
 
-from brokermanager.model.consumers import ConsumerTask
-from kafka.producer.kafka import KafkaProducer
 from fake_news_detection.utils.logger import getLogger
-from kafka.consumer.group import KafkaConsumer
-import logging, time, json
-from fake_news_detection.utils.Exception import FandangoException
 from brokermanager.model.publishers import KafkaPublisher
-from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel,\
-    News_DataModel
-from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
-from fake_news_detection.config.AppConfig import picklepath
-from fake_news_detection.business.Analyzer import analyzer, log
-from numpy.lib.utils import source
+from fake_news_detection.model.InterfacceComunicazioni import News_DataModel
 from fake_news_detection.business.Pipeline import AnalyticsService
-import csv 
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
+import pandas as pd
+
 
 log = getLogger(__name__)
 c=0
@@ -47,24 +38,34 @@ class Task_Analyzer(Task):
                 output=self.analytics.analyzer(news_preprocessed,False) 
                 output = output[1][0]
                 print( msg['sourceDomain'],msg['language'],output)
-                
+                try:
+                    model =self.daopredictor.get_by_id(msg['language'])
+                except:
+                    model = None
+                    
        
                 
-                if msg['sourceDomain'] in dic_domains['FAKE']: 
-                    #dict_for_training = {'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
-                    testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tFAKE\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
-                    testo=testo.replace("\n","$##$")
-                    file_output.write(testo+"\n")
-                    print("add negative",msg['sourceDomain'] )
-                    output = 0.0
-                    #={'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
-                elif msg['sourceDomain'] in dic_domains['REAL']:
-                    testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tREAL\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
-                    testo=testo.replace("\n","$##$")
-                    file_output.write(testo+"\n")
-                    output = 1.0
-                    print("add  pos",msg['sourceDomain'] )
-                    #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
+                l=[{'title': msg['headline'], 'text':msg['articleBody'] ,'label': 'FAKE'}]
+                if model:
+                    if msg['sourceDomain'] in dic_domains['FAKE']: 
+                        #dict_for_training = {'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
+                        #testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tFAKE\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
+                        df = pd.DataFrame(l)
+                        model.partial_fit(df)
+                        #testo=testo.replace("\n","$##$")
+                        #file_output.write(testo+"\n")
+                        print("add negative fit",msg['sourceDomain'] )
+                        output = 0.0
+                        #={'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
+                    elif msg['sourceDomain'] in dic_domains['REAL']:
+                        #testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tREAL\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
+                        #testo=testo.replace("\n","$##$")
+                        #file_output.write(testo+"\n")
+                        df = pd.DataFrame(l)
+                        model.partial_fit(df)
+                        print("add  positive fit",msg['sourceDomain'] )
+                        output = 1.0
+                #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                 #print("dict_output",dict_output)
                 dict_output = {"identifier":msg['identifier'], "headline":msg['headline'],
                                "articleBody": msg['articleBody'],
@@ -74,7 +75,6 @@ class Task_Analyzer(Task):
                                "url":msg['url'],
                                 "textRating": output,
                                 "publishDateEstimated" : news_preprocessed.publishDateEstimated
-
                                 #"publishDateEstimate" : ""
                              }
                 try:

@@ -115,7 +115,17 @@ class FakePredictor(DS4BizPredictor):
         predictor.accuracy = prestazioni.accuracy
         self.number_item = prestazioni.number_item
         
-        
+class KerasFakePredictor(FakePredictor):
+    
+    def partial_fit(self, X,y=None):
+        X=self.preprocessing.execution(X)
+        Y = X['label']
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
+        X = X.drop(['label'], axis=1)
+        self.predictor_fakeness.fit(X,Y)
+        return "OK"
+            
 class LGBMFakePredictor(DS4BizPredictor):
     '''
     classdocs

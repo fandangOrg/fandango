@@ -68,7 +68,7 @@ class JsonConsumer(Consumer):
     
     #take just one function at time
 class InjectableJSONConsumer(JsonConsumer):
-    def __init__(self,topic,group_id,bootstrap_servers,fun,auto_offset_reset="earliest",enable_auto_commit=True,retry_interval=1):
+    def __init__(self,topic,group_id,bootstrap_servers,fun,auto_offset_reset="reset",enable_auto_commit=True,retry_interval=1):
         super().__init__(topic,group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
         self.fun=fun
     def process(self, obj):
@@ -78,7 +78,8 @@ class InjectableJSONConsumer(JsonConsumer):
     
     #take some tasks together
 class InjectableTASKJSONConsumer(JsonConsumer):  
-    def __init__(self,topic,group_id,bootstrap_servers,task:Task,auto_offset_reset="earliest",enable_auto_commit=True,retry_interval=1):
+    #auto_offset_reset="earliest"
+    def __init__(self,topic,group_id,bootstrap_servers,task:Task,auto_offset_reset="reset",enable_auto_commit=True,retry_interval=1):
         super().__init__(topic,group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
         self.task=task
         self.file_output=open(path_training+"/dataset_kafka.csv", mode='a+')
