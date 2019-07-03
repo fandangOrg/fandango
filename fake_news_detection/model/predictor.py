@@ -59,7 +59,7 @@ class FakePredictor(DS4BizPredictor):
         now_string = now.strftime(('%d/%m/%Y %H:%M'))
         self.date=now_string
         self.predictor=predictor
-        print("predictor",self.predictor)
+        #print("predictor",self.predictor)
         self.preprocessing=preprocessing
         self.id=id
         self.number_item=0
@@ -144,9 +144,9 @@ class VotingClassifierPredictor(FakePredictor):
         self.preprocessing=preprocessing
         for k in range(1,5):
             estimator= config_factory.create_model_by_configuration("fandango", str(k))
-            print("analsisi",k,estimator)
+            #print("analsisi",k,estimator)
             lista_modelli.append((str(k),FakePredictor(estimator,preprocessing,id)))
-        print("lista_modelli",lista_modelli)
+        #print("lista_modelli",lista_modelli)
         self.eclf = VotingClassifier(estimators=lista_modelli, voting='soft',n_jobs=-1 )
         self.id=id
     
@@ -207,7 +207,6 @@ class LGBMFakePredictor(DS4BizPredictor):
         
     def predict(self, X):
         X=self.preprocessing.execution(X)
-        print(X.columns)
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
         labels_fakeness= self.predictor.predict(X)

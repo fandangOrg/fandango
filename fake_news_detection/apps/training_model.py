@@ -40,5 +40,5 @@ if __name__ == '__main__':
     for lang,train in [('en','default_train_v2_en.csv'),('it','default_train_v2_en.csv')]:
         print("leggi train")
         X=pandas.read_csv(resources_path+"/"+train ).iloc[:, 1:]
-        training_model_KerasClassifier(lang,X)
+        training_model_LGBMClassifier(lang,X)
         print("---")
