@@ -3,41 +3,37 @@ Created on Dec 10, 2018
 
 @author: daniele
 '''
-import string
-import unicodedata
-import pandas as pd
 from ds4biz_predictor_core.model.predictors.predictors import TransformingPredictor,\
     DS4BizPredictor
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-from sklearn import metrics
-from nltk.corpus import stopwords
-from nltk.stem.snowball import SnowballStemmer
 import datetime
 from fake_news_detection.business.textPreprocessing import TextPreprocessor
 from fake_news_detection.config.constants import QUOTES
 from fake_news_detection.business.featureEngineering import preprocess_features_of_df,\
     add_new_features_to_df
 from fake_news_detection.config.MLprocessConfig import new_features_mapping,\
-    text_preprocessing_mapping
+    text_preprocessing_mapping, config_factory
 from fake_news_detection.model.InterfacceComunicazioni import Prestazioni
-from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 from lightgbm.sklearn import LGBMClassifier
-from fake_news_detection.config.AppConfig import dataset_beta, picklepath,\
-    resources_path
+from fake_news_detection.config.AppConfig import dataset_beta  
 import pandas
-from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
+from sklearn.ensemble.voting_classifier import VotingClassifier
+from sklearn.preprocessing.label import LabelEncoder
+from sklearn.model_selection._split import train_test_split
+from sklearn.metrics.classification import accuracy_score, precision_score,\
+    recall_score, f1_score
 
 
 class Preprocessing:
     def __init__(self, language:str="it"):
         self.language = language
-        self.preprocess=TextPreprocessor(lang=language, mode="lemmatization", rm_stopwords=False, invalid_chars=QUOTES, encoding="utf-8")
+        #self.preprocess=TextPreprocessor(lang=language, mode="lemmatization", rm_stopwords=False, invalid_chars=QUOTES, encoding="utf-8")
 
-    def _preprocessing(self, X):
-        X=preprocess_features_of_df(df=X, mapping=text_preprocessing_mapping(self.preprocess))
-        print('preprocessed done')
-        return X
+    #===========================================================================
+    # def _preprocessing(self, X):
+    #     X=preprocess_features_of_df(df=X, mapping=text_preprocessing_mapping(self.preprocess))
+    #     print('preprocessed done')
+    #     return X
+    #===========================================================================
     
     def _add_features(self, X):
         X=add_new_features_to_df(df=X, mapping=new_features_mapping(self.language))
@@ -47,42 +43,54 @@ class Preprocessing:
         #X=self._preprocessing(X)
         return self._add_features(X)
     
-    
+'''
+MODELLO CHE USA SOLO FEATURES NUMERICHE, E TOGLIE LE FEATURES COME TEXT E TITLE.
+'''    
 class FakePredictor(DS4BizPredictor):
     '''
     classdocs
     '''
     def __init__(self, predictor:TransformingPredictor,
-                 preprocessing:Preprocessing,id:str,task:str):
+                 preprocessing:Preprocessing,id:str):
         '''
         Constructor
         '''
         now = datetime.datetime.now()
         now_string = now.strftime(('%d/%m/%Y %H:%M'))
         self.date=now_string
-        self.task=task
-        self.predictor_fakeness=predictor
+        self.predictor=predictor
+        #print("predictor",self.predictor)
         self.preprocessing=preprocessing
         self.id=id
         self.number_item=0
         
-    def fit(self, X, y=None):
-        print("dataframe",X.columns)
-        X=self.preprocessing.execution(X)
+    def fit(self, X, y=None,preprocessing=False):
+        if preprocessing:
+            X=self.preprocessing.execution(X)
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
         Y = X['label']
         X = X.drop(['label'], axis=1)
-        print("dataframedopo",X.columns)
-        self.predictor_fakeness.fit(X,Y)
-        self.number_item=len(X)
+        X_train, X_test, y_train, y_test = train_test_split(X,Y , test_size=0.2)
+        self.predictor.fit(X_train,y_train)
+        probs = self.predictor.predict_proba(X_test)
+        y_pred = [0 if single_pred[0] >= single_pred[1] else 1 for single_pred in probs]
+        get_performance(y_test=y_test, y_pred=y_pred,classes=self.predictor.classes_)        
+        self.number_item=len(X_train)
+        self.predictor.fit(X ,Y)
         
     def predict(self, X):
         X=self.preprocessing.execution(X)
-        labels_fakeness= self.predictor_fakeness.predict(X)
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
+        labels_fakeness= self.predictor.predict(X)
         return labels_fakeness
         
     def predict_proba(self,X):
         X=self.preprocessing.execution(X)
-        labels_fakeness= self.predictor_fakeness.predict_proba(X)
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
+        labels_fakeness= self.predictor.predict_proba(X)
         return labels_fakeness,X
     
     def is_partially_fittable(self):
@@ -91,8 +99,10 @@ class FakePredictor(DS4BizPredictor):
     def partial_fit(self, X,y=None):
         X=self.preprocessing.execution(X)
         Y = X['label']
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
         X = X.drop(['label'], axis=1)
-        self.predictor_fakeness.partial_fit(X,Y)
+        self.predictor.partial_fit(X,Y)
         return "OK"
 
         
@@ -107,7 +117,7 @@ class FakePredictor(DS4BizPredictor):
          
     
     def get_prestazioni(self):
-        return self._create_prestazioni(self.predictor_fakeness.predictor)
+        return self._create_prestazioni(self.predictor.predictor)
          
    
     def _update_prestazioni_model(self,predictor,prestazioni):
@@ -116,7 +126,51 @@ class FakePredictor(DS4BizPredictor):
         predictor.accuracy = prestazioni.accuracy
         self.number_item = prestazioni.number_item
         
+class KerasFakePredictor(FakePredictor):
+    
+    def partial_fit(self, X,y=None):
+        X=self.preprocessing.execution(X)
+        Y = X['label']
+        X = X.drop(['text'], axis=1)
+        X = X.drop(['title'], axis=1)
+        X = X.drop(['label'], axis=1)
+        self.predictor.fit(X,Y)
+        return "OK"
+    
+    
+class VotingClassifierPredictor(FakePredictor):
+    def __init__(self,preprocessing:Preprocessing,id):
+        lista_modelli=[]
+        self.preprocessing=preprocessing
+        for k in range(1,5):
+            estimator= config_factory.create_model_by_configuration("fandango", str(k))
+            #print("analsisi",k,estimator)
+            lista_modelli.append((str(k),FakePredictor(estimator,preprocessing,id)))
+        #print("lista_modelli",lista_modelli)
+        self.eclf = VotingClassifier(estimators=lista_modelli, voting='soft',n_jobs=-1 )
+        self.id=id
+    
+    def partial_fit(self, X,y=None): 
+        X['label']= self.le_.transform(X['label'])
+        for clf in self.eclf.estimators_:
+            clf.partial_fit(X[['title']],X['label'])
+            
+    def fit(self,X,preprocessing=False):
+        if preprocessing:
+            X=self.preprocessing.execution(X)
         
+        self.le_ = LabelEncoder().fit(X['label'])
+        Y = X['label']
+        
+        self.eclf.fit(X,Y) 
+        print("FITTED")
+        objs=[self.eclf,self.le_]
+        for clf in self.eclf.estimators_:
+            print(clf.predictor.predictor.accuracy)
+            
+        print(self.eclf.accuracy)
+
+            
 class LGBMFakePredictor(DS4BizPredictor):
     '''
     classdocs
@@ -129,18 +183,17 @@ class LGBMFakePredictor(DS4BizPredictor):
         now = datetime.datetime.now()
         now_string = now.strftime(('%d/%m/%Y %H:%M'))
         self.date=now_string
-        self.predictor_fakeness= predictor
+        self.predictor= predictor
         self.preprocessing=preprocessing
         self.id=id
         self.number_item=0
+        self.language=preprocessing.language
         
     def fit(self, X=None, y=None):
-        X=pandas.read_csv( resources_path+"/default_train_v2_en.csv" ).iloc[:, 1:]
         y= X['label']
         X = X.drop(['label'], axis=1)
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
-        self.predictor_fakeness.fit(X,y)
         
         #=======================================================================
         # print("dataframe",X.columns)
@@ -148,23 +201,22 @@ class LGBMFakePredictor(DS4BizPredictor):
         # Y = X['label']
         # X = X.drop(['label'], axis=1)
         # print("dataframedopo",X.columns)
-        # self.predictor_fakeness.fit(X,Y)
+        # self.predictor.fit(X,Y)
         # self.number_item=len(X)
         #=======================================================================
         
     def predict(self, X):
         X=self.preprocessing.execution(X)
-        print(X.columns)
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
-        labels_fakeness= self.predictor_fakeness.predict(X)
+        labels_fakeness= self.predictor.predict(X)
         return labels_fakeness
         
     def predict_proba(self,X):
         X=self.preprocessing.execution(X)
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
-        labels_fakeness= self.predictor_fakeness.predict_proba(X)
+        labels_fakeness= self.predictor.predict_proba(X)
         #print("labels_fakeness",labels_fakeness)
         return labels_fakeness,X
     
@@ -177,7 +229,7 @@ class LGBMFakePredictor(DS4BizPredictor):
         X = X.drop(['label'], axis=1)
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
-        self.predictor_fakeness.partial_fit(X,Y)
+        self.predictor.partial_fit(X,Y)
         return "OK"
 
         
@@ -192,54 +244,28 @@ class LGBMFakePredictor(DS4BizPredictor):
          
     
     def get_prestazioni(self):
-        return self._create_prestazioni(self.predictor_fakeness.predictor)
+        return self._create_prestazioni(self.predictor.predictor)
          
    
     def _update_prestazioni_model(self,predictor,prestazioni):
         predictor.precision = prestazioni.precision
         predictor.recall = prestazioni.recall
         predictor.accuracy = prestazioni.accuracy
-        self.number_item = prestazioni.number_item
+        self.number_item = prestazioni.number_item_lgb
         
-                
-    #===========================================================================
-    # def update_prestazioni(self,prestazioni:OutputPrestazioni):
-    #     self._update_prestazioni_model(self.predictor_sentiment.predictor,prestazioni.sentiment)
-    #     self._update_prestazioni_model(self.predictor_dispatching.predictor,prestazioni.dispatching)
-    #===========================================================================
-#===============================================================================
-#   
-# def prestazioni_model(dati,predictor):
-#     df = dataframe_from_social_data_no_split(dati)
-#     df = df.dropna()
-#     # calcolo prestazioni per il sentiment
-#     y=predictor.predict(df[['commento']])
-#     prestazioni_sentiment=prestazioni(df['sentiment'],y[0])
-#     prestazioni_dispatching = prestazioni_multi_label(df['categorie'],y[1])
-#     # print(df[['commento']])
-#     # print(y[1])
-#     output_prestazioni = OutputPrestazioni(prestazioni_sentiment, prestazioni_dispatching)
-#     return output_prestazioni
-#       
-# def prestazioni(y_test,y_pred):
-#     y_test=y_test.str.lower()
-#     accuracy=metrics.accuracy_score(y_test,y_pred)
-#     precision=metrics.precision_score(y_test,y_pred,average="macro")
-#     recall=metrics.recall_score(y_test,y_pred,average="macro")
-#     # print(accuracy,precision,recall)
-#     return Prestazioni(precision,recall,accuracy,len(y_test))
-# 
-# def prestazioni_multi_label(y_test,y_pred):
-#     y_test_addative=list()
-#     for i in range(len(y_test)):
-#         if y_pred[i] in y_test[i]:
-#             y_test_addative.append(y_pred[i])
-#         else:
-#             y_test_addative.append(y_test[i][0])
-#     y_test_addative= pd.Series(y_test_addative)
-#     return prestazioni(y_test_aòddative,y_pred)
-#===============================================================================
-
+def get_performance(y_test, y_pred,classes):
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred, average='weighted', labels= classes)
+    recall = recall_score(y_test, y_pred, average='weighted', labels= classes)
+    f1 = f1_score(y_test, y_pred, average='weighted', labels= classes)
+    print("\n Evaluation performance:")
+    print(" - y_test ->", str(list(y_test[:10])).replace("]", ""), "  . . .  ", str(list(y_test[-10:])).replace("[", ""))
+    print(" - y_pred ->", str(list(y_pred[:10])).replace("]", ""), "  . . .  ", str(list(y_pred[-10:])).replace("[", ""))
+    print("\t - Accuracy:", accuracy)
+    print("\t - Precision:", precision)
+    print("\t - Recall:", recall)
+    print("\t - F-measure:", f1, "\n")
+    
 if __name__ == '__main__':    
     X=pandas.read_csv(dataset_beta+"/train_kaggle.csv").iloc[:, 1:]
     print(X.columns)

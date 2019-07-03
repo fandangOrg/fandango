@@ -86,21 +86,30 @@ class AnalyticsService(metaclass=Singleton):
         self.url_authors = url_authors
         self.headers = {'content-type': "application/json",'accept': "application/json"}
         self.daopredictor = FSMemoryPredictorDAO(picklepath)
-        self.nome_modello={"en":"en_lgb"}
-        for k in self.nome_modello:
-            print("load model",k)
-            self.daopredictor.get_by_id(self.nome_modello.get(k,"en_lgb"))
+        #=======================================================================
+        # self.nome_modello={"en":"en"}
+        # for k in self.nome_modello:
+        #     print("load model",k)
+        #     self.daopredictor.get_by_id(self.nome_modello.get(k,"en"))
+        #=======================================================================
         self.dao =DAONewsElastic()
 
     def _test(self,id):
-        model =self.daopredictor.get_by_id(self.nome_modello.get(id,"en_lgb"))
-        
+        #model =self.daopredictor.get_by_id(self.nome_modello.get(id,"en"))
+        model =self.daopredictor.get_by_id(id)
+
     def _text_analysis(self,news_preprocessed:News_DataModel) -> News_DataModel:
-        #print('''ANALISI NEWS IN LINGUA '''+ news_preprocessed.language)
-        model =self.daopredictor.get_by_id(self.nome_modello.get(news_preprocessed.language,"en_lgb"))
+        print('''ANALISI NEWS IN LINGUA '''+ news_preprocessed.language)
+        try:
+            model =self.daopredictor.get_by_id(news_preprocessed.language)
+        except:
+            print("Doesn't exist model in ",news_preprocessed.language)
+            print("I use en model")
+            model =self.daopredictor.get_by_id("en")
         df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
         prest,features = model.predict_proba(df)
-        prest = pd.DataFrame(prest, columns=model.predictor_fakeness.classes_)
+        print("model.predictor_fakeness.classes_",model.predictor._classes)
+        prest = pd.DataFrame(prest, columns=model.predictor._classes)
         prest=pd.concat([prest,features],axis=1)
         return prest
     

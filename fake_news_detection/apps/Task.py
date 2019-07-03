@@ -4,22 +4,13 @@ Created on 11 mar 2019
 @author: camila
 '''
 
-from brokermanager.model.consumers import ConsumerTask
-from kafka.producer.kafka import KafkaProducer
 from fake_news_detection.utils.logger import getLogger
-from kafka.consumer.group import KafkaConsumer
-import logging, time, json
-from fake_news_detection.utils.Exception import FandangoException
 from brokermanager.model.publishers import KafkaPublisher
-from fake_news_detection.model.InterfacceComunicazioni import InterfaceInputModel,\
-    News_DataModel
-from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
-from fake_news_detection.config.AppConfig import picklepath
-from fake_news_detection.business.Analyzer import analyzer, log
-from numpy.lib.utils import source
+from fake_news_detection.model.InterfacceComunicazioni import News_DataModel
 from fake_news_detection.business.Pipeline import AnalyticsService
-import csv 
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
+import pandas as pd
+
 
 log = getLogger(__name__)
 c=0
@@ -39,48 +30,44 @@ class Task_Analyzer(Task):
                 if c%100==0:
                     print(c)
                 
-                #fieldnames = ['identifier', 'text', 'title','label','sourceDomian','language']
-                #writer = csv.DictWriter(file_output, delimiter='|', quotechar='"', quoting=csv.QUOTE_MINIMAL,fieldnames = fieldnames)
-                #print("applico l'analizer e trovo lo score di ",msg)
-                #===============================================================
-                # news_preprocessed = News_DataModel(language=msg.get('language','en'),headline= msg["headline"], 
-                #                                    articleBody = msg["articleBody"], sourceDomain = msg['sourceDomain'],
-                #                                    identifier = msg['identifier'], dateCreated = msg['dateCreated'] , 
-                #                                    dateModified= msg['dateModified'], datePublished = msg['datePublished'], 
-                #                                    author = msg['author'], publisher = msg['publisher'], calculateRating = msg['calculateRating'],
-                #                                     calculateRatingDetail = msg['calculateRatingDetail'], images = msg['images'], 
-                #                                     videos = msg['videos'])
-                # 
-                #===============================================================
-                print(msg)
                 news_preprocessed = News_DataModel(**msg)
                 #if msg['language'] != 'en':return
-                
                 #print(msg['headline'])
                 #print(msg['articleBody'])
-                output = 'hey'
-                
                 output=self.analytics.analyzer(news_preprocessed,False) 
-                output = output[1][0]
+                output = str(output[1][0])
+                
+                try:
+                    model =self.analytics.daopredictor.get_by_id(msg['language'])
+                except:
+                    model = None
+                    
+                if model:
+                    #l=[{'title': msg['headline'], 'text':msg['articleBody'] ,'label': 1}]
+                    #df = pd.DataFrame(l)
+                    #model.partial_fit(df)
+                    if msg['sourceDomain'] in dic_domains['FAKE']: 
+                        l=[{'title': msg['headline'], 'text':msg['articleBody'] ,'label': 1}]
+                        #dict_for_training = {'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
+                        testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tFAKE\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
+                        #df = pd.DataFrame(l)
+                        #model.partial_fit(df)
+                        testo=testo.replace("\n","$##$")
+                        file_output.write(testo+"\n")
+                        print("add negative fit",msg['sourceDomain'] )
+                        output = 0.0
+                        #={'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
+                    elif msg['sourceDomain'] in dic_domains['REAL']:
+                        testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tREAL\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
+                        testo=testo.replace("\n","$##$")
+                        file_output.write(testo+"\n")
+                        #l=[{'title': msg['headline'], 'text':msg['articleBody'] ,'label':0}]
+                        #df = pd.DataFrame(l)
+                        #model.partial_fit(df)
+                        print("add  positive fit",msg['sourceDomain'] )
+                        output = 1.0
                 print( msg['sourceDomain'],msg['language'],output)
-                
-       
-                
-                if msg['sourceDomain'] in dic_domains['FAKE']: 
-                    #dict_for_training = {'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
-                    testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tFAKE\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
-                    testo=testo.replace("\n","$##$")
-                    file_output.write(testo+"\n")
-                    print("add negative",msg['sourceDomain'] )
-                    output = 0.0
-                    #={'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
-                elif msg['sourceDomain'] in dic_domains['REAL']:
-                    testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tREAL\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
-                    testo=testo.replace("\n","$##$")
-                    file_output.write(testo+"\n")
-                    output = 1.0
-                    print("add  pos",msg['sourceDomain'] )
-                    #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
+                #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                 #print("dict_output",dict_output)
                 dict_output = {"identifier":msg['identifier'], 
                                "headline":msg['headline'],
@@ -91,7 +78,6 @@ class Task_Analyzer(Task):
                                "url":msg['url'],
                                 "textRating": output,
                                 "publishDateEstimated" : news_preprocessed.publishDateEstimated
-
                                 #"publishDateEstimate" : ""
                              }
                 try:

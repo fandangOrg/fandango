@@ -49,18 +49,18 @@ def get_performance(y_test:List, y_pred:List):
     print("\t - F-measure:", f1, "\n")
 
 
-def create_model1():
+def create_model1(input_dim):
     """
     Densely (fully) connected Neural Network with 3 layers and light dropout
     (Dropout consists in randomly setting a fraction 'rate' of input units to 0
     at each update during training time, which helps prevent overfitting)
     """
     model = Sequential()
-    model.add(Dense(240, input_dim=input_dim, activation='relu'))
+    model.add(Dense(2400, input_dim=input_dim, activation='relu'))
     model.add(Dropout(rate=0.20))
-    model.add(Dense(120, activation='relu'))
+    model.add(Dense(1200, activation='relu'))
     model.add(Dropout(rate=0.20))
-    model.add(Dense(60, activation='relu'))
+    model.add(Dense(600, activation='relu'))
     model.add(Dropout(rate=0.20))
     model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
