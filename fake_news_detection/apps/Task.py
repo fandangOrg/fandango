@@ -82,7 +82,8 @@ class Task_Analyzer(Task):
                     print("add  pos",msg['sourceDomain'] )
                     #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                 #print("dict_output",dict_output)
-                dict_output = {"identifier":msg['identifier'], "headline":msg['headline'],
+                dict_output = {"identifier":msg['identifier'], 
+                               "headline":msg['headline'],
                                "articleBody": msg['articleBody'],
                                "dateCreated": msg['dateCreated'], 
                                "dateModified" : msg['dateModified'], 
