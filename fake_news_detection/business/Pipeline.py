@@ -5,7 +5,7 @@ Created on 30 apr 2019
 '''
 import pandas as pd 
 from fake_news_detection.config.AppConfig import picklepath, url_service_media, url_service_authors,\
-    url_service_preprocessing
+    url_service_preprocessing, url_crawler
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.utils.logger import getLogger
 import json
@@ -31,6 +31,7 @@ class ScrapyService:
         Constructor
         '''
         self.url_media_service = url_media_service
+        self.url_crawler=url_crawler
         self.url_prepocessing=url_prepocessing
         self.headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -38,7 +39,7 @@ class ScrapyService:
     def _crawling(self,url):
         try:
             print("CRAWLING CERTH "+url)
-            u = URLRequest(self.url_media_service+"/api/retrieve_article")
+            u = URLRequest(self.url_crawler+"/api/retrieve_article")
             payload= {"url": url}
             j = json.dumps(payload)
             response = u.post(data=j, headers=self.headers)
