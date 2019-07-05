@@ -175,7 +175,9 @@ class AnalyticsService(metaclass=Singleton):
             "publisher": news_preprocessed.publisher,
             "sourceDomain": news_preprocessed.sourceDomain,
             "calculatedRating": 0.0,
-            "identifier": news_preprocessed.identifier}
+            "identifier": news_preprocessed.identifier,
+            "language": news_preprocessed.language
+            }
         print("analizzo gli autori")
         autors_org=self._get_authors_org_ids(news_preprocessed)
         news_preprocessed.video_analizer=True

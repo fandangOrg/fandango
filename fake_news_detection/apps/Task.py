@@ -69,14 +69,17 @@ class Task_Analyzer(Task):
                 print( msg['sourceDomain'],msg['language'],output)
                 #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                 #print("dict_output",dict_output)
-                dict_output = {"identifier":msg['identifier'], "headline":msg['headline'],
+                dict_output = {"identifier":msg['identifier'], 
+                               "headline":msg['headline'],
                                "articleBody": msg['articleBody'],
                                "dateCreated": msg['dateCreated'], 
                                "dateModified" : msg['dateModified'], 
                                "datePublished":msg['datePublished'],
                                "url":msg['url'],
-                                "textRating": output,
-                                "publishDateEstimated" : news_preprocessed.publishDateEstimated
+                               "textRating": output,
+                               "publishDateEstimated" : news_preprocessed.publishDateEstimated,
+                               "sourceDomain": news_preprocessed.sourceDomain, 
+                               "language": news_preprocessed.language                      
                                 #"publishDateEstimate" : ""
                              }
                 try:

@@ -42,7 +42,7 @@ def start_daemon() -> str:
 
 def analyzer(news_preprocessed:News_DataModel) -> str:
     log.info('''ANALISI NEWS'''+str(news_preprocessed.sourceDomain))
-    prest=service_analyzer.analyzer(news_preprocessed)
+    prest=service_analyzer.analynzer(news_preprocessed)
 #===============================================================================
 # =======
 #     log.info('''ANALISI NEWS''')
