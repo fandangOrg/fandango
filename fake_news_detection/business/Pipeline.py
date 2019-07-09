@@ -176,7 +176,8 @@ class AnalyticsService(metaclass=Singleton):
             "sourceDomain": news_preprocessed.sourceDomain,
             "calculatedRating": 0.0,
             "identifier": news_preprocessed.identifier,
-            "inLanguage": news_preprocessed.language
+            "inLanguage": news_preprocessed.language,
+            "url": news_preprocessed.url
             
             }
         print("analizzo gli autori")
