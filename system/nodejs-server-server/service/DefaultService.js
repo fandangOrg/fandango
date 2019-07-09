@@ -237,7 +237,7 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
   })
   })
 
-  console.log("hereererer")
+  //console.log("hereererer")
 
   var articleResponses = [];
   articles.forEach(function(article){
@@ -246,6 +246,9 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
     var articleResponse = {};
     articleResponse.identifier = article._source.identifier || null;
     articleResponse.url = article._source.url || null;
+    articleResponse.inLanguage = article._source.inLanguage || null;
+    articleResponse.sourceDomain = article._source.sourceDomain || null;
+    articleResponse.publishDateEstimated = article._source.publishDateEstimated || null;
     articleResponse.headline = article._source.headline || null;
     articleResponse.articleBody = article._source.articleBody || null;
     articleResponse.dateCreated = article._source.dateCreated || null;

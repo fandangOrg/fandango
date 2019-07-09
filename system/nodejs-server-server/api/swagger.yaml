@@ -251,6 +251,7 @@ definitions:
           about:
           - "about"
           - "about"
+          inLanguage: "inLanguage"
           dateModified: "dateModified"
           calculatedRatingDetail:
             authorRating: 1.46581298050294517310021547018550336360931396484375
@@ -262,6 +263,7 @@ definitions:
           - "contains"
           - "contains"
           dateCreated: "dateCreated"
+          publishDateEstimated: "publishDateEstimated"
           mentions:
           - "mentions"
           - "mentions"
@@ -282,6 +284,7 @@ definitions:
             - "parentOrganization"
             - "parentOrganization"
             url: "url"
+          sourceDomain: "sourceDomain"
           headline: "headline"
       - article:
           identifier: "identifier"
@@ -310,6 +313,7 @@ definitions:
           about:
           - "about"
           - "about"
+          inLanguage: "inLanguage"
           dateModified: "dateModified"
           calculatedRatingDetail:
             authorRating: 1.46581298050294517310021547018550336360931396484375
@@ -321,6 +325,7 @@ definitions:
           - "contains"
           - "contains"
           dateCreated: "dateCreated"
+          publishDateEstimated: "publishDateEstimated"
           mentions:
           - "mentions"
           - "mentions"
@@ -341,6 +346,7 @@ definitions:
             - "parentOrganization"
             - "parentOrganization"
             url: "url"
+          sourceDomain: "sourceDomain"
           headline: "headline"
   Fact_Request_Interface:
     type: "object"
@@ -383,39 +389,45 @@ definitions:
       category: "category"
       results:
       - fact:
-          datePublished: "datePublished"
           identifier: "identifier"
-          dateCreated: "dateCreated"
           temporalCoverageStart: "temporalCoverageStart"
+          about:
+          - "about"
+          - "about"
+          inLanguage: "inLanguage"
+          dateModified: "dateModified"
+          spatialCoverage: "spatialCoverage"
+          url: "url"
+          datePublished: "datePublished"
+          dateCreated: "dateCreated"
+          publishDateEstimated: "publishDateEstimated"
           dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
           mentions:
           - "mentions"
           - "mentions"
           name: "name"
-          about:
-          - "about"
-          - "about"
-          dateModified: "dateModified"
           text: "text"
-          spatialCoverage: "spatialCoverage"
-          url: "url"
+          sourceDomain: "sourceDomain"
       - fact:
-          datePublished: "datePublished"
           identifier: "identifier"
-          dateCreated: "dateCreated"
           temporalCoverageStart: "temporalCoverageStart"
+          about:
+          - "about"
+          - "about"
+          inLanguage: "inLanguage"
+          dateModified: "dateModified"
+          spatialCoverage: "spatialCoverage"
+          url: "url"
+          datePublished: "datePublished"
+          dateCreated: "dateCreated"
+          publishDateEstimated: "publishDateEstimated"
           dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
           mentions:
           - "mentions"
           - "mentions"
           name: "name"
-          about:
-          - "about"
-          - "about"
-          dateModified: "dateModified"
           text: "text"
-          spatialCoverage: "spatialCoverage"
-          url: "url"
+          sourceDomain: "sourceDomain"
   Claim_Response_Interface_claim_calculatedRatingDetail:
     properties:
       publishRating:
@@ -667,6 +679,12 @@ definitions:
         type: "string"
       url:
         type: "string"
+      inLanguage:
+        type: "string"
+      sourceDomain:
+        type: "string"
+      publishDateEstimated:
+        type: "string"
       dateCreated:
         type: "string"
       dateModified:
@@ -724,6 +742,7 @@ definitions:
       about:
       - "about"
       - "about"
+      inLanguage: "inLanguage"
       dateModified: "dateModified"
       calculatedRatingDetail:
         authorRating: 1.46581298050294517310021547018550336360931396484375
@@ -735,6 +754,7 @@ definitions:
       - "contains"
       - "contains"
       dateCreated: "dateCreated"
+      publishDateEstimated: "publishDateEstimated"
       mentions:
       - "mentions"
       - "mentions"
@@ -755,6 +775,7 @@ definitions:
         - "parentOrganization"
         - "parentOrganization"
         url: "url"
+      sourceDomain: "sourceDomain"
       headline: "headline"
   Article_Response_Interface_results:
     properties:
@@ -788,6 +809,7 @@ definitions:
         about:
         - "about"
         - "about"
+        inLanguage: "inLanguage"
         dateModified: "dateModified"
         calculatedRatingDetail:
           authorRating: 1.46581298050294517310021547018550336360931396484375
@@ -799,6 +821,7 @@ definitions:
         - "contains"
         - "contains"
         dateCreated: "dateCreated"
+        publishDateEstimated: "publishDateEstimated"
         mentions:
         - "mentions"
         - "mentions"
@@ -819,6 +842,7 @@ definitions:
           - "parentOrganization"
           - "parentOrganization"
           url: "url"
+        sourceDomain: "sourceDomain"
         headline: "headline"
   Fact_Response_Interface_fact:
     properties:
@@ -829,6 +853,12 @@ definitions:
       text:
         type: "string"
       url:
+        type: "string"
+      inLanguage:
+        type: "string"
+      sourceDomain:
+        type: "string"
+      publishDateEstimated:
         type: "string"
       about:
         type: "array"
@@ -851,41 +881,47 @@ definitions:
       spatialCoverage:
         type: "string"
     example:
-      datePublished: "datePublished"
       identifier: "identifier"
-      dateCreated: "dateCreated"
       temporalCoverageStart: "temporalCoverageStart"
+      about:
+      - "about"
+      - "about"
+      inLanguage: "inLanguage"
+      dateModified: "dateModified"
+      spatialCoverage: "spatialCoverage"
+      url: "url"
+      datePublished: "datePublished"
+      dateCreated: "dateCreated"
+      publishDateEstimated: "publishDateEstimated"
       dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
       mentions:
       - "mentions"
       - "mentions"
       name: "name"
-      about:
-      - "about"
-      - "about"
-      dateModified: "dateModified"
       text: "text"
-      spatialCoverage: "spatialCoverage"
-      url: "url"
+      sourceDomain: "sourceDomain"
   Fact_Response_Interface_results:
     properties:
       fact:
         $ref: "#/definitions/Fact_Response_Interface_fact"
     example:
       fact:
-        datePublished: "datePublished"
         identifier: "identifier"
-        dateCreated: "dateCreated"
         temporalCoverageStart: "temporalCoverageStart"
+        about:
+        - "about"
+        - "about"
+        inLanguage: "inLanguage"
+        dateModified: "dateModified"
+        spatialCoverage: "spatialCoverage"
+        url: "url"
+        datePublished: "datePublished"
+        dateCreated: "dateCreated"
+        publishDateEstimated: "publishDateEstimated"
         dateMtemporalCoverageEnd: "dateMtemporalCoverageEnd"
         mentions:
         - "mentions"
         - "mentions"
         name: "name"
-        about:
-        - "about"
-        - "about"
-        dateModified: "dateModified"
         text: "text"
-        spatialCoverage: "spatialCoverage"
-        url: "url"
+        sourceDomain: "sourceDomain"
