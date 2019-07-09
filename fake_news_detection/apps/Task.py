@@ -79,7 +79,7 @@ class Task_Analyzer(Task):
                                "textRating": output,
                                "publishDateEstimated" : news_preprocessed.publishDateEstimated,
                                "sourceDomain": news_preprocessed.sourceDomain, 
-                               "language": news_preprocessed.language                      
+                               "inLanguage": news_preprocessed.language                      
                                 #"publishDateEstimate" : ""
                              }
                 try:
