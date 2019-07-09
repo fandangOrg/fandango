@@ -9,7 +9,12 @@ from fake_news_detection.test.keras_no_deep import create_model1
 
 def training_model_LGBMClassifier(lang,X):
     daopredictor = FSMemoryPredictorDAO(picklepath)
-    predictor=LGBMClassifier() 
+    predictor=LGBMClassifier(boosting_type='gbdt',
+                               num_leaves=100,
+                               max_depth=-1,
+                               learning_rate=0.1,
+                               n_estimators=150,
+                               n_jobs=-1) 
     print("crea modello")
     model=FakePredictor(predictor=predictor,preprocessing=Preprocessing(lang), id=lang)
     model.fit(X)

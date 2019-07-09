@@ -70,6 +70,7 @@ class FakePredictor(DS4BizPredictor):
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
         Y = X['label']
+        print(Y.value_counts())
         X = X.drop(['label'], axis=1)
         X_train, X_test, y_train, y_test = train_test_split(X,Y , test_size=0.2)
         self.predictor.fit(X_train,y_train)

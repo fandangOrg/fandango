@@ -107,7 +107,6 @@ class FleschReadingEase(FeaturesExtractorLanguageDependence):
         
     def _it(self,text,**kwargs):
         try:
-            print('uso lingua it')
             doc=kwargs.get('doc')
             if doc is None:
                 doc = Text(text, hint_language_code=self.lang)
@@ -129,7 +128,6 @@ class FleschReadingEase(FeaturesExtractorLanguageDependence):
         
     def _en(self,text,**kwargs):   
         try:
-            print('uso lingua en')
             doc=kwargs.get('doc')
             if doc is None:
                 doc = Text(text, hint_language_code=self.lang)

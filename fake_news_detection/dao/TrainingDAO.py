@@ -5,7 +5,7 @@ Created on Oct 24, 2018
 '''
 
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article, dataset_beta, domains_index
+    index_name_news, docType_article, dataset_beta, domains_index, path_training
 import pandas as pd
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.utils.Exception import FandangoException
@@ -30,7 +30,7 @@ class DAOTraining:
 
 class DAOTrainingPD:
     #dataset_beta togliere commento e metterlo nel path 
-    def __init__(self, path = dataset_beta, delimiter='|'):
+    def __init__(self, path = path_training, delimiter='|'):
         self.path = path
         print(self.path)
         self.delimiter = delimiter
@@ -49,14 +49,19 @@ class DAOTrainingPD:
         df_app=training_set[['title','text','label']]
         df_app['label'] = df_app['label'].map({'FAKE': int(0), 'REAL': int(1)})
         df = df_app
-        #df=df.append(df_app)
         print("shape after 'fake_or_real_news.csv' -->", df.shape)
-        '''
+        #
+        #
+        #
         X=pd.read_csv(self.path+"/data.csv")
         X=X.rename(index=str, columns={"Label": "label", "Body": "text","Headline":"title"})
         X = X.drop(['URLs'], axis=1)
         df=df.append(X)
         print("shape after 'data.csv' -->", df.shape)
+        #
+        #
+        #
+        '''
         with open(self.path+"/dataset_kafka.csv","r") as file:
             for r in file.readlines():
                 items=r.strip().split("\t")
@@ -70,12 +75,15 @@ class DAOTrainingPD:
 
         print("shape after 'dataset_kafka.csv' -->", df.shape)
         '''
+        #
+        #
+        #
         #########buzzfeed dataset
-        files=os.listdir(dataset_beta+"/articles")
+        files=os.listdir(self.path+"/articles")
         print(files)
         v=set()
         for f in files:
-            e = ET.XML(open(dataset_beta+"/articles/"+f,"r").read())
+            e = ET.XML(open(self.path+"/articles/"+f,"r").read())
             title=""
             text =""
             value =""
@@ -97,19 +105,9 @@ class DAOTrainingPD:
                 df = df.append({'title': title,'text':text,'label':value}, ignore_index=True)
 
         print("shape after 'articles' -->", df.shape)
-        
-        #############################################################################################################
-        ################################fake-news-detection another kaggle dataset#################################
-        
-        training_kaggle = pd.read_csv(self.path +"/fake-new-detection.csv")
-        #training_kaggle = pd.read_csv("/home/camila/eclipse-workspace/fandango-fake-news/fake_news_detection/resources/fake-new-detection.csv")
-        df_kaggle = training_kaggle.drop(labels='URLs', axis=1)
-        print(df_kaggle.columns) 
-        df_kaggle = df_kaggle.rename( columns={"Headline":"title", "Body": "text",'Label':'label'})
-        print(df_kaggle.columns)
-        
-        
-        df=df.append(df_kaggle)
+        #
+        #
+        #
         print("after kaggle csv",df.shape)
         print("missing values title", df['title'].isna().sum())
         print("missing values text", df['text'].isna().sum())
