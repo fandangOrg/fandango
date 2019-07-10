@@ -54,7 +54,7 @@ class News_DataModel:
         self.publisher = publisher
         self.images = images
         self.videos = videos
-        self.sourceDomain = sourceDomain[0]
+        self.sourceDomain = sourceDomain
         self.calculateRatingDetail = calculateRatingDetail
         self.calculateRating = calculateRating
         self.identifier = identifier

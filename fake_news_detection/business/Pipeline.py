@@ -177,8 +177,9 @@ class AnalyticsService(metaclass=Singleton):
             "calculatedRating": 0.0,
             "identifier": news_preprocessed.identifier,
             "inLanguage": news_preprocessed.language,
-            "url": news_preprocessed.url
-            
+            "url": news_preprocessed.url,
+            "datePublishEstimated":news_preprocessed.publishDateEstimated,
+            "processType":"online"
             }
         print("analizzo gli autori")
         autors_org=self._get_authors_org_ids(news_preprocessed)
