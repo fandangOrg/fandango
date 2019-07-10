@@ -18,16 +18,15 @@ from _collections import defaultdict
 from pygments.unistring import Pe
 #from fake_news_detection.services.Services import dao_news
 from xml.etree import cElementTree as ET
+from elasticsearch import Elasticsearch
 
 log = getLogger(__name__)
 
 
-class DAOTraining:
-    def get_train_dataset(self):
-        return NotImplementedError
 
 
-
+ 
+        
 class DAOTrainingPD:
     #dataset_beta togliere commento e metterlo nel path 
     def __init__(self, path = dataset_beta, delimiter='|'):
@@ -128,6 +127,7 @@ class DAOTrainingPD:
 class DAOTrainingElastic:
 
     def __init__(self):
+        
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news 
         self.docType = docType_article
@@ -202,7 +202,7 @@ class DAOTrainingElasticByDomains():
         self.docType = docType_article
         self.list_domains=list_domains
         self.domains_index = domains_index
-        
+        self.client_elastic = Elasticsearch()
     
     
     def get_train_dataset(self,limit=1000):
@@ -233,15 +233,15 @@ class DAOTrainingElasticByDomains():
         print("> end of 'get_train_dataset()'\n", dataf.columns)
         return dataf
  
-    def __get_news_from_domain(self,domain,limit=100000):
+    def get_news_from_domain(self,domain,limit=100000,language= 'en'):
         
         try:
-            search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType).query("term", source_domain=domain)
-            response = search.execute()
+            s = Search().using(client=self.es_client).index(self.index_name).query("match", title= domain)
+            response = s.execute()
             result_list=[]
             print("RESPONSE TOTAL:", response.hits.total)
-            for c,hit in enumerate(itertools.islice(search.scan(),limit)):
-                if len(hit.title.strip())>10 and len(hit.text.strip())>20:
+            for c,hit in enumerate(itertools.islice(s.scan(),limit)):
+                if len(hit.title.strip())>10 and len(hit.text.strip())>20 and hit.language == language :
                     result_list.append({"title":hit.title.strip(),  "text" : hit.text.strip()})
                     print(hit.title, hit.text)
                 else:
@@ -249,21 +249,29 @@ class DAOTrainingElasticByDomains():
             return result_list
         except TransportError as e:
             print(e.info)
-            
         
+       
     def get_domains_from_elastic(self):
         
         domain_list = []
-        body = {"query": {"match_all": {}}}
-        dic_domain = defaultdict(list)       
-        res = self.es_client.search(index= self.domains_index, body= body)
-        for i in res['hits']['hits']:
-            domain_list.append( (i['_source']['webdomain'], i['_source']['label']))
-            if i['_source']['label'] =='FAKE':
-                dic_domain['FAKE'].append(i['_source']['webdomain'])
+        dic_domain = defaultdict(list)
+        
+        query = {"query": {"match_all": {}}}
+        s = Search.from_dict(query)
+        
+        s = s.using(self.es_client).index(self.domains_index)
+        print(self.domains_index)
+        response = s.execute()
+        print(s.count())
+        for hit in s.scan():
+            print(hit["webdomain"])
+            domain_list.append( (hit['webdomain'], hit['label']))
+            if hit['label'] =='FAKE':
+                dic_domain['FAKE'].append(hit['webdomain'])
             else:
-                dic_domain['REAL'].append(i['_source']['webdomain'])
-        print(dic_domain)
+                dic_domain['REAL'].append(hit['webdomain'])
+        print("COLLECTED LEGITIMATE DOMAINS", dic_domain['REAL'])
+        print("COLLECTED NO LEGITIMATE DOMAINS", dic_domain['FAKE'] )
         return dic_domain
         
                  
@@ -359,9 +367,12 @@ class DAOTrainingElasticByDomains():
 if __name__ == '__main__':
     
     
+    d = DAOTrainingElasticByDomains()
+    d.get_domains_from_elastic()
+    #domain='www.ilfattoquotidiano.it/tag/europa'
+    #d.get_news_from_domain(domain = domain)
 
-    DAO = DAOTrainingPD()
-    t = DAO.get_train_dataset()
+
     
     
 #===============================================================================
@@ -417,5 +428,4 @@ if __name__ == '__main__':
     
     
     #ii = DAOTrainingElasticByDomains()
-    #p.to_csv("/home/camila/Scrivania/Fandango_data.tsv",index = False, sep= "\t"
-
+    #p.to_csv("/home/camila/Scrivania/Fandango_data.tsv",index = False, sep= "\t")
