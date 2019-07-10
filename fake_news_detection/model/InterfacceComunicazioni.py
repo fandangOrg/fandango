@@ -54,7 +54,11 @@ class News_DataModel:
         self.publisher = publisher
         self.images = images
         self.videos = videos
-        self.sourceDomain = sourceDomain
+        print("SORUCE DOMAIN",type(sourceDomain),sourceDomain)
+        if type(sourceDomain)is list:
+            self.sourceDomain = sourceDomain[0]
+        else:
+            self.sourceDomain = sourceDomain
         self.calculateRatingDetail = calculateRatingDetail
         self.calculateRating = calculateRating
         self.identifier = identifier

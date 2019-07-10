@@ -18,6 +18,7 @@ from fake_news_detection.model.singleton_filter import Singleton
 from threading import Thread
 import os
 import time
+from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 log = getLogger(__name__)
 
 class ScrapyService:
@@ -67,7 +68,7 @@ class ScrapyService:
     def scrapy(self,url)-> News_DataModel:
         raw_article = self._crawling(url) 
         prepo_article = self._preprocessing(raw_article)
-        prepo_article.sourceDomain=[prepo_article.sourceDomain]
+        prepo_article.sourceDomain=prepo_article.sourceDomain
         #prepo_article.video = ["https://www.youtube.com/watch?v=wZZ7oFKsKzY","https://www.youtube.com/watch?v=w0AOGeqOnFY"]
         return(prepo_article)
 
@@ -87,6 +88,9 @@ class AnalyticsService(metaclass=Singleton):
         self.url_authors = url_authors
         self.headers = {'content-type': "application/json",'accept': "application/json"}
         self.daopredictor = FSMemoryPredictorDAO(picklepath)
+        dao = DAOTrainingElasticByDomains()
+        self.dic_domains = dao.get_domains_from_elastic()
+        
         #=======================================================================
         # self.nome_modello={"en":"en"}
         # for k in self.nome_modello:
@@ -109,8 +113,16 @@ class AnalyticsService(metaclass=Singleton):
             model =self.daopredictor.get_by_id("en")
         df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
         prest,features = model.predict_proba(df)
+        print("source_domain",news_preprocessed.sourceDomain,news_preprocessed.sourceDomain in  self.dic_domains['REAL'],self.dic_domains['REAL'] )
+        
+        if news_preprocessed.sourceDomain in  self.dic_domains['FAKE'] : 
+            prest = [[1.0,0.0]]
+        elif news_preprocessed.sourceDomain in  self.dic_domains['REAL'] :
+            prest = [[0.0,1.0]]
         print("model.predictor_fakeness.classes_",model.predictor._classes)
+        print("PREST",prest)
         prest = pd.DataFrame(prest, columns=model.predictor._classes)
+        print("PREST",prest)
         prest=pd.concat([prest,features],axis=1)
         return prest
     
@@ -164,7 +176,7 @@ class AnalyticsService(metaclass=Singleton):
     def _clear(self,data):
         return str(data).split(" ")[0]
                                 
-    def _save_news(self,news_preprocessed:News_DataModel,score_fake=0.0):
+    def _save_news(self,news_preprocessed:News_DataModel,js_t,score_fake=0.0):
         
         d = {"headline": news_preprocessed.headline,
             "articleBody" : news_preprocessed.articleBody,
@@ -178,9 +190,11 @@ class AnalyticsService(metaclass=Singleton):
             "identifier": news_preprocessed.identifier,
             "inLanguage": news_preprocessed.language,
             "url": news_preprocessed.url,
-            "datePublishEstimated":news_preprocessed.publishDateEstimated,
-            "processType":"online"
+            "publishDateEstimated":news_preprocessed.publishDateEstimated,
+            "processType":"online",
+            "features_text":js_t
             }
+        print(d)
         print("analizzo gli autori")
         autors_org=self._get_authors_org_ids(news_preprocessed)
         news_preprocessed.video_analizer=True
@@ -274,6 +288,8 @@ class AnalyticsService(metaclass=Singleton):
  
     def analyzer(self,news_preprocessed:News_DataModel,save=True) -> str:
         pd_text=self._text_analysis(news_preprocessed)
+        js_t=json.loads(pd_text.to_json(orient='records'))
+        print("JS_T",js_t)
         if save:
             
             list_authors=[]
@@ -281,7 +297,7 @@ class AnalyticsService(metaclass=Singleton):
             list_images=[]
             list_videos=[]
             score=pd_text[1][0]
-            news=self._save_news(news_preprocessed,score)
+            news=self._save_news(news_preprocessed,js_t,score)
             ##
             #
             #
@@ -306,7 +322,6 @@ class AnalyticsService(metaclass=Singleton):
             #pd_image=pd.DataFrame(list_images)
             pd_authors=pd.DataFrame(list_authors)
             pd_publish=pd.DataFrame(list_publishs)
-            js_t=json.loads(pd_text.to_json(orient='records'))
             #js_V=json.loads(pd_video.to_json(orient='records'))
             #js_i=json.loads(pd_image.to_json(orient='records'))
             js_a=json.loads(pd_authors.to_json(orient='records'))
@@ -317,7 +332,7 @@ class AnalyticsService(metaclass=Singleton):
             return {"text":js_t, "authors":js_a,"publishers":js_p} 
 
         else:      
-            return pd_text
+            return pd_text,js_t  
          
 def running(name):
     print("name", name)

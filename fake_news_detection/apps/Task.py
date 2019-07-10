@@ -34,7 +34,7 @@ class Task_Analyzer(Task):
                 #if msg['language'] != 'en':return
                 #print(msg['headline'])
                 #print(msg['articleBody'])
-                output=self.analytics.analyzer(news_preprocessed,False) 
+                output,js_t=self.analytics.analyzer(news_preprocessed,False) 
                 output = str(output[1][0])
                 
                 try:
@@ -79,7 +79,8 @@ class Task_Analyzer(Task):
                                "textRating": output,
                                "publishDateEstimated" : news_preprocessed.publishDateEstimated,
                                "sourceDomain": news_preprocessed.sourceDomain, 
-                               "inLanguage": news_preprocessed.language                      
+                               "inLanguage": news_preprocessed.language,
+                               "features_text":js_t                      
                                 #"publishDateEstimate" : ""
                              }
                 try:
