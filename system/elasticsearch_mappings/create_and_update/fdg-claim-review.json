@@ -50,6 +50,15 @@
             "ignore_above": 10000
           }
         }},
+        "url": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 10000
+            }
+          }
+        },
         "references":{
           "type":"text",
           "fields": {

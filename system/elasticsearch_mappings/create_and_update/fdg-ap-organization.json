@@ -3,15 +3,16 @@
     "mappings" : {
       "doc" : {
         "properties": {
-            "identifier":{
+          "identifier":{
               "type":"text",
               "fields": {
               "keyword": {
                 "type": "keyword",
                 "ignore_above": 10000
               }
-            }},
-        "name":{
+            }
+          },
+          "name":{
             "type":"text",
             "fields": {
             "keyword": {
@@ -35,6 +36,14 @@
                   "ignore_above": 10000
                 }
               }},
+        "country":{
+          "type":"text",
+          "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 10000
+              }
+            }},      
         "bias":{
             "type":"text",
             "fields": {

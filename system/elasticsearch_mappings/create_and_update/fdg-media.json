@@ -48,7 +48,7 @@
             }
             }
         },
-        "calculatedRating":{"type":"float"}     
+        "calculatedRating":{"type":"object"}     
         }
         }
     }
