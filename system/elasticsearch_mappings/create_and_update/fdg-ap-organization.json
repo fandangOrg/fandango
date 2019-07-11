@@ -59,7 +59,8 @@
             "type": "keyword",
             "ignore_above": 10000
           }
-        }} 
+        }},
+        "trustworthiness":{"type":"float"}      
         }
         }
     }
