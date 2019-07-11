@@ -3,9 +3,9 @@
         <img [src]="fandangoLogo" class="img-logo" alt="Fandango">
         <form #homepageForm="ngForm" (ngSubmit)="sendInput(homepageForm.value)">
             <div class="input-group mb-3">
-                <input [type]="inputType.type"
+                <input [type]="inputType['type']"
                        class="form-control shadow--hover"
-                       [placeholder]="inputPlaceholder" [pattern]="inputType.pattern"
+                       [placeholder]="inputPlaceholder" [pattern]="inputType['pattern']"
                        aria-label="Search" ngModel name="url" required>
                 <div class="input-group-append">
                     <button class="btn btn-info" type="submit" [disabled]="!homepageForm.valid">
