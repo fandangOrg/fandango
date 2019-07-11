@@ -6,7 +6,7 @@
     .input-group {
         border-radius: $navbar-search-border-radius;
         border: $navbar-search-border-width solid;
-        background-color: transparent;
+        background-color: white;
 
         .input-group-text {
             background-color: transparent;
@@ -29,13 +29,13 @@
         color: $navbar-search-dark-color;
     }
 
-    .form-control {
-        color: $navbar-search-dark-focus-color;
-
-        &::placeholder {
-            color: $navbar-search-dark-color;
-        }
-    }
+    //.form-control {
+    //    color: $navbar-search-dark-focus-color;
+    //
+    //    &::placeholder {
+    //        color: $navbar-search-dark-color;
+    //    }
+    //}
 
     .focused {
         .input-group {

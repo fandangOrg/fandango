@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {AnalyzeService} from "../analyze.service";
 import {Claim} from "./claim";
+import {AppService} from "../../../app.service";
 
 @Component({
     selector: 'app-claim',
@@ -31,12 +32,18 @@ export class ClaimComponent implements OnInit {
             'text': this.url,
             'topics': []
         };
+
         // CRAWLING AND ANALYZE ARTICLE REQUEST
         this.http.analyzeClaim(to_send).subscribe(
             data => {
                 console.log(data);
                 this.claims = data;
                 this.showLoading.emit(false);
+            }, error => {
+                this.showLoading.emit(false);
+                this.route.navigate(['/homepage']);
+                // AppService.showNotification('danger', `Error occured, status: ${error.statusText}`);
+                AppService.showNotification('danger', 'Error occured during retrieve claims');
             });
     }
 

@@ -2,7 +2,7 @@
     <div class="grid">
         <a [href]="sirenUrl" target="_blank">
             <button class="btn btn-icon btn-secondary" style="position: absolute; top: 20px;right: 20px; z-index: 2">
-                <span class="btn-inner--text span-fade" style="margin-right: 0">Open on Siren</span>
+                <span class="btn-inner--text span-fade" style="margin-right: 0">Open on Dashboard</span>
                 <img class="inner-img" src="assets/img/logos/siren.png" style="height: 20px !important;">
             </button>
         </a>
@@ -85,7 +85,7 @@
 
                         <tr *ngIf="article.authors.length === 0">
                             <th colspan="2">
-                                Not authors found
+                                No authors found
                             </th>
                         </tr>
                         </tbody>
@@ -119,7 +119,7 @@
 
                         <tr *ngIf="article.publishers.length === 0">
                             <th colspan="2">
-                                Not publishers found
+                                No publishers found
                             </th>
                         </tr>
                         </tbody>
@@ -188,7 +188,7 @@
             </div>
         </div>
         <hr class="my-4"/>
-        <h6 class="heading-small text-muted">Similiar news</h6>
+        <h6 class="heading-small text-muted">Similar</h6>
         <div class="table-responsive table-striped">
             <table class="table table-flush">
                 <thead class="bg-white">
@@ -213,6 +213,12 @@
                     <!--                    <th scope="row">-->
                     <!--                        <i class="fas fa-info-circle fa-2x text-default c-pointer" style="font-size: 18px"></i>-->
                     <!--                    </th>-->
+                </tr>
+
+                <tr *ngIf="article.similarNews.length === 0">
+                    <th colspan="3">
+                        No similar found
+                    </th>
                 </tr>
                 </tbody>
             </table>

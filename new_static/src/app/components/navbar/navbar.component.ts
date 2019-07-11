@@ -1,5 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Button, Buttons} from "../../app.config";
 
 @Component({
@@ -16,19 +16,25 @@ export class NavbarComponent implements OnInit {
     fandangoLogo: string;
     inputPlaceholder: string;
 
-    constructor(private router: ActivatedRoute) {
+    constructor(private router: Router, private activatedRoute: ActivatedRoute) {
         this.fandangoLogo = 'assets/img/logos/fandango.png';
         this.buttonList = Buttons;
         this.inputPlaceholder = '';
 
         // RETRIEVE TYPE ANALYZE AND URL FROM CHILDREN PARAMS
-        this.router.children[0].url.subscribe(params => {
+        this.activatedRoute.children[0].url.subscribe(params => {
             this.typeAnalyze = params[0]['path'];
             this.url = params[0]['parameters']['url'];
         });
     }
 
     ngOnInit() {
+    }
+
+    navigateToHomepage(buttonType: string) {
+        if (buttonType !== this.typeAnalyze) {
+            this.router.navigate(['homepage'], {queryParams: {'search': buttonType}});
+        }
     }
 
     sendInput() {

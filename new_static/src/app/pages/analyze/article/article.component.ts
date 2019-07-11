@@ -352,7 +352,8 @@ export class ArticleComponent implements OnInit {
             }, error => {
                 this.showLoading.emit(false);
                 this.route.navigate(['/homepage']);
-                AppService.showNotification('danger', 'Error occured, retry later.');
+                // AppService.showNotification('danger', `Error occured, status: ${error.statusText}`);
+                AppService.showNotification('danger', 'Error occured during analyzing article, check URL or retry later');
             }
         );
     }
