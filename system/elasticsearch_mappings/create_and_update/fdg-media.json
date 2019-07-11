@@ -3,53 +3,56 @@
     "mappings" : {
       "doc" : {
         "properties": {
-            "identifier":{
+          "calculatedRatingDetail":{"type":"object"},
+          "identifier":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 10000
+            }
+            }
+          },
+          "contentUrl":{
               "type":"text",
               "fields": {
               "keyword": {
                 "type": "keyword",
                 "ignore_above": 10000
               }
-            }},
-        "contentUrl":{
+            }
+          },
+          "contentSize":{
+              "type":"text",
+              "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 10000
+              }
+            }
+          },
+          "uploadDate":{"type":"date"},
+          "encodingFormat":{
             "type":"text",
             "fields": {
             "keyword": {
               "type": "keyword",
               "ignore_above": 10000
             }
-            }
-        },
-        "contentSize":{
+          }
+          },
+          "type":{
             "type":"text",
             "fields": {
             "keyword": {
               "type": "keyword",
               "ignore_above": 10000
+              }
             }
-            }
-        },
-        "uploadDate":{"type":"date"},
-        "encodingFormat":{
-            "type":"text",
-            "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 10000
-            }
-            }
-        },
-        "type":{
-            "type":"text",
-            "fields": {
-            "keyword": {
-              "type": "keyword",
-              "ignore_above": 10000
-            }
-            }
-        },
-        "calculatedRating":{"type":"float"}     
+          },
+          "calculatedRating":{"type":"float"}
         }
+        
         }
     }
 }
