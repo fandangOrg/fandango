@@ -150,7 +150,6 @@ class AnalyticsService(metaclass=Singleton):
             u = URLRequest(self.url_media_service+"/api/media_analysis")
             payload = {"images": news_preprocessed.images,"videos": news_preprocessed.videos,"identifier": news_preprocessed.identifier}
             print("RICHIESTA VIDEOIMMAGINI  ",payload)
-
             j = json.dumps(payload)
             response = u.post(data=j, headers=self.headers)
             print("VIDEOIMMAGINI RESPOSNE",response)
@@ -177,7 +176,6 @@ class AnalyticsService(metaclass=Singleton):
         return str(data).split(" ")[0]
                                 
     def _save_news(self,news_preprocessed:News_DataModel,js_t,score_fake=0.0):
-        
         d = {"headline": news_preprocessed.headline,
             "articleBody" : news_preprocessed.articleBody,
             "dateCreated": news_preprocessed.dateCreated,
