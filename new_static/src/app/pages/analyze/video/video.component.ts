@@ -53,7 +53,7 @@ export class VideoComponent implements OnInit, OnDestroy {
                         // CHECK ANALYZE STATUS
                         if (this.video['status'] === 'error') {
                             this.route.navigate(['/homepage']);
-                            AppService.showNotification('danger', 'Error during analyzing video')
+                            AppService.showNotification('danger', 'Error occured during analyzing video');
                         } else if (this.video['status'] !== 'done')
                             // IF STATUS NOT DONE PING SERVICE EVERY 5 SECONDS
                             this.checkStatus(tempVideo);
@@ -89,7 +89,7 @@ export class VideoComponent implements OnInit, OnDestroy {
                         clearInterval(self.interval);
                     } else if (data['status'] === 'error') {
                         self.route.navigate(['/homepage']);
-                        AppService.showNotification('danger', 'Error during analyzing video')
+                        AppService.showNotification('danger', 'Error occured during analyzing video');
                     } else {
                         console.log("ANALYZING -->", data['status']);
                     }

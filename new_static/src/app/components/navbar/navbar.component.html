@@ -16,10 +16,12 @@
                 </div>
             </div>
 
+
+<!--            (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder"-->
             <button *ngFor="let btn of buttonList"
                     class="btn btn-icon btn-sm btn-secondary"
                     [class.btn-info]="typeAnalyze===btn.type"
-                    (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder" type="button">
+                    (click)="navigateToHomepage(btn.type)" type="button">
                 <i [ngClass]="btn.icon"></i>
                 <span>{{btn.name}}</span>
             </button>
@@ -27,7 +29,7 @@
             <a href="http://40.114.234.51:8080/app/kibana">
                 <button class="btn btn-icon btn-sm btn-secondary" type="button">
                     <img class="inner-img mr-2" src="assets/img/logos/siren.png">
-                    <span>Siren</span>
+                    <span>Dashboard</span>
                 </button>
             </a>
         </form>

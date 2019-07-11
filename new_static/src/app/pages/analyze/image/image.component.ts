@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Log} from "@angular/core/testing/src/logger";
 import {NgxSpinnerService} from "ngx-spinner";
 import {AppService} from "../../../app.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-image',
@@ -15,9 +16,10 @@ export class ImageComponent implements OnInit, OnDestroy {
     @Output() showLoading = new EventEmitter<boolean>();
     url: string;
     image: object;
+    modalImage: string;
     interval: any;
 
-    constructor(private http: AnalyzeService, private router: ActivatedRoute, private route: Router, private spinner: NgxSpinnerService) {
+    constructor(private http: AnalyzeService, private router: ActivatedRoute, private route: Router, private spinner: NgxSpinnerService, private modalService: NgbModal) {
         this.url = this.http.retrieveUrl(this.router);
 
         // IF PARAMS IS UNDEFINED OR NULL REDIRECT TO HOMEPAGE
@@ -46,13 +48,22 @@ export class ImageComponent implements OnInit, OnDestroy {
 
                         if (this.image['status'] === 'error') {
                             this.route.navigate(['/homepage']);
-                            AppService.showNotification('danger', 'Error during analyzing image')
+                            AppService.showNotification('danger', 'Error occured during analyzing image');
+                            // AppService.showNotification('danger', `Error during analyzing image, error type: ${this.image['error']}`)
                         } else if (this.image['status'] !== 'done')
                             this.checkStatus(tempImage);
                     }
                 )
             }
         )
+    }
+
+    zoomImage(modal: any, image: string) {
+        this.modalImage = `data:image/png;base64,${image}`;
+        this.modalService.open(modal, {
+            size: 'lg',
+            centered: true
+        });
     }
 
     getColor(score: number) {
@@ -74,7 +85,7 @@ export class ImageComponent implements OnInit, OnDestroy {
                         clearInterval(self.interval);
                     } else if (data['status'] === 'error') {
                         self.route.navigate(['/homepage']);
-                        AppService.showNotification('danger', 'Error during analyzing image')
+                        AppService.showNotification('danger', 'Error occured during analyzing image');
                     } else {
                         console.log("ANALYZING -->", data['status']);
                     }

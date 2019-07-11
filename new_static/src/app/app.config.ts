@@ -1,9 +1,9 @@
 export interface Button {
     type: string;
     name: string;
-    icon?: string;
-    useImage?: string;
+    icon: string;
     placeholder: string;
+    input: string;
     description: string;
 }
 
@@ -13,6 +13,7 @@ export const Buttons = [
         name: 'Article',
         icon: 'far fa-newspaper',
         placeholder: 'Article URL',
+        input: 'url',
         description: 'CHECK THE TRUSTWORTHINESS OF AN ARTICLE AND ITS METADATA'
     },
     {
@@ -20,6 +21,7 @@ export const Buttons = [
         name: 'Image',
         icon: 'fas fa-image',
         placeholder: 'Image URL',
+        input: 'url',
         description: 'CHECK IF AN IMAGE HAS BEEN MODIFIED OR HAVE A WRONG TAG'
     },
     {
@@ -27,6 +29,7 @@ export const Buttons = [
         name: 'Video',
         icon: 'fas fa-video',
         placeholder: 'Video URL',
+        input: 'url',
         description: 'CHECK IF  A VIDEO HAS BEEN MODIFIED OR HAVE A WRONG TAG'
     },
     {
@@ -34,6 +37,7 @@ export const Buttons = [
         name: 'Claim',
         icon: 'fas fa-font',
         placeholder: 'Sentence',
+        input: 'text',
         description: 'RETRIEVE MOST SIMILAR CLAIMS'
     }
     // {

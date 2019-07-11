@@ -3,9 +3,9 @@
         <img [src]="fandangoLogo" class="img-logo" alt="Fandango">
         <form #homepageForm="ngForm" (ngSubmit)="sendInput(homepageForm.value)">
             <div class="input-group mb-3">
-                <input type="text"
-                       class="form-control"
-                       [placeholder]="inputPlaceholder"
+                <input [type]="inputType.type"
+                       class="form-control shadow--hover"
+                       [placeholder]="inputPlaceholder" [pattern]="inputType.pattern"
                        aria-label="Search" ngModel name="url" required>
                 <div class="input-group-append">
                     <button class="btn btn-info" type="submit" [disabled]="!homepageForm.valid">
@@ -15,34 +15,35 @@
             </div>
         </form>
 
-        <!--        <form class="navbar-search navbar-search-dark">-->
-        <!--            <div class="form-group mb-0" [ngClass]="{ 'focused': focus === true }">-->
-        <!--                <div class="input-group input-group-alternative">-->
-        <!--                    <div class="input-group-prepend">-->
-        <!--                        <span class="input-group-text"><i class="fas fa-search"></i></span>-->
-        <!--                    </div>-->
-        <!--                    <input class="form-control" placeholder="Search" type="text" (focus)="focus = true"-->
-        <!--                           (blur)="focus = false">-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </form>-->
+<!--                <form class="navbar-search navbar-search-dark" #homepageForm="ngForm" (ngSubmit)="sendInput(homepageForm.value)">-->
+<!--                            <div class="form-group mb-3" [ngClass]="{ 'focused': focus === true }">-->
+<!--                                <div class="input-group input-group-alternative">-->
+<!--                                    <input [type]="inputType.type" class="form-control" [placeholder]="inputPlaceholder"-->
+<!--                                           aria-label="Search" [pattern]="inputType.pattern" ngModel name="url" (focus)="focus = true"-->
+<!--                                           (blur)="focus = false" required>-->
+<!--                                    <div class="input-group-append">-->
+<!--                                        <button type="submit" style="color: #8898aa" class="input-group-text" [disabled]="!homepageForm.valid"><i class="fas fa-search" [ngClass]="{'text-info': homepageForm.valid, 'text-gray': !homepageForm.valid}"></i></button>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </form>-->
 
         <div class="text-center btn-group-lg">
             <button *ngFor="let btn of buttonList"
                     class="btn btn-icon"
                     [class.btn-info]="typeAnalyze===btn.type"
-                    (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder"
+                    (click)="changeButton(btn)"
                     placement="bottom"
                     [ngbTooltip]=btn.description>
                 <i [ngClass]="btn.icon"></i>
                 <span class="btn-inner--text">{{btn.name}}</span>
             </button>
 
-            <a href="http://40.114.234.51:8080/app/kibana">
+            <a class="ml-6" href="http://40.114.234.51:8080/app/kibana">
                 <button class="btn btn-lg btn-icon" placement="bottom"
                         ngbTooltip='OPEN SIREN DASHBOARD'>
                     <img class="inner-img mr-2" src="assets/img/logos/siren.png">
-                    <span>Siren</span>
+                    <span>Dashboard</span>
                 </button>
             </a>
         </div>
