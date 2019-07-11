@@ -78,6 +78,7 @@ class InjectableJSONConsumer(JsonConsumer):
     
     #take some tasks together
 class InjectableTASKJSONConsumer(JsonConsumer):  
+    #auto_offset_reset="earliest"
     def __init__(self,topic,group_id,bootstrap_servers,task:Task,auto_offset_reset="earliest",enable_auto_commit=True,retry_interval=1):
         super().__init__(topic,group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
         self.task=task

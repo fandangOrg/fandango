@@ -29,7 +29,7 @@ service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon
 
-#daemon_run()
+daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -42,7 +42,7 @@ def start_daemon() -> str:
 
 def analyzer(news_preprocessed:News_DataModel) -> str:
     log.info('''ANALISI NEWS'''+str(news_preprocessed.sourceDomain))
-    prest=service_analyzer.analyzer(news_preprocessed)
+    prest=service_analyzer.analynzer(news_preprocessed)
 #===============================================================================
 # =======
 #     log.info('''ANALISI NEWS''')

@@ -74,6 +74,8 @@ url_service_preprocessing = os.environ.get("URL_SERVICE_UPM") or config.get("con
 url_service_media = os.environ.get("URL_SERVICE_CERTH") or config.get("configurationservice", "media_service_url") 
 url_service_authors = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "authors_service_url")
 url_similar_claims = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "url_similar_claims")
+url_crawler = os.environ.get("URL_SERVICE_CRAWLER") or config.get("configurationservice", "url_crawler")
+
 ######################################################################################
 #############KAFKA CONFIG #############À
 

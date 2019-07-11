@@ -5,12 +5,21 @@ Created on Oct 18, 2018
 '''
 
 ######################ONLINE SERVICES TEST##############
+
+
+
 class News_raw:
-    def __init__(self,date_published: str,authors:list,date_created:str,date_modified:str,description:str,images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,title:str,top_image:str,url:str, videos:list, spider:str):
+
+    def __init__(self,identifier:str, date_published: str,authors:list,date_created:str,date_modified:str,description:str,
+                 images:list,keywords:list,language:str,source_domain:str,summary:str,text:str,texthash:str,
+                 title:str,top_image:str,url:str, videos:list, spider:str,publish_date_estimated:bool):
+        self.identifier = identifier
         self.authors = authors
+        self.publish_date_estimated=publish_date_estimated
         self.date_created = date_created
         self.date_modified = date_modified
         self.date_published = date_published 
+        #self.linkNumber = linkNumber
         self.description = description
         #self.fakeness = fakeness
         self.images = images
@@ -29,8 +38,13 @@ class News_raw:
 
 
 class News_DataModel:
-    def __init__(self,language:str,identifier:list,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,
-                 calculateRatingDetail:str,images:list, videos:list, sourceDomain:list,country:str="",nationality:str="",video_analizer:bool=False,image_analizer:bool=False):
+    def __init__(self,url:str,language:str,identifier:list,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,
+                 calculateRatingDetail:str,images:list, videos:list, 
+                 sourceDomain:list,country:str,nationality:str,
+                 publishDateEstimated:bool,
+                  video_analizer:bool=False,
+                  image_analizer:bool=False,**kwargs:dict):
+        self.url=url
         self.headline = headline
         self.articleBody = articleBody
         self.dateCreated = dateCreated
@@ -40,7 +54,11 @@ class News_DataModel:
         self.publisher = publisher
         self.images = images
         self.videos = videos
-        self.sourceDomain = sourceDomain[0]
+        print("SORUCE DOMAIN",type(sourceDomain),sourceDomain)
+        if type(sourceDomain)is list:
+            self.sourceDomain = sourceDomain[0]
+        else:
+            self.sourceDomain = sourceDomain
         self.calculateRatingDetail = calculateRatingDetail
         self.calculateRating = calculateRating
         self.identifier = identifier
@@ -49,7 +67,8 @@ class News_DataModel:
         self.nationality=nationality
         self.video_analizer=video_analizer
         self.image_analizer=image_analizer
-        
+        self.publishDateEstimated = publishDateEstimated
+        #self.fakeness=fakeness
     '''
     def __str__(self):
         return "headline:"+self.headline+";articleBody:"+self.articleBody+";dateCreated:"+self.dateCreated+";dateModified:"+self.dateModified+";datePublished:"+self.datePublished+";author:"+self.author+";publisher:"+self.publisher

@@ -5,7 +5,7 @@ Created on Oct 24, 2018
 '''
 
 from fake_news_detection.config.AppConfig import get_elastic_connector,\
-    index_name_news, docType_article, dataset_beta, domains_index
+    index_name_news, docType_article, dataset_beta, domains_index, path_training
 import pandas as pd
 from fake_news_detection.utils.logger import getLogger
 from fake_news_detection.utils.Exception import FandangoException
@@ -18,42 +18,49 @@ from _collections import defaultdict
 from pygments.unistring import Pe
 #from fake_news_detection.services.Services import dao_news
 from xml.etree import cElementTree as ET
+from elasticsearch import Elasticsearch
 
 log = getLogger(__name__)
 
 
-class DAOTraining:
-    def get_train_dataset(self):
-        return NotImplementedError
 
 
-
+ 
+        
 class DAOTrainingPD:
     #dataset_beta togliere commento e metterlo nel path 
-    def __init__(self, path = dataset_beta, delimiter='|'):
+    def __init__(self, path = path_training, delimiter='|'):
         self.path = path
         print(self.path)
         self.delimiter = delimiter
         
     def get_train_dataset(self, sample_size:float=1.0):
         print("\n\n > start of 'get_train_dataset()'")
+        '''
         print('Read Train Guardian.csv')
         training_set= pd.read_csv(self.path +"/"+"guardian.csv",sep='\t') # dataset
         training_set['label']=1
         df=training_set
         print("shape after 'guardian.csv' -->", df.shape)
-        
+        '''
         training_set= pd.read_csv(self.path +"/fake_or_real_news.csv") # dataset
+        
         df_app=training_set[['title','text','label']]
-        df_app['label'] = df_app['label'].map({'FAKE': 0, 'REAL':1})
-        df=df.append(df_app)
+        df_app['label'] = df_app['label'].map({'FAKE': int(0), 'REAL': int(1)})
+        df = df_app
         print("shape after 'fake_or_real_news.csv' -->", df.shape)
-
+        #
+        #
+        #
         X=pd.read_csv(self.path+"/data.csv")
         X=X.rename(index=str, columns={"Label": "label", "Body": "text","Headline":"title"})
         X = X.drop(['URLs'], axis=1)
         df=df.append(X)
         print("shape after 'data.csv' -->", df.shape)
+        #
+        #
+        #
+        '''
         with open(self.path+"/dataset_kafka.csv","r") as file:
             for r in file.readlines():
                 items=r.strip().split("\t")
@@ -66,13 +73,16 @@ class DAOTrainingPD:
                 df = df.append({'title': title,'text':text,'label':label}, ignore_index=True)
 
         print("shape after 'dataset_kafka.csv' -->", df.shape)
-
-        ###################
-        files=os.listdir(dataset_beta+"/articles")
+        '''
+        #
+        #
+        #
+        #########buzzfeed dataset
+        files=os.listdir(self.path+"/articles")
         print(files)
         v=set()
         for f in files:
-            e = ET.XML(open(dataset_beta+"/articles/"+f,"r").read())
+            e = ET.XML(open(self.path+"/articles/"+f,"r").read())
             title=""
             text =""
             value =""
@@ -88,20 +98,26 @@ class DAOTrainingPD:
                     
             if value=='mostly false' or value=='mostly true':
                 if value=='mostly false':
-                    value="0"
+                    value=int(0)
                 else:
-                    value='1'
+                    value=int(1)
                 df = df.append({'title': title,'text':text,'label':value}, ignore_index=True)
 
         print("shape after 'articles' -->", df.shape)
-                
-        #df=df_app
+        #
+        #
+        #
+        print("after kaggle csv",df.shape)
+        print("missing values title", df['title'].isna().sum())
+        print("missing values text", df['text'].isna().sum())
+        print("missing values label", df['label'].isna().sum())
         df=df.dropna(subset = ['title','text','label'])
         if sample_size < 1.0:
             df = df.sample(frac=sample_size)
 
         print("final shape -->", df.shape)
         print(df.groupby(['label']).agg(['count']))
+        print("total real and total fake",df.label.value_counts())
         print("> end of 'get_train_dataset()'\n")
         return df
 
@@ -109,6 +125,7 @@ class DAOTrainingPD:
 class DAOTrainingElastic:
 
     def __init__(self):
+        
         self.es_client = get_elastic_connector()
         self.index_name = index_name_news 
         self.docType = docType_article
@@ -183,7 +200,7 @@ class DAOTrainingElasticByDomains():
         self.docType = docType_article
         self.list_domains=list_domains
         self.domains_index = domains_index
-        
+        self.client_elastic = Elasticsearch()
     
     
     def get_train_dataset(self,limit=1000):
@@ -214,15 +231,15 @@ class DAOTrainingElasticByDomains():
         print("> end of 'get_train_dataset()'\n", dataf.columns)
         return dataf
  
-    def __get_news_from_domain(self,domain,limit=100000):
+    def get_news_from_domain(self,domain,limit=100000,language= 'en'):
         
         try:
-            search = Search(using=self.es_client,index=self.index_name,doc_type=self.docType).query("term", source_domain=domain)
-            response = search.execute()
+            s = Search().using(client=self.es_client).index(self.index_name).query("match", title= domain)
+            response = s.execute()
             result_list=[]
             print("RESPONSE TOTAL:", response.hits.total)
-            for c,hit in enumerate(itertools.islice(search.scan(),limit)):
-                if len(hit.title.strip())>10 and len(hit.text.strip())>20:
+            for c,hit in enumerate(itertools.islice(s.scan(),limit)):
+                if len(hit.title.strip())>10 and len(hit.text.strip())>20 and hit.language == language :
                     result_list.append({"title":hit.title.strip(),  "text" : hit.text.strip()})
                     print(hit.title, hit.text)
                 else:
@@ -230,21 +247,29 @@ class DAOTrainingElasticByDomains():
             return result_list
         except TransportError as e:
             print(e.info)
-            
         
+       
     def get_domains_from_elastic(self):
         
         domain_list = []
-        body = {"query": {"match_all": {}}}
-        dic_domain = defaultdict(list)       
-        res = self.es_client.search(index= self.domains_index, body= body)
-        for i in res['hits']['hits']:
-            domain_list.append( (i['_source']['webdomain'], i['_source']['label']))
-            if i['_source']['label'] =='FAKE':
-                dic_domain['FAKE'].append(i['_source']['webdomain'])
+        dic_domain = defaultdict(list)
+        
+        query = {"query": {"match_all": {}}}
+        s = Search.from_dict(query)
+        
+        s = s.using(self.es_client).index(self.domains_index)
+        print(self.domains_index)
+        response = s.execute()
+        print(s.count())
+        for hit in s.scan():
+            print(hit["webdomain"])
+            domain_list.append( (hit['webdomain'], hit['label']))
+            if hit['label'] =='FAKE':
+                dic_domain['FAKE'].append(hit['webdomain'])
             else:
-                dic_domain['REAL'].append(i['_source']['webdomain'])
-        print(dic_domain)
+                dic_domain['REAL'].append(hit['webdomain'])
+        print("COLLECTED LEGITIMATE DOMAINS", dic_domain['REAL'])
+        print("COLLECTED NO LEGITIMATE DOMAINS", dic_domain['FAKE'] )
         return dic_domain
         
                  
@@ -335,35 +360,47 @@ class DAOTrainingElasticByDomains():
         #return  [[res['_source']['title'], res['_source']['text']] for res in result['hits']['hits']]
 
                 
-
+        
 
 if __name__ == '__main__':
-    files=os.listdir(dataset_beta+"/articles")
-    print(files)
-    v=set()
-    for f in files:
-        e = ET.XML(open(dataset_beta+"/articles/"+f,"r").read())
-        title=""
-        text =""
-        value =""
-        for k in e:
-            if k.tag=="mainText":
-                text=k.text
-            
-            if k.tag=="title":
-                title=k.text
+    
+    
+    d = DAOTrainingElasticByDomains()
+    d.get_domains_from_elastic()
+    #domain='www.ilfattoquotidiano.it/tag/europa'
+    #d.get_news_from_domain(domain = domain)
 
-            if k.tag=="veracity":
-                value=k.text
-                
-        if value=='mostly false' or value=='mostly true':
-            if value=='mostly false':
-                value="0"
-            else:
-                value='1'
-            v.add(text)
-              
-    print(len(v))
+
+    
+    
+#===============================================================================
+#     files=os.listdir(dataset_beta+"/articles")
+#     print(files)
+#     v=set()
+#     for f in files:
+#         e = ET.XML(open(dataset_beta+"/articles/"+f,"r").read())
+#         title=""
+#         text =""
+#         value =""
+#         for k in e:
+#             if k.tag=="mainText":
+#                 text=k.text
+#             
+#             if k.tag=="title":
+#                 title=k.text
+# 
+#             if k.tag=="veracity":
+#                 value=k.text
+#                 
+#         if value=='mostly false' or value=='mostly true':
+#             if value=='mostly false':
+#                 value="0"
+#             else:
+#                 value='1'
+#             v.add(text)
+#               
+#     print(len(v))
+#===============================================================================
       
     #===========================================================================
     # dao_news=DAONewsElastic()
@@ -389,5 +426,4 @@ if __name__ == '__main__':
     
     
     #ii = DAOTrainingElasticByDomains()
-    #p.to_csv("/home/camila/Scrivania/Fandango_data.tsv",index = False, sep= "\t"
-
+    #p.to_csv("/home/camila/Scrivania/Fandango_data.tsv",index = False, sep= "\t")
