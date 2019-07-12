@@ -20,7 +20,12 @@ export class AnalyzeService {
     }
 
     analyzeArticle(url: string): Observable<Object> {
-        return this.http.post('/crawl_and_preprocessing?url=' + url, null);
+        return this.http.get(`/crawl_and_preprocessing?url=${url}`);
+    }
+
+    preAnalyzeArticle(url: string): Observable<Object> {
+        // OLD TRUE PARAMS DISABLE TOPICS ANALYSIS
+        return this.http.get(`/crawl_and_preprocessing?url=${url}&old=true`);
     }
 
     getImageScore(id: string): Observable<Object> {

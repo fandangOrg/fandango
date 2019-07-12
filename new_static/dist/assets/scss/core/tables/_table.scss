@@ -68,8 +68,11 @@
 // Add transition for hover state
 
 .table-hover {
-    tr {
+    tbody tr {
         @include transition($transition-base);
+        @include hover {
+            background-color: $gray-200;
+        }
     }
 }
 
