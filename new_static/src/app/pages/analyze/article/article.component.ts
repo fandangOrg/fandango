@@ -17,6 +17,7 @@ export class ArticleComponent implements OnInit {
     // EMITTER FOR ANALYZE COMPONENT ( PARENT ) TO SHOW SPINNER FOR PRELOADING
     @Output() showLoading = new EventEmitter<boolean>();
     url: string;
+    infoTooltip: string;
     sirenUrl: string;
     showMore: boolean;
     isOld: boolean;
@@ -49,7 +50,7 @@ export class ArticleComponent implements OnInit {
         let urlString = null;
 
         // IF IS OLD PARAMS EXIST MAKE AN ANALYSIS WITHOUT TOPICS
-        if(this.isOld) {
+        if (this.isOld) {
             urlString = 'preAnalyzeArticle';
         } else {
             urlString = 'analyzeArticle';
@@ -60,7 +61,7 @@ export class ArticleComponent implements OnInit {
             data => {
                 console.log(data);
                 this.sirenUrl = this.sirenUrl.replace('QUERYDACAMBIARE', this.url);
-                this.article = new Article(data['identifier'], data['language'], data['headline'], data['articleBody'], data['images'],
+                this.article = new Article(data['identifier'],data['datePublished'], data['language'], data['headline'], data['articleBody'], data['images'],
                     data['videos'], data['results']['publishers'], data['results']['authors'], data['results']['text'], data['similarnews']);
 
                 this.showLoading.emit(false);
@@ -81,6 +82,18 @@ export class ArticleComponent implements OnInit {
 
     showTextDetailsModal(modal) {
         this.modalService.open(modal);
+    }
+
+    showDetailLabel(label: string) {
+        this.infoTooltip = null;
+
+        this.http.getDetailInfo(label).subscribe(
+            data => {
+                // @ts-ignore
+                this.infoTooltip = data;
+            }, error => {
+                this.infoTooltip = 'No info found';
+            })
     }
 
     getProgressColor(value: number) {

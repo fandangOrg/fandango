@@ -23,6 +23,10 @@ export class AnalyzeService {
         return this.http.get(`/crawl_and_preprocessing?url=${url}`);
     }
 
+    getDetailInfo(label: string): Observable<Object> {
+        return this.http.get(`/info_score?label=${label}`,{responseType: 'text'})
+    }
+
     preAnalyzeArticle(url: string): Observable<Object> {
         // OLD TRUE PARAMS DISABLE TOPICS ANALYSIS
         return this.http.get(`/crawl_and_preprocessing?url=${url}&old=true`);

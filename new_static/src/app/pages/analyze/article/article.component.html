@@ -18,6 +18,11 @@
                         <th scope="row">
                             {{detail.value}}
                         </th>
+                        <th scope="row" width="1%">
+                            <i (mouseenter)="showDetailLabel(detail.key)" [ngbPopover]="infoTooltip" placement="right"
+                               class="fas fa-info-circle fa-2x c-pointer float-right"
+                               style="font-size: 18px;color: #525f7f !important;"></i>
+                        </th>
                     </tr>
                 </ng-container>
                 </tbody>
@@ -38,6 +43,8 @@
         <div class="row">
             <div class="col-12">
                 <h6 class="heading-small text-muted">Article</h6>
+                <label class="form-control-label">Published date</label>
+                <p>{{article.date | date}}</p>
                 <label class="form-control-label">Headline</label>
                 <p>{{article.headline}}</p>
                 <label class="form-control-label">Body</label>
@@ -46,8 +53,10 @@
                 <p *ngIf="showMore">{{article.body}}</p>
 
                 <div class="col-12 text-center">
-                    <button class="btn btn-sm btn-secondary" *ngIf="!showMore" (click)="showMore = true">Show more</button>
-                    <button class="btn btn-sm btn-secondary" *ngIf="showMore" (click)="showMore = false">Show less</button>
+                    <button class="btn btn-sm btn-secondary" *ngIf="!showMore" (click)="showMore = true">Show more
+                    </button>
+                    <button class="btn btn-sm btn-secondary" *ngIf="showMore" (click)="showMore = false">Show less
+                    </button>
                 </div>
             </div>
 
@@ -63,7 +72,8 @@
             <div class="col-12">
                 <h6 class="heading-small text-muted d-inline">Text analysis result</h6>
                 <i (click)="showTextDetailsModal(textDetailsModal)"
-                   class="fas fa-info-circle fa-2x c-pointer float-right" style="font-size: 18px;color: #525f7f !important;"></i>
+                   class="fas fa-info-circle fa-2x c-pointer float-right"
+                   style="font-size: 18px;color: #525f7f !important;"></i>
             </div>
             <div class="col-8 mx-auto">
                 <!--                        <h6 class="heading-small text-muted">Text analysis result</h6>-->
@@ -124,7 +134,7 @@
                 </div>
             </div>
             <div class="col-6 pl-0">
-                <h6 class="heading-small text-muted">Publisher</h6>
+                <h6 class="heading-small text-muted">Publishers</h6>
                 <div class="table-responsive">
                     <table class="table table-flush">
                         <tbody>
@@ -219,7 +229,7 @@
             </div>
         </div>
         <hr class="my-4"/>
-        <h6 class="heading-small text-muted">Similar</h6>
+        <h6 class="heading-small text-muted">Similar news</h6>
         <div class="table-responsive">
             <table class="table table-flush table-hover">
                 <thead class="bg-white">
@@ -238,8 +248,8 @@
                     <th scope="row">
                         {{news.sourceDomain}}
                     </th>
-                    <th scope="row" [ngClass]="getScoreColor(news.textRating * 100)">
-                        {{(news.textRating * 100).toFixed(2)}}%
+                    <th scope="row" [ngClass]="getScoreColor(news.calculatedRatingDetail.textRating * 100)">
+                        {{(news.calculatedRatingDetail.textRating * 100).toFixed(2)}}%
                     </th>
                     <th scope="row" width="1%">
                         <a title="Show news" [href]="news.url" (click)="$event.stopPropagation()" target="_blank"><i
@@ -249,7 +259,7 @@
 
                 <tr *ngIf="article.similarNews.length === 0">
                     <th colspan="4">
-                        No similar found
+                        No similar news found
                     </th>
                 </tr>
                 </tbody>
