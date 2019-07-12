@@ -12,7 +12,6 @@ import {ComponentsModule} from './components/components.module';
 import {AnalyzeComponent} from './pages/analyze/analyze.component';
 import {HomepageComponent} from './pages/homepage/homepage.component';
 import {NgxSpinnerModule} from 'ngx-spinner';
-import {TitleCasePipe} from "@angular/common";
 
 // BASE URL FOR HTTP REQUEST
 @Injectable()
@@ -46,9 +45,8 @@ export class Interceptor implements HttpInterceptor {
         AnalyzeComponent
     ],
     providers: [
-        {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true},
-        TitleCasePipe
-    ],
+        {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}
+        ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

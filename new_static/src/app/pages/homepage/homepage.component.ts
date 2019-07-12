@@ -17,7 +17,7 @@ export class HomepageComponent implements OnInit {
     buttonList: Array<Button>;  // BUTTON LIST
     buttonType: Array<string> = ['article', 'image', 'video', 'claim'];
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private titlecasePipe: TitleCasePipe) {
+    constructor(private router: Router, private activatedRoute: ActivatedRoute) {
         this.fandangoLogo = 'assets/img/logos/fandango.png';
         this.buttonList = Buttons;
         this.activatedRoute.queryParams.subscribe(params => {
@@ -27,7 +27,12 @@ export class HomepageComponent implements OnInit {
                 this.typeAnalyze = 'article';
             }
             this.inputType = this.getInputType(this.typeAnalyze);
-            this.inputPlaceholder = (this.titlecasePipe.transform(this.typeAnalyze) || 'Article') + ' URL';
+
+            const button = this.buttonList.find(obj => {
+                return obj['type'] === this.typeAnalyze
+            });
+
+            this.inputPlaceholder = (button.placeholder || 'Article URL');
         });
     }
 
