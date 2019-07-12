@@ -146,19 +146,19 @@ class OutputImageService:
     
         
 class OutputAuthorService:
-    def __init__(self, name:str,jobTitle:str="UNKNOW",  url:str="UNKNOW",affiliation:str="",fakenessScore:float=0.0,**args):
+    def __init__(self, name:str,jobTitle:str="UNKNOW",  url:str="UNKNOW",affiliation:str="",trustworthiness:float=0.0,**args):
         self.name = name
         self.jobTitle = jobTitle
         self.url = url
         self.affiliation = affiliation
-        self.fakenessScore = fakenessScore
+        self.fakenessScore = trustworthiness
             
 class OutputPublishService:
-    def __init__(self, name:str, url:str="UNKNOW",affiliation:str="",fakenessScore:float=0.0,**args):
+    def __init__(self, name:str, url:str="UNKNOW",affiliation:str="",trustworthiness:float=0.0,**args):
         self.name = name
         self.url = url
         self.affiliation = affiliation
-        self.fakenessScore = fakenessScore
+        self.fakenessScore = trustworthiness
 
 ###############################################################
     

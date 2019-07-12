@@ -151,6 +151,7 @@ def crawl_prep(url:str,old:str="False") -> News_DataModel:
     prest=service_analyzer.analyzer(news_preprocessed,old=old)
     news_preprocessed.results=prest
     news_preprocessed.similarnews = similar_news(news_preprocessed.identifier)
+    print(news_preprocessed.__dict__)
     return news_preprocessed
 #===============================================================================
 

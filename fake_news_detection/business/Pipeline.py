@@ -153,7 +153,7 @@ class AnalyticsService(metaclass=Singleton):
             response = u.post(data=j, headers=self.headers)
             end = time.time()
             #print("TEMPO SPESO PER LA RICHIESTA DEGLI AUTORI ==>>>",end - start)
-            #print("response->",response)
+            print("response->",response)
             if  'error' in response:
                 return Author_org_DataModel('',[],[])
             return Author_org_DataModel(**response)
@@ -211,6 +211,10 @@ class AnalyticsService(metaclass=Singleton):
             "processType":"online",
             "features_text":js_t
             }
+        if not self.dao.is_valitade_news_existence(news_preprocessed.identifier):
+            print("trovato già")
+            is_old = True
+            
         #print("analizzo gli autori")
         autors_org=self._get_authors_org_ids(news_preprocessed)
         news_preprocessed.video_analizer=True
@@ -232,6 +236,7 @@ class AnalyticsService(metaclass=Singleton):
         calculatedRatingDetail['textRating']=score_fake
         calculatedRatingDetail['authorRating']=autors_org.authorRating
         calculatedRatingDetail['publisherRating']=autors_org.publisherRating
+        print(calculatedRatingDetail['publisherRating'])
         ####
         d['calculatedRatingDetail']=calculatedRatingDetail
         d['author'] = autors_org.author
@@ -244,7 +249,7 @@ class AnalyticsService(metaclass=Singleton):
         d['dateModified'] =self._clear(news_preprocessed.dateModified)
         d['datePublished'] =self._clear(news_preprocessed.datePublished)
         
-        if not is_old and  self.dao.is_valitade_news_existence(news_preprocessed.identifier):
+        if not is_old:  
             print("save")
             self.dao.create_doc_news(d)
         else:
@@ -261,9 +266,11 @@ class AnalyticsService(metaclass=Singleton):
                 class_response =  OutputAuthorService
             else:
                 class_response = OutputPublishService
-            ##print("AUTORESID",id_item,response)
             if  'error' in response:
+                print("error ",response)
                 return class_response(id_item)
+            
+            print("AUTORESID",id_item,response)
             return class_response(**response)
         except Exception as e :
             #print("ERROR SERVICE _info_authors_and_pub_analysis: "+str(e))
@@ -331,6 +338,7 @@ class AnalyticsService(metaclass=Singleton):
                 
             #print("start _info_authors_and_pub_analysis")
             for authos in news['author']:
+                print(authos,self._info_authors_and_pub_analysis(authos, 'author').__dict__)
                 list_authors.append(self._info_authors_and_pub_analysis(authos, 'author').__dict__)
             #print("start _info_authors_and_pub_analysis")
             for organization in news['publisher']:
