@@ -48,8 +48,8 @@ export class ImageComponent implements OnInit, OnDestroy {
 
                         if (this.image['status'] === 'error') {
                             this.route.navigate(['/homepage']);
-                            AppService.showNotification('danger', 'Error occured during analyzing image');
-                            // AppService.showNotification('danger', `Error during analyzing image, error type: ${this.image['error']}`)
+                            // AppService.showNotification('danger', 'Error occured during analyzing image');
+                            AppService.showNotification('danger', `Error during analyzing image, ${this.image['error']}`)
                         } else if (this.image['status'] !== 'done')
                             this.checkStatus(tempImage);
                     }
@@ -85,7 +85,7 @@ export class ImageComponent implements OnInit, OnDestroy {
                         clearInterval(self.interval);
                     } else if (data['status'] === 'error') {
                         self.route.navigate(['/homepage']);
-                        AppService.showNotification('danger', 'Error occured during analyzing image');
+                        AppService.showNotification('danger', `Error during analyzing image, ${data['error']}`)
                     } else {
                         console.log("ANALYZING -->", data['status']);
                     }
