@@ -234,14 +234,14 @@ def similar_claims(claim_input: Claim_input) -> list:
     return list_claims
 
 def similar_news(id_news:str) -> list:
-    
+    print("similar news")
     u = URLRequest(url_similar_claims+"/fandango/v0.1/siren/FindSimilarArticles")
     payload = {"identifier": id_news}
     headers = {"Content-Type":  "application/json"}
     
     j = json.dumps(payload)
     response = u.post(data=j,headers = headers)
-    print(response)
+    print("SIMILAR ",response)
     list_news = []
     for i in response['results']: 
         list_news.append({"headline": i['headline'], "articleBody": i['articleBody'], "publisher" : i['publisher'], "textRating": i["calculatedRating"]})

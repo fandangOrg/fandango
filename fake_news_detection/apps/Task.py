@@ -80,7 +80,7 @@ class Task_Analyzer(Task):
                                "publishDateEstimated" : news_preprocessed.publishDateEstimated,
                                "sourceDomain": news_preprocessed.sourceDomain, 
                                "inLanguage": news_preprocessed.language,
-                               "features_text":js_t                      
+                               "features_text_tmp":js_t                      
                                 #"publishDateEstimate" : ""
                              }
                 try:
