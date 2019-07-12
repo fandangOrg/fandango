@@ -135,14 +135,28 @@ def feedback(info:InterfaceInputFeedBack) -> str:
 #     print(response)
 #     return News_DataModel(**response)
 #===============================================================================
-def crawl_prep(url:str) -> News_DataModel:
+
+class request_craw():
+    def __init__(self,url:str,old:str=False):
+        self.url = url
+        self.old = old
+
+def crawl_prep(url:str,old:str="False") -> News_DataModel:
+    if old =="False":
+        old=False
+    else: 
+        old = True
+    print("old",old,"url",url)
     news_preprocessed= service_scrapy.scrapy(url)
-    print(news_preprocessed.__dict__)
-    prest=service_analyzer.analyzer(news_preprocessed)
+    prest=service_analyzer.analyzer(news_preprocessed,old=old)
     news_preprocessed.results=prest
     news_preprocessed.similarnews = similar_news(news_preprocessed.identifier)
     return news_preprocessed
 #===============================================================================
+def pre_analizated_news(news:News_DataModel) -> News_DataModel:
+    print(news)
+    return news
+
 
 def ping_image(id:str) -> News_DataModel:
     headers = {'content-type': "application/json",'accept': "application/json"}
@@ -167,7 +181,7 @@ def url_video_score(url:str) -> str:
     headers = {'content-type': "application/json",'accept': "application/json"}
     u = URLRequest(url_service_media+"/api/media_analysis")
     payload = {"images": [],"videos": [url],"identifier": ['unkwon']}
-    print("RICHIESTA IMMAGINI  ",payload)
+    print("RICHIESTA VIDEO  ",payload)
     j = json.dumps(payload)
     return u.post(data=j, headers= headers)
 
@@ -234,19 +248,17 @@ def similar_claims(claim_input: Claim_input) -> list:
     return list_claims
 
 def similar_news(id_news:str) -> list:
-    print("similar news")
+    print("start similar news")
     u = URLRequest(url_similar_claims+"/fandango/v0.1/siren/FindSimilarArticles")
     payload = {"identifier": id_news}
     headers = {"Content-Type":  "application/json"}
     
     j = json.dumps(payload)
     response = u.post(data=j,headers = headers)
-    print("SIMILAR ",response)
     list_news = []
     for i in response['results']: 
         list_news.append({"headline": i['headline'], "articleBody": i['articleBody'], "publisher" : i['publisher'], "textRating": i["calculatedRating"]})
-    
-    return list_news
+    return response["results"]
 
 
 
@@ -371,7 +383,7 @@ app.root="/fandango/v0.3/fakeness"
 app.name="FANDANGO"
 #app.add_service("crawl_online", crawl_online, method= 'POST')
 #app.add_service("preprocessing_online", preprocessing_online, method = 'POST')
-app.add_service("crawl_and_preprocessing",crawl_prep, method = 'POST')
+app.add_service("crawl_and_preprocessing",crawl_prep, method = 'GET')
 #app.add_service("author_and_organizations",author_org_getter, method = 'POST')
 #app.add_service("Medias", media_getter, method = 'POST')
 #app.add_service("topics and entities",topics_getter , method = 'POST' )
@@ -387,6 +399,7 @@ app.add_service("similar_claims",similar_claims, method = 'POST')
 app.add_service("url_image_score",url_image_score, method = 'GET')
 app.add_service("url_video_score",url_video_score, method = 'GET')
 app.add_service("similar_news",similar_news, method = 'POST')
+app.add_service("pre_analizated_news",pre_analizated_news, method = 'POST')
 
 CORS(app)
 

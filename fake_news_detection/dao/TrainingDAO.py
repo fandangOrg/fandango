@@ -212,7 +212,6 @@ class DAOTrainingElasticByDomains():
         list_df = []
         for domain in self.list_domains:
             label = domain[1]
-            print(domain[0])
             list_documents = self.__get_news_from_domain(domain[0],limit)
             if len(list_documents)==0:
                 continue
@@ -262,7 +261,6 @@ class DAOTrainingElasticByDomains():
         response = s.execute()
         print(s.count())
         for hit in s.scan():
-            print(hit["webdomain"])
             domain_list.append( (hit['webdomain'], hit['label']))
             if hit['label'] =='FAKE':
                 dic_domain['FAKE'].append(hit['webdomain'])
