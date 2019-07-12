@@ -10,10 +10,10 @@ from fake_news_detection.test.keras_no_deep import create_model1
 def training_model_LGBMClassifier(lang,X):
     daopredictor = FSMemoryPredictorDAO(picklepath)
     predictor=LGBMClassifier(boosting_type='gbdt',
-                               num_leaves=1000,
-                               max_depth=8,
+                               num_leaves=100,
+                               max_depth=-1,
                                learning_rate=0.1,
-                               n_estimators=150,
+                               n_estimators=200,
                                n_jobs=-1) 
     print("crea modello")
     model=FakePredictor(predictor=predictor,preprocessing=Preprocessing(lang), id=lang)
@@ -45,5 +45,7 @@ if __name__ == '__main__':
     for lang,train in [('en','default_train_v3_only_kaggle_en.csv'),('it','default_train_v2_en.csv')]:
         print("leggi train")
         X=pandas.read_csv(resources_path+"/"+train ).iloc[:, 1:]
+        X['label']=X['label'].astype("int")
+        print(X)
         training_model_LGBMClassifier(lang,X)
         print("---")
