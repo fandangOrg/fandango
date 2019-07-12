@@ -153,9 +153,6 @@ def crawl_prep(url:str,old:str="False") -> News_DataModel:
     news_preprocessed.similarnews = similar_news(news_preprocessed.identifier)
     return news_preprocessed
 #===============================================================================
-def pre_analizated_news(news:News_DataModel) -> News_DataModel:
-    print(news)
-    return news
 
 
 def ping_image(id:str) -> News_DataModel:
@@ -399,7 +396,6 @@ app.add_service("similar_claims",similar_claims, method = 'POST')
 app.add_service("url_image_score",url_image_score, method = 'GET')
 app.add_service("url_video_score",url_video_score, method = 'GET')
 app.add_service("similar_news",similar_news, method = 'POST')
-app.add_service("pre_analizated_news",pre_analizated_news, method = 'POST')
 
 CORS(app)
 

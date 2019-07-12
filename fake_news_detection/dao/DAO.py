@@ -189,7 +189,7 @@ class DAONewsElastic(DAONews):
         doc_up =  {
            '_op_type': 'index',
            '_index': self.index_name_article,
-
+           '_id':dic_final['identifier'],
            '_type': 'doc',
            '_source' : dic_final
         }
