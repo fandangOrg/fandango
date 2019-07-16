@@ -324,16 +324,17 @@ function setClaimReviews(claimReviews){
   claimReviews.forEach(function(review){
   //  console.log(review)
     var claimReview = {};
-    claimReview.identifier = review._source.identifier || null;
-    claimReview.claimReviewed = review._source.claimReviewed || null;
-    claimReview.reviewAspect = review._source.reviewAspect || null;
-    claimReview.reviewBody = review._source.reviewBody || null;
-    claimReview.dateCreated = review._source.dateCreated || null;
-    claimReview.dateModified = review._source.dateModified || null;
-    claimReview.datePublished = review._source.datePublished || null;
-    claimReview.aggregateRating = review._source.aggregateRating || null;
-    claimReview.itemReviewed = review._source.itemReviewed || null;
-    claimReview.references = review._source.references || null;
+    claimReview = review._source;
+    // claimReview.identifier = review._source.identifier || null;
+    // claimReview.claimReviewed = review._source.claimReviewed || null;
+    // claimReview.reviewAspect = review._source.reviewAspect || null;
+    // claimReview.reviewBody = review._source.reviewBody || null;
+    // claimReview.dateCreated = review._source.dateCreated || null;
+    // claimReview.dateModified = review._source.dateModified || null;
+    // claimReview.datePublished = review._source.datePublished || null;
+    // claimReview.aggregateRating = review._source.aggregateRating || null;
+    // claimReview.itemReviewed = review._source.itemReviewed || null;
+    // claimReview.references = review._source.references || null;
     reviews.push(claimReview);
   })
   return reviews;
