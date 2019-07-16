@@ -42,6 +42,7 @@
         "dateModified":{"type":"date"},
         "datePublished":{"type":"date"},
         "aggregateRating":{"type":"float"},
+        "reviewRating":{"type":"float"},
         "itemReviewed":{
           "type":"text",
           "fields": {

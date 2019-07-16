@@ -33,28 +33,7 @@
             "calculatedRating": {
               "type": "float"
             },
-            "calculatedRatingDetail": {
-              "properties": {
-                "authorRating": {
-                  "type": "float"
-                },
-                "key": {
-                  "type": "text",
-                  "fields": {
-                    "keyword": {
-                      "type": "keyword",
-                      "ignore_above": 256
-                    }
-                  }
-                },
-                "publisherRating": {
-                  "type": "float"
-                },
-                "textRating": {
-                  "type": "float"
-                }
-              }
-            },
+            "calculatedRatingDetail": {"type":"object"},
             "contains": {
               "type": "text",
               "fields": {
