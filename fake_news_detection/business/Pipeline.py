@@ -186,9 +186,9 @@ class AnalyticsService(metaclass=Singleton):
             j = json.dumps(payload)
             response = u.post(data=j, headers=self.headers)
             return Topics_DataModel(**response)
-        except:
-            #print("ERROR SERVICE TOPIC")
-            return Topics_DataModel('',[],[])
+        except Exception as e:
+            print("ERROR SERVICE TOPIC",e)
+            return Topics_DataModel('','',[],[])
     def _clear(self,data):
         return str(data).split(" ")[0]
     
@@ -230,7 +230,7 @@ class AnalyticsService(metaclass=Singleton):
             #print("analizzo i topic")
             tp_entity=self._get_topics_ids(news_preprocessed)
         else:
-            tp_entity=Topics_DataModel('',[],[])
+            tp_entity=Topics_DataModel('','',[],[])
         ####calculatedRatingDetail
         calculatedRatingDetail=dict()
         calculatedRatingDetail['textRating']=score_fake
@@ -245,6 +245,7 @@ class AnalyticsService(metaclass=Singleton):
         d['contains'] = media.videos+ media.images
         d['mentions'] = tp_entity.mentions
         d['about'] = tp_entity.about
+        d['topic'] = tp_entity.topic
         d['dateCreated'] = self._clear(news_preprocessed.dateCreated)
         d['dateModified'] =self._clear(news_preprocessed.dateModified)
         d['datePublished'] =self._clear(news_preprocessed.datePublished)
