@@ -20,6 +20,8 @@ import os
 import time
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 import inspect
+import random
+from fake_news_detection.utils.score_utils import normalizer_neg, normalizer_pos
 log = getLogger(__name__)
 
 def log_info(f):
@@ -75,7 +77,7 @@ class ScrapyService:
         
         ##print(j)
         response = u.post(data=j, headers=self.headers)
-        ##print("response",response)
+        #print("response",response)
         
         return News_DataModel(**response)
     @log_info
@@ -131,16 +133,19 @@ class AnalyticsService(metaclass=Singleton):
         prest,features = model.predict_proba(df)
         #print("source_domain",news_preprocessed.sourceDomain,news_preprocessed.sourceDomain in  self.dic_domains['REAL'],self.dic_domains['REAL'] )
         
-        if news_preprocessed.sourceDomain in  self.dic_domains['FAKE'] : 
-            prest = [[1.0,0.0]]
+        if news_preprocessed.sourceDomain in  self.dic_domains['FAKE']:
+            prest=normalizer_neg(prest)
+            #prest = [[1.0,0.0]]
         elif news_preprocessed.sourceDomain in  self.dic_domains['REAL'] :
-            prest = [[0.0,1.0]]
+            #prest = [[0.0,1.0]]
+            prest=normalizer_pos(prest)
         #print("model.predictor_fakeness.classes_",model.predictor._classes)
         #print("PREST",prest)
         prest = pd.DataFrame(prest, columns=model.predictor._classes)
         #print("PREST",prest)
         prest=pd.concat([prest,features],axis=1)
         return prest
+    
     @log_info
     def _get_authors_org_ids(self,news_preprocessed:News_DataModel)-> Author_org_DataModel:
         u = URLRequest(self.url_authors+"/graph/article")
@@ -153,7 +158,7 @@ class AnalyticsService(metaclass=Singleton):
             response = u.post(data=j, headers=self.headers)
             end = time.time()
             #print("TEMPO SPESO PER LA RICHIESTA DEGLI AUTORI ==>>>",end - start)
-            print("response->",response)
+            #print("response->",response)
             if  'error' in response:
                 return Author_org_DataModel('',[],[])
             return Author_org_DataModel(**response)
@@ -188,7 +193,7 @@ class AnalyticsService(metaclass=Singleton):
             return Topics_DataModel(**response)
         except Exception as e:
             print("ERROR SERVICE TOPIC",e)
-            return Topics_DataModel('','',[],[])
+            return Topics_DataModel('','', [],[])
     def _clear(self,data):
         return str(data).split(" ")[0]
     
@@ -230,13 +235,13 @@ class AnalyticsService(metaclass=Singleton):
             #print("analizzo i topic")
             tp_entity=self._get_topics_ids(news_preprocessed)
         else:
-            tp_entity=Topics_DataModel('','',[],[])
+            tp_entity=Topics_DataModel('','', [],[])
         ####calculatedRatingDetail
         calculatedRatingDetail=dict()
         calculatedRatingDetail['textRating']=score_fake
         calculatedRatingDetail['authorRating']=autors_org.authorRating
         calculatedRatingDetail['publisherRating']=autors_org.publisherRating
-        print(calculatedRatingDetail['publisherRating'])
+        #print(calculatedRatingDetail['publisherRating'])
         ####
         d['calculatedRatingDetail']=calculatedRatingDetail
         d['author'] = autors_org.author
@@ -271,7 +276,7 @@ class AnalyticsService(metaclass=Singleton):
                 print("error ",response)
                 return class_response(id_item)
             
-            print("AUTORESID",id_item,response)
+            #print("AUTORESID",id_item,response)
             return class_response(**response)
         except Exception as e :
             #print("ERROR SERVICE _info_authors_and_pub_analysis: "+str(e))
@@ -339,7 +344,7 @@ class AnalyticsService(metaclass=Singleton):
                 
             #print("start _info_authors_and_pub_analysis")
             for authos in news['author']:
-                print(authos,self._info_authors_and_pub_analysis(authos, 'author').__dict__)
+                #print(authos,self._info_authors_and_pub_analysis(authos, 'author').__dict__)
                 list_authors.append(self._info_authors_and_pub_analysis(authos, 'author').__dict__)
             #print("start _info_authors_and_pub_analysis")
             for organization in news['publisher']:

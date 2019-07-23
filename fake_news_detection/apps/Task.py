@@ -55,7 +55,7 @@ class Task_Analyzer(Task):
                         testo=testo.replace("\n","$##$")
                         file_output.write(testo+"\n")
                         print("add negative fit",msg['sourceDomain'] )
-                        output = 0.0
+                        #output = 0.0
                         #={'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                     elif msg['sourceDomain'] in dic_domains['REAL']:
                         testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tREAL\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
@@ -65,7 +65,7 @@ class Task_Analyzer(Task):
                         #df = pd.DataFrame(l)
                         #model.partial_fit(df)
                         print("add  positive fit",msg['sourceDomain'] )
-                        output = 1.0
+                        #output = 1.0
                 print( msg['sourceDomain'],msg['language'],output)
                 #dict_for_training = {'text':msg['articleBody'], 'title': msg['headline'], 'label' : 'REAL', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                 #print("dict_output",dict_output)

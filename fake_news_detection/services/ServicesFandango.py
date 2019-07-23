@@ -256,7 +256,6 @@ def similar_news(id_news:str) -> list:
     response = u.post(data=j,headers = headers)
     for i in response['results']: 
         if i['sourceDomain']=='www.repubblica.it':
-            print(i["calculatedRating"])
             i["calculatedRatingDetail"]["textRating"]=1.0
     return response["results"]
 
