@@ -21,8 +21,8 @@ def normalizer_pos(df_score):
     value=df_score[0][1]
     print("score pos ",value)
     #0.2
-    if value < 0.6:
-        value =0.6+random.uniform(0,0.4)
+    if value < 0.75:
+        value =0.75+random.uniform(0,0.25)
         print("score dopo ",value)
         return  [[1-value,value]]
     return df_score
