@@ -1,0 +1,116 @@
+// Example how to ovveride styles form Investigate
+// Best to hunt particular style in Chrome Dev Tools inspector
+// and override it here using  "!important;"
+
+// Colors
+
+@nav-dark-color: #041527;
+@nav-light-color: #0a1e34;
+@nav-higlight-color: #418ff7;
+
+@light-blue: #3ea7f7;
+
+@dash-background: #f0f2f5;
+
+// === logo ===
+
+.about-kibi-logo {
+  //1026 × 1021
+  background-image: url('~plugins/custom_css/images/custom_logo.png') !important;
+}
+
+.global-nav {
+  .logo-small,
+  .logo {
+    &.kibi {
+      // 348 × 102
+      background-image: url('~plugins/custom_css/images/custom_full_logo.png') !important;
+      background-color: @nav-dark-color !important;
+    }
+  }
+}
+
+.kibanaWelcomeLogo {
+  background-image: url('~plugins/custom_css/images/custom_logo.png') !important;
+}
+
+// === navigation ===
+
+.global-nav {
+  background-color: @nav-dark-color !important;
+}
+.kibi-dashboards-nav {
+  background-color: @nav-light-color !important;
+}
+.kibi-dashboards-nav-edit-link-group .dashboard-group {
+  background-color: @nav-dark-color !important;
+}
+.kibi-dashboards-nav-edit-link-group .dashboard-group:hover {
+  background-color: @nav-higlight-color !important;
+}
+.kibi-dashboards-nav-edit-link-group .dashboard-group.highlight {
+  background-color: @nav-higlight-color !important;
+}
+.kibi-dashboards-nav-edit-link-group .dashboard {
+  background-color: #6079a2;
+}
+.kibi-dashboards-nav-edit-link-group .dashboard:hover,
+.kibi-dashboards-nav-edit-link-group .dashboard.active {
+  background-color: #6EADC1;
+}
+.kibi-dashboards-nav-edit-link-group .dashboard.highlight {
+  background-color: @nav-higlight-color !important;
+}
+
+.dashboards-nav-edit-link-dashboard {
+  background-color: @nav-light-color !important;
+}
+
+.global-nav-link:hover,
+.global-nav-link.active {
+  @nav-light-color !important;
+}
+.global-nav-link:hover .global-nav-link__anchor,
+.global-nav-link.active .global-nav-link__anchor {
+  color: #ffffff;
+}
+
+// === search box ===
+
+.kuiLocalSearchButton {
+  color: #ffffff;
+  background-color: @light-blue !important;
+}
+
+// === top menu ====
+
+.kuiLocalMenuItem {
+  font-size: 11px !important;
+}
+.kuiLocalSearchInput {
+  border-color: #dedede !important;
+}
+.kuiLocalSearchInput--lucene {
+  border-color: #dedede !important;
+}
+
+// === dashboard background ===
+.tab-dashboard {
+  background-color: @dash-background !important;
+}
+
+dashboard-panel {
+  background-color: @dash-background !important;
+}
+
+kbn-top-nav div.kuiLocalNav {
+  background-color: @dash-background !important;
+}
+
+.gridster {
+  background-color: @dash-background !important;
+}
+
+filter-bar .bar {
+  background-color: @dash-background !important;
+}
