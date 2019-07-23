@@ -12,6 +12,24 @@
                 }
                 }
             },
+            "identifier":{
+              "type":"text",
+              "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 10000
+              }
+              }
+          },
+          "keywords":{
+            "type":"text",
+            "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 10000
+            }
+            }
+        },
             "News":{"type":"object"},
             "ClaimReviews":{"type":"object"},
             "Facts":{"type":"object"}        
