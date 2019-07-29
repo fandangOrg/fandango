@@ -110,30 +110,8 @@ definitions:
           firstAppearance: "firstAppearance"
           identifier: "identifier"
           claimReviews:
-          - datePublished: "datePublished"
-            identifier: "identifier"
-            reviewAspect: "reviewAspect"
-            claimReviewed: "claimReviewed"
-            dateCreated: "dateCreated"
-            references:
-            - "references"
-            - "references"
-            reviewBody: "reviewBody"
-            itemReviewed: "itemReviewed"
-            dateModified: "dateModified"
-            aggregateRating: 5.962133916683182377482808078639209270477294921875
-          - datePublished: "datePublished"
-            identifier: "identifier"
-            reviewAspect: "reviewAspect"
-            claimReviewed: "claimReviewed"
-            dateCreated: "dateCreated"
-            references:
-            - "references"
-            - "references"
-            reviewBody: "reviewBody"
-            itemReviewed: "itemReviewed"
-            dateModified: "dateModified"
-            aggregateRating: 5.962133916683182377482808078639209270477294921875
+          - "{}"
+          - "{}"
           about:
           - "about"
           - "about"
@@ -158,30 +136,8 @@ definitions:
           firstAppearance: "firstAppearance"
           identifier: "identifier"
           claimReviews:
-          - datePublished: "datePublished"
-            identifier: "identifier"
-            reviewAspect: "reviewAspect"
-            claimReviewed: "claimReviewed"
-            dateCreated: "dateCreated"
-            references:
-            - "references"
-            - "references"
-            reviewBody: "reviewBody"
-            itemReviewed: "itemReviewed"
-            dateModified: "dateModified"
-            aggregateRating: 5.962133916683182377482808078639209270477294921875
-          - datePublished: "datePublished"
-            identifier: "identifier"
-            reviewAspect: "reviewAspect"
-            claimReviewed: "claimReviewed"
-            dateCreated: "dateCreated"
-            references:
-            - "references"
-            - "references"
-            reviewBody: "reviewBody"
-            itemReviewed: "itemReviewed"
-            dateModified: "dateModified"
-            aggregateRating: 5.962133916683182377482808078639209270477294921875
+          - "{}"
+          - "{}"
           about:
           - "about"
           - "about"
@@ -267,6 +223,7 @@ definitions:
           mentions:
           - "mentions"
           - "mentions"
+          topic: "topic"
           publisher:
           - identifier: "identifier"
             nationality: "nationality"
@@ -329,6 +286,7 @@ definitions:
           mentions:
           - "mentions"
           - "mentions"
+          topic: "topic"
           publisher:
           - identifier: "identifier"
             nationality: "nationality"
@@ -437,43 +395,6 @@ definitions:
     example:
       authorRating: 1.46581298050294517310021547018550336360931396484375
       publishRating: 6.02745618307040320615897144307382404804229736328125
-  Claim_Response_Interface_claim_claimReviews:
-    properties:
-      identifier:
-        type: "string"
-      claimReviewed:
-        type: "string"
-      reviewAspect:
-        type: "string"
-      reviewBody:
-        type: "string"
-      dateCreated:
-        type: "string"
-      dateModified:
-        type: "string"
-      datePublished:
-        type: "string"
-      aggregateRating:
-        type: "number"
-      itemReviewed:
-        type: "string"
-      references:
-        type: "array"
-        items:
-          type: "string"
-    example:
-      datePublished: "datePublished"
-      identifier: "identifier"
-      reviewAspect: "reviewAspect"
-      claimReviewed: "claimReviewed"
-      dateCreated: "dateCreated"
-      references:
-      - "references"
-      - "references"
-      reviewBody: "reviewBody"
-      itemReviewed: "itemReviewed"
-      dateModified: "dateModified"
-      aggregateRating: 5.962133916683182377482808078639209270477294921875
   Claim_Response_Interface_claim:
     properties:
       about:
@@ -511,35 +432,14 @@ definitions:
       claimReviews:
         type: "array"
         items:
-          $ref: "#/definitions/Claim_Response_Interface_claim_claimReviews"
+          type: "object"
+          properties: {}
     example:
       firstAppearance: "firstAppearance"
       identifier: "identifier"
       claimReviews:
-      - datePublished: "datePublished"
-        identifier: "identifier"
-        reviewAspect: "reviewAspect"
-        claimReviewed: "claimReviewed"
-        dateCreated: "dateCreated"
-        references:
-        - "references"
-        - "references"
-        reviewBody: "reviewBody"
-        itemReviewed: "itemReviewed"
-        dateModified: "dateModified"
-        aggregateRating: 5.962133916683182377482808078639209270477294921875
-      - datePublished: "datePublished"
-        identifier: "identifier"
-        reviewAspect: "reviewAspect"
-        claimReviewed: "claimReviewed"
-        dateCreated: "dateCreated"
-        references:
-        - "references"
-        - "references"
-        reviewBody: "reviewBody"
-        itemReviewed: "itemReviewed"
-        dateModified: "dateModified"
-        aggregateRating: 5.962133916683182377482808078639209270477294921875
+      - "{}"
+      - "{}"
       about:
       - "about"
       - "about"
@@ -569,30 +469,8 @@ definitions:
         firstAppearance: "firstAppearance"
         identifier: "identifier"
         claimReviews:
-        - datePublished: "datePublished"
-          identifier: "identifier"
-          reviewAspect: "reviewAspect"
-          claimReviewed: "claimReviewed"
-          dateCreated: "dateCreated"
-          references:
-          - "references"
-          - "references"
-          reviewBody: "reviewBody"
-          itemReviewed: "itemReviewed"
-          dateModified: "dateModified"
-          aggregateRating: 5.962133916683182377482808078639209270477294921875
-        - datePublished: "datePublished"
-          identifier: "identifier"
-          reviewAspect: "reviewAspect"
-          claimReviewed: "claimReviewed"
-          dateCreated: "dateCreated"
-          references:
-          - "references"
-          - "references"
-          reviewBody: "reviewBody"
-          itemReviewed: "itemReviewed"
-          dateModified: "dateModified"
-          aggregateRating: 5.962133916683182377482808078639209270477294921875
+        - "{}"
+        - "{}"
         about:
         - "about"
         - "about"
@@ -679,6 +557,8 @@ definitions:
         type: "string"
       url:
         type: "string"
+      topic:
+        type: "string"
       inLanguage:
         type: "string"
       sourceDomain:
@@ -758,6 +638,7 @@ definitions:
       mentions:
       - "mentions"
       - "mentions"
+      topic: "topic"
       publisher:
       - identifier: "identifier"
         nationality: "nationality"
@@ -825,6 +706,7 @@ definitions:
         mentions:
         - "mentions"
         - "mentions"
+        topic: "topic"
         publisher:
         - identifier: "identifier"
           nationality: "nationality"

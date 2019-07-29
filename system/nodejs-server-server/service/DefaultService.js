@@ -122,7 +122,9 @@ exports.findSimilarArticles = function(info) {
               moreLikeThis.query.more_like_this.min_term_freq = 1;
               moreLikeThis.query.more_like_this.min_doc_freq = 1;
               moreLikeThis.query.more_like_this.fields = [];
-              moreLikeThis.query.more_like_this.fields.push("*");
+              moreLikeThis.query.more_like_this.fields.push("articleBody");
+              moreLikeThis.query.more_like_this.fields.push("topic");
+              moreLikeThis.query.more_like_this.fields.push("headline");
               moreLikeThis.query.more_like_this.like = {};
               moreLikeThis.query.more_like_this.like._index = "fdg-article";
               moreLikeThis.query.more_like_this.like._type = "doc";
@@ -148,7 +150,6 @@ exports.findSimilarArticles = function(info) {
                   var articles = json.hits.hits;
                   var articlePromises = [];
 
-                  //console.log(articles)
                   articles.forEach(function(article){
                     article._source.author.forEach(function(author){
                       var articleAuthorPromise = new Promise(function(resolve, reject) {
@@ -237,15 +238,15 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
   })
   })
 
-  //console.log("hereererer")
-
+  
   var articleResponses = [];
   articles.forEach(function(article){
-  //  console.log(article)
+    
     // Here we construct the response as defined in the API
     var articleResponse = {};
     articleResponse.identifier = article._source.identifier || null;
     articleResponse.url = article._source.url || null;
+    articleResponse.topic = article._source.topic || null;
     articleResponse.inLanguage = article._source.inLanguage || null;
     articleResponse.sourceDomain = article._source.sourceDomain || null;
     articleResponse.publishDateEstimated = article._source.publishDateEstimated || null;
