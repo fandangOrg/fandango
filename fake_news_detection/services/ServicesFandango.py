@@ -29,7 +29,7 @@ service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon
 
-daemon_run()
+#daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -244,7 +244,7 @@ def similar_claims(claim_input: Claim_input) -> list:
             print("claim",j)
             list_claims.append({"text" : i['text'], "datePublished":i['datePublished'], "reviewBody":j['reviewBody']})
     
-    return list_claims
+    return response['results']
 
 def similar_news(id_news:str) -> list:
     print("start similar news")
@@ -257,6 +257,7 @@ def similar_news(id_news:str) -> list:
     for i in response['results']: 
         if i['sourceDomain']=='www.repubblica.it':
             i["calculatedRatingDetail"]["textRating"]=1.0
+    print("SIMILAR",response["results"])
     return response["results"]
 
 

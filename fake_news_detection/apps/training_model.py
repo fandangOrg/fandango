@@ -23,7 +23,7 @@ def training_model_LGBMClassifier(lang,X):
 
 def training_model_KerasClassifier(lang,X):
     input_dim = X.shape[1]-3
-    epochs = 20
+    epochs = 100
     batch_size = int(8507/20)+1
 
     daopredictor = FSMemoryPredictorDAO(picklepath)
