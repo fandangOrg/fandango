@@ -96,10 +96,11 @@ class Media_DataModel:
 
         
 class Topics_DataModel:
-    def __init__(self, identifier:str,mentions:list,about:list):
+    def __init__(self, identifier:str, topic:str,mentions:list,about:list):
         self.identifier = identifier
         self.mentions = mentions
         self.about = about
+        self.topic=topic
         
 class Final_DataModel:
     def __init__(self,identifier:str,headline:str,articleBody:str,dateCreated:str,dateModified:str,datePublished:str,author:list,publisher:list,  calculateRating: int,

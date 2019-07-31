@@ -49,6 +49,18 @@ def get_performance(y_test:List, y_pred:List):
     print("\t - F-measure:", f1, "\n")
 
 
+def create_lstm_moderl(input_dim):
+    model = Sequential()
+    print(input_dim) 
+    model.add(LSTM(100, input_shape=(11455,17), return_sequences=True))
+    model.add(Dropout(0.2))
+    model.add(LSTM( 100, return_sequences=True))
+    model.add(Dropout(0.2))
+    model.add(LSTM(1,return_sequences=True, activation='linear'))
+    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.summary()
+    return model
+
 def create_model1(input_dim):
     """
     Densely (fully) connected Neural Network with 3 layers and light dropout
@@ -60,7 +72,7 @@ def create_model1(input_dim):
     model.add(Dropout(rate=0.20))
     model.add(Dense(1200, activation='relu'))
     model.add(Dropout(rate=0.20))
-    model.add(Dense(600, activation='relu'))
+    model.add(LSTM(600, activation='relu'))
     model.add(Dropout(rate=0.20))
     model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])

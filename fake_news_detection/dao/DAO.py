@@ -218,7 +218,7 @@ class DAONewsElastic(DAONews):
         if not isinstance(doc_up, list):
             doc_up = [doc_up]
         try:
-            helpers.bulk(self.es_client, doc_up)
+            helpers.bulk(self.es_client, doc_up,refresh='wait_for')
         except Exception as e:
             log.error("Could not perform bulk query: {err}".format(err=e))
             raise FandangoException("Could not perform bulk query: {err}".format(err=e))
