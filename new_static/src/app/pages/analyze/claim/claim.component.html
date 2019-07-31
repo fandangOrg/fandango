@@ -79,14 +79,14 @@
                                             </td>
                                             <td>
                                             <td class="text-right">
-                                                <a class="mr-3" title="Show news" [href]="review.url" target="_blank"><i
-                                                    class="fas fa-external-link-alt"
-                                                    style="color:#525f7f !important;"></i></a>
-
                                                 <i title="Show Review body"
                                                    (click)="showReviewBody(review.reviewBody, bodyModal)"
-                                                   class="fas fa-align-left c-pointer"
+                                                   class="fas fa-align-left mr-3 c-pointer"
                                                    style="color:#525f7f !important;"></i>
+
+                                                <a title="Show news" [href]="review.url" target="_blank"><i
+                                                    class="fas fa-external-link-alt"
+                                                    style="color:#525f7f !important;"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
