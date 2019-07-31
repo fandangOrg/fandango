@@ -78,9 +78,15 @@
                                                 {{review.reviewRating.bestRating}}
                                             </td>
                                             <td>
-                                                <a title="Show news" [href]="review.url" target="_blank"><i
+                                            <td class="text-right">
+                                                <a class="mr-3" title="Show news" [href]="review.url" target="_blank"><i
                                                     class="fas fa-external-link-alt"
                                                     style="color:#525f7f !important;"></i></a>
+
+                                                <i title="Show Review body"
+                                                   (click)="showReviewBody(review.reviewBody, bodyModal)"
+                                                   class="fas fa-align-left c-pointer"
+                                                   style="color:#525f7f !important;"></i>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -88,6 +94,12 @@
                                 </th>
                             </ng-container>
                         </ng-container>
+
+                        <ng-template #bodyModal let-modal>
+                            <div class="modal-body">
+                                <p>{{reviewBody}}</p>
+                            </div>
+                        </ng-template>
 
                         <tr *ngIf="claims.length === 0">
                             <th scope="row" colspan="3" class="text-center">

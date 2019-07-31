@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {AnalyzeService} from "../analyze.service";
 import {Claim} from "./claim";
 import {AppService} from "../../../app.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
     selector: 'app-claim',
@@ -13,9 +14,10 @@ export class ClaimComponent implements OnInit {
 
     @Output() showLoading = new EventEmitter<boolean>();
     url: string;
+    reviewBody: string;
     claims: Claim[];
 
-    constructor(private router: ActivatedRoute, private http: AnalyzeService, private route: Router) {
+    constructor(private router: ActivatedRoute, private http: AnalyzeService, private route: Router, private modalService: NgbModal) {
         this.url = this.http.retrieveUrl(this.router);
 
         // IF PARAMS IS UNDEFINED OR NULL REDIRECT TO HOMEPAGE
@@ -45,6 +47,13 @@ export class ClaimComponent implements OnInit {
                 // AppService.showNotification('danger', `Error occured, status: ${error.statusText}`);
                 AppService.showNotification('danger', 'Error occured during retrieve claims');
             });
+    }
+
+    showReviewBody(body: string, modal: any) {
+        this.reviewBody = body;
+        this.modalService.open(modal, {
+            centered: true
+        });
     }
 
     getProgressColor(score: number) {
