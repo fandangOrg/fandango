@@ -21,6 +21,7 @@ from fake_news_detection.business.Pipeline import ScrapyService,\
 from fake_news_detection.apps.daemon import daemon_run
 from fake_news_detection.config.constants import LABEL_SCORE
 from flask.templating import render_template
+from time import sleep
 #from fake_news_detection.apps.daemon import daemon_run
 
 
@@ -29,7 +30,7 @@ service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon
 
-#daemon_run()
+daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -237,7 +238,6 @@ def similar_claims(claim_input: Claim_input) -> list:
     headers = {"Content-Type":  "application/json"}
     j = json.dumps(payload)
     response = u.post(data=j,headers = headers)
-    print(response)
     list_claims = []
     for i in response['results']: 
         for j in i['claimReviews']:
@@ -257,7 +257,6 @@ def similar_news(id_news:str) -> list:
     for i in response['results']: 
         if i['sourceDomain']=='www.repubblica.it':
             i["calculatedRatingDetail"]["textRating"]=1.0
-    print("SIMILAR",response["results"])
     return response["results"]
 
 
