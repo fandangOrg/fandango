@@ -1,6 +1,7 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Button, Buttons} from "../../app.config";
+import {AppService} from "../../app.service";
 
 @Component({
     selector: 'app-navbar',
@@ -14,12 +15,11 @@ export class NavbarComponent implements OnInit {
     buttonList: Array<Button>;
     typeAnalyze: string;
     fandangoLogo: string;
-    inputPlaceholder: string;
+    inputType: object;
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute) {
         this.fandangoLogo = 'assets/img/logos/fandango.png';
         this.buttonList = Buttons;
-        this.inputPlaceholder = '';
 
         // RETRIEVE TYPE ANALYZE AND URL FROM CHILDREN PARAMS
         this.activatedRoute.children[0].url.subscribe(params => {
@@ -29,6 +29,7 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.inputType = AppService.getInputType(this.typeAnalyze);
     }
 
     navigateToHomepage(buttonType: string) {
@@ -37,9 +38,11 @@ export class NavbarComponent implements OnInit {
         }
     }
 
-    sendInput() {
-        // EMIT ANALYZE EVENT WHEN TRIGGER SEARCH BUTTON ON NAVBAR, SENDING AS PARAMETERS TYPE AND URL TO ANALYZE COMPONENT
-        this.newSearch.emit({type: this.typeAnalyze, url: this.url});
+    sendInput(form) {
+        if (form.valid) {
+            // EMIT ANALYZE EVENT WHEN TRIGGER SEARCH BUTTON ON NAVBAR, SENDING AS PARAMETERS TYPE AND URL TO ANALYZE COMPONENT
+            this.newSearch.emit({type: this.typeAnalyze, url: this.url});
+        }
     }
 
 

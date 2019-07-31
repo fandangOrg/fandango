@@ -47,4 +47,8 @@ export class ClaimComponent implements OnInit {
             });
     }
 
+    getProgressColor(score: number) {
+        return AppService.getProgressColor(score);
+    }
+
 }

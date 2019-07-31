@@ -4,32 +4,40 @@
             <img class="navbar-img" [src]="fandangoLogo" alt="Fandango">
         </a>
     </div>
-    <div class="col-md-5 col-8">
-        <form #navbarForm="ngForm" (ngSubmit)="sendInput()">
-            <div class="navbar-input input-group">
-                <input type="text" class="form-control" [placeholder]="inputPlaceholder"
-                       aria-label="Search" [(ngModel)]="url" name="url">
+    <div class="col-md-4 col-8">
+        <form #navbarForm="ngForm" (ngSubmit)="sendInput(navbarForm)">
+            <div class="input-group input-group-alternative mb-4 border">
+                <input [type]="inputType['type']" [pattern]="inputType['pattern']" class="form-control shadow--hover" aria-label="Search" [(ngModel)]="url" name="url" required>
                 <div class="input-group-append">
-                    <button class="btn btn-info" type="submit" [disabled]="!url">
-                        <i class="fas fa-search"></i>
-                    </button>
+                        <button class="input-group-text" type="submit"><i class="fas fa-search"
+                                                          [ngClass]="{'text-info c-pointer': navbarForm.valid , 'text-gray': !navbarForm.valid }"></i></button>
                 </div>
             </div>
+
+<!--            <div class="navbar-input input-group">-->
+<!--                <input type="text" class="form-control" [placeholder]="inputPlaceholder"-->
+<!--                       aria-label="Search" [(ngModel)]="url" name="url">-->
+<!--                <div class="input-group-append">-->
+<!--                    <button class="btn btn-info" type="submit" [disabled]="!url">-->
+<!--                        <i class="fas fa-search"></i>-->
+<!--                    </button>-->
+<!--                </div>-->
+<!--            </div>-->
 
 
 <!--            (click)="typeAnalyze = btn.type;inputPlaceholder = btn.placeholder"-->
             <button *ngFor="let btn of buttonList"
                     class="btn btn-icon btn-sm btn-secondary"
                     [class.btn-info]="typeAnalyze===btn.type"
-                    (click)="navigateToHomepage(btn.type)" type="button">
+                    (click)="navigateToHomepage(btn.type)">
                 <i [ngClass]="btn.icon"></i>
                 <span>{{btn.name}}</span>
             </button>
 
             <a href="http://40.114.234.51:8080/app/kibana">
-                <button class="btn btn-icon btn-sm btn-secondary" type="button">
+                <button class="btn btn-icon btn-sm btn-secondary">
                     <img class="inner-img mr-2" src="assets/img/logos/siren.png">
-                    <span>Dashboard</span>
+                    <span>Advanced</span>
                 </button>
             </a>
         </form>

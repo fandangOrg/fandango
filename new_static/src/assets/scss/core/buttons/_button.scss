@@ -14,7 +14,7 @@
 
    &:hover {
       @include box-shadow($btn-hover-box-shadow);
-      transform: translateY($btn-hover-translate-y);
+      //transform: translateY($btn-hover-translate-y);
    }
 
    &:not(:last-child) {
@@ -46,6 +46,11 @@
    }
 }
 
+.btn-group-lg {
+    .btn:not(:last-child) {
+        margin-right: .7rem;
+    }
+}
 
 // Size variations
 

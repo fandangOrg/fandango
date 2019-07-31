@@ -68,6 +68,17 @@ export class AppService {
         }
     }
 
+    // RETRIEVE INPUT TYPE BASED ON BUTTON TYPE CLICKED
+    static getInputType(type: string) {
+        if (type === 'claim') {
+            return {type: 'text', pattern: ''}
+        } else if(type === 'image'){
+            return {type: 'url', pattern: 'https?:\\/\\/.*\\.(?:png|jpg|jpeg)'}
+        } else {
+            return {type: 'url', pattern: 'https?://.+'}
+        }
+    }
+
     static embedVideo(url) {
         url = url.replace("watch?v=", "embed/");
         return this.sanitizer.bypassSecurityTrustResourceUrl(url);

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Button, Buttons} from "../../app.config";
-import {TitleCasePipe} from "@angular/common";
+import {AppService} from "../../app.service";
 
 @Component({
     selector: 'app-homepage',
@@ -11,7 +11,7 @@ import {TitleCasePipe} from "@angular/common";
 
 export class HomepageComponent implements OnInit {
     typeAnalyze: string;    // TYPE ANALYZE BASED ON BUTTON SELECTED
-    inputType: object;
+    inputType: object;  // OBJECT THAT CONTAINS PATTERN AND INPUT TYPE FOR TEXTBOX
     fandangoLogo: string;
     inputPlaceholder: string;   // PLACEHOLDER ON INPUT
     buttonList: Array<Button>;  // BUTTON LIST
@@ -26,7 +26,8 @@ export class HomepageComponent implements OnInit {
             } else {
                 this.typeAnalyze = 'article';
             }
-            this.inputType = this.getInputType(this.typeAnalyze);
+
+            this.inputType = AppService.getInputType(this.typeAnalyze);
 
             const button = this.buttonList.find(obj => {
                 return obj['type'] === this.typeAnalyze
@@ -39,23 +40,18 @@ export class HomepageComponent implements OnInit {
     ngOnInit() {
     }
 
-    getInputType(type: string) {
-        if (type === 'claim') {
-            return {type: 'text', pattern: ''}
-        } else {
-            return {type: 'url', pattern: 'https?://.+'}
-        }
-    }
 
+    // FUNCTION CALLED WHEN BUTTON IS CHANGED
     changeButton(button: Button) {
         this.typeAnalyze = button.type;
         this.inputPlaceholder = button.placeholder;
-        this.inputType = this.getInputType(button.type);
+        this.inputType = AppService.getInputType(button.type);
         this.router.navigate(['homepage'], {queryParams: {'search': button.type}});
     }
 
     sendInput(form) {
         // ON SUBMIT NAVIGATE TO ANALYZE TYPE WITH URL AS QUERY PARAMS
-        this.router.navigate([`analyze/${this.typeAnalyze}`, {url: form.url}]);
+        if (form.valid)
+            this.router.navigate([`analyze/${this.typeAnalyze}`, {url: form.value.url}]);
     }
 }

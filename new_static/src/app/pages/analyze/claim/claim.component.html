@@ -10,18 +10,18 @@
                 </style>
 
                 <h6 class="heading-small text-muted">Claims</h6>
-                <div class="table-responsive table-striped">
+                <div class="table-responsive">
                     <table class="table align-items-center table-flush">
-                        <thead class="bg-white">
-                        <tr>
-                            <th scope="col">Body</th>
-                            <th scope="col">Date</th>
-                            <th scope="col"></th>
-                        </tr>
-                        </thead>
+<!--                        <thead class="bg-white">-->
+<!--                        <tr>-->
+<!--                            <th scope="col">Body</th>-->
+<!--                            <th scope="col">Date</th>-->
+<!--                            <th scope="col"></th>-->
+<!--                        </tr>-->
+<!--                        </thead>-->
                         <tbody>
                         <ng-container *ngFor="let claim of claims">
-                            <tr>
+                            <tr [class.bg-white]="claim.expand">
                                 <th scope="row" width="90%">
                                     {{claim.text}}
                                 </th>
@@ -30,18 +30,50 @@
                                 </th>
                                 <th scope="row" width="1%">
                                     <a (click)="claim.expand = !claim.expand">
-                                        <i *ngIf="!claim.expand" class="fas fa-caret-square-down fa-2x c-pointer"
-                                           placement="top" ngbTooltip='Expand body'></i>
-                                        <i *ngIf="claim.expand" class="fas fa-caret-square-up fa-2x c-pointer"
-                                           placement="top" ngbTooltip='Collapse body'></i>
+                                        <i *ngIf="!claim.expand" class="fas fa-caret-square-down fa-2x c-pointer"></i>
+                                        <i *ngIf="claim.expand" class="fas fa-caret-square-up fa-2x c-pointer"></i>
                                     </a>
                                 </th>
                             </tr>
-                            <tr *ngIf="claim.expand">
-                                <td colspan="3" style="white-space: normal">
-                                    {{claim.reviewBody}}
-                                </td>
-                            </tr>
+                            <ng-container *ngIf="claim.expand">
+                                <th scope="row" colspan="3" class="p-0">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Author</th>
+                                            <th scope="col">Score</th>
+                                            <th scope="row" width="1%">
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let review of claim.claimReviews">
+                                            <td>
+                                                {{review.author.name}}
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <span class="mr-2">{{review.reviewRating.ratingValue * 20}}%</span>
+                                                    <div>
+                                                        <div class="progress" style="width: 200px">
+                                                            <div class="progress-bar"
+                                                                 [ngClass]="getProgressColor(review.reviewRating.ratingValue * 20)"
+                                                                 role="progressbar"
+                                                                 aria-valuemin="0" aria-valuemax="100"
+                                                                 [style.width]="review.reviewRating.ratingValue * 20 + '%'"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a title="Show news" [href]="review.url" target="_blank"><i
+                                                    class="fas fa-external-link-alt" style="color:#525f7f !important;"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </th>
+                            </ng-container>
                         </ng-container>
 
                         <tr *ngIf="claims.length === 0">
