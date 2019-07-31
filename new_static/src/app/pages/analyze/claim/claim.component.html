@@ -12,13 +12,13 @@
                 <h6 class="heading-small text-muted">Claims</h6>
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush">
-<!--                        <thead class="bg-white">-->
-<!--                        <tr>-->
-<!--                            <th scope="col">Body</th>-->
-<!--                            <th scope="col">Date</th>-->
-<!--                            <th scope="col"></th>-->
-<!--                        </tr>-->
-<!--                        </thead>-->
+                        <!--                        <thead class="bg-white">-->
+                        <!--                        <tr>-->
+                        <!--                            <th scope="col">Body</th>-->
+                        <!--                            <th scope="col">Date</th>-->
+                        <!--                            <th scope="col"></th>-->
+                        <!--                        </tr>-->
+                        <!--                        </thead>-->
                         <tbody>
                         <ng-container *ngFor="let claim of claims">
                             <tr [class.bg-white]="claim.expand">
@@ -41,11 +41,11 @@
                                         <thead>
                                         <tr>
                                             <th scope="col">Author</th>
-                                            <th scope="col">Score</th>
-                                            <th scope="col">Alternative name</th>
+                                            <th scope="col">Label</th>
+                                            <th scope="col">Rating value</th>
                                             <th scope="col">Worst Rating</th>
                                             <th scope="col">Best Rating</th>
-                                            <!--                                            <th scope="row" width="1%"></th>-->
+                                            <th scope="row" width="1%"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -54,30 +54,33 @@
                                                 {{review.author.name}}
                                             </td>
                                             <td>
-                                                {{review.reviewRating.ratingValue}}
-<!--                                                <div class="d-flex align-items-center">-->
-<!--                                                    <span class="mr-2">{{review.reviewRating.ratingValue * 20}}%</span>-->
-<!--                                                    <div>-->
-<!--                                                        <div class="progress" style="width: 200px">-->
-<!--                                                            <div class="progress-bar"-->
-<!--                                                                 [ngClass]="getProgressColor(review.reviewRating.ratingValue * 20)"-->
-<!--                                                                 role="progressbar"-->
-<!--                                                                 aria-valuemin="0" aria-valuemax="100"-->
-<!--                                                                 [style.width]="review.reviewRating.ratingValue * 20 + '%'"></div>-->
-<!--                                                        </div>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
+                                                {{review.reviewRating.alternateName}}
                                             </td>
                                             <td>
-                                                {{review.reviewRating.alternateName}}
-<!--                                                <a title="Show news" [href]="review.url" target="_blank"><i-->
-<!--                                                    class="fas fa-external-link-alt" style="color:#525f7f !important;"></i></a>-->
+                                                {{review.reviewRating.ratingValue}}
+                                                <!--                                                <div class="d-flex align-items-center">-->
+                                                <!--                                                    <span class="mr-2">{{review.reviewRating.ratingValue * 20}}%</span>-->
+                                                <!--                                                    <div>-->
+                                                <!--                                                        <div class="progress" style="width: 200px">-->
+                                                <!--                                                            <div class="progress-bar"-->
+                                                <!--                                                                 [ngClass]="getProgressColor(review.reviewRating.ratingValue * 20)"-->
+                                                <!--                                                                 role="progressbar"-->
+                                                <!--                                                                 aria-valuemin="0" aria-valuemax="100"-->
+                                                <!--                                                                 [style.width]="review.reviewRating.ratingValue * 20 + '%'"></div>-->
+                                                <!--                                                        </div>-->
+                                                <!--                                                    </div>-->
+                                                <!--                                                </div>-->
                                             </td>
                                             <td>
                                                 {{review.reviewRating.worstRating}}
                                             </td>
                                             <td>
                                                 {{review.reviewRating.bestRating}}
+                                            </td>
+                                            <td>
+                                                <a title="Show news" [href]="review.url" target="_blank"><i
+                                                    class="fas fa-external-link-alt"
+                                                    style="color:#525f7f !important;"></i></a>
                                             </td>
                                         </tr>
                                         </tbody>
