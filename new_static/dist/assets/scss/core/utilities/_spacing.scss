@@ -105,3 +105,10 @@
         padding-bottom: 300px!important;
     }
 }
+
+.wrapper {
+    @include for-tablet-only() {
+        margin-right: 1rem !important;
+        margin-left: 1rem !important;
+    }
+}

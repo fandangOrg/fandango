@@ -45,8 +45,7 @@ export class Interceptor implements HttpInterceptor {
         AnalyzeComponent
     ],
     providers: [
-        {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}
-        ],
+        {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}],
     bootstrap: [AppComponent]
 })
 export class AppModule {

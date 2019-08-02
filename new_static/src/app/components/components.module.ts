@@ -6,6 +6,7 @@ import {RouterModule} from '@angular/router';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {SpinnerComponent} from './spinner/spinner.component';
 import {FormsModule} from '@angular/forms';
+import {SidebarComponent} from "./sidebar/sidebar.component";
 
 @NgModule({
     imports: [
@@ -17,11 +18,13 @@ import {FormsModule} from '@angular/forms';
     declarations: [
         FooterComponent,
         NavbarComponent,
+        SidebarComponent,
         SpinnerComponent
     ],
     exports: [
         FooterComponent,
         NavbarComponent,
+        SidebarComponent,
         SpinnerComponent
     ]
 })
