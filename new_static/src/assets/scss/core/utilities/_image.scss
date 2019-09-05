@@ -8,9 +8,21 @@
     margin-right: auto;
 }
 
+.img-details {
+    @include for-tablet-landscape-up() {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%)
+    }
+}
+
 .img-logo {
     @extend .img-center;
     margin-bottom: 1.5rem;
+
+    @include for-tablet-only() {
+        width: 75%;
+    }
 }
 
 .inner-img {

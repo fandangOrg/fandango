@@ -1,8 +1,8 @@
-<div class="row pt-5 pt-md-9">
+<div class="row pt-5 pt-md-9 wrapper">
     <div class="col-lg-6 col-md-8 col-sm-10 col-12 mx-auto">
         <img [src]="fandangoLogo" class="img-logo" alt="Fandango">
         <form #homepageForm="ngForm" (ngSubmit)="sendInput(homepageForm)">
-            <div class="form-group mb-3">
+            <div class="form-group homepage-form mb-3">
                 <div class="input-group input-group-alternative mb-4 border">
                     <input [type]="inputType['type']"
                            class="form-control shadow--hover"
