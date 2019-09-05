@@ -2,6 +2,7 @@
 log_folder = /home/camila/workspace/fandango-fake-news
 picklepath = /home/camila/
 path_training = /home/camila/eclipse-workspace/fandango-fake-news/fake_news_detection/resources
+path_training_preprocessed =/home/daniele/resources/fandango/train_preprocessed
 
 
 

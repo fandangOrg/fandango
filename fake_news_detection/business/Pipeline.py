@@ -174,7 +174,7 @@ class AnalyticsService(metaclass=Singleton):
             ##print("RICHIESTA VIDEOIMMAGINI  ",payload)
             j = json.dumps(payload)
             response = u.post(data=j, headers=self.headers)
-            ##print("VIDEOIMMAGINI RESPOSNE",response)
+            print("VIDEOIMMAGINI RESPOSNE",response)
             #print("......start request image and video")
             return Media_DataModel(**response)
         except Exception as e :

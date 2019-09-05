@@ -240,9 +240,12 @@ def similar_claims(claim_input: Claim_input) -> list:
     response = u.post(data=j,headers = headers)
     list_claims = []
     for i in response['results']: 
-        for j in i['claimReviews']:
-            print("claim",j)
-            list_claims.append({"text" : i['text'], "datePublished":i['datePublished'], "reviewBody":j['reviewBody']})
+        print(i)
+        #=======================================================================
+        # for j in i['claimReviews']:
+        #     print("claim",j)
+        #     list_claims.append({"text" : i['text'], "datePublished":i['datePublished'], "reviewBody":j['reviewBody']})
+        #=======================================================================
     
     return response['results']
 
