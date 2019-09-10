@@ -60,7 +60,7 @@ export class ArticleComponent implements OnInit {
         this.http[urlString](this.url).subscribe(
             data => {
                 console.log(data);
-                this.sirenUrl = this.sirenUrl.replace('QUERYDACAMBIARE', this.url);
+                this.sirenUrl = this.sirenUrl.replace(/QUERYDACAMBIARE/g, this.url);
                 this.article = new Article(data['identifier'],data['datePublished'], data['language'], data['headline'], data['articleBody'], data['images'],
                     data['videos'], data['results']['publishers'], data['results']['authors'], data['results']['text'], data['similarnews']);
 

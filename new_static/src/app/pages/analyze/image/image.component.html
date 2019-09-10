@@ -31,11 +31,11 @@
         <hr class="my-4" />
 
         <div class="row mb-4" *ngIf="image.status === 'done'">
-            <div class="col-lg-4 col-md-12" *ngFor="let img of image.display | slice:1">
+            <div class="col-lg-4 col-md-12 mb-2" *ngFor="let img of image.display | slice:1">
                 <div class="card shadow">
                     <div class="card-header">
                         <div class="col">
-                            <h4 class="mb-0">{{img.analyzer}}</h4>
+                            <h4 class="mb-0">{{img.detection}}</h4>
                         </div>
                     </div>
                     <div class="card-body">
