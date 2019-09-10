@@ -166,15 +166,17 @@ class AnalyticsService(metaclass=Singleton):
             #print("ERROR SERVICE _get_authors_org_ids: "+ str(e))
             return Author_org_DataModel('',[],[])
     @log_info     
-    def _get_media_ids(self,news_preprocessed:News_DataModel) -> Media_DataModel:
+    def _get_media_ids(self,news_preprocessed:News_DataModel, disable=True) -> Media_DataModel:
         try:
+            if disable:
+                return Media_DataModel('',[],[])
             #print("......start request image and video")
             u = URLRequest(self.url_media_service+"/api/media_analysis")
             payload = {"images": news_preprocessed.images,"videos": news_preprocessed.videos,"identifier": news_preprocessed.identifier}
             ##print("RICHIESTA VIDEOIMMAGINI  ",payload)
             j = json.dumps(payload)
             response = u.post(data=j, headers=self.headers)
-            ##print("VIDEOIMMAGINI RESPOSNE",response)
+            print("VIDEOIMMAGINI RESPOSNE",response)
             #print("......start request image and video")
             return Media_DataModel(**response)
         except Exception as e :

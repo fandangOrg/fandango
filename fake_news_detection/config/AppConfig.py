@@ -47,6 +47,8 @@ picklepath = os.environ.get("MODEL_PATH") or  pkg_resources.resource_filename("f
 static_folder = pkg_resources.resource_filename("new_static", "")  # @UndefinedVariable
 path_training = os.environ.get("PATH_FOR_TRAININGFILE") or config.get("default", "path_training")
 resources_path = pkg_resources.resource_filename("fake_news_detection.resources", "")
+resources_path_train = config.get("default", "path_training_preprocessed") or pkg_resources.resource_filename("fake_news_detection.resources", "")
+
 template_path = pkg_resources.resource_filename("fake_news_detection.config", "mapping_annotation.json")
 
 ##################################################################################################################à
