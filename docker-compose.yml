@@ -1,28 +1,20 @@
 fandango:
-  image: livetech/fandango-fake-news:0.1.2
+  image: livetech/fandango-fake-news:0.4.0
   volumes:
-    - ./:/data/
+    - ~/data/:/data/
   environment:
     - BASEURL_SERVICE= http://0.0.0.0
     - BASEPORT_SERVICE=9800
-    - URL_ELASTIC=FandangoEdge01:9220
-    #http://0.0.0.0:9220
-#    - MODEL_PATH=data/model
-    - KAFKA_URL =0.0.0.0
-    - KAFKA_PORT = 9092
-    - N_CONSUMER = 10
+    - URL_ELASTIC=0.0.0.0:9220
+    - N_CONSUMER=1
     - TAGDIR=/treetagger/
-    #- URL_SERVICE_CERTH
-    #- URL_SERVICE_UPM
+    - KAFKA_URL=0.0.0.0
+    - KAFKA_PORT=9092
+    - PATH_FOR_TRAININGFILE=/data/docker/compose/fandango_lvt/file
+    - URL_SERVICE_UPM=http://fandangoedge01:5001
+    #- URL_SERVICE_CERTH=http://195.251.117.141:5006
+    #- URL_SERVICE_CRAWLER=http://195.251.117.141:5006
+   # - MODEL_PATH=/data/model
+   # - 
   ports:
-    - 9800:9800
-#elasticsearch:
-#   image: elasticsearch:6.4.2
-#   ports:
-#     - "9200:9200"
-#     - "9399:9300"
-#   environment:
-#     ES_JAVA_OPTS: "-Xmx2g -Xms2g"
-#     UseAVX: 1  
-
- 
+    - 9880:9800

@@ -34,6 +34,7 @@ dao_annotation=DAOElasticAnnotation()
 #---------------------> annotation services<---------------------------------------
 def next_news(lang:str,author:str) -> News:
     log.debug(lang)
+    print("AUTORE PER IL NEXT",author)
     try:
         news=dao_annotation.next_news(author,language=lang)
    
@@ -44,7 +45,8 @@ def next_news(lang:str,author:str) -> News:
 
 def new_annotation(annotation:News_annotated) -> str:
     log.debug('id: {id}, label: {lbl}'.format(id= annotation.id, lbl=annotation.label))
-    print("nuova ANNOTAZIONI")
+    print("nuova ANNOTAZIONI",annotation.id, annotation.author, 
+                                         annotation.language, annotation.label)
     dao_annotation.insert_new_annotation(annotation.id, annotation.author, 
                                          annotation.language, annotation.label)
     return 'DONE'
@@ -60,8 +62,8 @@ def get_languages() -> List[Language]:
     l.append(Language("en","English","True"))
     l.append(Language("it","Italian","True"))
     l.append(Language("es","Spanish","True"))
-    #l.append(Language("pt","Portuguese",True))
-    #l.append(Language("el_GR","Greek",False))
+    l.append(Language("nl","Dutch","True"))
+
     return l
 #===============================================================================
 
@@ -82,7 +84,8 @@ app=DS4BizFlask(__name__,static_folder=static_folder_annotation+"/dist/",static_
 def page_not_found(e):
     return render_template('index.html')
 
-
+    
+print("SONO IL SECONDO SERVER E STO PARTENDO")
 app.root="/fandango/v0.3/fakeness"
 app.name="FANDANGO"
 app.add_service("next_news", next_news, method ='POST')

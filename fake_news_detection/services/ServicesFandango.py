@@ -403,7 +403,7 @@ app.add_service("similar_news",similar_news, method = 'POST')
 
 
 CORS(app)
-
+    
 log.info("RUN ON {cfg}".format(cfg= AppConfig.BASEURL+AppConfig.BASEPORT))
 app.setup()
 app.run(host = "0.0.0.0", port = AppConfig.BASEPORT,debug=False)
