@@ -4,7 +4,7 @@ Created on 23 apr 2019
 @author: camila
 '''
 from fake_news_detection.model.InterfacceComunicazioni import News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel,\
- InterfaceInputFeedBack, Claim_input, Claim_output
+ InterfaceInputFeedBack, Claim_input, Claim_output, News, News_annotated
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.config.AppConfig import  static_folder, url_service_media,\
     url_service_authors, url_similar_claims, template_path
@@ -21,7 +21,8 @@ from fake_news_detection.business.Pipeline import ScrapyService,\
 from fake_news_detection.apps.daemon import daemon_run
 from fake_news_detection.config.constants import LABEL_SCORE
 from flask.templating import render_template
-from time import sleep
+from fake_news_detection.dao.DaoAnnotation import DAOElasticAnnotation
+from flask.globals import request
 #from fake_news_detection.apps.daemon import daemon_run
 
 
@@ -30,7 +31,7 @@ service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon
 
-daemon_run()
+#daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -263,8 +264,6 @@ def similar_news(id_news:str) -> list:
     return response["results"]
 
 
-
-#===============================================================================
 # def finalaggr(news_preprocessed:News_DataModel)-> str:
 #     
 #     d = {"headline": news_preprocessed.headline,
@@ -401,6 +400,7 @@ app.add_service("similar_claims",similar_claims, method = 'POST')
 app.add_service("url_image_score",url_image_score, method = 'GET')
 app.add_service("url_video_score",url_video_score, method = 'GET')
 app.add_service("similar_news",similar_news, method = 'POST')
+
 
 CORS(app)
 

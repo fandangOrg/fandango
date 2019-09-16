@@ -41,10 +41,13 @@ def get_elastic_connector():
 log_folder = os.environ.get("LOG_FOLDER") or config.get("default", "log_folder")  or  pkg_resources.resource_filename("fake_news_detection.resources.log", "")  # @UndefinedVariable
 BASEURL = os.environ.get("BASEURL_SERVICE") or config["service"]["url"]
 BASEPORT = os.environ.get("BASEPORT_SERVICE") or config["service"]["port"]
+BASEPORT_ANNOTATION = os.environ.get("BASEPORT_SERVICE") or config["service"]["port_annotation"]
 
 picklepath = os.environ.get("MODEL_PATH") or  pkg_resources.resource_filename("fake_news_detection.resources.model", "")  # @UndefinedVariable
 #dataset_beta =  config.get("train", "path")  or pkg_resources.resource_filename("fake_news_detection.resources", "")   # @UndefinedVariable 
 static_folder = pkg_resources.resource_filename("new_static", "")  # @UndefinedVariable
+static_folder_annotation = pkg_resources.resource_filename("static", "")  # @UndefinedVariable
+
 path_training = os.environ.get("PATH_FOR_TRAININGFILE") or config.get("default", "path_training")
 resources_path = pkg_resources.resource_filename("fake_news_detection.resources", "")
 resources_path_train = config.get("default", "path_training_preprocessed") or pkg_resources.resource_filename("fake_news_detection.resources", "")

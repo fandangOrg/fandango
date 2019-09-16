@@ -188,7 +188,7 @@ class News:
         self.title = title
         self.text = text
         self.authors = authors
-        self.source_domain = source_domain
+        self.source_domain = [source_domain]
         self.language = language
         self.id = id
           
@@ -196,10 +196,11 @@ class News:
         return  "id: "+self.id+"; url: "+self.url+"; title: "+self.title+"; text: "+self.text.replace("\n"," ")
 
 class News_annotated:
-    def __init__(self, id:str, label:str,type_annotation:str=None):
+    def __init__(self, id:str, label:str,author:str=None, language:str=None):
         self.id = id
         self.label = label
-        self.type_annotation=type_annotation
+        self.author=author
+        self.language=language
  
         
 class News_domain:

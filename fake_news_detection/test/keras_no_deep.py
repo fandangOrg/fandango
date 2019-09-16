@@ -72,8 +72,6 @@ def create_model1(input_dim):
     model.add(Dropout(rate=0.20))
     model.add(Dense(1200, activation='relu'))
     model.add(Dropout(rate=0.20))
-    model.add(LSTM(600, activation='relu'))
-    model.add(Dropout(rate=0.20))
     model.add(Dense(1, kernel_initializer='normal', activation='sigmoid'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     model.summary()

@@ -65,7 +65,7 @@ class ScrapyService:
             news=News_raw(**response)
             return news
         except Exception as e:
-            #print(e)
+            print(e)
             return None
     @log_info
     def _preprocessing(self,raw_news:News_raw) -> News_DataModel:

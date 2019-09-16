@@ -34,6 +34,7 @@ index_author_org = test_author_org_index
 [service]
 url = http://0.0.0.0:9800/
 port = 9800
+port_annotation=9898
 
 
 [configurationservice]
