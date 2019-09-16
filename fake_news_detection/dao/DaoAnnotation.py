@@ -84,6 +84,7 @@ class DAOElasticAnnotation():
             }
         response = self.es_client.search(index=self.index_annotation, body= body )
         ids= response['aggregations']['group_by_id']['buckets']
+        random.shuffle(ids)
         for r in ids:
             count= r["doc_count"]
             if count < 3:
@@ -230,7 +231,7 @@ if __name__ == '__main__':
     for k in range(1,20):
         news=dao.next_news("author2")
         print(news)
-        dao.insert_new_annotation(news.id, "author2", news.language, random.choice(["FAKE","REAL"]))
+        #dao.insert_new_annotation(news.id, "author2", news.language, random.choice(["FAKE","REAL"]))
  
      
     
