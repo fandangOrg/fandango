@@ -21,7 +21,9 @@
 }
 
 .nav-link.disabled {
-    color: #8898aa;
+    color: #8898aa !important;
+    cursor: default !important;
+    background-color: transparent !important;
 }
 
 .nav-tabs {

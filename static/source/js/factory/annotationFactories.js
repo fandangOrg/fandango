@@ -1,7 +1,7 @@
 app.factory('annotation', ['$http', function ($http) {
     return {
-        goNext: function (language) {
-            return $http.post(base + "/next_news?lang=" + language);
+        goNext: function (language, author) {
+            return $http.post(base + "/next_news?lang=" + language + "&author=" + author);
         },
         getAutoAnnotation: function (label) {
             return $http.post(base + "/new_annotation", label);
