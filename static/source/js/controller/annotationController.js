@@ -17,7 +17,8 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
         'publisher': '',
         'url': '',
         'text': '',
-        'title': ''
+        'title': '',
+        'authorName': ''
     };
 
     // FUNCTIONS DECLARATION
@@ -98,6 +99,10 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
         if (language.active === 'False' || $scope.selectedLanguage === language.language) {
             return;
         } else {
+            if (!$scope.page.authorName) {
+                alert.showAlert('Warning');
+                return;
+            }
             $scope.selectedLanguage = language.language;
 
             var to_send = {
@@ -108,7 +113,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
                 $scope.countAnnotation = response.data;
             });
 
-            annotation.goNext($scope.selectedLanguage).then(function (response) {
+            annotation.goNext($scope.selectedLanguage, $scope.page.authorName).then(function (response) {
 
                 $scope.changeTextNews(response);
 
@@ -141,7 +146,9 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
                 var to_send = {
                     "id": $scope.news.id,
-                    "label": label
+                    "label": label,
+                    "author": $scope.page.authorName,
+                    "language": $scope.selectedLanguage
                 };
 
                 $scope.alertLabel = label;
@@ -159,7 +166,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
                         $scope.countAnnotation = response.data;
                     });
 
-                    annotation.goNext($scope.selectedLanguage).then(function (response) {
+                    annotation.goNext($scope.selectedLanguage, $scope.page.authorName).then(function (response) {
                         $scope.changeTextNews(response);
 
                         if (response.data.hasOwnProperty('END')) {
@@ -189,7 +196,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
                     alert.showAlert('Success');
 
                     to_send = {
-                        'language':$scope.optionLanguage
+                        'language': $scope.optionLanguage
                     };
 
                     annotation.getCountAnnotation(to_send).then(function (response) {
@@ -226,7 +233,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
     };
 
     $scope.skipAnnotation = function () {
-        annotation.goNext($scope.selectedLanguage).then(function (response) {
+        annotation.goNext($scope.selectedLanguage, $scope.page.authorName).then(function (response) {
             $scope.changeTextNews(response);
             resetRadio();
         }, function (response) {
@@ -237,14 +244,14 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
     $scope.startAnalyze = function () {
 
         var to_send = {
-          'language': $scope.selectedLanguage
+            'language': $scope.selectedLanguage
         };
 
         annotation.getCountAnnotation(to_send).then(function (response) {
 
             $scope.countAnnotation = response.data;
 
-            annotation.goNext($scope.selectedLanguage).then(function (response) {
+            annotation.goNext($scope.selectedLanguage, $scope.page.authorName).then(function (response) {
                 $("#btnStartAnalyze").addClass("animated fadeOut faster");
 
                 setTimeout(function () {
@@ -265,16 +272,16 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
         $scope.loadingAnalyzeUrl = true;
 
-            crUrl.analyzeUrl($scope.page.url).then(function (response) {
-                $scope.changeTextNews(response);
-                console.log($scope.page);
-                $scope.analyzeOk = true;
-                $scope.loadingAnalyzeUrl = false;
-            }, function (response) {
-                alert.showAlert('Error');
-                resetField();
-                $scope.analyzeOk = false;
-                $scope.loadingAnalyzeUrl = false;
-            });
-        };
+        crUrl.analyzeUrl($scope.page.url).then(function (response) {
+            $scope.changeTextNews(response);
+            console.log($scope.page);
+            $scope.analyzeOk = true;
+            $scope.loadingAnalyzeUrl = false;
+        }, function (response) {
+            alert.showAlert('Error');
+            resetField();
+            $scope.analyzeOk = false;
+            $scope.loadingAnalyzeUrl = false;
+        });
+    };
 }]);

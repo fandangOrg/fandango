@@ -3,7 +3,7 @@
         <div class="row align-items-center">
             <div class="col-12">
                 <div class="float-left">
-                    <h3 class="mb-0">Annotation</h3>
+                    <h3 class="mb-0">Annotation <span ng-if="analyzeStarted" class="h5">({{page.authorName}})</span></h3>
                 </div>
                 <div class="float-right">
                     <span class="badge badge-pill badge-primary mr-2" rel="tooltip" title="Count of news annotated" ng-if="analyzeStarted">{{countAnnotation}}</span>
@@ -15,7 +15,7 @@ Click on SKIP to get a new article to annotate"
             </div>
         </div>
     </div>
-    <div class="card-body card-annotation">
+    <div class="card-body" style="min-height: 130px">
         <div class="row" ng-if="!newExist">
             <div class="col-12 text-center">
                 <h4>No more news for selected language</h4>
@@ -48,12 +48,18 @@ Click on SKIP to get a new article to annotate"
             </div>
 
             <div class="row" ng-if="!analyzeStarted">
-                <div class="col-12 text-center middle-container">
-                    <div id="btnStartAnalyze" ng-click="startAnalyze()"
+                <div class="col-12 text-center">
+                    <div class="form-group">
+                        <input class="form-control form-control-alternative"
+                               ng-model="page.authorName" placeholder="Insert an annotator name"
+                               type="text">
+                    </div>
+
+                    <button id="btnStartAnalyze" ng-click="startAnalyze()" ng-disabled="!page.authorName"
                          class="btn btn-lg btn-icon btn-success">
                         <span class="btn-inner--icon"><i class="fas fa-play"></i></span>
                         <span class="btn-inner--text">Start Analyze</span>
-                    </div>
+                    </button>
                 </div>
             </div>
 
