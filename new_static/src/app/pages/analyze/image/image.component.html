@@ -40,7 +40,7 @@
                     </div>
                     <div class="card-body">
                         <img (click)="zoomImage(zoomModal,img.display)" class="c-pointer"
-                             src="data:image/png;base64,{{img.display}}" height="100%" width="100%"
+                             [src]="img.display" height="100%" width="100%"
                              [alt]="img.analyzer">
                     </div>
                 </div>
