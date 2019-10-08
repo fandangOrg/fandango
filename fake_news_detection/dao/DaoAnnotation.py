@@ -115,6 +115,14 @@ class DAOElasticAnnotation():
             }
         response = self.es_client.search(index=self.index_annotation, body= body )
         ids= response['aggregations']['group_by_id']['buckets']
+        full_annotated=list()
+        for r in ids:
+            count= r["doc_count"]
+            if count > 2:
+                full_annotated.append(r)
+        return len(full_annotated)
+    
+    
         return len(ids)                
         
     def _check_author_done(self,id,author):
