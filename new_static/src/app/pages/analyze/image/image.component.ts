@@ -59,7 +59,7 @@ export class ImageComponent implements OnInit, OnDestroy {
     }
 
     zoomImage(modal: any, image: string) {
-        this.modalImage = `data:image/png;base64,${image}`;
+        this.modalImage = image;
         this.modalService.open(modal, {
             size: 'lg',
             centered: true
