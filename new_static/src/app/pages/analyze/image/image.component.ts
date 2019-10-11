@@ -1,7 +1,7 @@
 import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {AnalyzeService} from "../analyze.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Log} from "@angular/core/testing/src/logger";
+import {ImageInfoLabels} from "../../../app.config";
 import {NgxSpinnerService} from "ngx-spinner";
 import {AppService} from "../../../app.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
@@ -18,8 +18,12 @@ export class ImageComponent implements OnInit, OnDestroy {
     image: object;
     modalImage: string;
     interval: any;
+    imageLabels: object[];
+    infoTooltip: string;
 
     constructor(private http: AnalyzeService, private router: ActivatedRoute, private route: Router, private spinner: NgxSpinnerService, private modalService: NgbModal) {
+        this.imageLabels = ImageInfoLabels;
+
         this.url = this.http.retrieveUrl(this.router);
 
         // IF PARAMS IS UNDEFINED OR NULL REDIRECT TO HOMEPAGE
@@ -31,6 +35,16 @@ export class ImageComponent implements OnInit, OnDestroy {
     ngOnDestroy() {
         // this.observableRef.unsubscribe();
         clearInterval(this.interval);
+    }
+
+    showDetailLabel(label: string) {
+        this.infoTooltip = null;
+
+        const obj = this.imageLabels.find(value => value['key'] === label);
+
+        this.infoTooltip = obj['value'];
+
+        // this.infoTooltip = Object.keys(this.imageLabels).find(key => this.imageLabels[key] === label);
     }
 
     ngOnInit() {

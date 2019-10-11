@@ -7,6 +7,25 @@ export interface Button {
     description: string;
 }
 
+export const ImageInfoLabels = [
+    {
+        key: 'CopyMove',
+        value: 'Has a part of this image been copy-pasted over another area? Red shows areas with high probability of a pasted object, Green shows areas with high probability of copied object,Blue shows areas with a low probability of any manipulation.'
+    },
+    {
+        key: 'Splicing',
+        value: 'Has an object of another unknown image been pasted over this one? Red shows areas with high probability of a pasted object, Blue shows areas with low probability of a pasted object.'
+    },
+    {
+        key: 'Manipulation',
+        value: 'Has an area of the image been altered in any way? Red shows areas with high probability of manipulation, Blue shows areas with low probability of manipulation.'
+    }
+    , {
+        key: 'faceForensics',
+        value: ' Has a face shown in this image been manipulated, or is it a deep-fake? All detected faces have a box surrounding them. If the box is Red, there is high probability that the face is manipulated while if the box is Blue the face is probably original.'
+    }
+];
+
 export const Buttons = [
     {
         type: 'article',
