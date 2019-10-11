@@ -18,6 +18,7 @@ def normalizer_neg(df_score):
     return df_score
 
 def normalizer_pos(df_score):
+    print(df_score[0])
     value=df_score[0][1]
     print("score pos ",value)
     #0.2

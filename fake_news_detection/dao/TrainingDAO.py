@@ -82,6 +82,8 @@ class DAOTrainingPD:
         print(files)
         v=set()
         for f in files:
+            if 'xml' not in f:continue
+            print(self.path+"/articles/"+f)
             e = ET.XML(open(self.path+"/articles/"+f,"r").read())
             title=""
             text =""
