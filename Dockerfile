@@ -41,5 +41,6 @@ ENV PATH $PATH:/treetagger/bin:/treetagger/cmd
 ADD . /fandango-fake-news
 ENV PYTHONPATH=$PYTHONPATH:/fandango-fake-news
 WORKDIR /fandango-fake-news/fake_news_detection/services/
-#CMD python ServicesFandango.py
-CMD ./start.sh
+#CMD python ServicesFandangoAnnotation.py
+CMD python ServicesFandango.py
+
