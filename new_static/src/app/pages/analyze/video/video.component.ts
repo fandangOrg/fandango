@@ -5,7 +5,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {NgxSpinnerService} from "ngx-spinner";
 import {AppService} from "../../../app.service";
 
-@Pipe({ name: 'urlSafe' })
+@Pipe({name: 'urlSafe'})
 export class SafePipe implements PipeTransform {
     constructor(private sanitizer: DomSanitizer) {}
     transform(url) {
@@ -23,6 +23,7 @@ export class VideoComponent implements OnInit, OnDestroy {
     @Output() showLoading = new EventEmitter<boolean>();
     url: string;
     video: object;
+    isExtracting: boolean;
     interval: any;
 
     constructor(private http: AnalyzeService, private router: ActivatedRoute, private route: Router, private sanitizer: DomSanitizer, private spinner: NgxSpinnerService) {
@@ -32,6 +33,8 @@ export class VideoComponent implements OnInit, OnDestroy {
         if (!this.url) {
             this.route.navigate(['/homepage']);
         }
+
+        this.isExtracting = false;
     }
 
     ngOnInit() {
@@ -49,13 +52,14 @@ export class VideoComponent implements OnInit, OnDestroy {
                         this.video = data;
                         console.log(this.video);
                         this.showLoading.emit(false);
+                        this.isExtracting = false;
 
                         // CHECK ANALYZE STATUS
                         if (this.video['status'] === 'error') {
                             this.route.navigate(['/homepage']);
                             AppService.showNotification('danger', `Error occured during analyzing video, ${this.video['error']}`);
                         } else if (this.video['status'] !== 'done')
-                            // IF STATUS NOT DONE PING SERVICE EVERY 5 SECONDS
+                        // IF STATUS NOT DONE PING SERVICE EVERY 5 SECONDS
                             this.checkStatus(tempVideo);
                     }
                 )
@@ -75,23 +79,24 @@ export class VideoComponent implements OnInit, OnDestroy {
     checkStatus(video) {
         // ASSIGN THIS TO SELF FOR USE IT IN INTERVAL FUNCTION
         const self = this;
-
-        setTimeout(() => this.spinner.show('spinnerVideo'), 25);
-
+        self.isExtracting = true;
         self.interval = window.setInterval(function () {
             self.http.getVideoScore(video).subscribe(
                 data => {
                     if (data['status'] === 'done') {
+                        self.isExtracting = false;
                         self.video = data;
                         console.log(self.video);
-                        setTimeout(() => self.spinner.hide('spinnerVideo'), 25);
                         // EXIT FROM LOOP
                         clearInterval(self.interval);
                     } else if (data['status'] === 'error') {
+                        self.isExtracting = false;
                         self.route.navigate(['/homepage']);
                         AppService.showNotification('danger', `Error occured during analyzing video, ${data['error']}`);
                     } else {
-                        console.log("ANALYZING -->", data['status']);
+                        self.video = data;
+                        self.isExtracting = true;
+                        console.log("ANALYZING -->", data);
                     }
                 }
             )
@@ -119,7 +124,7 @@ export class VideoComponent implements OnInit, OnDestroy {
         return url;
     }
 
-    isEmptyObject(obj){
+    isEmptyObject(obj) {
         return (Object.getOwnPropertyNames(obj).length === 0);
     }
 
