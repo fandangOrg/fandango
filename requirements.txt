@@ -24,7 +24,7 @@ docutils==0.14
 ds4biz-broker-manager==0.0.2.dev0
 ds4biz-commons==0.0.2.dev0
 ds4biz-flask==0.0.11
-ds4biz-predictor-core==0.0.4
+ds4biz-predictor-core==0.0.4.dev0
 elasticsearch==6.3.1
 elasticsearch-dsl==6.3.1
 eli5==0.8.1
