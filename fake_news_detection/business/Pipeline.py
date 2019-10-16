@@ -130,7 +130,8 @@ class AnalyticsService(metaclass=Singleton):
         #print('''ANALISI NEWS IN LINGUA '''+ news_preprocessed.language)
         try:
             print("MODELLO USATO ALL")
-            model =self.daopredictor.get_by_id('all')
+            #model =self.daopredictor.get_by_id('all')
+            model =self.daopredictor.get_by_id(news_preprocessed.language)
         except:
             #print("Doesn't exist model in ",news_preprocessed.language)
             #print("I use en model")
