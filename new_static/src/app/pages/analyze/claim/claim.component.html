@@ -9,7 +9,7 @@
                     }
                 </style>
 
-                <h6 class="heading-small text-muted">Claims</h6>
+                <h6 class="heading text-muted">Claims</h6>
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush">
                         <!--                        <thead class="bg-white">-->
@@ -20,7 +20,7 @@
                         <!--                        </tr>-->
                         <!--                        </thead>-->
                         <tbody>
-                        <ng-container *ngFor="let claim of claims">
+                        <ng-container *ngFor="let claim of claims['similar_claim']">
                             <tr [class.bg-white]="claim.expand">
                                 <th scope="row">
                                     {{claim.text}}
@@ -109,6 +109,51 @@
                     </table>
                 </div>
             </div>
+            <div class="col-12 mt-5">
+                <h6 class="heading text-muted">Open data</h6>
+                <div class="table-responsive">
+                    <table class="table align-items-center table-flush">
+                        <tbody>
+                        <ng-container *ngFor="let data of claims['open_data']">
+                            <tr [class.bg-white]="data.expand">
+                                <th scope="row">
+                                    {{data.name}}
+                                </th>
+                                <th scope="row" width="1%">
+                                    <a title="Show Open Data URL" [href]="data.url" target="_blank"><i
+                                        class="fas fa-external-link-alt" style="color:#525f7f !important;"></i></a>
+                                </th>
+                                <th scope="row" width="1%">
+                                    <a (click)="data.expand = !data.expand">
+                                        <i *ngIf="!data.expand" class="fas fa-caret-square-down fa-2x c-pointer"></i>
+                                        <i *ngIf="data.expand" class="fas fa-caret-square-up fa-2x c-pointer"></i>
+                                    </a>
+                                </th>
+                            </tr>
+                            <ng-container *ngIf="data.expand">
+                                <th scope="row" colspan="3" class="p-0">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td style="white-space: normal">
+                                                {{data.text}}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </th>
+                            </ng-container>
+                        </ng-container>
+
+                        <tr *ngIf="claims['open_data'].length === 0">
+                            <th scope="row" colspan="2" class="text-center">
+                                No Open Data found
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

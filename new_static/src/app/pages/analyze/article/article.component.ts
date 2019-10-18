@@ -61,8 +61,8 @@ export class ArticleComponent implements OnInit {
             data => {
                 console.log(data);
                 this.sirenUrl = this.sirenUrl.replace(/QUERYDACAMBIARE/g, this.url);
-                this.article = new Article(data['identifier'],data['datePublished'], data['language'], data['headline'], data['articleBody'], data['images'],
-                    data['videos'], data['results']['publishers'], data['results']['authors'], data['results']['text'], data['similarnews']);
+                this.article = new Article(data['news_preprocessed']['identifier'],data['news_preprocessed']['datePublished'], data['news_preprocessed']['language'], data['news_preprocessed']['headline'], data['news_preprocessed']['articleBody'], data['news_preprocessed']['images'],
+                    data['news_preprocessed']['videos'], data['news_preprocessed']['results']['publishers'], data['news_preprocessed']['results']['authors'], data['news_preprocessed']['results']['text'], data['news_preprocessed']['similarnews'], data['opendata']);
 
                 this.showLoading.emit(false);
                 console.log(this.article);
