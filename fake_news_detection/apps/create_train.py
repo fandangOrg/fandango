@@ -9,8 +9,9 @@ from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
 
 def create_train_file(name='default_train',path=resources_path,preprocessing=Preprocessing('en'),dao_dati=DAOTrainingPD(),language='en'):
     X = dao_dati.get_train_dataset()
-    X=preprocessing.execution(X)
-    X.to_csv(path+"/"+name+"_"+language+".csv")
+    X.to_csv(path+"/"+name+"_text_"+language+".csv")
+    #X=preprocessing.execution(X)
+   # X.to_csv(path+"/"+name+"_"+language+".csv")
     
     
 if __name__ == '__main__':

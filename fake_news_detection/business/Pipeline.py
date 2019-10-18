@@ -22,6 +22,9 @@ from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 import inspect
 import random
 from fake_news_detection.utils.score_utils import normalizer_neg, normalizer_pos
+from fake_news_detection.apps.training_model import BertForMultiClass
+import bert
+from fake_news_detection.model.predictor import BERTFakePredictor
 log = getLogger(__name__)
 
 def log_info(f):
@@ -122,13 +125,18 @@ class AnalyticsService(metaclass=Singleton):
         model =self.daopredictor.get_by_id(id)
     @log_info
     def _text_analysis(self,news_preprocessed:News_DataModel) -> News_DataModel:
+        
+         
         #print('''ANALISI NEWS IN LINGUA '''+ news_preprocessed.language)
         try:
+            print("MODELLO USATO ALL")
+            #model =self.daopredictor.get_by_id('all')
             model =self.daopredictor.get_by_id(news_preprocessed.language)
         except:
             #print("Doesn't exist model in ",news_preprocessed.language)
             #print("I use en model")
             model =self.daopredictor.get_by_id("en")
+        print("model",model)
         df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
         prest,features = model.predict_proba(df)
         #print("source_domain",news_preprocessed.sourceDomain,news_preprocessed.sourceDomain in  self.dic_domains['REAL'],self.dic_domains['REAL'] )
@@ -141,7 +149,11 @@ class AnalyticsService(metaclass=Singleton):
             prest=normalizer_pos(prest)
         #print("model.predictor_fakeness.classes_",model.predictor._classes)
         #print("PREST",prest)
-        prest = pd.DataFrame(prest, columns=model.predictor._classes)
+        if type(model) is BERTFakePredictor:
+            prest = pd.DataFrame(prest, columns=[0,1])
+        else:
+            print(model.predictor._classes)
+            prest = pd.DataFrame(prest, columns=model.predictor._classes)
         #print("PREST",prest)
         prest=pd.concat([prest,features],axis=1)
         return prest
@@ -327,6 +339,7 @@ class AnalyticsService(metaclass=Singleton):
             list_publishs=[]
             list_images=[]
             list_videos=[]
+            print(pd_text)
             score=pd_text[1][0]
             news=self._save_news(news_preprocessed,js_t,score,old)
             ##

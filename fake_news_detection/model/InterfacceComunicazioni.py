@@ -6,7 +6,15 @@ Created on Oct 18, 2018
 
 ######################ONLINE SERVICES TEST##############
 
-
+class Open_Data: 
+    def __init__(self,text:str, category:str, topics:list):
+        self.text = text
+        self.category = category
+        self.topics = topics
+        
+        
+        
+        
 
 class News_raw:
 
