@@ -27,7 +27,6 @@ import torch
 from torch.utils.data.dataset import TensorDataset
 from torch.utils.data.sampler import RandomSampler
 from torch.utils.data.dataloader import DataLoader
-from bert import run_classifier
 import bert
 import pandas as pd 
 

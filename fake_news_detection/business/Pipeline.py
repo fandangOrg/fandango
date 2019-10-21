@@ -22,7 +22,7 @@ from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
 import inspect
 import random
 from fake_news_detection.utils.score_utils import normalizer_neg, normalizer_pos
-from fake_news_detection.apps.training_model import BertForMultiClass
+#from fake_news_detection.apps.training_model import BertForMultiClass
 import bert
 from fake_news_detection.model.predictor import BERTFakePredictor
 log = getLogger(__name__)
