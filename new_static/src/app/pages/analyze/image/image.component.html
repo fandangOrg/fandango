@@ -1,11 +1,11 @@
 <div class="col-md-8 col-12 analyze-container" *ngIf="image">
     <div class="grid">
-        <!--        <a target="_blank">-->
-        <!--            <button class="btn btn-icon btn-secondary" style="position: absolute; top: 20px;right: 20px; z-index: 2">-->
-        <!--                <span class="btn-inner&#45;&#45;text span-fade" style="margin-right: 0">Image Timeline</span>-->
-        <!--                <i class="fas fa-history"  style="font-size: 20px !important;margin: 0"></i>-->
-        <!--            </button>-->
-        <!--        </a>-->
+                <a target="_blank" href="http://tnt.vrtinnovatie.be/?url={{url}}">
+                    <button class="btn btn-icon btn-secondary" style="position: absolute; top: 20px;right: 20px; z-index: 2">
+                        <span class="btn-inner--text">Image Timeline</span>
+                        <i class="fas fa-history" style="margin: 0"></i>
+                    </button>
+                </a>
         <div class="row">
             <div class="col-md-6 col-12">
                 <img [src]="image.contentUrl" style="height: 300px;" class="img-center img-thumbnail">

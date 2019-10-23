@@ -37,16 +37,6 @@ export class ImageComponent implements OnInit, OnDestroy {
         clearInterval(this.interval);
     }
 
-    showDetailLabel(label: string) {
-        this.infoTooltip = null;
-
-        const obj = this.imageLabels.find(value => value['key'] === label);
-
-        this.infoTooltip = obj['value'];
-
-        // this.infoTooltip = Object.keys(this.imageLabels).find(key => this.imageLabels[key] === label);
-    }
-
     ngOnInit() {
 
         this.showLoading.emit(true);
@@ -70,6 +60,16 @@ export class ImageComponent implements OnInit, OnDestroy {
                 )
             }
         )
+    }
+
+    showDetailLabel(label: string) {
+        this.infoTooltip = null;
+
+        const obj = this.imageLabels.find(value => value['key'] === label);
+
+        this.infoTooltip = obj['value'];
+
+        // this.infoTooltip = Object.keys(this.imageLabels).find(key => this.imageLabels[key] === label);
     }
 
     zoomImage(modal: any, image: string) {
