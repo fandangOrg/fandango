@@ -1,5 +1,5 @@
 fandango:
-  image: livetech/fandango-fake-news:0.3.8
+  image: livetech/fandango-fake-news:0.3.9
   volumes:
     - ~/data/:/data/
   environment:

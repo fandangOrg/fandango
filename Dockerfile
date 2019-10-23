@@ -35,7 +35,6 @@ WORKDIR /treetagger
 RUN tar xvzf /treetagger/tree-tagger-linux-3.2.1.tar.gz
 RUN /treetagger/install-tagger.sh
 ENV PATH $PATH:/treetagger/bin:/treetagger/cmd
-#################
 
 #RUN pip install --upgrade --extra-index-url http://$user:$password@206.189.119.125:8080 --trusted-host 206.189.119.125 -r /requirements.txt
 ADD . /fandango-fake-news
