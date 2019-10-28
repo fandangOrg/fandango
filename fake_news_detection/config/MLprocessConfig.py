@@ -25,10 +25,42 @@ def text_preprocessing_mapping(preprocess):
             ('title', preprocess)
             ]
 #(lang=lang_code)
+
+class app_str:
+    def __init__(self,name,lang_code):
+        self.__name__= name
+        self.lang=lang_code
+        
 def new_features_mapping(lang_code):
     return  [
                                 #('text', CharsCounter(lang=lang_code)),
                                 #('title', CharsCounter(lang=lang_code)),
+                                ("text",app_str("rix",lang_code)),
+                                ("text",app_str("lix",lang_code)),
+                                ("text",app_str("gunning_fog",lang_code)),
+                                ("text",app_str("dale_chall_readability_score",lang_code)),
+                                ("text",app_str("linsear_write_formulas",lang_code)),
+                                ("text",app_str("automated_readability_index",lang_code)),
+                                ("text",app_str("coleman_liau_index",lang_code)),
+                                ("text",app_str("smog_index",lang_code)),
+                                ("text",app_str("flesch_kincaid_grade",lang_code)),
+                                ("text",app_str("vflesch_reading_ease",lang_code)),
+                                ("text",app_str("avg_sentence_per_word",lang_code)),
+                                ("text",app_str("avg_letter_per_word",lang_code)),
+                                ("text",app_str("avg_character_per_word",lang_code)),
+                                ("text",app_str("avg_syllables_per_word",lang_code)),
+                                ###
+                                # #
+                                ###
+                                ("title",app_str("avg_sentence_length",lang_code)),
+                                ("title",app_str("avg_sentence_per_word",lang_code)),
+                                ("title",app_str("avg_letter_per_word",lang_code)),
+                                ("title",app_str("avg_character_per_word",lang_code)),
+                                ("title",app_str("avg_syllables_per_word",lang_code)),
+                                ###
+                                # #
+                                ###
+                                
                                 ('text', AVGSentencesSizeCounter(lang=lang_code)),
                                 ('title', AVGWordsCounter(lang=lang_code)),
                                 ('text', AVGWordsCounter(lang=lang_code)),
@@ -36,8 +68,8 @@ def new_features_mapping(lang_code):
                                 ('title', PunctuationCounter(lang=lang_code)),
                                 ('title', StopwordCounter(lang= lang_code)),
                                 ('text',LexicalDiversity(lang = lang_code)),
-                                ('text', FleschReadingEase(lang = lang_code)),
-                                ('text', FKGRadeLevel(lang = lang_code)),
+                                #('text', FleschReadingEase(lang = lang_code)),
+                                #('text', FKGRadeLevel(lang = lang_code)),
                                 ('text', POSDiversity(lang = lang_code)),
                                 ('title', POSDiversity(lang = lang_code)),
 

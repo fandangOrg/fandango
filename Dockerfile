@@ -8,9 +8,14 @@ RUN apt-get install -y build-essential
 RUN apt-get install -y libicu-dev
 ADD requirements.txt /
 RUN pip install --upgrade --extra-index-url http://$user:$password@distribution.livetech.site --trusted-host distribution.livetech.site -r /requirements.txt
-RUN python3 -m spacy download en_core_web_md
+#RUN pip install https://github.com/explosion/spacy-models/releases/download/it_core_news_sm-2.1.0/en_core_web_md-2.1.0.tar.gz#egg=en_core_web_md==2.1.0
+#RUN pip install https://github.com/explosion/spacy-models/releases/download/it_core_news_sm-2.1.0/it_core_news_sm-2.1.0.tar.gz#egg=it_core_news_sm==2.1.0
+#RUN pip install https://github.com/explosion/spacy-models/releases/download/es_core_news_md-2.1.0/es_core_news_md-2.1.0.tar.gz#egg=es_core_news_md==2.1.0
+#RUN pip install https://github.com/explosion/spacy-models/releases/download/nl_core_news_sm-2.1.0/nl_core_news_sm-2.1.0.tar.gz#egg=nl_core_news_sm==2.1.0
+RUN pip install --upgrade pip
+RUN python -m spacy download en_core_web_sm
 RUN python3 -m spacy download it_core_news_sm
-RUN python3 -m spacy download es_core_news_md
+RUN python3 -m spacy download es_core_news_sm
 RUN python3 -m spacy download nl_core_news_sm
 RUN python3 -m nltk.downloader stopwords
 ######## TREETAGGER
@@ -28,8 +33,11 @@ ADD $SOURCE/spanish.par.gz /treetagger
 #ADD $SOURCE/german-par-linux-3.2-utf8.bin.gz /treetagger
 #ADD $SOURCE/french-chunker-par.gz /treetagger
 ADD $SOURCE/english-chunker.par.gz /treetagger
-#ADD $SOURCE/german-chunker-par.gz /treetagger
+#ADD $SOURCE/german-chunker-par.gz /treetaggerMAPPING
 ADD $SOURCE/spanish-chunker.par.gz /treetagger
+ADD $SOURCE/dutch.par.gz /treetagger
+ADD $SOURCE/spanish.par.gz /treetagger
+
 RUN chmod u+x /treetagger/install-tagger.sh
 WORKDIR /treetagger
 RUN tar xvzf /treetagger/tree-tagger-linux-3.2.1.tar.gz
