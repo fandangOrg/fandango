@@ -2,13 +2,6 @@
     <div class="grid">
         <div class="row">
             <div class="col-12">
-
-                <style>
-                    .table th {
-                        white-space: normal;
-                    }
-                </style>
-
                 <h6 class="heading text-muted">Claims</h6>
                 <div class="table-responsive">
                     <table class="table align-items-center table-flush">
@@ -22,7 +15,7 @@
                         <tbody>
                         <ng-container *ngFor="let claim of claims['similar_claim']">
                             <tr [class.bg-white]="claim.expand">
-                                <th scope="row">
+                                <th scope="row" style="white-space: normal;">
                                     {{claim.text}}
                                 </th>
                                 <th scope="row" style="white-space: nowrap">
@@ -116,8 +109,8 @@
                         <tbody>
                         <ng-container *ngFor="let data of claims['open_data']">
                             <tr [class.bg-white]="data.expand">
-                                <th scope="row">
-                                    {{data.name}}
+                                <th class="open-data" scope="row">
+                                    {{data.text}}
                                 </th>
                                 <th scope="row" width="1%">
                                     <a title="Show Open Data URL" [href]="data.url" target="_blank"><i
