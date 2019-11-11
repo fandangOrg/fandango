@@ -31,7 +31,7 @@ log = getLogger(__name__)
 service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon()  uncomment if you want to start kafka deamon#
-#daemon_run()
+daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 

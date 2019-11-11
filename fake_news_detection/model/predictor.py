@@ -130,6 +130,7 @@ class FakePredictor(DS4BizPredictor):
         X=self.preprocessing.execution(X)
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
+        print(X)
         labels_fakeness= self.predictor.predict_proba(X)
         return labels_fakeness,X
     

@@ -11,6 +11,7 @@ from fake_news_detection.utils.Exception import FandangoException
 from elasticsearch import helpers
 import random
 from fake_news_detection.model.InterfacceComunicazioni import News
+from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
     
 log = getLogger(__name__)
 
@@ -22,6 +23,8 @@ class DAOElasticAnnotation():
         self.docType = docType_article
         self.index_annotation = index_annotation
         self.check_index_exists()
+        dao = DAOTrainingElasticByDomains()
+        self.dic_domains = dao.get_domains_from_elastic()
         
     def check_index_exists(self):
         if not self.es_client.indices.exists(index=self.index_annotation, ignore=404):
@@ -199,7 +202,10 @@ class DAOElasticAnnotation():
         id=self._get_missed_annoation(author,language )
         if id is not None:
             news=self._get_news(id)
-            return self._parser_news(news)
+            news_parsed=self._parser_news(news)
+            if news_parsed.source_domain[0] in  self.dic_domains['FAKE'] or news_parsed.source_domain[0] in  self.dic_domains['REAL'] :
+                print("È UNA GIÀ ANNOTATA CON I DOMAIN")
+            return news_parsed
         #['identifier'],news['headline'],news.get('topic',"?"),news['inLanguage']
         k=1300
         while True:
@@ -225,7 +231,12 @@ class DAOElasticAnnotation():
                 news= r["_source"]
                 print('ID NEWS RANDO',r["_source"]['identifier'])
                 if not self._check_news_done(r["_source"]['identifier']):
-                    return self._parser_news(news)
+                    news_parsed=self._parser_news(news)
+                    if news_parsed.source_domain[0] in  self.dic_domains['FAKE'] or news_parsed.source_domain[0] in  self.dic_domains['REAL'] :
+                        print("È UNA GIÀ ANNOTATA CON I DOMAIN")
+                    else:
+                        return news_parsed
+                
             #return news['identifier'],news['headline'],news.get('topic',"?"),news['inLanguage']
     
     
