@@ -330,8 +330,8 @@
                 <tbody>
                 <ng-container *ngFor="let data of article.openData">
                     <tr [class.bg-white]="data.expand">
-                        <th scope="row">
-                            {{data.name}}
+                        <th class="open-data" scope="row">
+                            {{data.text}}
                         </th>
                         <th scope="row" width="1%">
                             <a title="Show Open Data URL" [href]="data.url" target="_blank"><i
