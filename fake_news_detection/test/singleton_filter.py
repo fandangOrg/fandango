@@ -45,12 +45,13 @@ class Singleton_Filter(metaclass=Singleton):
         '''
         Constructor
         '''
-        self.lang=['en','it']
+        self.lang=['en','it','es',"nl"]
         self.nlp_tool=dict()
         for lang in self.lang:
             print("---loading ",lang)
             self.nlp_tool[lang+"_tagger"] = treetaggerwrapper.TreeTagger(TAGLANG=lang)
             self.nlp_tool[lang+"_stopwords"] = set(stopwords.words(LANG_MAPPING[lang][0]))
+            
             #self.nlpt_tool[lang+"_stemmer"] = SnowballStemmer(LANG_MAPPING[lang][1])
             #self.nlpt_tool[lang+"_nlp"] = spacy.load(LANG_MAPPING[lang][2], disable=["tagger", "parser", "ner"])
                                                     

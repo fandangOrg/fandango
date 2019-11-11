@@ -123,6 +123,41 @@ class DAOTrainingPD:
         print("> end of 'get_train_dataset()'\n")
         return df
 
+class DAOTrainingPDDomain(DAOTrainingPD):
+    #dataset_beta togliere commento e metterlo nel path 
+    def __init__(self, path = path_training, delimiter='|'):
+        self.path = path
+        print(self.path)
+        self.delimiter = delimiter
+        
+    def get_train_dataset(self, sample_size:float=1.0):
+        print("\n\n > start of 'get_train_dataset()'")
+        '''
+        print('Read Train Guardian.csv')
+        training_set= pd.read_csv(self.path +"/"+"guardian.csv",sep='\t') # dataset
+        training_set['label']=1
+        df=training_set
+        print("shape after 'guardian.csv' -->", df.shape)
+        '''
+        training_set= pd.read_csv(self.path,sep=self.delimiter) # dataset
+        
+        df_app=training_set[['title','text','label']]
+        df_app['label'] = df_app['label'].map({'FAKE': int(0), 'REAL': int(1)})
+        df = df_app
+        print("after kaggle csv",df.shape)
+        print("missing values title", df['title'].isna().sum())
+        print("missing values text", df['text'].isna().sum())
+        print("missing values label", df['label'].isna().sum())
+        df=df.dropna(subset = ['title','text','label'])
+        if sample_size < 1.0:
+            df = df.sample(frac=sample_size)
+
+        print("final shape -->", df.shape)
+        print(df.groupby(['label']).agg(['count']))
+        print("total real and total fake",df.label.value_counts())
+        print("> end of 'get_train_dataset()'\n")
+        return df
+    
 
 class DAOTrainingElastic:
 

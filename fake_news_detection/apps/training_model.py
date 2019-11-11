@@ -71,14 +71,13 @@ def build_model_BERT(name="model_2"):
     daopredictor.save(model, id='all')
     
 if __name__ == '__main__':
-    build_model_BERT()
+    #build_model_BERT()
     
-    #===========================================================================
-    # for lang,train in [('en','default_train_v3_only_kaggle_en.csv'),('it','default_train_v2_en.csv')]:
-    #     print("leggi train")
-    #     X=pandas.read_csv(resources_path_train+"/"+train ).iloc[:, 1:]
-    #     X['label']=X['label'].astype("int")
-    #     print(X)
-    #     training_model_LGBMClassifier(lang,X)
-    #     print("---")
-    #===========================================================================
+    #for lang,train in [('en','default_train_v3_only_kaggle_en.csv'),('it','default_train_v2_en.csv')]:
+    for lang,train in [('it','default_train_domains_text_it.csv'),('nl','default_train_domains_text_nl.csv'),('es','default_train_domains_text_es.csv')]:
+        print("leggi train")
+        X=pandas.read_csv(resources_path_train+"/"+train ).iloc[:, 1:]
+        X['label']=X['label'].astype("int")
+        print(X)
+        training_model_LGBMClassifier(lang,X)
+        print("---")

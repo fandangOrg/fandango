@@ -14,7 +14,8 @@ from fake_news_detection.config.MLprocessConfig import new_features_mapping,\
     text_preprocessing_mapping, config_factory
 from fake_news_detection.model.InterfacceComunicazioni import Prestazioni
 from lightgbm.sklearn import LGBMClassifier
-from fake_news_detection.config.AppConfig import dataset_beta  
+from fake_news_detection.config.AppConfig import dataset_beta  ,\
+    resources_path_train
 import pandas
 from sklearn.ensemble.voting_classifier import VotingClassifier
 from sklearn.preprocessing.label import LabelEncoder
@@ -388,9 +389,13 @@ def get_performance(y_test, y_pred,classes):
     print("\t - Recall:", recall)
     print("\t - F-measure:", f1, "\n")
     
-if __name__ == '__main__':    
-    X=pandas.read_csv(dataset_beta+"/train_kaggle.csv").iloc[:, 1:]
-    print(X.columns)
+if __name__ == '__main__':   
+    for lang,train in [('it','default_train_v2_en.csv')]:
+        X=pandas.read_csv(resources_path_train+"/"+train ).iloc[:, 1:] 
+        print(X.columns)
+        preprocessing = Preprocessing("en")
+        X = preprocessing.execution(X)
+        print(X.columns) 
     #===========================================================================
     # daopredictor = FSMemoryPredictorDAO(picklepath)
     # predictor=LGBMClassifier() 

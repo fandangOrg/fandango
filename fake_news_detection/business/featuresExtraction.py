@@ -11,8 +11,45 @@ from itertools import count
 from fake_news_detection.utils.DataPrep import clean_text
 from fake_news_detection.test.singleton_filter import Singleton_Filter
 import numpy
+from textstat.textstat import textstat, textstatistics
+from builtins import ZeroDivisionError
 
 singleton=Singleton_Filter()
+
+class utils_senteces(textstatistics):
+    def __init__(self,lang):
+        super(utils_senteces, self).__init__()
+        self.lang=lang
+        
+    
+    def syllable_count(self, text):
+        return textstat.syllable_count(text, lang=self.lang)
+        
+
+    def all_analysis(self,text):
+        try:
+            v=self.lix(text)
+        except ZeroDivisionError:
+            v=0.0
+        analysis={
+        "rix":self.rix(text),
+        "lix":v,
+        "gunning_fog":self.gunning_fog(text),
+        "dale_chall_readability_score":self.dale_chall_readability_score(text),
+        "linsear_write_formulas":self.linsear_write_formula(text),
+        "automated_readability_index":self.automated_readability_index(text),
+        "coleman_liau_index":self.coleman_liau_index(text),
+        "smog_index":self.smog_index(text),
+        "flesch_kincaid_grade":self.flesch_kincaid_grade(text),
+        "vflesch_reading_ease":self.flesch_reading_ease(text),
+        "avg_sentence_per_word":self.avg_sentence_per_word(text),
+        "avg_letter_per_word":self.avg_letter_per_word(text),
+        "avg_character_per_word":self.avg_character_per_word(text),
+        "avg_syllables_per_word":self.avg_syllables_per_word(text),
+        "avg_sentence_length":self.avg_sentence_length(text)
+        }
+        return analysis
+        
 class FeaturesExtractor(ABC):
     
     def __init__(self, lang:str,**kwargs):
@@ -101,61 +138,80 @@ class AveWordxParagraph(FeaturesExtractor):
 class FleschReadingEase(FeaturesExtractorLanguageDependence):
         
     def _set_funct_by_lang(self):
-        self.lang_to_funct={"it":self._it,
-                            "en":self._en}
+        self.lang_to_funct={"it":self._score,
+                            "en":self._score,
+                            "es":self._score,
+                            "nl":self._score}
         
-        
-    def _it(self,text,**kwargs):
+    def _score(self,text,**kwargs):  
         try:
-            doc=kwargs.get('doc')
-            if doc is None:
-                doc = Text(text, hint_language_code=self.lang)
-            tot_syl = 0
-            
-            for word in doc.words:
-                c = syllcountit(word)
-                tot_syl += c
-            
-            #print('total  vowels :',tot_syl)
-            total_words = len(doc.words)
-            if len(doc.sentences) != 0 and total_words != 0:
-                ratio1 = total_words / len(doc.sentences)
-                ratio2 = tot_syl / total_words
-            
-                return (206.835 - (1.015*ratio1) - (84.6*ratio2))
-        except:
-            return np.nan    
+                return utils_senteces(self.lang).flesch_reading_ease(text)
+        except: 
+            return np.nan
         
-    def _en(self,text,**kwargs):   
-        try:
-            doc=kwargs.get('doc')
-            if doc is None:
-                doc = Text(text, hint_language_code=self.lang)
-            tot_syl = 0
-            
-            for word in doc.words:
-                c = syllcounten(word)
-                tot_syl += c
-            
-            #print('total  vowels :',tot_syl)
-            total_words = len(doc.words)
-            if len(doc.sentences) != 0 and total_words != 0:
-                ratio1 = total_words / len(doc.sentences)
-                ratio2 = tot_syl / total_words
-            
-                return (206.835 - (1.015*ratio1) - (84.6*ratio2))
-        except:
-            return np.nan    
-        
+    #===========================================================================
+    # def _it(self,text,**kwargs):
+    #     try:
+    #         doc=kwargs.get('doc')
+    #         if doc is None:
+    #             doc = Text(text, hint_language_code=self.lang)
+    #         tot_syl = 0
+    #         
+    #         for word in doc.words:
+    #             c = syllcountit(word)
+    #             tot_syl += c
+    #         
+    #         #print('total  vowels :',tot_syl)
+    #         total_words = len(doc.words)
+    #         
+    #         if len(doc.sentences) != 0 and total_words != 0:
+    #             ratio1 = total_words / len(doc.sentences)
+    #             ratio2 = tot_syl / total_words
+    #         
+    #             return (206.835 - (1.015*ratio1) - (84.6*ratio2))
+    #         
+    #     except:
+    #         return np.nan    
+    #     
+    # def _en(self,text,**kwargs):   
+    #     try:
+    #         doc=kwargs.get('doc')
+    #         if doc is None:
+    #             doc = Text(text, hint_language_code=self.lang)
+    #         tot_syl = 0
+    #         
+    #         for word in doc.words:
+    #             c = syllcounten(word)
+    #             tot_syl += c
+    #         
+    #         #print('total  vowels :',tot_syl)
+    #         total_words = len(doc.words)
+    #         print(self._score(text))
+    #         if len(doc.sentences) != 0 and total_words != 0:
+    #             ratio1 = total_words / len(doc.sentences)
+    #             ratio2 = tot_syl / total_words
+    #         
+    #             return (206.835 - (1.015*ratio1) - (84.6*ratio2))
+    #     except:
+    #         return np.nan    
+    #     
+    #===========================================================================
         
         
                
 class FKGRadeLevel(FeaturesExtractorLanguageDependence):
     def _set_funct_by_lang(self):
         self.lang_to_funct={"it":self._it,
-                            "en":self._en}
+                            "en":self._en,
+                            "es":self._score,
+                            "nl":self._score}
         
-        
+    def _score(self,text,**kwargs):  
+        try:
+                return utils_senteces(self.lang).flesch_kincaid_grade(text)
+        except: 
+            return np.nan
+    
     def _en(self,text,**kwargs):   
         try:
             doc=kwargs.get('doc')
@@ -168,6 +224,7 @@ class FKGRadeLevel(FeaturesExtractorLanguageDependence):
                 tot_syl += c
             
             #print('total  vowels :',tot_syl)
+            print(self._score(text))
             total_words = len(doc.words)
             if len(doc.sentences) != 0 and total_words != 0:
                 ratio1 = total_words / len(doc.sentences)
@@ -334,6 +391,7 @@ class CountAdj(FeaturesExtractor):
             tagger=singleton.nlp_tool[self.lang+"_tagger"]                                            
             #tagger.tag_text("doc")
             #print(tagger)
+            adj_list_tag = ["JJ","JJR","JJS","adj","ADJ",'adjabbr']
             tag_text=kwargs.get("tag_text")
             count = 0 
             if tag_text is None:
@@ -341,7 +399,7 @@ class CountAdj(FeaturesExtractor):
             for tag in tag_text:
                 tt = tag.split('\t')
                 if len(tt)>1:
-                    if tt[1] == 'JJ' or tt[1] == 'JJR' or tt[1] == 'JJS':
+                    if tt[1] in adj_list_tag:
                         count += 1
             if len(tag_text)==0: return 0.0
             return count/len(tag_text)
@@ -354,14 +412,14 @@ class CountAdv(FeaturesExtractor):
         tagger=singleton.nlp_tool[self.lang+"_tagger"]                                    
         #tagger.tag_text("doc")
         count = 0 
-        adv_list_tag = ['RB', 'RBR', 'RBS', 'WRB']
+        adv_list_tag = ['RB', 'RBR', 'RBS', 'WRB',"ADV","adv","advabbr"]
         tag_text=kwargs.get("tag_text")
         if tag_text is None:
             tag_text = tagger.tag_text(text)
         for tag in tag_text:
+            #print(tag)
             tt = tag.split('\t')
             if len(tt)>1:
-                #print(tt)
                 if tt[1] in adv_list_tag:
                     count += 1
         if len(tag_text)==0: return 0.0
@@ -373,6 +431,8 @@ class CountPrep_conj(FeaturesExtractor):
         tagger=singleton.nlp_tool[self.lang+"_tagger"]
         #tagger.tag_text("doc")
         count = 0 
+        prep_list_tag = ['IN', 'CC', 'prep'"prepabbr","PRE","PREP"]
+
         tag_text=kwargs.get("tag_text")
         if tag_text is None:
             tag_text = tagger.tag_text(text)
@@ -380,7 +440,7 @@ class CountPrep_conj(FeaturesExtractor):
             tt = tag.split('\t')
             #print(tt)
             if len(tt)>1:
-                if tt[1] == 'IN' or tt[1] == "CC":
+                if tt[1] in prep_list_tag:
                     count += 1
         if len(tag_text)==0: return 0.0
         return count/len(tag_text)
@@ -397,7 +457,7 @@ class countVerbs(FeaturesExtractor):
         for tag in tag_text:
             tt = tag.split('\t')
             if len(tt)>1:
-                if tt[1] in verbs_list:
+                if tt[1] in verbs_list or tt[1][0].lower()=="v":
                     count += 1
         if len(tag_text)==0: return 0.0
         return count/len(tag_text)
@@ -410,6 +470,7 @@ class POSDiversity(FeaturesExtractor):
         tag_text=kwargs.get("tag_text")
         if tag_text is None:
             tag_text = tagger.tag_text(text)
+            
         tags=[]
         for tag in tag_text:
             tt = tag.split('\t')
@@ -417,7 +478,11 @@ class POSDiversity(FeaturesExtractor):
                 #print(tt)
                 tags.append(tt[1]) 
         if len(tags)==0: return 0.0
-        return len(set(tags))/58
+         #nl-->https://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/dutch-tagset.txt
+         #it --> http://sslmit.unibo.it/~baroni/collocazioni/itwac.tagset.txt
+         #spanish -> Source: http://www.cis.uni-muenchen.de/~schmid/tools/TreeTagger/data/spanish-tagset.txt
+        n_tag={'it':52,'en':58,'nl':41,'es':75}
+        return len(set(tags))/n_tag[self.lang]
     
     
 class Multifunction(FeaturesExtractor):
@@ -439,9 +504,15 @@ class Multifunction(FeaturesExtractor):
         ##tagger.tag_text("doc")
         tag_text = tagger.tag_text(text)
         doc = Text(text, hint_language_code=self.lang)
+        all_analysis=utils_senteces(self.lang).all_analysis( text)
         for f in self.functions:
+            value=all_analysis.get(f.__name__)
+            
+            if value is not None:
+                results.append(value)
+            else:
             #start = time.time()
-            results.append(f(text, **{"tag_text":tag_text,"doc":doc}))
+                results.append(f(text, **{"tag_text":tag_text,"doc":doc}))
             #end = time.time()
             #print(f,end - start)
         #print("................................................")
@@ -449,9 +520,28 @@ class Multifunction(FeaturesExtractor):
         
         
 if __name__ == "__main__":
-    
-    l=FleschReadingEase('en')
-    print(l('hi, how are you? and you me feel for the fine and and and for then at at '))
+    lang_code='it'
+        
+    analisi=[('text', AVGSentencesSizeCounter(lang=lang_code)),
+    ('title', CountAdv(lang=lang_code)),
+    ('text', CountAdv(lang=lang_code)),
+    ('title', StopwordCounter(lang= lang_code)),
+    ('text',LexicalDiversity(lang = lang_code)),
+    ('text', FleschReadingEase(lang = lang_code)),
+    ('text', FKGRadeLevel(lang = lang_code)),
+    ('text', POSDiversity(lang = lang_code)),
+    ]
+    text="o you happen to know the library, AllenNLP? If you’re working on Natural Language Processing (NLP), you might hear about the name. However, I guess a few people actually use it. Or the other has tried before but hasn’t know where to start because there are lots of functions. For those who aren’t familiar with…"
+    for a,analyzer in analisi:
+        print(analyzer.__name__)
+        print(analyzer.__name__,analyzer(text))
+        
+                                    
+    #===========================================================================
+    # 
+    # l=FleschReadingEase('en')
+    # print(l('hi, how are you? and you me feel for the fine and and and for then at at '))
+    #===========================================================================
     #l = StopwordCounter(lang='en')
     #print(l('hi, how are you? and you me feel for the fine and and and for then at at '))
     #s = AveWordxParagraph(lang = 'en')
@@ -480,7 +570,7 @@ if __name__ == "__main__":
     
     
     
-    
+
     
     
     
