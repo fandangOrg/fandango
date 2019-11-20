@@ -23,7 +23,7 @@ paths:
         schema:
           $ref: "#/definitions/Claim_Request_Interface"
       responses:
-        200:
+        "200":
           description: "Successful operation"
           schema:
             type: "array"
@@ -43,7 +43,7 @@ paths:
         schema:
           $ref: "#/definitions/Article_Request_Interface"
       responses:
-        200:
+        "200":
           description: "Successful operation"
           schema:
             type: "array"
@@ -66,7 +66,7 @@ paths:
         schema:
           $ref: "#/definitions/Fact_Request_Interface"
       responses:
-        200:
+        "200":
           description: "Successful operation"
           schema:
             type: "array"
@@ -354,6 +354,7 @@ definitions:
           - "about"
           inLanguage: "inLanguage"
           dateModified: "dateModified"
+          source: "source"
           spatialCoverage: "spatialCoverage"
           url: "url"
           datePublished: "datePublished"
@@ -374,6 +375,7 @@ definitions:
           - "about"
           inLanguage: "inLanguage"
           dateModified: "dateModified"
+          source: "source"
           spatialCoverage: "spatialCoverage"
           url: "url"
           datePublished: "datePublished"
@@ -387,6 +389,7 @@ definitions:
           text: "text"
           sourceDomain: "sourceDomain"
   Claim_Response_Interface_claim_calculatedRatingDetail:
+    type: "object"
     properties:
       publishRating:
         type: "number"
@@ -396,6 +399,7 @@ definitions:
       authorRating: 1.46581298050294517310021547018550336360931396484375
       publishRating: 6.02745618307040320615897144307382404804229736328125
   Claim_Response_Interface_claim:
+    type: "object"
     properties:
       about:
         type: "array"
@@ -461,6 +465,7 @@ definitions:
       - "possiblyRelatesTo"
       - "possiblyRelatesTo"
   Claim_Response_Interface_results:
+    type: "object"
     properties:
       claim:
         $ref: "#/definitions/Claim_Response_Interface_claim"
@@ -492,6 +497,7 @@ definitions:
         - "possiblyRelatesTo"
         - "possiblyRelatesTo"
   Article_Response_Interface_article_author:
+    type: "object"
     properties:
       identifier:
         type: "string"
@@ -523,6 +529,7 @@ definitions:
       name: "name"
       url: "url"
   Article_Response_Interface_article_publisher:
+    type: "object"
     properties:
       identifier:
         type: "string"
@@ -548,6 +555,7 @@ definitions:
       - "parentOrganization"
       url: "url"
   Article_Response_Interface_article:
+    type: "object"
     properties:
       identifier:
         type: "string"
@@ -659,6 +667,7 @@ definitions:
       sourceDomain: "sourceDomain"
       headline: "headline"
   Article_Response_Interface_results:
+    type: "object"
     properties:
       article:
         $ref: "#/definitions/Article_Response_Interface_article"
@@ -727,6 +736,7 @@ definitions:
         sourceDomain: "sourceDomain"
         headline: "headline"
   Fact_Response_Interface_fact:
+    type: "object"
     properties:
       identifier:
         type: "string"
@@ -739,6 +749,8 @@ definitions:
       inLanguage:
         type: "string"
       sourceDomain:
+        type: "string"
+      source:
         type: "string"
       publishDateEstimated:
         type: "string"
@@ -770,6 +782,7 @@ definitions:
       - "about"
       inLanguage: "inLanguage"
       dateModified: "dateModified"
+      source: "source"
       spatialCoverage: "spatialCoverage"
       url: "url"
       datePublished: "datePublished"
@@ -783,6 +796,7 @@ definitions:
       text: "text"
       sourceDomain: "sourceDomain"
   Fact_Response_Interface_results:
+    type: "object"
     properties:
       fact:
         $ref: "#/definitions/Fact_Response_Interface_fact"
@@ -795,6 +809,7 @@ definitions:
         - "about"
         inLanguage: "inLanguage"
         dateModified: "dateModified"
+        source: "source"
         spatialCoverage: "spatialCoverage"
         url: "url"
         datePublished: "datePublished"

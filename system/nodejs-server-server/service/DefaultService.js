@@ -64,6 +64,10 @@ function createFactResponse(info, json){
       result.name = fact._source.name || null;
       result.text = fact._source.text || null;
       result.url = fact._source.url || null;
+      result.inLanguage = fact._source.inLanguage || null;
+      result.sourceDomain = fact._source.sourceDomain || null;
+      result.source = fact._source.source || null;
+      result.publishDateEstimated = fact._source.publishDateEstimated || null;
       result.about = fact._source.about || null;
       result.mentions = fact._source.mentions || null;
       result.dateCreated = fact._source.dateCreated || null;
@@ -619,6 +623,5 @@ exports.findSimilarClaims = function(info) {
            return Promise.resolve(response);
          })
      }
-
 
 
