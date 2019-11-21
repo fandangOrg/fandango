@@ -390,12 +390,13 @@ def running(name):
 
     
 if __name__ == '__main__':
-    service_scrapy=ScrapyService()
-    service_analyzer= AnalyticsService()
-    news_preprocessed=service_scrapy.scrapy("https://www.theguardian.com/us-news/2019/feb/19/bernie-sanders-announces-2020-run-presidency")
-    prest=service_analyzer.analyzer(news_preprocessed)
-    
-    headers = {'content-type': "application/json",'accept': "application/json"}
+    #===========================================================================
+    # service_scrapy=ScrapyService()
+    # service_analyzer= AnalyticsService()
+    # news_preprocessed=service_scrapy.scrapy("https://www.theguardian.com/us-news/2019/feb/19/bernie-sanders-announces-2020-run-presidency")
+    # prest=service_analyzer.analyzer(news_preprocessed)
+    # headers = {'content-type': "application/json",'accept': "application/json"}
+    #===========================================================================
 #===============================================================================
 #     u = URLRequest(url_service_certh+"/api/media_analysis")
 #     payload = {"images": ["https://i.guim.co.uk/img/media/fc33d72d0d06b2b08d2c8e6c8ccc5879bbdb7b3d/5_343_2662_1597/master/2662.jpg?width=300&quality=85&auto=format&fit=max&s=3e45e12e82a20bc9a70c001854b44f67"],"videos": [""],"identifier": "test"}
@@ -405,34 +406,17 @@ if __name__ == '__main__':
 #     response = u.post(data=j, headers=headers)
 #     #print("VIDEOIMMAGINI RESPOSNE",response)
 #===============================================================================
-    text='''
-They urged swift action after the first deadly 737 Max crash off Indonesia in October, according to audio obtained by CBS and the New York Times.
-
-Boeing reportedly resisted their calls but promised a software fix.
-
-But this had not been rolled out when an Ethiopian Airlines' 737 Max crashed four months later, killing 157 people.
-
-Currently 737 Max planes are grounded worldwide amid concerns that an anti-stall system may have contributed to both crashes.
-
-Boeing is in the process of updating the system, known as MCAS, but denies it was solely to blame for the disasters.
-
-    Boeing admits knowing of 737 Max problem
-    Boeing safety system not at fault, says chief executive
-    Boeing 737 Max: What went wrong?
-
-In a closed door meeting with Boeing executives last November, which was secretly recorded, American Airlines' pilots can be heard expressing concerns about the safety of MCAS.
-
-Boeing vice-president Mike Sinnett told the pilots: "No one has yet to conclude that the sole cause of this was this function on the airplane."
-
-Later in the meeting, he added: "The worst thing that can ever happen is a tragedy like this, and the even worse thing would be another one."
-
-The pilots also complained they had not been told about MCAS, which was new to the 737 Max, until after the Lion Air crash off Indonesia, which killed 189.
-
-"These guys didn't even know the damn system was on the airplane, nor did anybody else," said Mike Michaelis, head of safety for the pilots' union.
-
-Boeing declined to comment on the November meeting, saying: "We are focused on working with pilots, airlines and global regulators to certify the updates on the Max 
-
-'''
+    text='''Shares in Amarin jumped on news that it had won the backing of an FDA advisory panel to sell its heart drug Vascepa to a wider group of patients. The shares, which had jumped over 20 per cent earlier in the week as the panel prepared to meet, added another 8 per cent when the Nasdaq market re-opened on Friday. It was trading around the $22.87 mark at lunch in New York, up 6.4 per cent on the day. The specially convened FDA advisory committee voted unanimously to approve the expanded use of Amarin’s Vascepa drug as an add-on therapy for reducing the chance of heart attacks and strokes in high-risk patients with cardiovascular disease. However, there were differences within the group as to just how widely it should be prescribed. Vascepa is a highly purified fish oil capsule targeted at people who are at risk of stroke or heart attack because they continue to have high levels of harmful blood fats, called triglycerides, despite being prescribed treatment with statins. Until now, Amarin was approved only for a much smaller niche indication – the lowering of triglycerides in patients who have extremely high levels of the blood fats. “There is no doubt this is a medication that could benefit a substantial portion of the US and meets an unmet need,” said panel member Dr Jack Yanovski of the National Institutes of Health. The panel was largely in favour of an approval in patients with history of cardiovascular disease, but some members were unconvinced of the drug’s effectiveness in reducing cardiac events in patients who have not had strokes or heart attacks, or any other such events. Jefferies analyst Michael Yee said on Thursday, ahead of the vote, that patients with existing cardiovascular disease would be the vast majority of those likely to be using Vascepa. “Frankly it’s not clear that the exact wording of the label would even materially impact prescriptions, utilisation, or reimbursement,” Mr Yee added. Some patients in the trial reported slightly higher risk of bleeding and a small increase in irregular heart rhythm, safety concerns that panel members suggested highlighting on the drug’s label. In the United States, cardiovascular disease leads to one in every three deaths. An expanded label could open up market access to up to 15 million Americans with high triglycerides and other cardiovascular risk factors, despite being on statin treatment. In May, the FDA granted Amarin priority review for Vascepa in relation to a much wider group of patients who have less extreme levels of the dangerous blood fats. The company says it is a condition affecting millions of patients. A late-stage trial last year found Vascepa, when administered to patients on cholesterol-lowering drug statin, cut the combined rate of heart attacks, strokes and other cardiovascular events by 25 per cent compared to a placebo. Shares in Amarin jumped 20 per cent before trading was suspended to allow the committee consider the evidence for wider access. Roth Capital Partners analyst Yasmeen Rahimi, who expects Vascepa to be a game changer in the cardiovascular market, sees it capturing about 12.1 per cent of the market over the next decade, resulting in peak sales of $3.2 billion by 2030. Amarin recorded sales of $229.2 million last year. The company must now wait to see if the FDA follows th guidance of the advisory committee. The medicines regulator, which has set a target date of December 28th to decide on the label expansion, is not mandated to follow the recommendation of the panel, but generally does. – Additional reporting, Reuters
+'''    
+    daopredictor = FSMemoryPredictorDAO(picklepath)
+    df = pd.DataFrame(data={'title': ["Amarin shares jump as FDA panel backs heart drug"], 'text': [text.replace("\n"," ") ]})
+    model =daopredictor.get_by_id("en")
+    print(df)
+    prest,features = model.predict_proba(df)
+    print(model.predictor.__dict__)
+    print(prest)
+    print(features)
+    
     #===========================================================================
     # u = URLRequest(url_service_certh+"/api/extract_topics")
     # payload = {"articleBody": text,
