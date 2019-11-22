@@ -30,14 +30,20 @@ class ColumnFEExtractor:
         if isinstance(objects, DataFrame):
             if cmd == 1:
                 for col,fun in self._multi_function():
-                    s = objects[col].apply(fun)
-                    names = fun.__name__
-                    #print(names,type(values),'\n',values)
-                    df=pandas.DataFrame.from_items(zip(s.index, s.values) )
-                    df=df.T
-                    df.columns =[col+"_"+name for name in names]
-                    objects=pandas.concat([df, objects], axis=1, sort=False)
-                    #objects[[col+"_"+name for name in names]]=values
+                    try:
+                        s = objects[col].apply(fun)
+                        names = fun.__name__
+                        #print(names,type(values),'\n',values)
+                        print(s.index)
+                        print(s.values)
+                        df=pandas.DataFrame.from_items(zip(s.index, s.values) )
+                        df=df.T
+                        df.columns =[col+"_"+name for name in names]
+                        objects=pandas.concat([df, objects], axis=1, sort=True)
+                        print(df)
+                        #objects[[col+"_"+name for name in names]]=values
+                    except KeyError as e :
+                        continue
                 return  objects  
                     
             for couple in self.mapping:
@@ -77,7 +83,7 @@ class ColumnFEExtractor:
 def add_new_features_to_df(df:DataFrame, mapping:List[Tuple]) -> DataFrame:
     extractor = ColumnFEExtractor(mapping)
     df_improved = extractor(df, 1)
-    df_improved.dropna(inplace=True)
+#    df_improved.dropna(inplace=True)
     return df_improved
 
 

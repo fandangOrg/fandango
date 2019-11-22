@@ -1,3 +1,40 @@
+<ng-template #uploadModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Upload image</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="mb-4">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="inputImg"
+                       (change)="handleFileUpload($event.target.files)" />
+                <label class="custom-file-label"
+                       for="inputImg">{{imgFile ? imgFile.name : 'Upload file (required)'}}</label>
+            </div>
+            <hr class="my-4">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Insert URL image (optional)"
+                   aria-label="Search" id="uploadUrl" [(ngModel)]="imgUrl">
+        </div>
+
+        <div class="progress-wrapper" *ngIf="uploadLoading">
+            <div class="progress-info">
+                <div class="progress-label">
+                    <span>Uploading...</span>
+                </div>
+            </div>
+            <div class="progress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+            </div>
+        </div>
+
+        <button class="btn btn-info btn-lg btn-block" *ngIf="!uploadLoading" [disabled]="!imgFile" (click)="sendImgUpload()">Send file</button>
+    </div>
+</ng-template>
+
 <div class="row pt-5 pt-md-9 wrapper">
     <div class="col-lg-6 col-md-8 col-sm-10 col-12 mx-auto">
         <img [src]="fandangoLogo" class="img-logo" alt="Fandango">
@@ -54,13 +91,18 @@
             </button>
 
             <div class="float-right">
+                <button class="btn btn-lg btn-icon" (click)="showUploadModal(uploadModal)">
+                    <i class="fas fa-file-upload"></i>
+                    <span class="btn-inner--text">Upload Image</span>
+                </button>
+
                 <a href="http://40.114.234.51:8080/app/kibana">
                     <button class="btn btn-lg btn-icon">
                         <img class="inner-img mr-2" src="assets/img/logos/siren.png">
                         <span>Advanced</span>
                     </button>
                 </a>
-<!--                <p class="text-sm text-center mt-1">Advanced investigative <br>functions</p>-->
+                <!--                <p class="text-sm text-center mt-1">Advanced investigative <br>functions</p>-->
             </div>
         </div>
     </div>
