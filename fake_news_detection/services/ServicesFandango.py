@@ -3,9 +3,10 @@ Created on 23 apr 2019
 
 @author: camila
 '''
+
 from fake_news_detection.model.InterfacceComunicazioni import News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel,\
  InterfaceInputFeedBack, Claim_input, Claim_output, News, News_annotated,\
-    Open_Data
+    Open_Data, UploadImageInput
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.config.AppConfig import  static_folder, url_service_media,\
     url_service_authors, url_similar_claims, template_path, url_upload_image
@@ -31,7 +32,7 @@ log = getLogger(__name__)
 service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon()  uncomment if you want to start kafka deamon#
-daemon_run()
+#daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -109,13 +110,15 @@ def ping_video(id:str) -> str:
     u = URLRequest(url_service_media+"/api/analyze_video/"+id)
     return u.get(headers=headers)
 
-def upload_image(url:str,image :str):
+def upload_image(uploadimagein:UploadImageInput) -> str:
     headers = {'content-type': "application/json",'accept': "application/json"}
     u = URLRequest(url_upload_image+"/api/analyze_image")
-    payload = {"url": url,"force" :"true","image":image}
+    payload = {"url": uploadimagein.url,"force" :"true","image": uploadimagein.image}
     print("UPLOAD IMAGE REQUEST  ",payload)
     j = json.dumps(payload)
     return u.post(data=j, headers= headers)
+
+
 
       
 def url_image_score(url:str) -> str:
