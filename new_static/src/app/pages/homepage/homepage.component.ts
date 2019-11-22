@@ -87,7 +87,10 @@ export class HomepageComponent implements OnInit, AfterViewInit {
 
         this.http.uploadImage(to_send).subscribe(data => {
             console.log(data);
+            let result = data;
+            result = result['display'].find(key => key.analyzer === 'original');
             this.uploadLoading = false;
+            this.router.navigate(['analyze/image', {url: result['display']}]);
         }, error => {
             this.uploadLoading = false;
         })
