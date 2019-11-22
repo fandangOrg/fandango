@@ -31,7 +31,7 @@ log = getLogger(__name__)
 service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon()  uncomment if you want to start kafka deamon#
-daemon_run()
+#daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -245,7 +245,7 @@ app.add_service("similar_claims",similar_claims, method = 'POST')
 app.add_service("url_image_score",url_image_score, method = 'GET')
 app.add_service("url_video_score",url_video_score, method = 'GET')
 app.add_service("similar_news",similar_news, method = 'POST')
-app.add_service("upload_image",upload_image, method = 'POST')
+#app.add_service("upload_image",upload_image, method = 'POST')
 
 
 CORS(app)
