@@ -80,7 +80,7 @@ url_service_media = os.environ.get("URL_SERVICE_CERTH") or config.get("configura
 url_service_authors = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "authors_service_url")
 url_similar_claims = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "url_similar_claims")
 url_crawler = os.environ.get("URL_SERVICE_CRAWLER") or config.get("configurationservice", "url_crawler")
-
+url_upload_image =  os.environ.get("URL_SERVICE_UPLOADIMAGE") or config.get("configurationservice", "url_image_upload")
 ######################################################################################
 #############KAFKA CONFIG #############À
 

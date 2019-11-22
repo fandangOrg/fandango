@@ -13,6 +13,7 @@ from fake_news_detection.test.singleton_filter import Singleton_Filter
 import numpy
 from textstat.textstat import textstat, textstatistics
 from builtins import ZeroDivisionError
+from scipy.constants.constants import pt
 
 singleton=Singleton_Filter()
 
@@ -335,7 +336,7 @@ class AVGSentencesSizeCounter(FeaturesExtractor):
                 doc = Text(text, hint_language_code=self.lang)
             return numpy.mean([len(sentence.words) for sentence in doc.sentences])
         except:
-            return np.nan
+            return 1.0
         
 class PositiveWordsCounter(FeaturesExtractor):
     def __call__(self, text:str,**kwargs) -> float:
@@ -506,13 +507,16 @@ class Multifunction(FeaturesExtractor):
         doc = Text(text, hint_language_code=self.lang)
         all_analysis=utils_senteces(self.lang).all_analysis( text)
         for f in self.functions:
-            value=all_analysis.get(f.__name__)
+            x=f.__name__
+            value=all_analysis.get(x)
             
             if value is not None:
+                #value=(x,all_analysis.get(x))
                 results.append(value)
             else:
             #start = time.time()
-                results.append(f(text, **{"tag_text":tag_text,"doc":doc}))
+                #results.append((f.__name__,f(text, **{"tag_text":tag_text,"doc":doc})))
+                results.append( f(text, **{"tag_text":tag_text,"doc":doc}))
             #end = time.time()
             #print(f,end - start)
         #print("................................................")

@@ -109,12 +109,11 @@ class FakePredictor(DS4BizPredictor):
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
         Y = X['label']
-        print(Y.value_counts())
         X = X.drop(['label'], axis=1)
         X_train, X_test, y_train, y_test = train_test_split(X,Y , test_size=0.2)
         self.predictor.fit(X_train,y_train)
         probs = self.predictor.predict_proba(X_test)
-        y_pred = [0 if single_pred[0] >= single_pred[1] else 1 for single_pred in probs]
+        y_pred = [self.predictor.classes_[0] if single_pred[0] >= single_pred[1] else self.predictor.classes_[1] for single_pred in probs]
         get_performance(y_test=y_test, y_pred=y_pred,classes=self.predictor.classes_)        
         self.number_item=len(X_train)
         self.predictor.fit(X ,Y)
@@ -250,6 +249,7 @@ class LGBMFakePredictor(DS4BizPredictor):
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
         labels_fakeness= self.predictor.predict(X)
+
         return labels_fakeness
         
     def predict_proba(self,X):
@@ -377,6 +377,8 @@ class BERTFakePredictor(DS4BizPredictor):
         
         
 def get_performance(y_test, y_pred,classes):
+    print("-->",y_test)
+    print("-->",y_pred)
     accuracy = accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred, average='weighted', labels= classes)
     recall = recall_score(y_test, y_pred, average='weighted', labels= classes)

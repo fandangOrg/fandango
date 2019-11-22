@@ -17,11 +17,13 @@ def create_train_file(name='default_train',path=resources_path,preprocessing=Pre
     
     
 if __name__ == '__main__':
-    #create_train_file(name='default_train_v3_only_kaggle_new_features')
-    for file_train,lang in [('dataset_dutch.csv','nl'),("dataset_italian.csv","it"),("dataset_spanish.csv","es")]:
-        print(lang,file_train)
-        create_train_file(name='default_train_domains',path=resources_path,
-                          preprocessing=Preprocessing(lang),
-                          dao_dati=DAOTrainingPDDomain(path_training+"/"+file_train, "|"),
-                          language=lang)
+    create_train_file(name='default_train_v3_only_kaggle_new_features')
+    #===========================================================================
+    # for file_train,lang in [('dataset_dutch.csv','nl'),("dataset_italian.csv","it"),("dataset_spanish.csv","es")]:
+    #     print(lang,file_train)
+    #     create_train_file(name='default_train_domains',path=resources_path,
+    #                       preprocessing=Preprocessing(lang),
+    #                       dao_dati=DAOTrainingPDDomain(path_training+"/"+file_train, "|"),
+    #                       language=lang)
+    #===========================================================================
         

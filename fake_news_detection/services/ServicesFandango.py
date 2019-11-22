@@ -8,7 +8,7 @@ from fake_news_detection.model.InterfacceComunicazioni import News_DataModel, Au
     Open_Data
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.config.AppConfig import  static_folder, url_service_media,\
-    url_service_authors, url_similar_claims, template_path
+    url_service_authors, url_similar_claims, template_path, url_upload_image
 import json
 from flask_cors.extension import CORS
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
@@ -31,7 +31,7 @@ log = getLogger(__name__)
 service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon()  uncomment if you want to start kafka deamon#
-#daemon_run()
+daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -44,7 +44,7 @@ def start_daemon() -> str:
 
 def analyzer(news_preprocessed:News_DataModel) -> str:
     log.info('''ANALISI NEWS'''+str(news_preprocessed.sourceDomain))
-    prest=service_analyzer.analynzer(news_preprocessed)
+    prest=service_analyzer.analyzer(news_preprocessed)
     
     print(prest)
     #log.info(json.loads(prest))
@@ -108,6 +108,15 @@ def ping_video(id:str) -> str:
     headers = {'content-type': "application/json",'accept': "application/json"}
     u = URLRequest(url_service_media+"/api/analyze_video/"+id)
     return u.get(headers=headers)
+
+def upload_image(url:str,image :str):
+    headers = {'content-type': "application/json",'accept': "application/json"}
+    u = URLRequest(url_upload_image+"/api/analyze_image")
+    payload = {"url": url,"force" :"true","image":image}
+    print("UPLOAD IMAGE REQUEST  ",payload)
+    j = json.dumps(payload)
+    return u.post(data=j, headers= headers)
+
       
 def url_image_score(url:str) -> str:
     
@@ -236,6 +245,7 @@ app.add_service("similar_claims",similar_claims, method = 'POST')
 app.add_service("url_image_score",url_image_score, method = 'GET')
 app.add_service("url_video_score",url_video_score, method = 'GET')
 app.add_service("similar_news",similar_news, method = 'POST')
+app.add_service("upload_image",upload_image, method = 'POST')
 
 
 CORS(app)

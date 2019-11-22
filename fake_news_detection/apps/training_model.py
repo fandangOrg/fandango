@@ -12,6 +12,7 @@ import torch
 from pytorch_pretrained_bert.modeling import BertForPreTraining
 from bert.modeling import BertModel
 import torch.nn as nn
+import matplotlib.pyplot as plt
 
 
 class BertForMultiClass(BertForPreTraining):
@@ -42,6 +43,17 @@ def training_model_LGBMClassifier(lang,X):
     print("crea modello")
     model=FakePredictor(predictor=predictor,preprocessing=Preprocessing(lang), id=lang)
     model.fit(X)
+    X = X.drop(['text'], axis=1)
+    X = X.drop(['title'], axis=1)
+    X = X.drop(['label'], axis=1)
+    """ Plot the significance scores of feautures """
+    feat_imp = pandas.Series(model.predictor.feature_importances_, index=X.columns)
+    # feat_imp = pd.Series(self.mdl.models[0].feature_importances_, index=X.columns)
+    feat_imp.nlargest(50).plot(kind='barh', figsize=(8, 10))
+    plt.tight_layout()
+    plt.show()
+    plt.close()
+    
     daopredictor.save(model)
 
 
@@ -73,11 +85,18 @@ def build_model_BERT(name="model_2"):
 if __name__ == '__main__':
     #build_model_BERT()
     
-    #for lang,train in [('en','default_train_v3_only_kaggle_en.csv'),('it','default_train_v2_en.csv')]:
+    #for lang,train in [('en','default_train_v3_only_kaggle_new_features_text_en.csv')]:
     for lang,train in [('it','default_train_domains_text_it.csv'),('nl','default_train_domains_text_nl.csv'),('es','default_train_domains_text_es.csv')]:
         print("leggi train")
-        X=pandas.read_csv(resources_path_train+"/"+train ).iloc[:, 1:]
-        X['label']=X['label'].astype("int")
-        print(X)
+        X=pandas.read_csv(resources_path+"/"+train ).iloc[:, 1:]
+        X['label']=X['label'].map({0: "FAKE", 1: "GOOD"})
+        #=======================================================================
+        # col=X.columns
+        # for c in col:
+        #     if 'title_' in c:
+        #         X=X.drop([c], axis=1)
+        #         print(c)
+        #=======================================================================
+        print(len(X))
         training_model_LGBMClassifier(lang,X)
         print("---")
