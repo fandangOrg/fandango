@@ -76,3 +76,7 @@ textarea[resize="horizontal"] {
 .form-control-lg {
     font-size: $font-size-base;
 }
+
+.custom-file-input {
+    cursor: pointer;
+}
