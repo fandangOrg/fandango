@@ -258,7 +258,12 @@ class Prestazioni:
     def toJSON(self):
         return self.__dict__
 
-        
+
+class UploadImageInput:
+    def __init__(self,url:str,image:str):
+        self.url = url
+        self.image = image
+    
 
 class Info:
     def __init__(self,nome_modello:str,data_creazione:str,prestazioni:Prestazioni,language:str):

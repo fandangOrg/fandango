@@ -41,7 +41,7 @@ export const Buttons = [
         icon: 'fas fa-image',
         placeholder: 'Image URL',
         input: 'url',
-        description: 'CHECK IF AN IMAGE HAS BEEN MODIFIED OR HAS A WRONG TAG'
+        description: 'CHECK IF AN IMAGE HAS BEEN MODIFIED'
     },
     {
         type: 'video',
@@ -49,7 +49,7 @@ export const Buttons = [
         icon: 'fas fa-video',
         placeholder: 'Video URL',
         input: 'url',
-        description: 'CHECK IF A VIDEO HAS BEEN MODIFIED OR HAS A WRONG TAG'
+        description: 'CHECK IF A VIDEO HAS BEEN MODIFIED'
     },
     {
         type: 'claim',
