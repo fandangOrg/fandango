@@ -96,7 +96,7 @@ class StopwordCounter(FeaturesExtractor):
                     count += 1
             return count/len(doc.words)
         except:
-            return np.nan
+            return 0.0
 
 
 class LexicalDiversity(FeaturesExtractor):
@@ -109,7 +109,7 @@ class LexicalDiversity(FeaturesExtractor):
             #print(doc) 
             return (len(set(doc.words)) / len(doc.words))
         except:
-            return np.nan
+            return 0.0
             
     
        
@@ -133,7 +133,7 @@ class AveWordxParagraph(FeaturesExtractor):
             #print(np.mean(list_word_par))
             return(np.mean(list_word_par))
         except:
-            return np.nan
+            return 0.0
                 
             
 class FleschReadingEase(FeaturesExtractorLanguageDependence):
@@ -148,7 +148,7 @@ class FleschReadingEase(FeaturesExtractorLanguageDependence):
         try:
                 return utils_senteces(self.lang).flesch_reading_ease(text)
         except: 
-            return np.nan
+            return 0.0
         
     #===========================================================================
     # def _it(self,text,**kwargs):
@@ -172,7 +172,7 @@ class FleschReadingEase(FeaturesExtractorLanguageDependence):
     #             return (206.835 - (1.015*ratio1) - (84.6*ratio2))
     #         
     #     except:
-    #         return np.nan    
+    #         return 0.0    
     #     
     # def _en(self,text,**kwargs):   
     #     try:
@@ -194,7 +194,7 @@ class FleschReadingEase(FeaturesExtractorLanguageDependence):
     #         
     #             return (206.835 - (1.015*ratio1) - (84.6*ratio2))
     #     except:
-    #         return np.nan    
+    #         return 0.0    
     #     
     #===========================================================================
         
@@ -211,7 +211,7 @@ class FKGRadeLevel(FeaturesExtractorLanguageDependence):
         try:
                 return utils_senteces(self.lang).flesch_kincaid_grade(text)
         except: 
-            return np.nan
+            return 0.0
     
     def _en(self,text,**kwargs):   
         try:
@@ -233,7 +233,7 @@ class FKGRadeLevel(FeaturesExtractorLanguageDependence):
             
                 return ((0.39*ratio1)+(11.8*ratio2)-15.59)
         except: 
-            return np.nan
+            return 0.0
         
     def _it(self,text,**kwargs):
         try:
@@ -254,7 +254,7 @@ class FKGRadeLevel(FeaturesExtractorLanguageDependence):
             
                 return ((0.39*ratio1)+(11.8*ratio2)-15.59)
         except: 
-            return np.nan
+            return 0.0
 
 #da implementare bene    
 class GunningFog(FeaturesExtractor):
@@ -289,7 +289,7 @@ class PunctuationCounter(FeaturesExtractor):
                     count += 1
             return count/len(text)
         except:
-            return np.nan
+            return 0.0
 
 
 class CharsCounter(FeaturesExtractor):
@@ -297,7 +297,7 @@ class CharsCounter(FeaturesExtractor):
         try:
             return log(len(text) + 1)
         except:
-            return np.nan
+            return 0.0
 
 
 class WordsCounter(FeaturesExtractor):
@@ -308,7 +308,7 @@ class WordsCounter(FeaturesExtractor):
                 doc = Text(text, hint_language_code=self.lang)
             return log(len([word for word in doc.words]) + 1)
         except:
-            return np.nan
+            return 0.0
 
 
 class AVGWordsCounter(FeaturesExtractor):
@@ -316,7 +316,7 @@ class AVGWordsCounter(FeaturesExtractor):
         try:
             return len(text.split())/len(text) 
         except:
-            return np.nan
+            return 0.0
         
 class SentencesCounter(FeaturesExtractor):
     def __call__(self, text:str,**kwargs) -> float:
@@ -326,7 +326,7 @@ class SentencesCounter(FeaturesExtractor):
                 doc = Text(text, hint_language_code=self.lang)
             return log(len([sentence for sentence in doc.sentences]) + 1)
         except:
-            return np.nan
+            return 0.0
 
 class AVGSentencesSizeCounter(FeaturesExtractor):
     def __call__(self, text:str,**kwargs) -> float:
@@ -344,7 +344,7 @@ class PositiveWordsCounter(FeaturesExtractor):
             doc = Text(text, hint_language_code=self.lang)
             return log(len([word for sentence in doc.sentences for word in sentence.words if word.polarity == 1]) + 1)
         except:
-            return np.nan
+            return 0.0
 
 
 class NegativeWordsCounter(FeaturesExtractor):
@@ -354,7 +354,7 @@ class NegativeWordsCounter(FeaturesExtractor):
             doc = Text(text, hint_language_code=self.lang)
             return log(len([word for sentence in doc.sentences for word in sentence.words if word.polarity == -1]) + 1)
         except:
-            return np.nan
+            return 0.0
 
 
 class SentimentWordsCounter(FeaturesExtractor):
@@ -373,7 +373,7 @@ class SentimentWordsCounter(FeaturesExtractor):
                     neg += 1
             return log(pos+1) - log(neg+1)
         except:
-            return np.nan
+            return 0.0
 
 
 class EntitiesCounter(FeaturesExtractor):
@@ -382,7 +382,7 @@ class EntitiesCounter(FeaturesExtractor):
             doc = Text(text, hint_language_code=self.lang)
             return log(len(doc.entities) + 1)
         except:
-            return np.nan
+            return 0.0
         
         
 class CountAdj(FeaturesExtractor):
@@ -405,7 +405,7 @@ class CountAdj(FeaturesExtractor):
             if len(tag_text)==0: return 0.0
             return count/len(tag_text)
         except:
-            return np.nan
+            return 0.0
                 
 class CountAdv(FeaturesExtractor):
     def __call__(self, text:str, **kwargs) -> float:

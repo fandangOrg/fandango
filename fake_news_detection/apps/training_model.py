@@ -32,7 +32,7 @@ class BertForMultiClass(BertForPreTraining):
         return logits
     
     
-def training_model_LGBMClassifier(lang,X):
+def training_model_LGBMClassifier(lang,X,X_test=None,draw=False):
     daopredictor = FSMemoryPredictorDAO(picklepath)
     predictor=LGBMClassifier(boosting_type='gbdt',
                                num_leaves=100,
@@ -42,17 +42,19 @@ def training_model_LGBMClassifier(lang,X):
                                n_jobs=-1) 
     print("crea modello")
     model=FakePredictor(predictor=predictor,preprocessing=Preprocessing(lang), id=lang)
-    model.fit(X)
+    columns=model.fit(X,X_test)
     X = X.drop(['text'], axis=1)
     X = X.drop(['title'], axis=1)
     X = X.drop(['label'], axis=1)
-    """ Plot the significance scores of feautures """
-    feat_imp = pandas.Series(model.predictor.feature_importances_, index=X.columns)
-    # feat_imp = pd.Series(self.mdl.models[0].feature_importances_, index=X.columns)
-    feat_imp.nlargest(50).plot(kind='barh', figsize=(8, 10))
-    plt.tight_layout()
-    plt.show()
-    plt.close()
+    if draw:
+        """ Plot the significance scores of feautures """
+        print(model.predictor.feature_importances_)
+        feat_imp = pandas.Series(model.predictor.feature_importances_, index=columns)
+        # feat_imp = pd.Series(self.mdl.models[0].feature_importances_, index=X.columns)
+        feat_imp.nlargest(50).plot(kind='barh', figsize=(8, 10))
+        plt.tight_layout()
+        plt.show()
+        plt.close()
     
     daopredictor.save(model)
 
@@ -86,17 +88,17 @@ if __name__ == '__main__':
     #build_model_BERT()
     
     #for lang,train in [('en','default_train_v3_only_kaggle_new_features_text_en.csv')]:
-    for lang,train in [('it','default_train_domains_text_it.csv'),('nl','default_train_domains_text_nl.csv'),('es','default_train_domains_text_es.csv')]:
+    #for lang,train in [('it','default_train_domains_text_it.csv'),('nl','default_train_domains_text_nl.csv'),('es','default_train_domains_text_es.csv')]:
+    for lang,train in [('en','default_train_domains_text_en.csv'),('it','default_train_domains_text_it.csv'),('nl','default_train_domains_text_nl.csv'),('es','default_train_domains_text_es.csv')]:
         print("leggi train")
         X=pandas.read_csv(resources_path+"/"+train ).iloc[:, 1:]
         X['label']=X['label'].map({0: "FAKE", 1: "GOOD"})
-        #=======================================================================
-        # col=X.columns
-        # for c in col:
-        #     if 'title_' in c:
-        #         X=X.drop([c], axis=1)
-        #         print(c)
-        #=======================================================================
-        print(len(X))
+        ###
+        if lang=="en":
+            X_test=pandas.read_csv(resources_path+"/default_train_v3_only_kaggle_new_features_text_en.csv").iloc[:, 1:]
+            X_test['label']=X_test['label'].map({0: "FAKE", 1: "GOOD"})
+            print(len(X))
+            X=X.append(X_test)
+            print(len(X))
         training_model_LGBMClassifier(lang,X)
         print("---")
