@@ -78,14 +78,14 @@ def training_model_VotingClassifier(lang,X):
     model.fit(X)
     daopredictor.save(model)
 
-def build_model_BERT(name="model_2"):
+def build_model_BERT(name="model_3"):
     daopredictor = FSMemoryPredictorDAO(picklepath)
     print("crea modello")
     model=BERTFakePredictor(torch.load(picklepath+"/"+name),preprocessing=BertPreprocessing(), id='all')
     daopredictor.save(model, id='all')
     
 if __name__ == '__main__':
-    #build_model_BERT()
+    build_model_BERT()
     
     #for lang,train in [('en','default_train_v3_only_kaggle_new_features_text_en.csv')]:
     #for lang,train in [('it','default_train_domains_text_it.csv'),('nl','default_train_domains_text_nl.csv'),('es','default_train_domains_text_es.csv')]:
