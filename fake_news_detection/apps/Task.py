@@ -24,7 +24,7 @@ class Task_Analyzer(Task):
         self.publisher = publisher
         self.topic=topic
         
-    def do(self,msg,file_output,dic_domains):
+    def do(self,msg,dic_domains):
                 global c
                 c+=1
                 if c%100==0:
@@ -53,14 +53,14 @@ class Task_Analyzer(Task):
                         #df = pd.DataFrame(l)
                         #model.partial_fit(df)
                         testo=testo.replace("\n","$##$")
-                        file_output.write(testo+"\n")
+                        #file_output.write(testo+"\n")
                         print("add negative fit",msg['sourceDomain'] )
                         #output = 0.0
                         #={'text':msg['articleBody'], 'title':msg['headline'], 'label' :'FAKE', 'sourceDomian':msg['sourceDomain'],'language' : msg['language'], 'identifier': msg['identifier']}
                     elif msg['sourceDomain'] in dic_domains['REAL']:
                         testo=msg['identifier']+"\t"+msg['sourceDomain']+"\tREAL\t"+msg['language']+"\t"+msg['headline']+"\t"+msg['articleBody']
                         testo=testo.replace("\n","$##$")
-                        file_output.write(testo+"\n")
+                        #file_output.write(testo+"\n")
                         #l=[{'title': msg['headline'], 'text':msg['articleBody'] ,'label':0}]
                         #df = pd.DataFrame(l)
                         #model.partial_fit(df)
