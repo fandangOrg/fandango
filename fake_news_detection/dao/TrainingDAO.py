@@ -159,6 +159,53 @@ class DAOTrainingPDDomain(DAOTrainingPD):
         return df
     
 
+class DAOTrainingPDDomainEN(DAOTrainingPD):
+    #dataset_beta togliere commento e metterlo nel path 
+    def __init__(self, path = path_training, delimiter=','):
+        self.path = path
+        print(self.path)
+        self.delimiter = delimiter
+        
+    def get_train_dataset(self,files=[("en-training-apnews-5000.csv","REAL"),
+                                      ("en-training-infowar-5000.csv","FAKE"),
+                                      ("en-training-sputniknews-5000.csv","FAKE"),
+                                      ("en-training-theguardian-5000.csv","REAL")],
+                           sample_size:float=1.0):
+        print("\n\n > start of 'get_train_dataset()'")
+        '''
+        print('Read Train Guardian.csv')
+        training_set= pd.read_csv(self.path +"/"+"guardian.csv",sep='\t') # dataset
+        training_set['label']=1
+        df=training_set
+        print("shape after 'guardian.csv' -->", df.shape)
+        '''
+        df_end = None
+        for file,label in files:
+            print('Read Train',file)
+            training_set= pd.read_csv(self.path+"/"+file,sep=self.delimiter) # dataset
+            training_set['label']=label    
+            df_app=training_set[['title','text','label']]
+            df_app['label'] = df_app['label'].map({'FAKE': int(0), 'REAL': int(1)})
+            df = df_app
+            print("missing values title", df['title'].isna().sum())
+            print("missing values text", df['text'].isna().sum())
+            print("missing values label", df['label'].isna().sum())
+            df=df.dropna(subset = ['title','text','label'])
+            print("size csv",df.shape)
+            if sample_size < 1.0:
+                df = df.sample(frac=sample_size)
+            if df_end is None:
+                df_end=df
+            else:
+                df_end=df_end.append(df)
+        df=df_end
+        print("final shape -->", df.shape)
+        print(df.groupby(['label']).agg(['count']))
+        print("total real and total fake",df.label.value_counts())
+        print("> end of 'get_train_dataset()'\n")
+        return df
+    
+
 class DAOTrainingElastic:
 
     def __init__(self):
@@ -400,8 +447,9 @@ class DAOTrainingElasticByDomains():
 if __name__ == '__main__':
     
     
-    d = DAOTrainingElasticByDomains()
-    d.get_domains_from_elastic()
+    d = DAOTrainingPDDomainEN(path='/home/daniele/resources/fandango/train/en_domain')
+    df=d.get_train_dataset()
+    print(df)
     #domain='www.ilfattoquotidiano.it/tag/europa'
     #d.get_news_from_domain(domain = domain)
 

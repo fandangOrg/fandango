@@ -32,7 +32,7 @@ log = getLogger(__name__)
 service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon()  uncomment if you want to start kafka deamon#
-#daemon_run()
+daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -114,8 +114,9 @@ def upload_image(uploadimagein:UploadImageInput) -> str:
     headers = {'content-type': "application/json",'accept': "application/json"}
     u = URLRequest(url_upload_image+"/api/analyze_image")
     payload = {"url": uploadimagein.url,"force" :"true","image": uploadimagein.image}
-    print("UPLOAD IMAGE REQUEST  ",payload)
+    print("UPLOAD IMAGE REQUEST  ",len( payload))
     j = json.dumps(payload)
+    print("START upload")
     return u.post(data=j, headers= headers)
 
 
