@@ -119,8 +119,6 @@ def upload_image(uploadimagein:UploadImageInput) -> str:
     return u.post(data=j, headers= headers)
 
 
-
-      
 def url_image_score(url:str) -> str:
     
     headers = {'content-type': "application/json",'accept': "application/json"}
