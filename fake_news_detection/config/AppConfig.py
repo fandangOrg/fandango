@@ -81,6 +81,8 @@ url_service_authors = os.environ.get("URL_SERVICE_UPM") or config.get("configura
 url_similar_claims = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "url_similar_claims")
 url_crawler = os.environ.get("URL_SERVICE_CRAWLER") or config.get("configurationservice", "url_crawler")
 url_upload_image =  os.environ.get("URL_SERVICE_UPLOADIMAGE") or config.get("configurationservice", "url_image_upload")
+url_overall_score =  os.environ.get("URL_OVERALL_SCORE") or config.get("configurationservice", "overall_score_url")
+
 ######################################################################################
 #############KAFKA CONFIG #############À
 
