@@ -82,7 +82,7 @@ class InjectableTASKJSONConsumer(JsonConsumer):
     def __init__(self,topic,group_id,bootstrap_servers,task:Task,auto_offset_reset="earliest",enable_auto_commit=True,retry_interval=1):
         super().__init__(topic,group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
         self.task=task
-        self.file_output=open(path_training+"/dataset_kafka.csv", mode='a+')
+        #self.file_output=open(path_training+"/dataset_kafka.csv", mode='a+')
         dao = DAOTrainingElasticByDomains()
         self.dic_domains = dao.get_domains_from_elastic()
 
@@ -90,7 +90,7 @@ class InjectableTASKJSONConsumer(JsonConsumer):
        
     def process(self, obj):
         #print(self.task.do(obj))
-        return self.task.do(obj,self.file_output,self.dic_domains )
+        return self.task.do(obj,self.dic_domains )
     
     
 

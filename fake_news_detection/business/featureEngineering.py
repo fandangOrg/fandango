@@ -31,18 +31,17 @@ class ColumnFEExtractor:
             if cmd == 1:
                 for col,fun in self._multi_function():
                     try:
+                        print("analisi",col)
                         s = objects[col].apply(fun)
                         names = fun.__name__
-                        #print(names,type(values),'\n',values)
-                        print(s.index)
-                        print(s.values)
                         df=pandas.DataFrame.from_items(zip(s.index, s.values) )
                         df=df.T
                         df.columns =[col+"_"+name for name in names]
-                        objects=pandas.concat([df, objects], axis=1, sort=True)
-                        print(df)
+                        objects=pandas.concat([df, objects], axis=1, sort=False)
+                        print(object)
                         #objects[[col+"_"+name for name in names]]=values
                     except KeyError as e :
+                        print(e)
                         continue
                 return  objects  
                     

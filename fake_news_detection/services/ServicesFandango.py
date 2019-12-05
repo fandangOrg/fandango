@@ -3,12 +3,14 @@ Created on 23 apr 2019
 
 @author: camila
 '''
+
 from fake_news_detection.model.InterfacceComunicazioni import News_DataModel, Author_org_DataModel, Media_DataModel, Topics_DataModel,\
  InterfaceInputFeedBack, Claim_input, Claim_output, News, News_annotated,\
-    Open_Data
+    Open_Data, UploadImageInput
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.config.AppConfig import  static_folder, url_service_media,\
-    url_service_authors, url_similar_claims, template_path, url_upload_image
+    url_service_authors, url_similar_claims, template_path, url_upload_image,\
+    url_overall_score
 import json
 from flask_cors.extension import CORS
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
@@ -24,6 +26,7 @@ from fake_news_detection.config.constants import LABEL_SCORE
 from flask.templating import render_template
 from fake_news_detection.dao.DaoAnnotation import DAOElasticAnnotation
 from flask.globals import request
+import pprint
 #from fake_news_detection.apps.daemon import daemon_run
 
 
@@ -31,7 +34,7 @@ log = getLogger(__name__)
 service_scrapy=ScrapyService()
 service_analyzer=AnalyticsService()
 ###run deamon()  uncomment if you want to start kafka deamon#
-daemon_run()
+#daemon_run()
 
 headers = {'content-type': "application/json",'accept': "application/json"}
 
@@ -93,6 +96,8 @@ def crawl_prep(url:str,old:str="False") -> News_DataModel:
     topics = []
     #topics = topics_getter(news_preprocessed)
     opendata = Open_Data(text=news_preprocessed.headline, category=news_preprocessed.headline, topics= topics)
+    
+    news_preprocessed.calculateRating = agg_score(news_preprocessed.identifier,news_preprocessed.calculateRating,news_preprocessed.calculateRatingDetail)
     op = get_opendata(opendata)
     prest = {"news_preprocessed": news_preprocessed , "opendata" : op}
     print(prest)
@@ -109,15 +114,16 @@ def ping_video(id:str) -> str:
     u = URLRequest(url_service_media+"/api/analyze_video/"+id)
     return u.get(headers=headers)
 
-def upload_image(url:str,image :str):
+def upload_image(uploadimagein:UploadImageInput) -> str:
     headers = {'content-type': "application/json",'accept': "application/json"}
     u = URLRequest(url_upload_image+"/api/analyze_image")
-    payload = {"url": url,"force" :"true","image":image}
-    print("UPLOAD IMAGE REQUEST  ",payload)
+    payload = {"url": uploadimagein.url,"force" :"true","image": uploadimagein.image}
+    print("UPLOAD IMAGE REQUEST  ",len( payload))
     j = json.dumps(payload)
+    print("START upload")
     return u.post(data=j, headers= headers)
 
-      
+
 def url_image_score(url:str) -> str:
     
     headers = {'content-type': "application/json",'accept': "application/json"}
@@ -212,13 +218,19 @@ def similar_news(id_news:str) -> list:
             i["calculatedRatingDetail"]["textRating"]=1.0
     return response["results"]
 
-
+def agg_score(id_news:str, calculatedRating:float,calculatedRatingDetail:list) -> str:
+    u = URLRequest(url_overall_score+"/api/fusion_score")
+    payload = {"identifier": id_news , "calculatedRating": calculatedRating , "calculatedRatingDetail":calculatedRatingDetail}
+    headers = {"Content-Type":  "application/json"}
+    j = json.dumps(payload)
+    response = u.post(data=j,headers = headers)
+    print(response["calculatedRating"])
+    return response["calculatedRating"]
 
 #------------------------------------>App FLASK <----------------------------------
 
 
 app=DS4BizFlask(__name__,static_folder=static_folder+"/dist/",static_url_path="",template_folder='../templates/')
-
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -246,6 +258,7 @@ app.add_service("url_image_score",url_image_score, method = 'GET')
 app.add_service("url_video_score",url_video_score, method = 'GET')
 app.add_service("similar_news",similar_news, method = 'POST')
 app.add_service("upload_image",upload_image, method = 'POST')
+app.add_service("overall_score",agg_score, method = 'POST')
 
 
 CORS(app)

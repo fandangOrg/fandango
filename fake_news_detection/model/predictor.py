@@ -47,6 +47,9 @@ class Preprocessing:
     
     def _add_features(self, X):
         X=add_new_features_to_df(df=X, mapping=new_features_mapping(self.language))
+        c=X.columns.tolist()
+        c.sort()
+        X=X[c]
         return X    
 
     def execution(self,X):
@@ -102,25 +105,73 @@ class FakePredictor(DS4BizPredictor):
         self.preprocessing=preprocessing
         self.id=id
         self.number_item=0
+        self.delete=["text_AVGSentencesSizeCounter",'text_AveWordxParagraph','text_AVGWordsCounter','text_vflesch_reading_ease']
         
-    def fit(self, X, y=None,preprocessing=False):
+    def fit(self, X,X_test=None, y=None,preprocessing=False):
         if preprocessing:
             X=self.preprocessing.execution(X)
+        X=X.drop(self.delete, axis=1)
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
         Y = X['label']
         X = X.drop(['label'], axis=1)
-        X_train, X_test, y_train, y_test = train_test_split(X,Y , test_size=0.2)
+        c=X.columns.tolist()
+        c.sort()
+        X=X[c]
+        
+        if X_test is not None:
+            X_test = X_test.drop(['text'], axis=1)
+            X_test = X_test.drop(['title'], axis=1)
+            y_test = X_test['label']
+            X_test = X_test.drop(['label'], axis=1)
+            c=X_test.columns.tolist()
+            c.sort()
+            X_test=X_test[c]
+            X_train=X
+            y_train=Y
+            cc=["text_AVGSentencesSizeCounter",'text_AveWordxParagraph','text_AVGWordsCounter','text_vflesch_reading_ease']
+            X_test = X_test.drop(cc, axis=1)
+            #X_train = X_train.drop(cc, axis=1)
+            #cc=X_train.columns
+            #===================================================================
+            # for c in cc:
+            #     #['text_AveWordxParagraph','text_POSDiversity','text_coleman_liau_index','text_linsear_write_formulas']
+            # # ['title_avg_sentence_per_word','title_avg_letter_per_word','text_avg_sentence_per_word',"text_LexicalDiversity"]:
+            #     X_test = X_test.drop(c, axis=1)
+            #     X_train = X_train.drop(c, axis=1)
+            #     print(X_train.columns)
+            #     print("train->",len(y_train))
+            #     print("test->",len(y_test))
+            #     self.predictor.fit(X_train,y_train)
+            #     probs = self.predictor.predict_proba(X_test)
+            #     y_pred = [self.predictor.classes_[0] if single_pred[0] >= single_pred[1] else self.predictor.classes_[1] for single_pred in probs]
+            #     get_performance(y_test=y_test, y_pred=y_pred,classes=self.predictor.classes_) 
+            #===================================================================
+            
+        else:    
+            X_train, X_test, y_train, y_test = train_test_split(X,Y , test_size=0.2)
+            
+        print(X_train.columns)
+        print("train->",len(y_train))
+        print("test->",len(y_test))
         self.predictor.fit(X_train,y_train)
         probs = self.predictor.predict_proba(X_test)
         y_pred = [self.predictor.classes_[0] if single_pred[0] >= single_pred[1] else self.predictor.classes_[1] for single_pred in probs]
+        #=======================================================================
+        # f=open("validation.csv","w+")
+        # for i in range(0,len(y_pred)):
+        #     f.write(y_pred[i]+"\t" +y_test[i]+"\n")
+        # f.close()
+        #=======================================================================
         get_performance(y_test=y_test, y_pred=y_pred,classes=self.predictor.classes_)        
         self.number_item=len(X_train)
-        self.predictor.fit(X ,Y)
+        return X_train.columns
+        #self.predictor.fit(X ,Y)
         
     def predict(self, X):
         X=self.preprocessing.execution(X)
         X = X.drop(['text'], axis=1)
+        X=X.drop(self.delete, axis=1)
         X = X.drop(['title'], axis=1)
         labels_fakeness= self.predictor.predict(X)
         return labels_fakeness
@@ -128,6 +179,7 @@ class FakePredictor(DS4BizPredictor):
     def predict_proba(self,X):
         X=self.preprocessing.execution(X)
         X = X.drop(['text'], axis=1)
+        X=X.drop(self.delete, axis=1)
         X = X.drop(['title'], axis=1)
         labels_fakeness= self.predictor.predict_proba(X)
         return labels_fakeness,X
@@ -137,10 +189,14 @@ class FakePredictor(DS4BizPredictor):
     
     def partial_fit(self, X,y=None):
         X=self.preprocessing.execution(X)
+        X=X.drop(self.delete, axis=1)
         Y = X['label']
         X = X.drop(['text'], axis=1)
         X = X.drop(['title'], axis=1)
         X = X.drop(['label'], axis=1)
+        c=X.columns.tolist()
+        c.sort()
+        X=X[c]
         self.predictor.partial_fit(X,Y)
         return "OK"
 
@@ -377,8 +433,6 @@ class BERTFakePredictor(DS4BizPredictor):
         
         
 def get_performance(y_test, y_pred,classes):
-    print("-->",y_test)
-    print("-->",y_pred)
     accuracy = accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred, average='weighted', labels= classes)
     recall = recall_score(y_test, y_pred, average='weighted', labels= classes)
