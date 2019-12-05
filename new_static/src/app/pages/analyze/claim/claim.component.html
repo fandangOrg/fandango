@@ -50,7 +50,9 @@
                                                 {{review.reviewRating.alternateName}}
                                             </td>
                                             <td>
-                                                {{review.reviewRating.ratingValue}}
+                                                <span
+                                                    *ngIf="review.reviewRating.ratingValue > 0">{{review.reviewRating.ratingValue}}</span>
+                                                <span *ngIf="review.reviewRating.ratingValue <= 0">Unavailable</span>
                                                 <!--                                                <div class="d-flex align-items-center">-->
                                                 <!--                                                    <span class="mr-2">{{review.reviewRating.ratingValue * 20}}%</span>-->
                                                 <!--                                                    <div>-->
@@ -65,10 +67,14 @@
                                                 <!--                                                </div>-->
                                             </td>
                                             <td>
-                                                {{review.reviewRating.worstRating}}
+                                                <span
+                                                    *ngIf="review.reviewRating.worstRating > 0">{{review.reviewRating.worstRating}}</span>
+                                                <span *ngIf="review.reviewRating.worstRating <= 0">Unavailable</span>
+
                                             </td>
                                             <td>
-                                                {{review.reviewRating.bestRating}}
+                                                <span *ngIf="review.reviewRating.bestRating > 0">{{review.reviewRating.bestRating}}</span>
+                                                <span *ngIf="review.reviewRating.bestRating <= 0">Unavailable</span>
                                             </td>
                                             <td>
                                             <td class="text-right">

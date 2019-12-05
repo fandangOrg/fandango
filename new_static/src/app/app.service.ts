@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
 
 declare var $: any;
@@ -44,11 +43,9 @@ export class AppService {
 
     static getScoreColor(score: number) {
         switch (true) {
-            case score <= 25:
+            case score <= 33:
                 return 'text-danger';
-            case score <= 50:
-                return 'text-warning';
-            case score <= 75:
+            case score <= 66:
                 return 'text-yellow';
             default:
                 return 'text-success'
@@ -57,11 +54,9 @@ export class AppService {
 
     static getProgressColor(score: number) {
         switch (true) {
-            case score <= 25:
+            case score <= 33:
                 return 'bg-danger';
-            case score <= 50:
-                return 'bg-warning';
-            case score <= 75:
+            case score <= 66:
                 return 'bg-yellow';
             default:
                 return 'bg-success'
@@ -72,7 +67,7 @@ export class AppService {
     static getInputType(type: string) {
         if (type === 'claim') {
             return {type: 'text', pattern: ''}
-        } else if(type === 'image'){
+        } else if (type === 'image') {
             return {type: 'url', pattern: 'https?:\\/\\/.*\\.(?:png|jpg|jpeg)'}
         } else {
             return {type: 'url', pattern: 'https?://.+'}
