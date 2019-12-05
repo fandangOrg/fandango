@@ -96,8 +96,9 @@ def crawl_prep(url:str,old:str="False") -> News_DataModel:
     topics = []
     #topics = topics_getter(news_preprocessed)
     opendata = Open_Data(text=news_preprocessed.headline, category=news_preprocessed.headline, topics= topics)
-    
-    news_preprocessed.calculateRating = agg_score(news_preprocessed.identifier,news_preprocessed.calculateRating,news_preprocessed.calculateRatingDetail)
+    #news_preprocessed.calculateRating = agg_score(news_preprocessed.identifier,news_preprocessed.calculateRatingDetail)
+    news_preprocessed.calculateRating = 55
+
     op = get_opendata(opendata)
     prest = {"news_preprocessed": news_preprocessed , "opendata" : op}
     print(prest)
@@ -218,14 +219,15 @@ def similar_news(id_news:str) -> list:
             i["calculatedRatingDetail"]["textRating"]=1.0
     return response["results"]
 
-def agg_score(id_news:str, calculatedRating:float,calculatedRatingDetail:list) -> str:
+def agg_score(id_news:str,calculatedRatingDetail:list) -> str:
     u = URLRequest(url_overall_score+"/api/fusion_score")
-    payload = {"identifier": id_news , "calculatedRating": calculatedRating , "calculatedRatingDetail":calculatedRatingDetail}
+    payload = {"identifier": id_news, "calculatedRatingDetail":calculatedRatingDetail}
     headers = {"Content-Type":  "application/json"}
     j = json.dumps(payload)
     response = u.post(data=j,headers = headers)
     print(response["calculatedRating"])
     return response["calculatedRating"]
+
 
 #------------------------------------>App FLASK <----------------------------------
 
