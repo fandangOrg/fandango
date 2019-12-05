@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import {ActivatedRoute, Router} from '@angular/router';
 import {Button, Buttons} from "../../app.config";
 import {AppService} from "../../app.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {HomepageService} from "./homepage.service";
 
 @Component({
@@ -21,6 +21,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
     imgFile: File;
     uploadLoading: boolean;
     imgUrl: string;
+    modalReference: NgbModalRef;
 
     constructor(private router: Router, private activatedRoute: ActivatedRoute, private modalService: NgbModal, private http: HomepageService) {
         this.fandangoLogo = 'assets/img/logos/fandango.png';
@@ -68,7 +69,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
     }
 
     showUploadModal(modal) {
-        this.modalService.open(modal);
+        this.modalReference = this.modalService.open(modal);
     }
 
     handleFileUpload(files: FileList) {
@@ -87,12 +88,19 @@ export class HomepageComponent implements OnInit, AfterViewInit {
 
         this.http.uploadImage(to_send).subscribe(data => {
             console.log(data);
-            let result = data;
-            result = result['display'].find(key => key.analyzer === 'original');
+            this.modalReference.close();
             this.uploadLoading = false;
-            this.router.navigate(['analyze/image', {url: result['display']}]);
+
+            if (data['status'] === 'error') {
+                this.modalReference.close();
+                AppService.showNotification('danger', `Error during analyzing image, ${data['error']}`);
+            } else {
+                let result = data;
+                result = result['display'].find(key => key.analyzer === 'original');
+                this.router.navigate(['analyze/image', {url: result['display']}]);
+            }
         }, error => {
-            this.uploadLoading = false;
+            AppService.showNotification('danger', `Error during analyzing image`);
         })
     }
 
