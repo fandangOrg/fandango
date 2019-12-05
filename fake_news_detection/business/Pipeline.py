@@ -25,6 +25,7 @@ from fake_news_detection.utils.score_utils import normalizer_neg, normalizer_pos
 #from fake_news_detection.apps.training_model import BertForMultiClass
 import bert
 from fake_news_detection.model.predictor import BERTFakePredictor
+from pprint import pprint
 log = getLogger(__name__)
 
 def log_info(f):
@@ -189,7 +190,7 @@ class AnalyticsService(metaclass=Singleton):
             ##print("RICHIESTA VIDEOIMMAGINI  ",payload)
             j = json.dumps(payload)
             response = u.post(data=j, headers=self.headers)
-            print("VIDEOIMMAGINI RESPOSNE",response)
+            print("VIDEOIMMAGINI RESPONSE",response)
             #print("......start request image and video")
             return Media_DataModel(**response)
         except Exception as e :
@@ -246,6 +247,8 @@ class AnalyticsService(metaclass=Singleton):
             news_preprocessed.images=[]
         #print("analizzo i media")    
         media= self._get_media_ids(news_preprocessed)
+        print("mediaaaaaaaaaaaaaaaaaaaaaa",media.images)
+        #print("MEDIAAAAAAAAAAAAAAAAAAA ---->",media)
         if not is_old:
             #print("analizzo i topic")
             tp_entity=self._get_topics_ids(news_preprocessed)
@@ -256,6 +259,7 @@ class AnalyticsService(metaclass=Singleton):
         calculatedRatingDetail['textRating']=score_fake
         calculatedRatingDetail['authorRating']=autors_org.authorRating
         calculatedRatingDetail['publisherRating']=autors_org.publisherRating
+        calculatedRatingDetail['mediaRating'] = []
         #print(calculatedRatingDetail['publisherRating'])
         ####
         d['calculatedRatingDetail']=calculatedRatingDetail
@@ -271,10 +275,10 @@ class AnalyticsService(metaclass=Singleton):
         d['datePublished'] =self._clear(news_preprocessed.datePublished)
         
         if not is_old:  
-            print("save")
+            print("saved")
             self.dao.create_doc_news(d)
         else:
-            print("non save")
+            print("not saved")
         d['images'] = media.images
         d['videos'] = media.videos
         return d
@@ -336,7 +340,6 @@ class AnalyticsService(metaclass=Singleton):
         pd_text.rename(columns={'FAKE': int(0), 'GOOD': int(1)}, inplace=True)
         js_t=json.loads(pd_text.to_json(orient='records'))
         if save:
-            
             list_authors=[]
             list_publishs=[]
             list_images=[]
