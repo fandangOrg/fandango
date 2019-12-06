@@ -28,7 +28,6 @@
                 </tbody>
             </table>
         </div>
-
     </div>
 </ng-template>
 
@@ -68,35 +67,34 @@
             <!--            </div>-->
         </div>
         <hr class="my-4"/>
-        <!--        <div class="row">-->
-        <!--            <div class="col-12">-->
-        <!--                <h6 class="heading-small text-muted d-inline">Text analysis result</h6>-->
-        <!--                <i (click)="showTextDetailsModal(textDetailsModal)"-->
-        <!--                   class="fas fa-info-circle fa-2x c-pointer float-right"-->
-        <!--                   style="font-size: 18px;color: #525f7f !important;"></i>-->
-        <!--            </div>-->
-        <!--            <div class="col-8 mx-auto">-->
-        <!--                &lt;!&ndash;                        <h6 class="heading-small text-muted">Text analysis result</h6>&ndash;&gt;-->
-        <!--                <div class="progress-wrapper">-->
-        <!--                    <div class="progress-info">-->
-        <!--                        <div class="progress-label">-->
-        <!--                            <span>Trustworthiness</span>-->
-        <!--                        </div>-->
-        <!--                        <div class="progress-percentage">-->
-        <!--                            <span>{{(article.textAnalysis[0]['1'] * 100).toFixed(2)}}%</span>-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                    <div class="progress">-->
-        <!--                        <div class="progress-bar bg-success"-->
-        <!--                             [ngClass]="getProgressColor(article.textAnalysis[0]['1'] * 100)" role="progressbar"-->
-        <!--                             aria-valuemin="0" aria-valuemax="100"-->
-        <!--                             [style.width]="article.textAnalysis[0]['1'] * 100 + '%'">-->
-        <!--                        </div>-->
-        <!--                    </div>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <!--        <hr class="my-4"/>-->
+        <div class="row">
+            <div class="col-12">
+                <h6 class="heading-small text-muted">Overall score</h6>
+            </div>
+            <div class="col-10 mx-auto">
+                <div class="progress-wrapper">
+                    <div class="progress-info">
+                        <div class="progress-label">
+                            <span>Untrustworthy</span>
+                        </div>
+                        <div class="progress-percentage mx-auto">
+                            <span>{{article.score}}%</span>
+                        </div>
+                        <div class="progress-label">
+                            <span>Trustworthy</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar"
+                             [ngClass]="getProgressColor(article.score)" role="progressbar"
+                             aria-valuemin="0" aria-valuemax="100"
+                             [style.width]="article.score + '%'">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="my-4"/>
 
         <div class="row">
             <div class="col-md-4 col-12" style="border-right: 1px solid rgba(0, 0, 0, 0.2)">
@@ -216,6 +214,14 @@
                         </tr>
                         </tbody>
                     </table>
+                </div>
+
+                <div class="text-center">
+                    <a [href]="upmUrl" target="_blank">
+                        <button class="btn btn-secondary">
+                            Check publisher
+                        </button>
+                    </a>
                 </div>
             </div>
             <!--                <div class="col-md-2 col-12 text-center">-->

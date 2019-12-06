@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AnalyzeService} from '../analyze.service';
 import {AppService} from '../../../app.service';
 import {Article} from './article';
-import {sirenUrl} from "../../../app.config";
+import {sirenUrl, upmUrl} from "../../../app.config";
 import {DomSanitizer} from "@angular/platform-browser";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
@@ -19,6 +19,7 @@ export class ArticleComponent implements OnInit {
     url: string;
     infoTooltip: string;
     sirenUrl: string;
+    upmUrl: string;
     showMore: boolean;
     isOld: boolean;
     article: Article;
@@ -28,6 +29,7 @@ export class ArticleComponent implements OnInit {
         this.showMore = false;
         this.isOld = false;
         this.sirenUrl = sirenUrl;
+        this.upmUrl = upmUrl;
         // RETRIEVE URL FROM QUERY PARAMS
         this.url = this.http.retrieveUrl(this.router);
 
@@ -61,7 +63,7 @@ export class ArticleComponent implements OnInit {
             data => {
                 console.log(data);
                 this.sirenUrl = this.sirenUrl.replace(/QUERYDACAMBIARE/g, this.url);
-                this.article = new Article(data['news_preprocessed']['identifier'],data['news_preprocessed']['datePublished'], data['news_preprocessed']['language'], data['news_preprocessed']['headline'], data['news_preprocessed']['articleBody'], data['news_preprocessed']['images'],
+                this.article = new Article(data['news_preprocessed']['identifier'], data['news_preprocessed']['datePublished'], data['news_preprocessed']['language'], data['news_preprocessed']['headline'], data['news_preprocessed']['articleBody'], data['news_preprocessed']['calculateRating'], data['news_preprocessed']['images'],
                     data['news_preprocessed']['videos'], data['news_preprocessed']['results']['publishers'], data['news_preprocessed']['results']['authors'], data['news_preprocessed']['results']['text'], data['news_preprocessed']['similarnews'], data['opendata']);
 
                 this.showLoading.emit(false);
