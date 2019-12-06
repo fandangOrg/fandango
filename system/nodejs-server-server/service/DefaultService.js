@@ -167,7 +167,11 @@ exports.findSimilarArticles = function(info) {
                       });
                       articlePromises.push(articlePublisherPromise);
                     }) 
+                    // Here we retrieve the fusionScore for each article
+                    articlePromises.push(new Promise(function(resolve, reject) {resolve(getCalculatedRating(article._id));}))
                    })
+
+
 
                    //console.log(articlePromises)
 
@@ -206,7 +210,7 @@ function emptyResponse(identifier, topics){
   return returnPayload;
 }
 
-function createArticleResponse(identifier, articles, authorsAndPublishers){
+function createArticleResponse(identifier, articles, authorsRatingAndPublishers){
   var resultPayload = {};
   resultPayload.identifier = identifier;
  // console.log(articles)
@@ -216,28 +220,34 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
 
   var authors = [];
   var publishers = [];
+  var rating = [];
   // First we separate out authors and publishers into an assoc array of objects
-  authorsAndPublishers.forEach(function(ap){
+  authorsRatingAndPublishers.forEach(function(arp){
   //  console.log(ap)
-    ap.data.forEach(function(data){
-    //console.log(data)
+    arp.data.forEach(function(data){
+    // console.log(data)
     if (data._index == "fdg-ap-person"){ // author
-      if (authors[ap.id]){
-        authors[ap.id].push(data._source);
+      if (authors[arp.id]){
+        authors[arp.id].push(data._source);
       }
       else{
-        authors[ap.id] = [];
-        authors[ap.id].push(data._source);
+        authors[arp.id] = [];
+        authors[arp.id].push(data._source);
       }
     }
     else if (data._index == "fdg-ap-organization"){ // publisher
-      if (publishers[ap.id]){
-        publishers[ap.id].push(data._source);
+      if (publishers[arp.id]){
+        publishers[arp.id].push(data._source);
       }
       else{
-        publishers[ap.id] = [];
-        publishers[ap.id].push(data._source);
+        publishers[arp.id] = [];
+        publishers[arp.id].push(data._source);
       }
+    }
+    else if (data._index == "fdg-article-fusionscore"){ // fusion score
+     rating[arp.id] = data._source;
+    //  console.log(rating)
+    //  console.log("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
     }
   })
   })
@@ -245,6 +255,8 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
   
   var articleResponses = [];
   articles.forEach(function(article){
+
+    // console.log(article)
     
     // Here we construct the response as defined in the API
     var articleResponse = {};
@@ -279,8 +291,18 @@ function createArticleResponse(identifier, articles, authorsAndPublishers){
     articleResponse.mentions = article._source.mentions || [null];
     articleResponse.contains = article._source.contains || null;
     articleResponse.about = article._source.about || null;
-    articleResponse.calculatedRating = article._source.calculatedRating || null;
-    articleResponse.calculatedRatingDetail = article._source.calculatedRatingDetail || null;
+    try{
+      articleResponse.calculatedRating = rating[article._id].calculatedRating || null;
+    }
+    catch(e){
+      articleResponse.calculatedRating = null;
+    }
+    try{
+      articleResponse.calculatedRatingDetail = rating[article._id].calculatedRatingDetail || null;
+    }
+    catch(e){
+      articleResponse.calculatedRatingDetail = null;
+    }
 
     articleResponses.push(articleResponse);
   })
@@ -617,6 +639,37 @@ exports.findSimilarClaims = function(info) {
          })
          .then(function(json){
            //console.log(json.hits.hits)
+           var response = {};
+           response.id = articleID;
+           response.data = json.hits.hits;
+           return Promise.resolve(response);
+         })
+     }
+
+     function getCalculatedRating(articleID){
+
+       var ratingQuery = {};
+       ratingQuery.query = {};
+       ratingQuery.query.match = {};
+       ratingQuery.query.match.identifier = articleID;
+ 
+      console.log(JSON.stringify(ratingQuery))
+ 
+       var url = "http://localhost:9220/fdg-article-fusionscore/doc/_search"
+       return fetch(url,
+         {
+             method: 'POST',
+             body: JSON.stringify(ratingQuery),
+             headers:{
+                 'Content-Type': 'application/json',
+             }
+         })
+         .then(function(result){
+          //  console.log(result.json())
+             return result.json();
+         })
+         .then(function(json){
+           console.log(json.hits.hits)
            var response = {};
            response.id = articleID;
            response.data = json.hits.hits;
