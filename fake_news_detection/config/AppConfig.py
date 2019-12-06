@@ -76,6 +76,8 @@ mapping_annotation = pkg_resources.resource_filename("fake_news_detection.config
 
 #--------------------------->EXTERNAL SERVICES VARIABLES<-------------------------------------------------------------------------
 url_service_preprocessing = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "preprocessing_service_url") 
+url_service_image = os.environ.get("URL_SERVICE_CERTH") or config.get("configurationservice", "image_service_url") 
+url_service_video = os.environ.get("URL_SERVICE_CERTH") or config.get("configurationservice", "video_service_url") 
 url_service_media = os.environ.get("URL_SERVICE_CERTH") or config.get("configurationservice", "media_service_url") 
 url_service_authors = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "authors_service_url")
 url_similar_claims = os.environ.get("URL_SERVICE_UPM") or config.get("configurationservice", "url_similar_claims")

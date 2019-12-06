@@ -39,14 +39,14 @@ port_annotation=9898
 
 [configurationservice]
 preprocessing_service_url = http://40.114.234.51:5001
-media_service_url = http://195.251.117.141:5006
+video_service_url = http://195.251.117.141:5006
+image_service_url = http://160.40.51.160:8001
 authors_service_url = http://40.114.234.51:5000
 url_similar_claims = http://40.114.234.51:3000 
 url_crawler = http://40.114.234.51:5006 
 url_image_upload = http://160.40.51.160:8001/api/analyze_image
 overall_score_url = http://195.251.117.141:8001
-
-
+media_service_url = http://195.251.117.141:5006
 #preprocessing_service_url = http://138.4.47.33:5006
 #preprocessing_service_url = http://40.114.234.51:5001
 #media_service_url = http://195.251.117.141:5006
