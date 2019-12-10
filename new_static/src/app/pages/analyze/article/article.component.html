@@ -305,9 +305,16 @@
                     <th scope="row">
                         {{news.sourceDomain}}
                     </th>
-                    <th scope="row" [ngClass]="getScoreColor(news.calculatedRatingDetail.textRating * 100)">
-                        {{(news.calculatedRatingDetail.textRating * 100).toFixed(2)}}%
+
+                    <th scope="row" *ngIf="news.calculatedRating && news.calculatedRating > 0"
+                        [ngClass]="getScoreColor(news.calculatedRating)">
+                        {{news.calculatedRating.toFixed(2)}}%
                     </th>
+
+                    <th scope="row" *ngIf="!news.calculatedRating || news.calculatedRating < 0" class="text-muted">
+                        Not available
+                    </th>
+
                     <th scope="row" width="1%">
                         <a title="Show news" [href]="news.url" (click)="$event.stopPropagation()" target="_blank"><i
                             class="fas fa-external-link-alt" style="color:#525f7f !important;"></i></a>
