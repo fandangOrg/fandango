@@ -43,8 +43,9 @@ export class ImageComponent implements OnInit, OnDestroy {
 
         this.http.analyzeImage(this.url).subscribe(
             data => {
-                let tempImage = data['images'][0];
-                this.http.getImageScore(data['images'][0]).subscribe(
+                console.log(data);
+                const tempImage = data['identifier'];
+                this.http.getImageScore(tempImage).subscribe(
                     data => {
                         this.image = data;
                         console.log(this.image);

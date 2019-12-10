@@ -36,7 +36,7 @@
                         <div class="progress">
                             <div class="progress-bar progress-bar-striped progress-bar-animated bg-info"
                                  role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                                [style.width]="video.progress+'%'"></div>
+                                 [style.width]="video.progress+'%'"></div>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,10 @@
                 <div class="card shadow">
                     <div class="card-header">
                         <div class="col">
-                            <h4 class="mb-0">{{detail.detection}}</h4>
+                            <h4 class="mb-0">{{detail.detection}}
+                                <i [ngbPopover]="infoVideo"
+                                   placement="right"
+                                   class="fas fa-info-circle c-pointer float-right" style="font-size: 18px"></i></h4>
                         </div>
                     </div>
                     <div class="card-body">

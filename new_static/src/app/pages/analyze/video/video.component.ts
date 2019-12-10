@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {DomSanitizer} from "@angular/platform-browser";
 import {NgxSpinnerService} from "ngx-spinner";
 import {AppService} from "../../../app.service";
+import {InfoVideo} from "../../../app.config";
 
 @Pipe({name: 'urlSafe'})
 export class SafePipe implements PipeTransform {
@@ -23,12 +24,13 @@ export class VideoComponent implements OnInit, OnDestroy {
     @Output() showLoading = new EventEmitter<boolean>();
     url: string;
     video: object;
+    infoVideo: string;
     isExtracting: boolean;
     interval: any;
 
     constructor(private http: AnalyzeService, private router: ActivatedRoute, private route: Router, private sanitizer: DomSanitizer, private spinner: NgxSpinnerService) {
         this.url = this.http.retrieveUrl(this.router);
-
+        this.infoVideo = InfoVideo;
         // IF PARAMS IS UNDEFINED OR NULL REDIRECT TO HOMEPAGE
         if (!this.url) {
             this.route.navigate(['/homepage']);
@@ -45,9 +47,9 @@ export class VideoComponent implements OnInit, OnDestroy {
                 console.log(data);
 
                 // GET IDENTIFIER AND SEND IT TO ANALYZER SERVICE
-                let tempVideo = data['videos'][0];
+                const tempVideo = data['identifier'];
 
-                this.http.getVideoScore(data['videos'][0]).subscribe(
+                this.http.getVideoScore(tempVideo).subscribe(
                     data => {
                         this.video = data;
                         console.log(this.video);
