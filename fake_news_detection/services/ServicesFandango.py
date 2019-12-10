@@ -90,14 +90,19 @@ def crawl_prep(url:str,old:str="False") -> News_DataModel:
         old = True
     print("old",old,"url",url)
     news_preprocessed= service_scrapy.scrapy(url)
-    prest=service_analyzer.analyzer(news_preprocessed,old=old)
+    prest,analisy2=service_analyzer.analyzer(news_preprocessed,old=old)
     news_preprocessed.results=prest
+    print("presssssssssssssssst",analisy2)
     news_preprocessed.similarnews = similar_news(news_preprocessed.identifier)
+    #print("similar news----->",news_preprocessed.similarnews)
     topics = []
     #topics = topics_getter(news_preprocessed)
+    news_preprocessed.calculateRatingDetail = analisy2
+    print("calculateddddddddddddddddddddddddddd",news_preprocessed.calculateRatingDetail)
     opendata = Open_Data(text=news_preprocessed.headline, category=news_preprocessed.headline, topics= topics)
-    #news_preprocessed.calculateRating = agg_score(news_preprocessed.identifier,news_preprocessed.calculateRatingDetail)
-    news_preprocessed.calculateRating = 55
+    news_preprocessed.calculateRating = round(agg_score(news_preprocessed.identifier,news_preprocessed.calculateRatingDetail),2)
+    
+    print("calculated ratinggggggggggggggggg",round(news_preprocessed.calculateRating,2))
 
     op = get_opendata(opendata)
     prest = {"news_preprocessed": news_preprocessed , "opendata" : op}
@@ -106,20 +111,20 @@ def crawl_prep(url:str,old:str="False") -> News_DataModel:
 
 
 def ping_image(id:str) -> News_DataModel:
-    headers = {'content-type': "application/json",'accept': "application/json"}
-    u = URLRequest(url_service_media+"/api/analyze_image/"+id)
-    return u.get(headers=headers)
+    headers = {'content-type': "application/json"}
+    u = URLRequest(url_service_image+"/api/analyze_image?identifier="+id)
+    return u.get(json=headers)
 
 def ping_video(id:str) -> str:
-    headers = {'content-type': "application/json",'accept': "application/json"}
-    u = URLRequest(url_service_media+"/api/analyze_video/"+id)
-    return u.get(headers=headers)
+    headers = {'content-type': "application/json"}
+    u = URLRequest(url_service_video+"/api/analyze_video?identifier="+id)
+    return u.get(json=headers)
 
 def upload_image(uploadimagein:UploadImageInput) -> str:
-    headers = {'content-type': "application/json",'accept': "application/json"}
+    headers = {'content-type': "application/json"}
     u = URLRequest(url_upload_image+"/api/analyze_image")
     payload = {"url": uploadimagein.url,"force" :"true","image": uploadimagein.image}
-    print("UPLOAD IMAGE REQUEST  ",len( payload))
+    print("UPLOAD IMAGE REQUEST  ",len(payload))
     j = json.dumps(payload)
     print("START upload")
     return u.post(data=j, headers= headers)
@@ -128,16 +133,16 @@ def upload_image(uploadimagein:UploadImageInput) -> str:
 def url_image_score(url:str) -> str:
     
     headers = {'content-type': "application/json",'accept': "application/json"}
-    u = URLRequest(url_service_media+"/api/media_analysis")
-    payload = {"images": url,"videos": [],"identifier": ['unkwon']}
+    u = URLRequest(url_service_image+"/api/analyze_image")
+    payload = {"url":url }
     print("RICHIESTA IMMAGINI  ",payload)
     j = json.dumps(payload)
     return u.post(data=j, headers= headers)
 
 def url_video_score(url:str) -> str:
     headers = {'content-type': "application/json",'accept': "application/json"}
-    u = URLRequest(url_service_media+"/api/media_analysis")
-    payload = {"images": [],"videos": [url],"identifier": ['unkwon']}
+    u = URLRequest(url_service_video+"/api/analyze_video")
+    payload = {"url":url}
     print("RICHIESTA VIDEO  ",payload)
     j = json.dumps(payload)
     return u.post(data=j, headers= headers)
@@ -205,7 +210,6 @@ def similar_claims(claim_input: Claim_input) -> list:
     print(result)
     return result
 
-
 def similar_news(id_news:str) -> list:
     print("start similar news")
     u = URLRequest(url_similar_claims+"/fandango/v0.1/siren/FindSimilarArticles")
@@ -223,10 +227,12 @@ def similar_news(id_news:str) -> list:
 
 def agg_score(id_news:str,calculatedRatingDetail:list) -> str:
     u = URLRequest(url_overall_score+"/api/fusion_score")
+    print(calculatedRatingDetail)
     payload = {"identifier": id_news, "calculatedRatingDetail":calculatedRatingDetail}
     headers = {"Content-Type":  "application/json"}
     j = json.dumps(payload)
     response = u.post(data=j,headers = headers)
+    
     print(response["calculatedRating"])
     return response["calculatedRating"]
 
@@ -270,120 +276,6 @@ CORS(app)
 log.info("RUN ON {cfg}".format(cfg= AppConfig.BASEURL+AppConfig.BASEPORT))
 app.setup()
 app.run(host = "0.0.0.0", port = AppConfig.BASEPORT,debug=False)
-
-#===============================================================================
-# 
-# def analyzer(daopredictor,nome_modello,news_preprocessed:News_DataModel) ->  str:
-#     
-#     
-#     log.info('''ANALISI NEWS''')
-#     model = daopredictor.get_by_id(nome_modello)
-#     df = pd.DataFrame(data={'title': [news_preprocessed.headline], 'text': [news_preprocessed.articleBody.replace("\n"," ")]})
-#     print(df.columns)
-#     prest = model.predict_proba(df)
-#     prest = pd.DataFrame(prest, columns=model.predictor_fakeness.predictor.predictor.classes_)
-#     log.info(json.loads(prest.to_json(orient='records')))
-#     result = json.loads(prest.to_json(orient='records'))
-#     
-#     return str(result[0]['REAL'])
-#===============================================================================
-
-# def finalaggr(news_preprocessed:News_DataModel)-> str:
-#     
-#     d = {"headline": news_preprocessed.headline,
-#             "articleBody" : news_preprocessed.articleBody,
-#                "dateCreated": news_preprocessed.dateCreated,
-#                "dateModified": news_preprocessed.dateModified,
-#                "datePublished": news_preprocessed.datePublished,
-#                "author": news_preprocessed.author,
-#                "publisher": news_preprocessed.publisher,
-#                "sourceDomain": news_preprocessed.sourceDomain,
-#                "calculatedRatingDetail": news_preprocessed.calculateRatingDetail,
-#                "calculatedRating": analyzer(news_preprocessed)[0]['REAL'],
-#                "identifier": news_preprocessed.identifier}
-#     
-#     
-#     d['author'] = author_org_getter(news_preprocessed).author
-#     d['publisher'] = author_org_getter(news_preprocessed).publisher
-#     d['images'] = media_getter(news_preprocessed).images
-#     d['videos'] = media_getter(news_preprocessed).videos
-#     d['mentions'] = topics_getter(news_preprocessed).mentions
-#     d['about'] = topics_getter(news_preprocessed).about
-#     dao.create_doc_news(d)
-#     #print(d, Final_DataModel(**d))
-#===============================================================================
-
-#===============================================================================
-# def author_org_getter(news_preprocessed:News_DataModel) -> Author_org_DataModel:
-#     
-#     payload = {"headline": news_preprocessed.headline,
-#                "articleBody" : news_preprocessed.articleBody,
-#                "dateCreated": news_preprocessed.dateCreated,
-#                "dateModified": news_preprocessed.dateModified,
-#                "datePublished": news_preprocessed.datePublished,
-#                "author": news_preprocessed.author,
-#                "publisher": news_preprocessed.publisher,
-#                "images": news_preprocessed.images,
-#                "video": news_preprocessed.video,
-#                "sourceDomain": news_preprocessed.sourceDomain,
-#                "calculateRatingDetail": news_preprocessed.calculateRatingDetail,
-#                "calculateRating": -news_preprocessed.calculateRating,
-#                "identifier": news_preprocessed.identifier}
-# 
-#     u = URLRequest(url_service_upm+"/graph/article")
-#     
-#     j = json.dumps(payload)
-#     response = u.post(data=j, headers=headers)
-#     return Author_org_DataModel(**response)
-# 
-# 
-# def media_getter(news_preprocessed:News_DataModel) -> Media_DataModel :
-#     
-#     u = URLRequest(url_service_certh+"/api/media_analysis")
-#     payload = {"images": news_preprocessed.images,"videos": news_preprocessed.videos,"identifier": news_preprocessed.identifier}
-#     j = json.dumps(payload)
-#     response = u.post(data=j, headers=headers)
-#     response['identifier'] = news_preprocessed.identifier
-#     return Media_DataModel(**response)
-# 
-# def topics_getter(news_preprocessed:News_DataModel) -> Topics_DataModel:
-#     u = URLRequest(url_service_certh+"/api/extract_topics")
-#     payload = {"articleBody": news_preprocessed.articleBody,
-#                "headline": news_preprocessed.headline,
-#                "identifier": news_preprocessed.identifier,
-#                "language" : "language" }#####---->modify when ready from upm preprocessing 
-#     j = json.dumps(payload)
-#     response = u.post(data=j, headers=headers)
-#     return Topics_DataModel(**response)
-#===============================================================================
-#===============================================================================
-# 
-# def finalaggr(news_preprocessed:News_DataModel)-> str:
-#     
-#     d = {"headline": news_preprocessed.headline,
-#             "articleBody" : news_preprocessed.articleBody,
-#                "dateCreated": news_preprocessed.dateCreated,
-#                "dateModified": news_preprocessed.dateModified,
-#                "datePublished": news_preprocessed.datePublished,
-#                "author": news_preprocessed.author,
-#                "publisher": news_preprocessed.publisher,
-#                "sourceDomain": news_preprocessed.sourceDomain,
-#                "calculatedRatingDetail": news_preprocessed.calculateRatingDetail,
-#                "calculatedRating": analyzer(news_preprocessed)[0]['REAL'],
-#                "identifier": news_preprocessed.identifier}
-#     
-#     
-#     d['author'] = author_org_getter(news_preprocessed).author
-#     d['publisher'] = author_org_getter(news_preprocessed).publisher
-#     d['images'] = media_getter(news_preprocessed).images
-#     d['videos'] = media_getter(news_preprocessed).videos
-#     d['mentions'] = topics_getter(news_preprocessed).mentions
-#     d['about'] = topics_getter(news_preprocessed).about
-#     dao.create_doc_news(d)
-#     #print(d, Final_DataModel(**d))
-# 
-#     return('ciao')
-#===============================================================================
 
 
 
