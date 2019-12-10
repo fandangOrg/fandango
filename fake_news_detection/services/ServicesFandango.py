@@ -10,7 +10,7 @@ from fake_news_detection.model.InterfacceComunicazioni import News_DataModel, Au
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.config.AppConfig import  static_folder, url_service_media,\
     url_service_authors, url_similar_claims, template_path, url_upload_image,\
-    url_overall_score
+    url_overall_score, url_service_video, url_service_image
 import json
 from flask_cors.extension import CORS
 from ds4biz_flask.model.ds4bizflask import DS4BizFlask
@@ -129,7 +129,7 @@ def url_image_score(url:str) -> str:
     
     headers = {'content-type': "application/json",'accept': "application/json"}
     u = URLRequest(url_service_media+"/api/media_analysis")
-    payload = {"images": [url],"videos": [],"identifier": ['unkwon']}
+    payload = {"images": url,"videos": [],"identifier": ['unkwon']}
     print("RICHIESTA IMMAGINI  ",payload)
     j = json.dumps(payload)
     return u.post(data=j, headers= headers)
@@ -214,9 +214,11 @@ def similar_news(id_news:str) -> list:
     
     j = json.dumps(payload)
     response = u.post(data=j,headers = headers)
-    for i in response['results']: 
-        if i['sourceDomain']=='www.repubblica.it':
-            i["calculatedRatingDetail"]["textRating"]=1.0
+    #===========================================================================
+    # for i in response['results']: 
+    #     if i['sourceDomain']=='www.repubblica.it':
+    #         i["calculatedRatingDetail"]["textRating"]=1.0
+    #===========================================================================
     return response["results"]
 
 def agg_score(id_news:str,calculatedRatingDetail:list) -> str:
