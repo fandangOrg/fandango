@@ -94,12 +94,13 @@ def crawl_prep(url:str,old:str="False") -> News_DataModel:
     news_preprocessed.results=prest
     print("presssssssssssssssst",analisy2)
     news_preprocessed.similarnews = similar_news(news_preprocessed.identifier)
-    #print("similar news----->",news_preprocessed.similarnews)
     topics = []
     #topics = topics_getter(news_preprocessed)
     news_preprocessed.calculateRatingDetail = analisy2
     print("calculateddddddddddddddddddddddddddd",news_preprocessed.calculateRatingDetail)
     opendata = Open_Data(text=news_preprocessed.headline, category=news_preprocessed.headline, topics= topics)
+    news_preprocessed.calculateRatingDetail['textRating'] = news_preprocessed.calculateRatingDetail['textRating']*100
+    print(news_preprocessed.calculateRatingDetail['textRating'])
     news_preprocessed.calculateRating = round(agg_score(news_preprocessed.identifier,news_preprocessed.calculateRatingDetail),2)
     
     print("calculated ratinggggggggggggggggg",round(news_preprocessed.calculateRating,2))
@@ -127,6 +128,7 @@ def upload_image(uploadimagein:UploadImageInput) -> str:
     print("UPLOAD IMAGE REQUEST  ",len(payload))
     j = json.dumps(payload)
     print("START upload")
+    print(j)
     return u.post(data=j, headers= headers)
 
 
