@@ -4,6 +4,7 @@ import {Button, Buttons} from "../../app.config";
 import {AppService} from "../../app.service";
 import {NgbModal, NgbModalRef} from "@ng-bootstrap/ng-bootstrap";
 import {HomepageService} from "./homepage.service";
+import {AnalyzeService} from "../analyze/analyze.service";
 
 @Component({
     selector: 'app-homepage',
@@ -23,7 +24,7 @@ export class HomepageComponent implements OnInit, AfterViewInit {
     imgUrl: string;
     modalReference: NgbModalRef;
 
-    constructor(private router: Router, private activatedRoute: ActivatedRoute, private modalService: NgbModal, private http: HomepageService) {
+    constructor(private router: Router, private activatedRoute: ActivatedRoute, private modalService: NgbModal, private http: HomepageService, private analyzeService: AnalyzeService) {
         this.fandangoLogo = 'assets/img/logos/fandango.png';
         this.buttonList = Buttons;
         this.imgUrl = '';
@@ -95,13 +96,26 @@ export class HomepageComponent implements OnInit, AfterViewInit {
                 this.modalReference.close();
                 AppService.showNotification('danger', `Error during analyzing image, ${data['error']}`);
             } else {
-                let result = data;
-                result = result['display'].find(key => key.analyzer === 'original');
-                this.router.navigate(['analyze/image', {url: result['display']}]);
+                // this.analyzeService.getImageScore(data['identifier']).subscribe(
+                //     data => {
+                //         console.log(data);
+                //         if (data['status'] === 'error') {
+                //             AppService.showNotification('danger', `Error during analyzing image, ${data['error']}`)
+                //         } else if (this.image['status'] !== 'done')
+                //             this.checkStatus(tempImage);
+                //     });
+
+                // let result = data;
+                // result = result['display'].find(key => key.analyzer === 'original');
+                this.router.navigate(['analyze/image', {url: this.imgUrl}]);
             }
         }, error => {
             AppService.showNotification('danger', `Error during analyzing image`);
         })
+    }
+
+    pingImageService() {
+
     }
 
     sendInput(form) {
