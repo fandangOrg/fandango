@@ -1,0 +1,8 @@
+MATCH(i:Article) WITH i UNWIND i.authors as author MATCH(a:Author) WHERE author = a.uuid MERGE (i)-[:WAS_WRITTEN_BY]-(a)
+
+MATCH(i:Article) WITH i UNWIND i.publisher	 as org MATCH(o:Organization) WHERE org = o.uuid MERGE (i)-[:WAS_PUBLISHED_BY]-(o)
+
+
+MATCH(i:Article) WITH i UNWIND i.publisher as org UNWIND i.authors as aut MATCH(o:Organization),MATCH(a:Authors) WHERE org = aut MERGE (a)-[:IS_AFFILIATE_TO]-(o)
+
+

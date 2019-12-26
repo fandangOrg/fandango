@@ -1,0 +1,8 @@
+version: '3'
+services:
+    preprocessing :   
+      image: "tavitto16/fandango_preprocessing:latest"
+      container_name: docker_fandango_pre
+      ports:
+        - "5001:5001"
+      command : bash -c "python /app/init_services.py & sleep 40 && curl http://0.0.0.0:5001/preprocess/stream/start && tail -F anything"
