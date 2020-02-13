@@ -14,6 +14,9 @@ app.factory('annotation', ['$http', function ($http) {
         },
         getCountAnnotation: function (to_send) {
             return $http.post(base + "/counter_annotations", to_send);
+        },
+        getCountByAuthor: function (to_send) {
+            return $http.post(base + "/get_counter_by_author", to_send);
         }
     };
 }]);

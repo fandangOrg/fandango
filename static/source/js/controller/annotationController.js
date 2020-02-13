@@ -5,6 +5,7 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
     $scope.optionLanguage = ''; // LANGUAGE ON ANNOTATION OPTION MENU
     $scope.tabSelected = 1; // 1 = AUTO - 2 = - MANUAL - 3 = DOMAIN
     $scope.countAnnotation = 0; // NUMBER OF NEWS ANNOTATED
+    $scope.authorCountAnnotation = 0; // NUMBER OF NEWS ANNOTATED BY AUTHOR
     $scope.loadingAnalyzeUrl = false; // FLAG FOR SPINNER ON URL ANALYZING
     $scope.analyzeOk = false; // FLAG FOR SHOW ERROR ON URL ANALYZING
     $scope.newExist = true; // FLAG FOR CHECK IF IS LAST NEWS
@@ -251,6 +252,14 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
             $scope.countAnnotation = response.data;
 
+            var to_send = {
+                'author': $scope.page.authorName
+            };
+            
+            annotation.getCountByAuthor(to_send).then(function (response) {
+                console.log(response);
+                $scope.authorCountAnnotation = response.data;
+            
             annotation.goNext($scope.selectedLanguage, $scope.page.authorName).then(function (response) {
                 $("#btnStartAnalyze").addClass("animated fadeOut faster");
 
@@ -260,8 +269,9 @@ app.controller('annotationCtrl', ['$scope', '$http', 'crUrl', 'lang', 'annotatio
 
                 $scope.changeTextNews(response);
                 $scope.analyzeStarted = true;
-            }, function (response) {
+                }, function (response) {
                 alert.showAlert('Error');
+                });
             });
         });
     };
