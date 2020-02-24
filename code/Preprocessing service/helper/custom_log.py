@@ -5,7 +5,7 @@ import time
 import shutil
 
 # MODIFIED!
-os.environ['app_logs'] = os.path.join("www","app_logs")
+os.environ['app_logs'] = os.path.join("app_logs")
 
 
 def check_directory_expired_date(total_time=36000):

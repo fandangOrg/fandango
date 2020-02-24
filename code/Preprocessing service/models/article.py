@@ -1,103 +1,88 @@
-import json
-from helper import global_variables as gv
+from helper import config as cfg
 
-
-# ======================================================================================================================
-# ---------------------------------------------- ARTICLE MODEL ---------------------------------------------------------
-# ======================================================================================================================
 
 class Article:
-    def __init__(self, df):
-        self.convert_df_to_dict(df)
-        self.identifier = self.df['identifier'][0]
-        self.headline = self.df['title'][0]
-        self.articleBody = self.df['text'][0]
-        self.url = df['url'][0]
-        self.sourceDomain = self.df['source_domain'][0]
+    def __init__(self, data):
 
-        # check if is instance of a list
-        if isinstance(self.sourceDomain, list):
-            self.sourceDomain = self.sourceDomain[0]
+        # Main fields
+        self.identifier = data["identifier"]
+        self.headline = data["title"]
+        self.articleBody = data['text']
+        self.url = data['url']
+        self.sourceDomain = data['source_domain']
+        self.authors = data['authors']
+        self.language = data["language"]
 
-        self.language = self.df["language"][0]
-        self.dateCreated = self.df['date_created'][0]
-        self.dateModified = self.df['date_modified'][0]
-        self.datePublished = self.df['date_published'][0]
-        self.publish_date_estimated = self.df['publish_date_estimated'][0]
-        self.authors = self.df['authors'][0]
-        if len(self.authors) == 0:
-            self.authors = [gv.default_field]
-        if not isinstance(self.df['organization'][0], list):
-            self.publisher = [self.df['organization'][0]]
+        if "date_created" in data.keys():
+            self.dateCreated = data['date_created']
         else:
-            self.publisher = self.df['organization'][0]
-        if 'calculateRating' in list(self.df.keys()):
-            self.calculateRating = self.df['calculateRating'][0]
+            self.dateCreated = ""
+        if "date_modified" in data.keys():
+            self.dateModified = data['date_modified']
+        else:
+            self.dateModified = ""
+        if "date_published" in data.keys():
+            self.datePublished = data['date_published']
+        else:
+            self.datePublished = ""
+        if "publish_date_estimated" in data.keys():
+            self.publish_date_estimated = data['publish_date_estimated']
+        else:
+            self.publish_date_estimated = ""
+
+        if not isinstance(data['publisher'], list):
+            self.publisher = [data['publisher']]
+        else:
+            self.publisher = data['publisher']
+
+        if "summary" in data.keys():
+            self.summary = data['summary']
+        else:
+            self.summary = ""
+        if "images" in data.keys():
+            self.images = data['images']
+        else:
+            self.images = []
+        if "videos" in data.keys():
+            self.videos = data['videos']
+        else:
+            self.videos = []
+        if "country" in data.keys():
+            self.country = data['country']
+        else:
+            self.country = cfg.org_default_field
+        if "nationality" in data.keys():
+            self.nationality = data['nationality']
+        else:
+            self.nationality = data["nationality"]
+
+        # Non-required parameters
+        if 'calculateRating' in list(data.keys()):
+            self.calculateRating = data['calculateRating']
         else:
             self.calculateRating = -99
-        if 'calculateRatingDetail' in list(self.df.keys()):
-            self.calculateRatingDetail = self.df['calculateRatingDetail'][0]
+
+        if 'calculateRatingDetail' in list(data.keys()):
+            self.calculateRatingDetail = data['calculateRatingDetail']
         else:
             self.calculateRatingDetail = ""
-        if 'about' in list(self.df.keys()):
-            self.about = df['about'][0]
-        else:
-            self.about = []
-        if 'mentions' in list(self.df.keys()):
-            self.mentions = df['mentions'][0]
-        else:
-            self.mentions = []
-        if 'contains' in list(self.df.keys()):
-            self.contains = df['contains'][0]
-        else:
-            self.contains = []
 
-        self.country = df['country'][0]
-        self.nationality = df['org_nationality'][0]
-        self.summary = self.df['summary'][0]
-        self.images = self.df['images'][0]
-        self.videos = self.df['videos'][0]
-        # ------------- linkNumber -------------
-        if 'linkNumber' in list(self.df.keys()):
-            self.linkNumber = int(df['linkNumber'][0])
-        else:
-            self.linkNumber = 0
+    def article_to_dict(self):
+        return self.build_kafka_output()
 
-        if 'version' in list(self.df.keys()):
-            self.version = df['version'][0]
-        else:
-            self.version = 0
-        # ------------------------------------------------------------------------
-        if 'fakeness' in list(self.df.keys()):
-            self.fakeness = self.df['fakeness'][0]
-        else:
-            self.fakeness = gv.default_field
-        # ------------------------------------------------------------------------
-
-    def convert_df_to_dict(self, df):
-        if not isinstance(df, dict):
-            self.df = df.to_dict()
-
-    def to_json_ES(self):
-        return json.dumps(self)
-
-    def to_dict_KAFKA(self):
+    def build_kafka_output(self):
+        output = {}
         try:
             output = {"identifier": self.identifier, "headline": self.headline,
-                      "articleBody": self.articleBody, 'url' : self.url,
-                      "language":self.language,
-                      "images": self.images, "videos": self.videos,
-                      "dateCreated": self.dateCreated, "dateModified": self.dateModified,
-                      "datePublished": self.datePublished, "publishDateEstimated": self.publish_date_estimated,
-                      "author": self.authors, "publisher": self.publisher,
-                      "sourceDomain": self.sourceDomain, "country": self.country,
+                      "articleBody": self.articleBody, 'url': self.url,
+                      "language": self.language, "images": self.images,
+                      "videos": self.videos, "dateCreated": self.dateCreated,
+                      "dateModified": self.dateModified, "datePublished": self.datePublished,
+                      "publishDateEstimated": self.publish_date_estimated, "author": self.authors,
+                      "publisher": self.publisher, "sourceDomain": self.sourceDomain, "country": self.country,
                       "nationality": self.nationality, "calculateRating": self.calculateRating,
                       "calculateRatingDetail": self.calculateRatingDetail}
-            # Add Fakeness whether it is available
-            if self.fakeness != gv.default_field:
-                output['fakeness'] = self.fakeness
+
         except Exception as e:
-            msg = str(e) + ' Empty Document!'
-            gv.logger.warning(msg)
-            output = {}
+            cfg.logger.error(e)
         return output

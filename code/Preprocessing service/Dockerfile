@@ -1,4 +1,4 @@
-FROM python:3
+FROM python:3.6
 
 COPY . /app
 WORKDIR /app
@@ -10,9 +10,10 @@ RUN apt install -y openssh-client
 RUN pip install requests
 RUN pip install future
 RUN pip install colorlog
+RUN pip install flair
 RUN pip install -r requirements.txt
 RUN python -m spacy download en_core_web_sm
-RUN python -m spacy download xx
+RUN python -m spacy download xx_ent_wiki_sm
 RUN python -m spacy download it_core_news_sm
 RUN python -m spacy download de_core_news_sm
 RUN python -m spacy download es_core_news_sm

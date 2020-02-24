@@ -6,12 +6,18 @@ import numpy as np
 from datetime import datetime
 import time
 import os
+import pytz
 import json
 import pycountry
 import whois
 import tld
+import hashlib
 import tldextract
-from helper import global_variables as gv
+import pandas as pd
+from helper import config as cfg
+from difflib import SequenceMatcher
+from restcountries import RestCountryApiV2 as rapi
+from urllib.parse import urlparse
 
 
 def get_stop_words():
@@ -120,12 +126,89 @@ def remove_domain_words(source_domain, domain_stop_words):
 
 def get_country_by_code(country_code):
     try:
-        country_domain = gv.country_domains
+        country_domain = cfg.country_domains
         country = country_domain[country_code]
     except Exception as e:
-        gv.logger.warning(e)
+        cfg.logger.warning(e)
         country = "Not Specified"
     return country
+
+def extract_org_info(source_domain):
+    source_domain_data = None
+    required_fields = {"domain_name", "creation_date", "expiration_date", "status", "name", "org",
+                       "city", "state", "zipcode", "country"}
+    try:
+        # WhoisIP
+        w = whois.whois(source_domain)
+        # To dict
+        source_domain_data = dict(w)
+
+        # Not all the required information is available
+        if not source_domain_data.keys() >= required_fields:
+            # 1) Domain name
+            if "domain_name" not in source_domain_data.keys():
+                source_domain_data["domain_name"] = None
+            else:
+                if isinstance(source_domain_data["domain_name"], list):
+                    source_domain_data["domain_name"] = source_domain_data["domain_name"][0].lower()
+
+            # 2) Creation date
+            if "creation_date" not in source_domain_data.keys():
+                source_domain_data["creation_date"] = cfg.org_default_field
+            else:
+                if isinstance(source_domain_data["creation_date"], list):
+                    source_domain_data["creation_date"] = source_domain_data["creation_date"][0]
+                # Add time zone utc
+                if isinstance(source_domain_data["creation_date"], datetime):
+                    d = pytz.UTC.localize(source_domain_data["creation_date"])
+                    source_domain_data["creation_date"] = d.strftime("%Y-%m-%d %H:%M:%S %Z")
+
+            # 3) Expiration date
+            if "expiration_date" not in source_domain_data.keys():
+                source_domain_data["expiration_date"] = cfg.org_default_field
+            else:
+                if isinstance(source_domain_data["expiration_date"], list):
+                    source_domain_data["expiration_date"] = source_domain_data["expiration_date"][0]
+                # Add time zone utc
+                if isinstance(source_domain_data["expiration_date"], datetime):
+                    d = pytz.UTC.localize(source_domain_data["expiration_date"])
+                    source_domain_data["expiration_date"] = d.strftime("%Y-%m-%d %H:%M:%S %Z")
+
+            # 4) String keys
+            standard_keys = ["status", "name", "org", "city", "state", "zipcode"]
+            for i in standard_keys:
+                if i not in source_domain_data.keys():
+                    source_domain_data[i] = cfg.org_default_field
+                else:
+                    source_domain_data[i] = str(source_domain_data[i])
+
+            # 5) Country
+            if 'country' in source_domain_data.keys() and w['country'] is not None:
+                country_code = source_domain_data['country']
+                country_data = pycountry.countries.get(alpha_2=country_code)
+                if country_data is None:
+                    country_code = source_domain.split('.')[-1]
+                    try:
+                        source_domain_data['country'] = cfg.country_domains[country_code.lower()]
+                    except Exception as e:
+                        source_domain_data['country'] = cfg.default_field
+                else:
+                    source_domain_data['country'] = str(country_data.name)
+
+        # Check
+        ttd = tldextract.extract(source_domain)
+        if source_domain_data["domain_name"] is None:
+            # tldExtractor
+            source_domain_data["domain_name"] = ttd.registered_domain
+
+        # Add a new key for whois name
+        source_domain_data["whois_name"] = source_domain_data["name"]
+        if source_domain_data["name"] is cfg.org_default_field:
+            source_domain_data["name"] = ttd.domain
+
+    except Exception as e:
+        cfg.logger.error(e)
+    return source_domain_data
 
 
 def check_organization_data(organization, organizations_list, threshold=90):
@@ -170,7 +253,7 @@ def check_organization_data(organization, organizations_list, threshold=90):
             if country_data is None:
                 country_code = organization.split('.')[-1]
                 try:
-                    country = gv.country_domains[country_code]
+                    country = cfg.country_domains[country_code]
                 except Exception as e:
                     country = 'Not Specified'
             else:
@@ -203,7 +286,7 @@ def check_organization_data(organization, organizations_list, threshold=90):
         else:
             done = True
     except Exception as e:
-        gv.logger.warning(e)
+        cfg.logger.warning(e)
         country = 'Not Specified'
         parent_org = 'Not Specified'
         final_org = 'Unknown'
@@ -231,7 +314,7 @@ def check_organization_data(organization, organizations_list, threshold=90):
                 final_org = organization.title()
 
         except Exception as e:
-            gv.logger.warning(e)
+            cfg.logger.warning(e)
 
     org_data['name'] = final_org.title()
     org_data['country'] = country
@@ -305,7 +388,7 @@ def check_authorname_org(authorName, organizations_list, threshold=90):
             is_org = True
 
     except Exception as e:
-        gv.logger.error(e)
+        cfg.logger.error(e)
         is_org = False
 
     return is_org
@@ -328,6 +411,7 @@ def collect_publisher_from_allmediaLink():
                    'https://uk.allmedialink.com/',
                    'https://uk.allmedialink.com/online-newsportal/',
                    'https://usa.allmedialink.com/']
+
     total_np = []
     total_time = 86400
     done = False
@@ -358,7 +442,7 @@ def collect_publisher_from_allmediaLink():
                 total_np += final_newspapers
             except Exception as e:
                 msg = str(e) + ' The last updated document will be used in this case.'
-                gv.logger.warning(msg)
+                cfg.logger.warning(msg)
                 # Use the last updated
                 if os.path.exists(newspaper_resource):
                     with open(newspaper_resource) as json_file:
@@ -368,8 +452,8 @@ def collect_publisher_from_allmediaLink():
                 # Get out of the for loop
                 break
 
-                # FANDANGO LIST
-        fandango_list = ['Europa Today', 'Il Fatto Quotidiano',
+        # FANDANGO LIST
+        fandango_list = ['Europa Today', 'Il Fatto Quotidiano', "Ansa"
                          'Milano Finanza', 'AttivoNews', 'ilsapereepotere2', 'El Mundo Today',
                          'Errado de Aragon', 'Meneame', 'Hay Noticia', 'HLN', 'Het Nieuwsblad',
                          'Newsmonkey', 'GVA', 'HBVL', 'La Verdad', 'El Norte de Castilla',
@@ -399,13 +483,233 @@ def get_datetime():
     date_time = now.strftime("%m/%d/%Y, %H:%M:%S %z")
     return date_time
 
-def save_last_article(id):
+def extract_country_from_code(country_code):
+    country = None
     try:
-        with open(gv.save_article_txt, 'w+') as f:
-            text = f.read()
-            text = str(id)
-            f.seek(0)
-            f.write(text)
-            f.truncate()
+        country_data = pycountry.countries.get(alpha_2=country_code.upper())
+        if country_data is not None:
+            country = str(country_data.official_name)
+        else:
+            country = cfg.country_domains[country_code.lower()]
     except Exception as e:
-        gv.logger.error(e)
+        cfg.logger.warning(e)
+    return country
+
+def extract_publisher_info(source_domain, list_of_websites=None, threshold=95):
+    source_domain_data = None
+    required_fields = {"domain_name", "creation_date", "expiration_date", "status", "name", "org",
+                       "city", "state", "zipcode", "country", "suffix", "whois_name", "whois_country",
+                       "nationality"}
+    try:
+        # WhoisIP
+        w = whois.whois(source_domain)
+        # To dict
+        source_domain_data = dict(w)
+
+        # Not all the required information is available
+        if not source_domain_data.keys() >= required_fields:
+            # 1) Domain name
+            if "domain_name" not in source_domain_data.keys():
+                source_domain_data["domain_name"] = None
+            else:
+                if isinstance(source_domain_data["domain_name"], list):
+                    source_domain_data["domain_name"] = source_domain_data["domain_name"][0].lower()
+
+            # 2) Creation date
+            if "creation_date" not in source_domain_data.keys():
+                source_domain_data["creation_date"] = cfg.org_default_field
+            else:
+                if isinstance(source_domain_data["creation_date"], list):
+                    source_domain_data["creation_date"] = source_domain_data["creation_date"][0]
+                # Add time zone utc
+                if isinstance(source_domain_data["creation_date"], datetime):
+                    d = pytz.UTC.localize(source_domain_data["creation_date"])
+                    source_domain_data["creation_date"] = d.strftime("%Y-%m-%d %H:%M:%S %Z")
+
+            # 3) Expiration date
+            if "expiration_date" not in source_domain_data.keys():
+                source_domain_data["expiration_date"] = cfg.org_default_field
+            else:
+                if isinstance(source_domain_data["expiration_date"], list):
+                    source_domain_data["expiration_date"] = source_domain_data["expiration_date"][0]
+                # Add time zone utc
+                if isinstance(source_domain_data["expiration_date"], datetime):
+                    d = pytz.UTC.localize(source_domain_data["expiration_date"])
+                    source_domain_data["expiration_date"] = d.strftime("%Y-%m-%d %H:%M:%S %Z")
+
+            # 4) Updated date
+            if "updated_date" not in source_domain_data.keys():
+                source_domain_data["updated_date"] = cfg.org_default_field
+            else:
+                if isinstance(source_domain_data["updated_date"], list):
+                    source_domain_data["updated_date"] = source_domain_data["creation_date"][0]
+                # Add time zone utc
+                if isinstance(source_domain_data["updated_date"], datetime):
+                    d = pytz.UTC.localize(source_domain_data["updated_date"])
+                    source_domain_data["updated_date"] = d.strftime("%Y-%m-%d %H:%M:%S %Z")
+
+            # 5) String keys
+            standard_keys = ["status", "name", "org", "city", "state", "zipcode"]
+            for i in standard_keys:
+                if i not in source_domain_data.keys():
+                    source_domain_data[i] = cfg.org_default_field
+                elif i in source_domain_data.keys() and source_domain_data[i] is not None:
+                    if isinstance(source_domain_data[i] , list):
+                        source_domain_data[i] = source_domain_data[i][0]
+                    source_domain_data[i] = str(source_domain_data[i])
+                else:
+                    source_domain_data[i] = cfg.org_default_field
+
+            # 6) Extract source domain information
+            ttd = tldextract.extract(source_domain)
+            if source_domain_data["domain_name"] is None:
+                # tldExtractor
+                source_domain_data["domain_name"] = ttd.registered_domain
+
+            # Add a new key for whois name
+            source_domain_data["whois_name"] = source_domain_data["name"]
+
+            if list_of_websites is not None:
+                source_domain_data["name"] = check_name_publisher(publisher_name=ttd.domain.lower(),
+                                                                  organizations_list=list_of_websites,
+                                                                  threshold=threshold)
+            else:
+                source_domain_data["name"] = ttd.domain.upper()
+            source_domain_data["suffix"] = ttd.suffix
+
+            # 7) Country and nationality
+            if 'country' in source_domain_data.keys() and source_domain_data['country'] is not None:
+                country_code = source_domain_data['country']
+                country_data = extract_country_from_code(country_code)
+                source_domain_data['whois_country'] = str(country_data)
+            else:
+                source_domain_data['whois_country'] = cfg.org_default_field
+
+            # Analyse country via suffix
+            country_code = source_domain.split('.')[-1]
+            country_data = extract_country_from_code(country_code)
+            if country_data is None:
+                if source_domain_data["whois_country"] != cfg.org_default_field:
+                    source_domain_data['country'] = source_domain_data["whois_country"]
+                else:
+                    source_domain_data['country'] = cfg.org_default_field
+            else:
+                source_domain_data['country'] = str(country_data)
+        try:
+            source_domain_data["nationality"] = rapi.get_countries_by_name(source_domain_data["country"])[0].demonym
+        except Exception as e:
+            source_domain_data["nationality"] = cfg.org_default_field
+
+        # Only keep the required keys
+        source_domain_data = dict((key,value) for key, value in source_domain_data.items() if key in list(required_fields))
+    except Exception as e:
+        cfg.logger.error(e)
+    return source_domain_data
+
+
+def check_name_publisher(publisher_name, organizations_list, threshold=95):
+    publisher_name_cleaned = None
+    try:
+        if isinstance(organizations_list, pd.DataFrame):
+            organizations_list = organizations_list["name"].values.tolist()
+
+
+        similarity = []
+        org_lower = [org.replace(' ', '').lower() for org in organizations_list]
+        # Compute similarity
+        for i, org in enumerate(org_lower):
+            similarity.append(fuzz.ratio(org, publisher_name.lower()))
+        if np.max(similarity) > threshold:
+            idx = np.argmax(np.array(similarity))
+            publisher_name_cleaned = organizations_list[idx]
+        else:
+            publisher_name_cleaned = publisher_name.upper()
+    except Exception as e:
+        cfg.logger.error(e)
+    return publisher_name_cleaned
+
+
+def remove_duplicate_strings_from_list(str_lst, min_char=3, fuzzy=False, fuzzy_threshold=.8):
+    unique_str_lst = str_lst
+    try:
+        if len(str_lst) > 0:
+            str_lst = [i for i in str_lst if i is not None and len(i) >= min_char]
+            if len(str_lst) > 0:
+                if not fuzzy:
+                    unique_str_lst = list(set(str_lst))
+                else:
+                    unique_str_lst = fuzzy_similarity_search(data=str_lst, threshold=fuzzy_threshold)
+            else:
+                unique_str_lst = [cfg.default_field]
+        else:
+            unique_str_lst = [cfg.default_field]
+    except Exception as e:
+        cfg.logger.error(e)
+    return unique_str_lst
+
+
+def fuzzy_similarity_search(data, threshold=.8):
+    new_data = []
+    try:
+        for i, val in enumerate(data):
+            # First iteration
+            if i == 0:
+                new_data.append(val)
+            else:
+                index_ls = []
+                for j, val_new in enumerate(new_data):
+                    dist = SequenceMatcher(None, val, val_new).ratio()
+                    if dist >= threshold:
+                        insert = False
+                    else:
+                        insert = True
+                    index_ls.append(insert)
+
+                if False not in index_ls:
+                    new_data.append(val)
+
+    except Exception as e:
+        cfg.logger.error(e)
+    return new_data
+
+
+def create_websites_db(filepath, countries):
+    df = pd.DataFrame()
+    try:
+        for cont in countries:
+            cfg.logger.info("Extracting data from ", cont)
+            df_temp = pd.read_excel(filepath, sheet_name=cont, skip_blank_lines=False)
+            cols = list(df_temp.columns)
+            moDf = df_temp.dropna(how='any', subset=cols[1:4])
+
+            # Replace nans by unknown
+            moDf = moDf.fillna("N/A")
+            df = pd.concat([df, moDf], axis=0)
+    except Exception as e:
+        cfg.logger.error(e)
+    return df
+
+
+def create_csv_from_df(df, filepath):
+    try:
+        df.to_csv(filepath)
+    except Exception as e:
+        cfg.logger.error(e)
+
+def generate_uuid_article(url):
+    identifier = ""
+    try:
+        identifier = (hashlib.sha256(".".join(urlparse(url).netloc.split(".")[-2:]).encode('utf-8')).hexdigest() +
+                      hashlib.sha256(urlparse(url).path.encode('utf-8')).hexdigest())
+    except Exception as e:
+        cfg.logger.error(e)
+    return identifier
+
+def extract_domain_from_url(url):
+    domain = None
+    try:
+        info = tldextract.extract(url)
+        domain = info.registered_domain
+    except Exception as e:
+        cfg.logger.error(e)
+    return domain

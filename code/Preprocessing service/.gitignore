@@ -8,3 +8,9 @@ models/__pycache__/
 __pycache__/
 
 test\.py
+
+test/data.py
+
+test/kafka_topics.py
+
+test/

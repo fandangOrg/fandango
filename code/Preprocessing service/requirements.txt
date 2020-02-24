@@ -2,6 +2,7 @@ kafka-python
 elasticsearch
 pandas
 numpy
+colorlog
 spacy
 bs4
 requests
@@ -13,8 +14,9 @@ python-restcountries
 lxml
 flask
 flask_cors
+flask_swagger_ui
 python-whois
 tld
 tldextract
 unidecode
-
+pytz

@@ -1,0 +1,2158 @@
+,location,domain,name,media_type,media_focus,language,platform
+0,National,http://www.antena3.com/,Antena 3,Broadcast,General Interest,Spanish,TV
+1,National,http://www.cuatro.com/,Cuatro,Broadcast,General Interest,Spanish,TV
+2,National,http://www.ondacero.es/,Onda Cero,Broadcast,General Interest,Spanish,Radio
+3,National,http://www.rtve.es/,RTVE,Broadcast,General Interest,Spanish,Radio TV
+4,National,http://www.telecinco.es/,Tele 5,Broadcast,General Interest,Spanish,TV
+5,National,http://www.rtve.es/television/teletexto/,TVE,Broadcast,General Interest,Spanish,Teletext
+7,National,http://www.20minutos.es/,20 Minutos,Internet,General Interest,Spanish,N/A
+8,National,https://www.90min.com/es,90 Min,Internet,Sport,Spanish,N/A
+9,National,http://www.agrodigital.com/,Agro Digital,Internet,Agriculture,Spanish,N/A
+10,National,http://www.agroinformacion.com/,Agro Informacion,Internet,Agriculture,Spanish,N/A
+11,National,http://thecorner.eu/,Corner,Internet,General Interest,English,N/A
+12,National,http://www.cunoticias.com/,CU Noticias,Internet,General Interest,Spanish,N/A
+13,National,http://www.diariocritico.com/,Diario CrÃ­tico,Internet,General Interest,Spanish,N/A
+14,National,http://www.diariosigloxxi.com/,Diario Siglo XXI,Internet,General Interest,Spanish,N/A
+15,National,http://www.elboletin.com/,El Boletin,Internet,General Interest,Spanish,N/A
+16,National,http://www.elconfidencial.com/,El Confidencial,Internet,General Interest,Spanish,N/A
+17,National,http://www.elconfidencialdigital.com/,El Confidencial Digital,Internet,General Interest,Spanish,N/A
+18,National,http://www.eldesmarque.com/,El Desmarque,Internet,Sport,Spanish,N/A
+19,National,http://www.eldiario.es/,El Diario,Internet,General Interest,Spanish,N/A
+20,National,https://www.elespanol.com/,El Espanol,Internet,General Interest,Spanish,N/A
+21,National,http://www.elimparcial.es/,El Imparcial,Internet,General Interest,Spanish,N/A
+22,National,http://www.elsemanaldigital.com/,El Semanal Digital,Internet,General Interest,Spanish,N/A
+23,National,http://www.estrelladigital.es/,Estrella Digital,Internet,General Interest,Spanish,N/A
+24,National,http://www.europapress.es/,Europa Press,Internet,General Interest,Spanish,N/A
+25,National,http://www.expatica.com/es/,Expatica,Internet,General Interest,English,N/A
+26,National,http://www.hispanidad.com/,Hispanidad,Internet,General Interest,Spanish,N/A
+27,National,https://www.infolibre.es/,Info Libre,Internet,General Interest,Spanish,N/A
+28,National,http://www.lainformacion.com/,La Informacion,Internet,General Interest,Spanish,N/A
+29,National,http://www.lasemana.es/,La Semana,Internet,General Interest,Spanish,N/A
+30,National,http://www.lavozlibre.com/,La Voz Libre,Internet,General Interest,Spanish,N/A
+31,National,http://www.libertaddigital.com/,Libertad Digital,Internet,General Interest,Spanish,N/A
+32,National,http://www.msn.com/es-es,MSN,Internet,General Interest,Spanish,N/A
+33,National,http://www.noticiasdebolsa.com/,Noticias de Bolsa,Internet,Business,Spanish,N/A
+34,National,http://noticierouniversal.com/,Noticiero Universal,Internet,General Interest,Spanish,N/A
+35,National,http://www.periodistadigital.com/,Periodista Digital,Internet,General Interest,Spanish,N/A
+36,National,http://www.que.es/,Que,Internet,General Interest,Spanish,N/A
+37,National,http://www.diariosigloxxi.com/,Siglo XXI,Internet,General Interest,Spanish,N/A
+38,National,https://www.spanishnews.es/,Spanish News,Internet,General Interest,English,N/A
+39,National,http://spanishnewstoday.com/,Spanish News Today,Internet,General Interest,English,N/A
+40,National,http://www.terra.es/,Terra,Internet,General Interest,Spanish,N/A
+41,National,http://www.thelocal.es/,The Local,Internet,General Interest,English,N/A
+42,National,http://www.typicallyspanish.com/,Typically Spanish,Internet,General Interest,English,N/A
+43,National,http://vozpopuli.com/,Voz Populi,Internet,General Interest,Spanish,N/A
+44,National,https://es.noticias.yahoo.com/,Yahoo,Internet,General Interest,Spanish,N/A
+46,National,https://www.hola.com/,Hola,Magazine,Entertainment,Spanish,N/A
+48,National,http://www.abc.es/,ABC,Newspaper,General Interest,Spanish,N/A
+49,National,http://as.com/,AS,Newspaper,Sport,Spanish,N/A
+50,National,http://www.boe.es/,Boletin Oficial del Estado,Newspaper,Government,Spanish,N/A
+51,National,http://cincodias.com/,Cinco Dias,Newspaper,Business,Spanish,N/A
+52,National,http://www.elmundo.es/,El Mundo,Newspaper,General Interest,Spanish,N/A
+53,National,http://elpais.com/,El Pais,Newspaper,General Interest,Spanish,N/A
+54,National,http://www.expansion.com/,Expansion,Newspaper,Business,Spanish,N/A
+55,National,http://lagaceta.es/,La Gaceta,Newspaper,General Interest,Spanish,N/A
+56,National,http://www.marca.com/,Marca,Newspaper,Sport,Spanish,N/A
+57,National,http://www.sport.es/,Sport,Newspaper,Sport,Spanish,N/A
+59,National,http://www.efe.com/principal.asp?opcion=0&idioma=ESPANOL,EFE,Press Agency,General Interest,Spanish,N/A
+60,National,http://www.europapress.es/,Europa Press,Press Agency,General Interest,Spanish,N/A
+61,National,https://es.reuters.com/,Reuters,Press Agency,General Interest,Spanish,N/A
+65,Aguilar de la Frontera,http://www.aguilardigital.es/,Aguilar Digital,Internet,General Interest,Spanish,N/A
+66,Aguilar de la Frontera,http://www.aguilarnoticias.com/,Aguilar Noticias,Internet,General Interest,Spanish,N/A
+67,Albolote,http://www.alboloteinformacion.com/,Albolote Informacion,Internet,General Interest,Spanish,N/A
+68,Alcala la Real,http://andaluciainformacion.es/alcala-la-real/,Informacion Alcala la Real,Newspaper,General Interest,Spanish,N/A
+69,Algeciras,http://www.algecirasalminuto.com/,Algeciras al Minuto,Internet,General Interest,Spanish,N/A
+70,Algeciras,http://algecirasnoticias.com/,Algeciras Noticias,Internet,General Interest,Spanish,N/A
+71,Algeciras,http://www.europasur.es/,Europa Sur,Newspaper,General Interest,Spanish,N/A
+72,Algeciras,http://andaluciainformacion.es/campo-de-gibraltar/,InformaciÃ³n El Faro,Newspaper,General Interest,Spanish,N/A
+73,Algeciras,http://andaluciainformacion.es/campo-de-gibraltar/,Viva Campo de Gibraltar,Newspaper,General Interest,Spanish,N/A
+74,Alhaurin de la Torre,http://www.alhaurin.com/,Alhaurin,Internet,General Interest,Spanish,N/A
+75,Alhaurin de la Torre,http://www.alhaurindelatorre.com/,Diario Alhaurin,Internet,General Interest,Spanish,N/A
+76,Alhaurin de la Torre,http://www.diariolatorre.es/,Diario la Torre,Internet,General Interest,Spanish,N/A
+77,Alhaurin el Grande,http://rtvalhaurinelgrande.com/,RTVA,Broadcast,General Interest,Spanish,Radio TV
+78,Almeria,http://www.almeria24h.com/,Almeria 24h,Internet,General Interest,Spanish,N/A
+79,Almeria,http://almeria360.com/,AlmerÃ­a 360,Internet,General Interest,Spanish,N/A
+80,Almeria,http://www.costa-news.com/costa-almeria-news,Costa Almeria News,Newspaper,General Interest,English,N/A
+81,Almeria,http://www.elalmeria.es/,Diario de Almeria,Newspaper,General Interest,Spanish,N/A
+82,Almeria,https://www.euroweeklynews.com/news/costa-de-almeria,Euro Weekly News,Newspaper,General Interest,English,N/A
+83,Almeria,http://www.hlmspain.com/,HLM,Newspaper,General Interest,English,N/A
+84,Almeria,http://www.ideal.es/almeria/,Ideal,Newspaper,General Interest,Spanish,N/A
+85,Almeria,http://www.lagacetadealmeria.com/,La Gaceta de Almeria,Internet,General Interest,Spanish,N/A
+86,Almeria,http://www.lavozdealmeria.com/,La Voz de Almeria,Newspaper,General Interest,Spanish,N/A
+87,Almeria,http://www.noticiasdealmeria.com/,Noticias de Almeria,Internet,General Interest,Spanish,N/A
+88,Almeria,http://www.telealmerianoticias.es/,Tele Almeria Noticias,Internet,General Interest,Spanish,N/A
+89,Almeria,http://andaluciainformacion.es/almeria/,Viva Almeria,Newspaper,General Interest,Spanish,N/A
+90,Almonte,http://www.almontealdia.com/,Almonte al Dia,Internet,General Interest,Spanish,N/A
+91,Almunecar,http://almunecardigital.com/,Almunecar Digital,Internet,General Interest,Spanish,N/A
+92,Almunecar,http://www.costadigital.es/,Costa Digital,Internet,General Interest,Spanish,N/A
+93,Almunecar,http://www.infocostatropical.com/,Info Costa Tropical,Internet,General Interest,Spanish,N/A
+94,Andujar,http://andaluciainformacion.es/andujar/,Viva AndujÃ¡r,Newspaper,General Interest,Spanish,N/A
+95,Antequera,http://andaluciainformacion.es/antequera/,Viva Centro de Andalucia,Newspaper,General Interest,Spanish,N/A
+96,Aracena,http://lasierranoticias.com/,La Sierra Noticias,Internet,General Interest,Spanish,N/A
+97,Arcos de la Frontera,http://andaluciainformacion.es/arcos/,Informacion Arcos,Newspaper,General Interest,Spanish,N/A
+98,Baena,http://www.baenadigital.com/,Baena Digital,Internet,General Interest,Spanish,N/A
+99,Baeza,http://www.baezaactualidad.es/,Baeza Actualidad,Internet,General Interest,Spanish,N/A
+100,Bailen,http://www.bailendigital.com/,Bailen Digital,Internet,General Interest,Spanish,N/A
+101,Barbate,http://andaluciainformacion.es/barbate/,Viva Barbate,Newspaper,General Interest,Spanish,N/A
+102,Baza,http://andaluciainformacion.es/baza/,Informacion Comarca de Baza,Newspaper,General Interest,Spanish,N/A
+103,Benalmadena,http://benalmadenadigital.es/,Benalmadena Digital,Internet,General Interest,Spanish,N/A
+104,Benalmadena,http://www.elnoticierodigital.com/ciudad.php?ciudad=be,El Noticiero,Newspaper,General Interest,Spanish,N/A
+105,Cabra,http://www.cabranoticias.com/,Cabra Noticias,Internet,General Interest,Spanish,N/A
+106,Cadiz,http://www.cadizdirecto.com/,Cadiz Directo,Internet,General Interest,Spanish,N/A
+107,Cadiz,http://www.cadizempresa.com/,Cadiz Empresa,Internet,Business,Spanish,N/A
+108,Cadiz,http://www.diariobahiadecadiz.com/,Diario Bahia de Cadiz,Internet,General Interest,Spanish,N/A
+109,Cadiz,http://www.diariodecadiz.es/,Diario de Cadiz,Newspaper,General Interest,Spanish,N/A
+110,Cadiz,http://andaluciainformacion.es/cadiz/,Informacion Cadiz,Newspaper,General Interest,Spanish,N/A
+111,Cadiz,http://www.lavozdigital.es/,La Voz,Newspaper,General Interest,Spanish,N/A
+112,Cadiz,http://andaluciainformacion.es/cadiz/,Viva Cadiz,Newspaper,General Interest,Spanish,N/A
+113,Camas,http://andaluciainformacion.es/italica/,Viva Italica,Newspaper,General Interest,Spanish,N/A
+114,Carmona,http://www.carmonainformacion.com/,Carmona InformaciÃ³n,Newspaper,General Interest,Spanish,N/A
+115,Chiclana,http://andaluciainformacion.es/chiclana/,Viva Chiclana,Newspaper,General Interest,Spanish,N/A
+116,Coin,http://www.thenewsonline.es/,News,Newspaper,General Interest,English,N/A
+117,Conil de la Frontera,http://andaluciainformacion.es/conil/,Viva Conil,Newspaper,General Interest,Spanish,N/A
+118,Cordoba,http://www.20minutos.es/andalucia/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+119,Cordoba,http://www.diariocordoba.com/,Cordoba,Newspaper,General Interest,Spanish,N/A
+120,Cordoba,http://www.eldiadecordoba.es/,El Dia de Cordoba,Newspaper,General Interest,Spanish,N/A
+121,Cordoba,http://www.lacalledecordoba.com/,El Semanario La Calle de Cordoba,Newspaper,General Interest,Spanish,N/A
+122,Cordoba,http://andaluciainformacion.es/cordoba/,Viva Cordoba,Newspaper,General Interest,Spanish,N/A
+123,Ecija,http://andaluciainformacion.es/ecija/,Viva El PeriÃ³dico de Ecija,Newspaper,General Interest,Spanish,N/A
+124,El Puerto de Santa Maria,http://andaluciainformacion.es/el-puerto/,Viva El Puerto,Newspaper,General Interest,Spanish,N/A
+126,Estepona,http://www.diariosol.es/,Diario Sol,Internet,General Interest,Spanish,N/A
+127,Fuengirola,http://www.semanarioelbolichero.com/,El Bolichero,Newspaper,General Interest,Spanish,N/A
+128,Fuengirola,http://www.elnoticierodigital.com/ciudad.php?ciudad=fu,El Noticiero,Newspaper,General Interest,Spanish,N/A
+129,Granada,http://www.20minutos.es/andalucia/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+130,Granada,http://granadadigital.es/,Granada Digital,Internet,General Interest,Spanish,N/A
+131,Granada,http://www.granadahoy.com/,Granada Hoy,Newspaper,General Interest,Spanish,N/A
+132,Granada,http://www.ideal.es/,Ideal,Newspaper,General Interest,Spanish,N/A
+133,Granada,http://www.radiogranada.es/,Radio Granada,Broadcast,General Interest,Spanish,Radio
+134,Granada,http://andaluciainformacion.es/granada/,Viva Granada,Newspaper,General Interest,Spanish,N/A
+135,Guadix,http://andaluciainformacion.es/guadix/,Informacion Wadi As,Newspaper,General Interest,Spanish,N/A
+136,Huelva,http://www.elperiodicodehuelva.es/,El Periodico de Huelva,Newspaper,General Interest,Spanish,N/A
+137,Huelva,http://www.huelvainformacion.es/,Huelva Informacion,Newspaper,General Interest,Spanish,N/A
+138,Huelva,http://andaluciainformacion.es/huelva/,Viva Huelva,Newspaper,General Interest,Spanish,N/A
+139,Jaen,http://www.ideal.es/jaen/,Ideal,Newspaper,General Interest,Spanish,N/A
+140,Jaen,http://www.diariojaen.es/,Jaen,Newspaper,General Interest,Spanish,N/A
+141,Jaen,http://www.noticiascadadia.com/,Noticias Cada Dia,Internet,General Interest,Spanish,N/A
+142,Jaen,http://andaluciainformacion.es/jaen/,Viva Jaen,Newspaper,General Interest,Spanish,N/A
+143,Jerez de la Frontera,http://www.diariodejerez.es/,Diario de Jerez,Newspaper,General Interest,Spanish,N/A
+144,Jerez de la Frontera,http://andaluciainformacion.es/jerez/,Informacion Jerez,Newspaper,General Interest,Spanish,N/A
+145,Jerez de la Frontera,http://www.lavozdigital.es/jerez/,La Voz,Newspaper,General Interest,Spanish,N/A
+146,Jerez de la Frontera,http://www.radiojerez.com/,Radio Jerez,Broadcast,General Interest,Spanish,Radio
+147,Jerez de la Frontera,http://andaluciainformacion.es/jerez/,Viva Jerez,Newspaper,General Interest,Spanish,N/A
+148,Linares,http://www.linares28.es/,Linares 28,Internet,General Interest,Spanish,N/A
+149,Lucena,http://www.lucenadigital.com/,Lucena Digital,Internet,General Interest,Spanish,N/A
+150,Lucena,http://www.lucenahoy.com/,Lucena Hoy,Internet,General Interest,Spanish,N/A
+151,Mairena del Aljarafe,http://www.noticiasaljarafe.es/,Noticias Aljarafe,Internet,General Interest,Spanish,N/A
+152,Malaga,http://www.20minutos.es/andalucia/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+153,Malaga,http://www.cope.es/Menu/Local/malaga/malaga,COPE,Broadcast,General Interest,Spanish,Radio
+154,Malaga,http://www.costa-news.com/costa-del-sol-news,Costa del Sol News,Newspaper,General Interest,English,N/A
+155,Malaga,http://thecultureclique.com/,Culture Clique,Internet,General Interest,English,N/A
+156,Malaga,http://www.elnoticierodigital.com/ciudad.php?ciudad=ma,El Noticiero,Newspaper,General Interest,Spanish,N/A
+157,Malaga,https://www.euroweeklynews.com/news/costa-del-sol,Euro Weekly News,Newspaper,General Interest,English,N/A
+158,Malaga,http://www.laopiniondemalaga.es/,La Opinion de Malaga,Newspaper,General Interest,Spanish,N/A
+159,Malaga,http://www.malagadiario.com/,Malaga Diario,Internet,General Interest,Spanish,N/A
+160,Malaga,http://www.malagahoy.es/,Malaga Hoy,Newspaper,General Interest,Spanish,N/A
+161,Malaga,http://www.svenskamagasinet.nu/,Nya Svenska Magasinet,Magazine,General Interest,Swedish,N/A
+162,Malaga,http://www.que.es/malaga/,Que,Internet,General Interest,Spanish,N/A
+163,Malaga,http://www.surinenglish.com/,Sur,Newspaper,General Interest,English,N/A
+164,Malaga,http://www.diariosur.es/,Sur,Newspaper,General Interest,Spanish,N/A
+165,Malaga,http://andaluciainformacion.es/malaga/,Viva Malaga,Newspaper,General Interest,Spanish,N/A
+166,Manilva,http://www.manilva.ws/,Manilva,Internet,General Interest,Spanish,N/A
+167,Manilva,http://www.rtvmanilva.com/,Manilva Radio Television,Broadcast,General Interest,Spanish,Radio TV
+168,Manilva,http://theresident.eu/,Resident,Newspaper,General Interest,English,N/A
+169,Marbella,http://www.costanachrichten.com/content/blogcategory/45/102/,Costa del Sol Nachrichten,Newspaper,General Interest,German,N/A
+170,Marbella,http://www.spanishsunnewspaper.com/,Spanish Sun,Newspaper,General Interest,English,N/A
+171,Marbella,http://www.sydkusten.es/,Sydkusten,Newspaper,General Interest,Swedish,N/A
+172,Marbella,http://andaluciainformacion.es/marbella/,Viva Marbella,Newspaper,General Interest,Spanish,N/A
+173,Medina Sidonia,http://andaluciainformacion.es/medina/,Viva Medina,Newspaper,General Interest,Spanish,N/A
+174,Mojacar,http://elindalico.es/,El Indalico,Newspaper,General Interest,Spanish,N/A
+175,Montilla,http://montillabierta.es/,Montilla Abierta,Internet,General Interest,Spanish,N/A
+176,Montilla,http://www.montilladigital.com/,Montilla Digital,Internet,General Interest,Spanish,N/A
+177,Montilla,http://www.montillanoticias.com/,Montilla Noticias,Internet,General Interest,Spanish,N/A
+178,Montilla,http://www.montillaonline.com/,Montilla Online,Internet,General Interest,Spanish,N/A
+179,Orgiva,http://www.theolivepress.es/,Olive Press,Newspaper,General Interest,English,N/A
+180,Pedrera,http://andaluciainformacion.es/sierra-sur-de-sevilla/,Viva Sierra Sur de Sevilla,Newspaper,General Interest,Spanish,N/A
+181,Priego,http://priegodigital.com/,Priego Digital,Internet,General Interest,Spanish,N/A
+182,Puente Genil,http://puentegenilnoticias.com/,Puente Genil Noticias,Internet,General Interest,Spanish,N/A
+183,Puerto Real,http://www.puertorealhoy.es/,Puerto Real Hoy,Internet,General Interest,Spanish,N/A
+184,Punta Umbria,http://andaluciainformacion.es/punta-umbria/,Viva Punta Umbria,Newspaper,General Interest,Spanish,N/A
+185,Ronda,http://andaluciainformacion.es/ronda/,Ronda Semanal,Newspaper,General Interest,Spanish,N/A
+186,Rota,http://andaluciainformacion.es/rota/,Viva Rota,Newspaper,General Interest,Spanish,N/A
+187,San Fernando,http://andaluciainformacion.es/san-fernando/,Informacion San Fernando,Newspaper,General Interest,Spanish,N/A
+188,Sanlucar de Barrameda,http://andaluciainformacion.es/sanlucar/,Informacion Sanlucar,Newspaper,General Interest,Spanish,N/A
+189,Sevilla,http://www.20minutos.es/andalucia/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+190,Sevilla,http://sevilla.abc.es/,ABC de Sevilla,Newspaper,General Interest,Spanish,N/A
+191,Sevilla,http://www.andalucia24horas.com/,Andalucia 24 Horas,Internet,General Interest,Spanish,N/A
+192,Sevilla,http://agendaempresa.com/,Agenda de la Empresa Andaluza,Newspaper,Business,Spanish,N/A
+193,Sevilla,http://cadenaser.com/emisora/radio_sevilla,Cadena Ser Radio Sevilla,Broadcast,General Interest,Spanish,Radio
+194,Sevilla,http://www.cope.es/Menu/Local/sevilla/sevilla,COPE,Broadcast,General Interest,Spanish,Radio
+195,Sevilla,http://www.diariodesevilla.es/,Diario de Sevilla,Newspaper,General Interest,Spanish,N/A
+196,Sevilla,http://elcorreoweb.es/,El Correo de Andalucia,Newspaper,General Interest,Spanish,N/A
+197,Sevilla,http://elcorreoweb.es/el-decano-deportivo/,El Decano Deportivo,Newspaper,Sport,Spanish,N/A
+198,Sevilla,http://www.estadiodeportivo.com/,Estadio Deportivo,Newspaper,Sport,Spanish,N/A
+199,Sevilla,http://andaluciainformacion.es/portada/?i=1,Informacion Andalucia,Internet,General Interest,Spanish,N/A
+200,Sevilla,http://www.que.es/sevilla/,Que,Internet,General Interest,Spanish,N/A
+201,Sevilla,http://andaluciainformacion.es/sevilla/,Viva Sevilla,Newspaper,General Interest,Spanish,N/A
+202,Torredonjimeno,http://www.diariotorredonjimeno.es/,Diario Torredonjimeno,Internet,General Interest,Spanish,N/A
+203,Torremolinos,http://www.diariodetorremolinos.com/,Diario Torremolinos,Internet,General Interest,Spanish,N/A
+204,Torremolinos,http://www.elnoticierodigital.com/ciudad.php?ciudad=to,El Noticiero,Newspaper,General Interest,Spanish,N/A
+205,Torremolinos,http://andaluciainformacion.es/torremolinos/,Informacion Torremolinos,Newspaper,General Interest,Spanish,N/A
+206,Ubeda,http://www.ubedadigital.es/,Ubeda Digital,Internet,General Interest,Spanish,N/A
+207,Ubrique,http://www.elperiodicodeubrique.com/,El Periodico de Ubrique,Internet,General Interest,Spanish,N/A
+208,Utrera,http://www.utreraweb.com/,Utrera Web,Internet,General Interest,Spanish,N/A
+209,Valverde del Camino,http://valverdediario.es/,Valverde Diario,Internet,General Interest,Spanish,N/A
+210,Vejer de la Frontera,http://andaluciainformacion.es/vejer/,Viva Vejer,Newspaper,General Interest,Spanish,N/A
+211,Velez Malaga,http://diarioaxarquia.com/,Diario La Axarquia,Newspaper,General Interest,Spanish,N/A
+213,Ejea de los Caballeros,http://www.ejeadigital.com/,Ejea Digital,Internet,General Interest,Spanish,Radio
+214,Huesca,http://www.diariodelaltoaragon.es/,Diario del Alto Aragon,Newspaper,General Interest,Spanish,N/A
+215,Huesca,http://www.radiohuesca.com/,Radio Huesca,Broadcast,General Interest,Spanish,N/A
+216,Teruel,http://www.diariodeteruel.es/,Diario de Teruel,Newspaper,General Interest,Spanish,N/A
+217,Zaragoza,http://www.20minutos.es/aragon/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+218,Zaragoza,http://www.andalan.es/,Andalan,Internet,General Interest,Spanish,N/A
+219,Zaragoza,http://www.arredol.com/,Arredol,Internet,General Interest,Aragonese,N/A
+220,Zaragoza,http://www.aragondigital.es/,Aragon Digital,Internet,General Interest,Spanish,N/A
+221,Zaragoza,http://www.heraldo.es/,El Heraldo de Aragon,Newspaper,General Interest,Spanish,N/A
+222,Zaragoza,http://www.elperiodicodearagon.com/,El Periodico de Aragon,Newspaper,General Interest,Spanish,N/A
+223,Zaragoza,http://www.que.es/zaragoza/,Que,Internet,General Interest,Spanish,N/A
+225,Aviles,http://www.elcomercio.es/aviles/,La Voz de Aviles,Newspaper,General Interest,Spanish,N/A
+226,Gijon - Xixon,http://www.asturies.com/,Asturies,Internet,General Interest,Asturian,N/A
+227,Gijon,http://www.elcomercio.es/,El Comercio,Newspaper,General Interest,Spanish,N/A
+228,Oviedo,http://www.20minutos.es/asturias,20 Minutos,Internet,General Interest,Spanish,N/A
+229,Oviedo,http://www.asturiasopinion.com/,Asturias Opinion,Internet,General Interest,Spanish,N/A
+230,Oviedo,http://www.lne.es/,La Nueva Espana,Newspaper,General Interest,Spanish,N/A
+231,Oviedo,http://www.lavozdeasturias.es/,La Voz de Asturias,Newspaper,General Interest,Spanish,N/A
+232,Oviedo,http://www.noticiasoviedo.es/,Noticias Oviedo,Internet,General Interest,Spanish,N/A
+233,Oviedo,http://www.que.es/asturias/,Que,Internet,General Interest,Spanish,N/A
+235,Campos del Puerto,http://www.mallorcavandaag.com/,Mallorca Vandaag,Newspaper,General Interest,Dutch,N/A
+236,Ibiza,http://www.diariodeibiza.es/,Diario de Ibiza,Newspaper,General Interest,Spanish,N/A
+237,Ibiza,http://ultimahora.es/ibiza.html,Ultima Hora,Newspaper,General Interest,Spanish,N/A
+238,Mahon - Mao,http://www/esdiari.com/,Es Diari,Newspaper,General Interest,Catalan,N/A
+239,Mahon,http://menorca.info/,Menorca,Newspaper,General Interest,Spanish,N/A
+240,Palma de Mallorca,http://dbalears.cat/,Diari de Balears,Newspaper,General Interest,Catalan,N/A
+241,Palma de Mallorca,http://www.diariodemallorca.es/,Diario de Mallorca,Newspaper,General Interest,Spanish,N/A
+242,Palma de Mallorca,https://www.euroweeklynews.com/news/mallorca,Euro Weekly News,Newspaper,General Interest,English,N/A
+243,Palma de Mallorca,http://majorcadailybulletin.com/,Majorca Daily Bulletin,Newspaper,General Interest,English,N/A
+244,Palma de Mallorca,http://themallorca.net/,Mallorca,Internet,General Interest,English,N/A
+245,Palma de Mallorca,http://mallorcaconfidencial.com/,Mallorca Confidencial,Internet,General Interest,Spanish,N/A
+246,Palma de Mallorca,http://www.mallorcazeitung.es/,Mallorca Zeitung,Newspaper,General Interest,German,N/A
+247,Palma de Mallorca,http://ultimahora.es/,Ultima Hora,Newspaper,General Interest,Spanish,N/A
+248,Soller,http://setmanarisoller.cat/,Soller,Newspaper,General Interest,Catalan,N/A
+249,Soller,http://www.sollernet.com/veudesoller/,Veu de Soller,Newspaper,General Interest,Catalan,N/A
+251,Arrecife,http://www.cronicasdelanzarote.es/,Cronicas de Lanzarote,Internet,General Interest,Spanish,N/A
+252,Arrecife,http://www.diariodelanzarote.com/,Diario de Lanzarote,Internet,General Interest,Spanish,N/A
+253,Arrecife,http://www.lavozdelanzarote.com/,La Voz de Lanzarote,Newspaper,General Interest,Spanish,N/A
+254,Corralejo,http://www.fuertenews.com/,Fuerte News,Internet,General Interest,English,N/A
+255,Galdar,http://www.infonortedigital.com/portada/,Info Norte Digital,Internet,General Interest,Spanish,N/A
+256,Las Palmas,http://www.canarias7.es/,Canarias 7,Newspaper,General Interest,Spanish,N/A
+257,Las Palmas,http://www.eldiario.es/canariasahora/,Canarias Ahora,Internet,General Interest,Spanish,N/A
+258,Las Palmas,http://elapuron.com/,El Apuron,Internet,General Interest,Spanish,N/A
+259,Las Palmas,http://www.fuerteventuranews.com/,Fuerteventura News,Internet,General Interest,English,N/A
+260,Las Palmas,http://www.lagacetadecanarias.net/,La Gaceta de Canarias El Mundo,Newspaper,General Interest,Spanish,N/A
+261,Las Palmas,http://www.laprovincia.es/,La Provincia,Newspaper,General Interest,Spanish,N/A
+262,Los Cristianos,http://www.islandconnections.eu/,Island Connections,Newspaper,General Interest,English,N/A
+263,Puerto del Rosario,http://www.fuerteventuradigital.com/,Fuerteventura Digital,Internet,General Interest,Spanish,N/A
+264,San Bartolome,http://www.lanzarotedigital.com/,Lanzarote Digital,Internet,General Interest,Spanish,N/A
+265,San Miguel de Abona,http://www.canarianweekly.com/,Canarian Weekly,Newspaper,General Interest,English,N/A
+266,San Miguel de Abona,http://www.thepaper.net/,Paper,Newspaper,General Interest,English,N/A
+267,Santa Cruz de Tenerife,http://www.canariasport.com/,Canaria Sport,Internet,Sport,Spanish,N/A
+268,Santa Cruz de Tenerife,http://www.canarias24horas.com/,Canarias 24 Horas,Internet,General Interest,Spanish,N/A
+269,Santa Cruz de Tenerife,http://www.diariodeavisos.es/,Diario de Avisos,Newspaper,General Interest,Spanish,N/A
+270,Santa Cruz de Tenerife,http://www.eldia.es/,El Dia,Newspaper,General Interest,Spanish,N/A
+271,Santa Cruz de Tenerife,http://www.elilustrador.es/,El Ilustrador,Internet,General Interest,Spanish,N/A
+272,Santa Cruz de Tenerife,http://www.kanarenexpress.com/,Kanaren Express,Newspaper,General Interest,German,N/A
+273,Santa Cruz de Tenerife,http://www.lagacetadecanarias.net/,La Gaceta de Canarias El Mundo,Newspaper,General Interest,Spanish,N/A
+274,Santa Cruz de Tenerife,http://www.laopinion.es/,La Opinion,Newspaper,General Interest,Spanish,N/A
+275,Santa Cruz de Tenerife,http://newsinthesun.com/,News in the Sun,Internet,General Interest,English,N/A
+276,Santa Cruz de Tenerife,http://www.noticiacanaria.com/,Noticia Canaria,Internet,General Interest,Spanish,N/A
+277,Santa Cruz de Tenerife,http://www.tenerifenews.com/,Tenerife News,Newspaper,General Interest,English,N/A
+278,Santa Cruz de Tenerife,http://thetenerifesun.com/,Tenerife Sun,Newspaper,General Interest,English,N/A
+280,Castro Urdiales,http://castrodigital.webcindario.com/,Castro Digital,Internet,General Interest,Spanish,N/A
+281,Santander,http://www.eldiarioalerta.com/,Alerta,Newspaper,General Interest,Spanish,N/A
+282,Santander,http://www.cantabriadiario.com/,Cantabria Diario,Internet,General Interest,Spanish,N/A
+283,Santander,http://www.cantabrialiberal.com/,Cantabria Liberal,Internet,General Interest,Spanish,N/A
+284,Santander,http://cronicadecantabria.com/cr/,Cronica de Cantabria,Internet,General Interest,Spanish,N/A
+285,Santander,http://www.eldiariomontanes.es/,El Diario Montanes,Newspaper,General Interest,Spanish,N/A
+287,Albacete,http://eldiadigital.es/sec/albacete/,El Dia de Albacete,Newspaper,General Interest,Spanish,N/A
+288,Albacete,http://www.lacerca.com/,La Cerca,Internet,General Interest,Spanish,N/A
+289,Albacete,http://www.latribunadealbacete.es/,La Tribuna de Albacete,Newspaper,General Interest,Spanish,N/A
+290,Ciudad Real,http://eldiadigital.es/sec/ciudad_real/,El Dia de Ciudad Real,Newspaper,General Interest,Spanish,N/A
+291,Ciudad Real,http://www.latribunadeciudadreal.es/,La Tribuna de Ciudad Real,Newspaper,General Interest,Spanish,N/A
+292,Ciudad Real,http://www.lanzadigital.com/,Lanza,Newspaper,General Interest,Spanish,N/A
+293,Cuenca,http://eldiadigital.es/sec/cuenca/,El Dia de Cuenca,Newspaper,General Interest,Spanish,N/A
+294,Cuenca,http://www.latribunadecuenca.es/,La Tribuna de Cuenca,Newspaper,General Interest,Spanish,N/A
+295,Guadalajara,http://eldiadigital.es/sec/guadalajara/,El Dia de Guadalajara,Newspaper,General Interest,Spanish,N/A
+296,Guadalajara,http://www.guadanews.es/,Guada News,Newspaper,General Interest,Spanish,N/A
+297,Guadalajara,http://www.guadaque.com/,Guada Que,Internet,General Interest,Spanish,N/A
+298,Guadalajara,http://www.guadalajaradosmil.es/,Guadalajara Dos Mil,Newspaper,General Interest,Spanish,N/A
+299,Guadalajara,http://www.lacronica.net/,La Cronica de Guadalajara,Internet,General Interest,Spanish,N/A
+300,Guadalajara,http://www.latribunadeguadalajara.es/,La Tribuna de Guadalajara,Newspaper,General Interest,Spanish,N/A
+301,Guadalajara,http://www.nuevaalcarria.com/,Nueva Alcarria,Newspaper,General Interest,Spanish,N/A
+302,Las Pedroneras,http://www.radioazul.es/noticias/,Radio Azul,Broadcast,General Interest,Spanish,Radio
+303,Motilla de Palancar,http://www.radio90.net/,Radio 90 Motilla,Broadcast,General Interest,Spanish,Radio
+304,Talavera de la Reina,http://www.latribunadetalavera.es/,La Tribuna de Talavera,Newspaper,General Interest,Spanish,N/A
+305,Toledo,http://eldiadigital.es/sec/toledo/,El Dia de Toledo,Newspaper,General Interest,Spanish,N/A
+306,Toledo,http://www.latribunadetoledo.es/,La Tribuna de Toledo,Newspaper,General Interest,Spanish,N/A
+308,Aranda de Duero,http://www.arandadirecto.com/,Aranda Directo,Internet,General Interest,Spanish,N/A
+309,Aranda de Duero,http://www.diariodelaribera.net/,Diario de la Ribera,Internet,General Interest,Spanish,N/A
+310,Aranda de Duero,http://www.radioaranda.com/,Radio Aranda,Broadcast,General Interest,Spanish,Radio
+311,Astorga,http://www.astorga.com/faro/,El Faro Astorgano,Newspaper,General Interest,Spanish,N/A
+312,Avila,http://avilared.com/,Avila Red,Internet,General Interest,Spanish,N/A
+313,Avila,http://www.diariodeavila.es/,Diario de Avila,Newspaper,General Interest,Spanish,N/A
+314,Burgos,http://www.diariodeburgos.es/,Diario de Burgos,Newspaper,General Interest,Spanish,N/A
+315,Burgos,http://www.elcorreodeburgos.com/,El Correo de Burgos,Newspaper,General Interest,Spanish,N/A
+316,Leon,http://www.diariodeleon.es/,Diario de Leon,Newspaper,General Interest,Spanish,N/A
+317,Leon,http://www.lacronicadeleon.es/,La Cronica de Leon,Newspaper,General Interest,Spanish,N/A
+318,Leon,http://www.leon7dias.com/,Leon 7 Dias,Internet,General Interest,Spanish,N/A
+319,Leon,http://www.leonactualidad.es/,Leon Actualidad,Internet,General Interest,Spanish,N/A
+320,Palencia,http://www.diariopalentino.es/,Diario Palentino,Newspaper,General Interest,Spanish,N/A
+321,Ponferrada,http://www.bierzo7.com/,Bierzo 7,Newspaper,General Interest,Spanish,N/A
+322,Ponferrada,http://www.bierzodeportes.com/,Bierzo Deportes,Internet,Sport,Spanish,N/A
+323,Ponferrada,http://www.elbierzodigital.com/,El Bierzo Digital,Internet,General Interest,Spanish,N/A
+324,Ponferrada,https://www.ponferradahoy.com/,Ponferrada Hoy,Internet,General Interest,Spanish,N/A
+325,Salamanca,http://www.lagacetadesalamanca.es/,La Gaceta Regional de Salamanca,Newspaper,General Interest,Spanish,N/A
+326,Salamanca,http://www.noticiasdesalamanca.com/,Noticias de Salamanca,Internet,General Interest,Spanish,N/A
+327,Salamanca,http://www.salamanca24horas.com/,Salamanca 24 Horas,Internet,General Interest,Spanish,N/A
+328,Salamanca,http://www.tribunasalamanca.com/,Tribuna de Salamanca,Newspaper,General Interest,Spanish,N/A
+329,Segovia,http://www.acueducto2.com/,Acueducto 2,Internet,General Interest,Spanish,N/A
+330,Segovia,http://www.eladelantado.com/,El Adelantado,Newspaper,General Interest,Spanish,N/A
+331,Soria,http://www.diariodesoria.es/,Diario de Soria,Newspaper,General Interest,Spanish,N/A
+332,Soria,http://www.heraldodesoria.es/,Heraldo de Soria,Newspaper,General Interest,Spanish,N/A
+333,Valladolid,http://www.20minutos.es/castilla-y-leon/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+334,Valladolid,http://www.cerestv.es/,Ceres Television,Broadcast,General Interest,Spanish,TV
+335,Valladolid,http://www.eldiadevalladolid.com/,El Dia de Valladolid,Newspaper,General Interest,Spanish,N/A
+336,Valladolid,http://www.elnortedecastilla.es/,El Norte de Castilla,Newspaper,General Interest,Spanish,N/A
+337,Zamora,http://www.laopiniondezamora.es/,La Opinion de Zamora,Newspaper,General Interest,Spanish,N/A
+339,Barcelona,http://www.20minutos.es/barcelona-cataluna/,20 Minutos,Newspaper,General Interest,Spanish,Also CAT
+340,Barcelona,http://www.324.cat/,324,Broadcast,General Interest,Catalan,Radio TV
+341,Barcelona,http://www.noticies.net/,Agencia Catalana de Noticies,Press Agency,General Interest,Catalan,N/A
+342,Barcelona,http://www.ara.cat/,Ara,Newspaper,General Interest,Catalan,N/A
+343,Barcelona,http://www.ara.cat/en,Ara,Newspaper,General Interest,English,N/A
+344,Barcelona,http://www.barcelonanews.net/,Barcelona News,Internet,General Interest,English,N/A
+345,Barcelona,https://catalunyadiari.com/,Catalunya Diari,Internet,General Interest,Catalan,N/A
+346,Barcelona,http://www.catalunyapress.cat/,Catalunya Press,Internet,General Interest,Catalan,N/A
+347,Barcelona,http://www.catradio.cat/,Catalunya Radio,Broadcast,General Interest,Catalan,Radio
+348,Barcelona,http://www.diaridebarcelona.com/,Diari de Barcelona,Internet,General Interest,Catalan,N/A
+349,Barcelona,http://www.e-noticies.cat/,E Noticies,Internet,General Interest,Catalan,N/A
+350,Barcelona,http://www.eldiari.cat/,El Diari,Internet,General Interest,Catalan,N/A
+351,Barcelona,http://www.mundodeportivo.com/,El Mundo Deportivo,Newspaper,Sport,Spanish,N/A
+352,Barcelona,http://www.elperiodico.cat/ca/,El Periodico de Catalunya,Newspaper,General Interest,Catalan,N/A
+353,Barcelona,http://www.elperiodico.com/es/,El Periodico de Catalunya,Newspaper,General Interest,Spanish,N/A
+354,Barcelona,http://www.elplural.com/,El Plural,Internet,General Interest,Spanish,N/A
+355,Barcelona,http://www.elpuntavui.cat/barcelona.html,El Punt Avui,Newspaper,General Interest,Catalan,N/A
+356,Barcelona,http://www.elsingular.cat/,El Singular,Internet,General Interest,Catalan,N/A
+357,Barcelona,http://www.eltriangle.eu/cat/,El Triangle,Newspaper,General Interest,Catalan,N/A
+358,Barcelona,http://www.eltriangle.eu/,El Triangle,Newspaper,General Interest,Spanish,N/A
+359,Barcelona,http://www.lavanguardia.com/,La Vanguardia,Newspaper,General Interest,Spanish,N/A
+360,Barcelona - Barcelone,http://www.lepetitjournal.com/barcelone,Le Petit Journal,Internet,General Interest,FRA,N/A
+361,Barcelona,http://www.mondivers.cat/,Mon Divers,Internet,General Interest,Catalan,N/A
+362,Barcelona,http://www.mundodeportivo.com/,Mundo Deportivo,Newspaper,Sport,Spanish,N/A
+363,Barcelona,http://www.naciodigital.cat/,Nacio Digital,Internet,General Interest,Catalan,N/A
+364,Barcelona,http://www.que.es/barcelona/,Que,Internet,General Interest,Spanish,N/A
+365,Barcelona,http://www.sport-english.com/,Sport,Newspaper,Sport,English,N/A
+366,Barcelona,http://www.sport-japanese.com/,Sport,Newspaper,Sport,Japanese,N/A
+367,Barcelona,http://www.sport.es/es/,Sport,Newspaper,Sport,Spanish,N/A
+368,Barcelona,http://www.iberia-universal.com/,Universal,Newspaper,General Interest,Spanish,N/A
+369,Barcelona,http://www.vilaweb.cat/,Vila Web,Internet,General Interest,Catalan,N/A
+370,GavÃ¡ - GavÃ ,http://www.elbruguers.cat/,El Bruguers,Newspaper,General Interest,Catalan,N/A
+371,Girona,http://www.diaridegirona.cat/,Diari de Girona,Newspaper,General Interest,Catalan,N/A
+372,Girona,http://www.elpuntavui.cat/girona.html,El Punt Avui,Newspaper,General Interest,Catalan,N/A
+373,Granollers,http://www.el9nou.cat/portada2_v%C2%AD%C2%AD%C2%AD_0,El 9 Nou,Newspaper,General Interest,Catalan,N/A
+374,Igualada,http://www.veuanoia.cat/,La Veu de L'Anoia,Newspaper,General Interest,Catalan,N/A
+375,Lleida,http://www.lamanyana.es/,La Manana,Newspaper,General Interest,Catalan,Also SPA
+376,Lleida,http://www.diarisegre.com/,Segre,Newspaper,General Interest,Catalan,N/A
+377,Manlleu,http://www.diaridemanlleu.com/,Diari de Manlleu,Newspaper,General Interest,Catalan,N/A
+378,Manresa,http://www.regio7.cat/,Regio 7,Newspaper,General Interest,Catalan,N/A
+379,Sant Cugat del Valles,http://www.diaridesantcugat.cat/,Diari de Sant Cugat,Newspaper,General Interest,Catalan,N/A
+380,Santa Eugenia de Ter,http://www.eldimoni.com/,El Dimoni de Santa Eugenia de Ter,Newspaper,General Interest,Catalan,N/A
+381,Tarragona,http://www.diaridetarragona.com/,Diari de Tarragona,Newspaper,General Interest,Catalan,Also SPA
+382,Tarragona,https://tarragonadigital.com/,Tarragona Digital,Internet,General Interest,Catalan,N/A
+383,Terrassa,http://www.diarideterrassa.es/,Diari de Terrassa,Newspaper,General Interest,Catalan,Also SPA
+384,Valls,http://www.elvallenc.cat/,El Vallenc,Newspaper,General Interest,Catalan,N/A
+385,Vic,http://www.el9nou.cat/portada2_o_0,El 9 Nou,Newspaper,General Interest,Catalan,N/A
+386,Vilafranca del Penedes,http://www.el3devuit.cat/,El 3 de Vuit,Newspaper,General Interest,Catalan,N/A
+387,Vilanova i la Gentru,http://www.diaridevilanova.cat/,Diari de Vilanova,Newspaper,General Interest,Catalan,N/A
+389,Ceuta,http://www.ceutaldia.com/,Ceuta al Dia,Internet,General Interest,Spanish,N/A
+390,Ceuta,http://elfarodigital.es/ceuta.html,El Faro de Ceuta,Newspaper,General Interest,Spanish,N/A
+391,Ceuta,http://elfarodigital.es/,El Faro Digital,Internet,General Interest,Spanish,N/A
+392,Ceuta,http://www.elpueblodeceuta.es/,El Pueblo de Ceuta,Newspaper,General Interest,Spanish,N/A
+394,Badajoz,http://digitalextremadura.com/,Digital Extremadura,Internet,General Interest,Spanish,N/A
+395,Badajoz,http://www.hoy.es/,Hoy,Newspaper,General Interest,Spanish,N/A
+396,Badajoz,http://www.lacronicabadajoz.com/,La Cronica de Badajoz,Newspaper,General Interest,Spanish,N/A
+397,Badajoz,http://www.semanariovegasaltas.es/,Semanario Vegas Altas y La,Newspaper,General Interest,Spanish,N/A
+399,Caceres,http://www.elperiodicoextremadura.com/,El Periodico Extremadura,Newspaper,General Interest,Spanish,N/A
+400,Montijo,http://www.ventanadigital.com/,La Ventana de las Vejas Bajas,Magazine,General Interest,Spanish,N/A
+402,A Coruna,http://www.20minutos.es/galicia/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+403,A Coruna,http://www.crtvg.es/,CRTVG,Broadcast,General Interest,Gallegan,Radio TV
+404,A Coruna,http://www.canaldeportivo.com/,Depor Sport,Newspaper,Sport,Spanish,N/A
+405,A Coruna,http://www.elidealgallego.com/,El Ideal Gallego,Newspaper,General Interest,Spanish,N/A
+406,A Coruna,http://www.laopinioncoruna.es/,La Opinion A Coruna,Newspaper,General Interest,Spanish,N/A
+407,A Coruna,http://www.lavozdegalicia.es/,La Voz de Galicia,Newspaper,General Interest,Spanish,N/A
+408,A Coruna,http://www.radiocoruna.com/,Radio Coruna,Broadcast,General Interest,Spanish,Radio
+409,A Coruna,http://xornalgalicia.com/,Xornal Galicia,Internet,General Interest,Gallegan,Also SPA
+410,Ferrol,http://www.diariodeferrol.com/,Diario de Ferrol,Newspaper,General Interest,Spanish,N/A
+411,Ferrol,http://www.galiciaartabradigital.com/,Galicia Artabra,Internet,IN,Spanish,N/A
+412,Ferrol,http://www.vieiros.com/,Vieiros,Internet,General Interest,Gallegan,Also SPA
+413,Lugo,http://elprogreso.galiciae.com/,El Progreso,Newspaper,General Interest,Spanish,N/A
+414,Ourense,http://www.laregion.es/,La Region,Newspaper,General Interest,Spanish,N/A
+415,Pontevedra,http://diariodepontevedra.galiciae.com/,Diario de Pontevedra,Newspaper,General Interest,Spanish,N/A
+416,Pontevedra,http://www.noticiasgalicia.com/,Noticias Galicia,Internet,General Interest,Spanish,Also GLG
+417,Santiago de Compostela,http://www.axencia.com/,Axencia Galega de Noticias,Press Agency,General Interest,Spanish,N/A
+419,Santiago de Compostela,http://www.correotv.es/,Correo TV,Broadcast,General Interest,Spanish,TV
+421,Santiago de Compostela,http://www.galiciae.com/,De Luns a Venres,Newspaper,General Interest,Gallegan,N/A
+423,Santiago de Compostela,http://www.elcorreogallego.es/,El Correo Gallego,Newspaper,General Interest,Spanish,N/A
+425,Santiago de Compostela,http://www.galiciaconfidencial.com/,Galicia Confidencial,Internet,General Interest,Gallegan,N/A
+427,Santiago de Compostela,http://www.galiciahoxe.com/,Galicia Hoxe,Newspaper,General Interest,Gallegan,N/A
+429,Vigo,http://www.20minutos.es/galicia/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+430,Vigo,http://www.atlantico.net/,Atlantico,Newspaper,General Interest,Spanish,N/A
+431,Vigo,http://www.farodevigo.es/,Faro de Vigo,Newspaper,General Interest,Spanish,N/A
+432,Vigo,http://www.noticiasvigo.es/,Noticias Vigo,Internet,General Interest,Spanish,N/A
+433,Vigo,http://www.televigo.com/,Tele Vigo,Broadcast,General Interest,Spanish,TV
+434,Vigo,http://www.vigoempresa.com/,Vigo Empresa,Newspaper,Business,Spanish,N/A
+435,Villagarcia de Arousa,http://www.diariodearousa.com/,Diario de Arousa,Newspaper,General Interest,Spanish,N/A
+437,Calahorra,http://www.lanoticia.es/,La Noticia de la Semana,Newspaper,General Interest,Spanish,N/A
+438,Haro,http://www.radioharo.com/,Radio Haro,Broadcast,General Interest,Spanish,Radio
+439,Logrono,http://www.esrioja.es/,Es Rioja,Internet,General Interest,Spanish,N/A
+440,Logrono,http://www.larioja.com/,La Rioja,Newspaper,General Interest,Spanish,N/A
+441,Logrono,http://www.que.es/la-rioja/,Que,Internet,General Interest,Spanish,N/A
+442,Logrono,http://www.radiorioja.es/,Radio Rioja,Broadcast,General Interest,Spanish,Radio
+443,Logrono,http://www.rioja2.com/,Rioja 2,Internet,General Interest,Spanish,N/A
+445,Alcala de Henares,http://www.alcaladehenaresactualidad.es/,Alcala Actualidad,Internet,General Interest,Spanish,N/A
+446,Alcala de Henares,http://www.diariodealcala.es/,Diario de Alcala,Newspaper,General Interest,Spanish,N/A
+447,Boadilla del Monte,http://www.diariodeboadilla.es/,Diario de Boadilla,Internet,General Interest,Spanish,N/A
+448,Boadilla del Monte,http://www.que.es/boadilla-del-monte/,Que,Internet,General Interest,Spanish,N/A
+449,Fuenlabrada,http://www.fuenlabradanoticias.com/,Fuenlabrada Noticias,Internet,General Interest,Spanish,N/A
+450,Getafe,http://www.getafehoy.es/,Getafe Hoy,Internet,General Interest,Spanish,N/A
+451,Getafe,http://www.getafenoticias.com/,Getafe Noticias,Internet,General Interest,Spanish,N/A
+452,Getafe,http://www.que.es/getafe/,Que,Internet,General Interest,Spanish,N/A
+453,Madrid,http://www.20minutos.es/madrid/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+454,Madrid,http://www.abc.es/,ABC,Newspaper,General Interest,Spanish,N/A
+455,Madrid,http://as.com/,AS,Newspaper,Sport,Spanish,N/A
+456,Madrid,http://www.boe.es/,Boletin Oficial del Estado,Newspaper,Government,Spanish,N/A
+457,Madrid,http://cincodias.com/,Cinco Dias,Newspaper,Business,Spanish,N/A
+458,Madrid,http://www.cope.es/Menu/Local/madrid/madrid,Cope,Broadcast,General Interest,Spanish,Radio
+459,Madrid,https://www.diagonalperiodico.net/,Diagonal,Newspaper,General Interest,Spanish,N/A
+460,Madrid,http://www.eldigitaldemadrid.es/,El Digital de Madrid,Internet,General Interest,Spanish,N/A
+461,Madrid,http://www.eleconomista.es/,El Economista,Newspaper,Business,Spanish,N/A
+462,Madrid,http://www.elmundo.es/,El Mundo,Newspaper,General Interest,Spanish,N/A
+463,Madrid,http://www.elmundofinanciero.com/,El Mundo Financiero,Newspaper,Business,Spanish,N/A
+464,Madrid,http://elpais.com/,El Pais,Newspaper,General Interest,Spanish,N/A
+465,Madrid,http://www.eluniversodemadrid.es/,El Universo de Madrid,Newspaper,General Interest,Spanish,N/A
+466,Madrid,http://www.expansion.com/,Expansion,Newspaper,Business,Spanish,N/A
+467,Madrid,http://gaceta.es/,La Gaceta,Newspaper,General Interest,Spanish,N/A
+468,Madrid,http://www.larazon.es/,La Razon,Newspaper,General Interest,Spanish,N/A
+469,Madrid,http://www.lepetitjournal.com/madrid,Le Petit Journal,Internet,General Interest,FRA,N/A
+470,Madrid,http://www.madridactual.es/,Madrid Actual,Internet,General Interest,Spanish,N/A
+471,Madrid,http://www.madridactualidad.es/,Madrid Actualidad,Internet,General Interest,Spanish,N/A
+472,Madrid,http://www.madridiario.es/,Madrid Diario,Internet,General Interest,Spanish,N/A
+473,Madrid,http://www.madriddigital.info/,Madrid Digital,Internet,General Interest,Spanish,N/A
+474,Madrid,http://madridpress.com/,Madrid Press,Internet,General Interest,Spanish,N/A
+475,Madrid,http://www.madridiario.es/,Madridiario,Internet,General Interest,Spanish,N/A
+476,Madrid,http://www.marca.com/,Marca,Newspaper,Sport,Spanish,N/A
+477,Madrid,http://mkespana.ru/,MK,Newspaper,Ethnic,Russian,Russian
+478,Madrid,http://www.publico.es/,Publico,Newspaper,General Interest,Spanish,N/A
+479,Madrid,http://www.que.es/madrid/,Que,Internet,General Interest,Spanish,N/A
+480,Madrid,http://www.telemadrid.es/,Tele Madrid,Broadcast,General Interest,Spanish,N/A
+481,Mostoles,http://www.mostolesaldia.com/,Mostoles al Dia,Internet,General Interest,Spanish,TV
+482,Mostoles,http://www.que.es/mostoles/,Que,Internet,General Interest,Spanish,N/A
+484,Melilla,http://elfarodigital.es/melilla.html,El Faro de Melilla,Newspaper,General Interest,Spanish,N/A
+485,Melilla,http://www.eltelegrama.es/,El Telegrama,Newspaper,General Interest,Spanish,N/A
+486,Melilla,http://www.infomelilla.com/,Info Melilla,Internet,General Interest,Spanish,N/A
+487,Melilla,http://www.meliya.com/,Meliya,Internet,General Interest,Spanish,N/A
+488,Melilla,http://www.melillahoy.es/,Melilla Hoy,Newspaper,General Interest,Spanish,N/A
+490,Cartagena,http://www.costanachrichten.com/content/blogcategory/50/103/,Costa Calida Nachrichten,Newspaper,General Interest,German,N/A
+491,Cartagena,http://www.elfaro.es/,El Faro,Newspaper,General Interest,Spanish,N/A
+492,Murcia,http://www.20minutos.es/region-de-murcia/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+493,Murcia,http://www.elfaro.es/,El Faro,Newspaper,General Interest,Spanish,N/A
+494,Murcia,http://www.laopiniondemurcia.es/,La Opinion,Newspaper,General Interest,Spanish,N/A
+495,Murcia,http://www.laverdad.es/,La Verdad,Newspaper,General Interest,Spanish,N/A
+496,Murcia,http://www.murcia.com/,Murcia,Internet,General Interest,Spanish,N/A
+497,Murcia,http://murciatoday.com/,Murcia Today,Internet,General Interest,English,N/A
+498,Murcia,http://www.noticiasmurcia.com/,Noticias Murcia,Internet,General Interest,Spanish,N/A
+500,Pamplona,http://www.diariodenavarra.es/,Diario de Navarra,Newspaper,General Interest,Spanish,N/A
+501,Pamplona,http://www.noticiasdenavarra.com/,Diario de Noticias,Newspaper,General Interest,Spanish,N/A
+502,Pamplona,http://pamplonaactual.com/,Pamplona Actual,Internet,General Interest,Spanish,N/A
+504,Andoain,http://www.berria.info/,Berria,Newspaper,General Interest,Basque,N/A
+505,Beasain,http://goierri.hitza.eus/,Goierriko Hitza,Newspaper,General Interest,Basque,N/A
+506,Bilbao,http://www.que.es/bilbao/,20 Minutos,Internet,General Interest,Spanish,N/A
+507,Bilbao,http://www.deia.com/,Deia,Newspaper,General Interest,Spanish,N/A
+508,Bilbao,http://www.elcorreo.com/,El Correo,Newspaper,General Interest,Spanish,N/A
+509,Bilbao,http://www.que.es/bilbao/,Que,Internet,General Interest,Spanish,N/A
+510,Donostia San,http://www.diariovasco.com/,El Diario Vasco,Newspaper,General Interest,Spanish,N/A
+512,Donostia San,http://www.gara.net/,Gara,Newspaper,General Interest,Spanish,Also EUS
+514,Donostia San,http://www.noticiasdegipuzkoa.com/,Noticias de Gipuzkoa,Newspaper,General Interest,Spanish,N/A
+516,Getxo,http://www.herria.info/,Herria,Internet,General Interest,Basque,N/A
+517,Getxo,http://www.ukdigitala.com/,Uribe Kosta Digitala,Internet,General Interest,Spanish,Also EUS
+518,Hernani,http://www.kronika.net/,Hernanino Kronika,Internet,General Interest,Basque,N/A
+519,Lasarte Oria,http://www.argia.com/,Argia,Magazine,General Interest,Basque,N/A
+520,Tolosa,http://www.tolosaldekohitza.info/,Tolosaldeko Hitza,Internet,General Interest,Basque,N/A
+521,Vitoria Gasteiz,http://www.astekaridigitala.net/,Astekari Digitala,Internet,General Interest,Spanish,N/A
+522,Vitoria Gasteiz,http://www.noticiasdealava.com/,Diario Noticias de Alava,Newspaper,General Interest,Spanish,N/A
+523,Vitoria Gasteiz,http://www.elcorreo.com/alava/,El Correo,Newspaper,General Interest,Spanish,N/A
+525,Alcoy,http://www.ciudaddealcoy.com/,Ciudad de Alcoy,Newspaper,General Interest,Spanish,N/A
+526,Alcoy,http://www.radioalcoy.com/,Radio Alcoy,Broadcast,General Interest,Spanish,Radio
+527,Alicante,http://www.20minutos.es/comunidad-valenciana/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+528,Alicante,http://www.alicantenoticias.es/,Alicante Noticias,Internet,General Interest,Spanish,N/A
+529,Alicante,http://alicantetoday.com/,Alicante Today,Internet,General Interest,English,N/A
+530,Alicante,http://www.costanachrichten.com/content/blogcategory/13/101/,Costa Blanca Nachrichten,Newspaper,General Interest,German,N/A
+531,Alicante,http://www.cbz.es/,Costa Blanca Zeitung,Newspaper,General Interest,German,N/A
+532,Alicante,http://www.costanachrichten.com/,Costa Nachrichten,Internet,General Interest,German,N/A
+533,Alicante,http://www.diarioinformacion.com/,Informacion,Newspaper,General Interest,Spanish,N/A
+534,Alicante,http://www.laverdad.es/alicante/,La Verdad,Newspaper,General Interest,Spanish,N/A
+535,Alicante,http://www.lasprovincias.es/alicante/,Las Provincias,Newspaper,General Interest,Spanish,N/A
+536,Alicante,http://www.prensaynoticias.com/,Noticias,Newspaper,General Interest,Spanish,N/A
+537,Altea,http://www.halloonline.com/,Hallo,Newspaper,General Interest,Dutch,N/A
+538,Benidorm,http://www.costa-news.com/costa-blanca-news,Costa Blanca News,Newspaper,General Interest,English,N/A
+539,Benidorm,http://www.costa-news.com/,Costa News,Internet,General Interest,English,N/A
+540,Benidorm,http://www.holabenidorm.com/,Hola Benidorm,Internet,General Interest,Spanish,N/A
+541,Castellon,http://www.castellonnoticias.com/,Castellon Noticias,Internet,General Interest,Spanish,N/A
+542,Castellon,http://www.lasprovincias.es/castellon/,Las Provincias,Newspaper,General Interest,Spanish,N/A
+543,Castellon,http://www.levante-emv.com/,Levante EMV,Newspaper,General Interest,Spanish,N/A
+544,Castellon,http://www.elperiodicomediterraneo.com/,Mediterraneo,Newspaper,General Interest,Spanish,N/A
+545,Castellon,http://www.que.es/castellon/,Que,Internet,General Interest,Spanish,N/A
+546,Castellon,http://www.radiocastellon.com/,Radio Castellon,Broadcast,General Interest,Spanish,Radio
+547,Cullera,http://www.culleradigital.com/,Cullera Digital,Internet,General Interest,Spanish,N/A
+548,Denia,http://www.saz-aktuell.com/,Spaniens Allgemeine Zeitung,Newspaper,General Interest,German,N/A
+549,Elche,http://www.radioelche.com/,Radio Elche,Broadcast,General Interest,Spanish,Radio
+550,Elda,http://radioelda.com/,Radio Elda,Broadcast,General Interest,Spanish,Radio
+551,Gandia,http://www.radiogandia.net/,Radio Gandia,Broadcast,General Interest,Spanish,Radio
+552,Javea,http://www.javeanews.co.uk/,Javea News,Internet,General Interest,Spanish,N/A
+553,Ontiniente,http://www.radioontinyent.com/,Radio Ontinyent,Broadcast,General Interest,Spanish,Radio
+554,Orihuela,http://www.bajo-segura.com/,Bajo Segura Noticias,Internet,General Interest,Spanish,N/A
+555,Orihuela,http://www.orihueladigital.es/,Orihuela Digital,Internet,General Interest,Spanish,N/A
+556,Puerto Sagunto,http://www.el-economico.com/el_economico/,El Economico,Newspaper,General Interest,Spanish,N/A
+557,San Vicente del,http://www.costacomunicaciones.es/costa/index.php?publicacion=1,El Raspeig,Newspaper,General Interest,Spanish,N/A
+559,Torrent,http://laopiniondetorrent.es/,La Opinion,Newspaper,General Interest,Spanish,N/A
+560,Torrevieja,http://torreguia.es/,El Periodico,Internet,General Interest,Spanish,N/A
+561,Torrevieja,http://www.thepost.es/,Post,Newspaper,General Interest,English,N/A
+562,Valencia,http://www.20minutos.es/comunidad-valenciana/,20 Minutos,Newspaper,General Interest,Spanish,N/A
+563,Valencia,http://www.ahoravalencia.es/,Ahora Valencia,Internet,General Interest,Spanish,N/A
+564,Valencia,http://www.costa-news.com/costa-levante-news,Costa Levante News,Newspaper,General Interest,English,N/A
+565,Valencia,http://www.deportevalenciano.com/,Deporte Valenciano,Internet,Sport,Spanish,N/A
+566,Valencia,http://www.eltemps.cat/,El Temps,Newspaper,General Interest,Valencian,N/A
+567,Valencia,http://www.lavozdigital.net/,La Voz,Newspaper,General Interest,Spanish,N/A
+568,Valencia,http://www.lasprovincias.es/valencia/,Las Provincias,Newspaper,General Interest,Spanish,N/A
+569,Valencia,http://www.levante-emv.com/,Levante EMV,Newspaper,General Interest,Spanish,N/A
+570,Valencia,http://www.minidiario.com/,Mini Diario,Newspaper,General Interest,Spanish,N/A
+571,Valencia,http://www.panorama-actual.es/,Panorama Actual,Internet,General Interest,Spanish,N/A
+572,Valencia,http://www.que.es/valencia/,Que,Internet,General Interest,Spanish,N/A
+573,Valencia,http://www.superdeporte.es/,Super Deporte,Newspaper,Sport,Spanish,N/A
+574,Valencia,http://val.superdeporte.es/,Super Deporte,Newspaper,Sport,Valencian,N/A
+575,Valencia,http://vlcnoticias.com/,VLC Noticias,Internet,General Interest,Spanish,N/A
+2,National,http://www.radio24.ilsole24ore.com/,Radio 24,Broadcast,General Interest,Italian,Radio
+3,National,http://www.rainews.it/,RAI,Broadcast,General Interest,Italian,Radio TV
+4,National,http://www.televideo.rai.it/,RAI,Broadcast,General Interest,Italian,Teletext
+5,National,http://www.tgcom24.mediaset.it/,TG Com,Broadcast,General Interest,Italian,TV
+7,National,https://www.90min.com/it,90 Min,Internet,Sport,Italian,N/A
+8,National,http://www.albanianews.it/,Albania News,Internet,Ethnic,Italian,N/A
+9,National,http://www.giornale.it/,Giornale,Internet,General Interest,Italian,N/A
+10,National,https://news.google.com/news/?ned=it,Google,Internet,General Interest,Italian,N/A
+11,National,http://www.initaliaonline.it/,In Italia,Internet,General Interest,Italian,N/A
+12,National,http://www.italynews.it/,Italy News,Internet,General Interest,Italian,N/A
+13,National,http://www.legginotizie.com/,Leggi Notizie,Internet,General Interest,Italian,N/A
+14,National,http://www.ligury.com/,Onda International Newspaper,Internet,General Interest,Italian,N/A
+15,National,http://www.thelocal.it/,The Local,Internet,General Interest,English,N/A
+16,National,http://www.wallstreetitalia.com/,Wall Street Italia,Internet,Business,Italian,N/A
+17,National,https://it.notizie.yahoo.com/,Yahoo,Internet,General Interest,Italian,N/A
+18,Foreign,http://it.ibtimes.com/,International Business Times,Internet,Business,Italian,N/A
+19,Foreign,http://www.italica.sm/,Italica,Internet,General Interest,English,N/A
+20,Foreign,http://www.lifeinitaly.com/,Life in Italy,Internet,General Interest,English,N/A
+22,National,http://www.ildomenicale.it/,Il Domenicale,Magazine,General Interest,Italian,N/A
+23,National,http://www.internazionale.it/,Internazionale,Magazine,General Interest,Italian,N/A
+24,National,http://espresso.repubblica.it/,L'Espresso,Magazine,General Interest,Italian,N/A
+25,National,http://www.panorama.it/,Panorama,Magazine,General Interest,Italian,N/A
+27,National,http://www.affaritaliani.it/,Affari Italiani,Newspaper,Business,Italian,N/A
+28,National,http://www.corriere.it/,Corriere della Sera,Newspaper,General Interest,Italian,N/A
+29,National,http://www.ilmessaggero.it/,Il Messaggero,Newspaper,General Interest,Italian,N/A
+30,National,http://www.ilsole24ore.com/,Il Sole 24 Ore,Newspaper,Business,Italian,N/A
+31,National,http://www.gazzetta.it/,La Gazzetta dello Sport,Newspaper,Sport,Italian,N/A
+32,National,http://www.repubblica.it/,La Repubblica,Newspaper,General Interest,Italian,N/A
+33,National,http://www.lastampa.it/,La Stampa,Newspaper,General Interest,Italian,N/A
+35,National,http://www.adnkronos.com/,Adnkronos,Press Agency,General Interest,Italian,N/A
+36,National,http://servizi.agenziami.it/,Agenzia Multimediale Italiana,Press Agency,General Interest,Italian,N/A
+37,National,http://www.agi.it/en,AGI,Press Agency,General Interest,English,N/A
+38,National,http://www.agi.it/,AGI,Press Agency,General Interest,Italian,N/A
+39,National,http://www.agopress.info/,AGO,Press Agency,General Interest,Italian,N/A
+40,National,http://www.aise.it/,AISE,Press Agency,General Interest,Italian,N/A
+41,National,http://www.ansa.it/site/notizie/awnplus/english/english.html,ANSA,Press Agency,General Interest,English,N/A
+42,National,http://www.ansa.it/,ANSA,Press Agency,General Interest,Italian,N/A
+43,National,http://www.askanews.it/,ASKA,Press Agency,General Interest,Italian,N/A
+44,National,http://www.italpress.com/,Italpress,Press Agency,General Interest,Italian,N/A
+45,National,https://it.reuters.com/,Reuters,Press Agency,General Interest,Italian,N/A
+49,Pescara,http://ilcentro.gelocal.it/,Il Centro,Newspaper,General Interest,Italian,N/A
+51,Catanzaro,http://www.ildomani.it/,Il Domani,Newspaper,General Interest,Italian,N/A
+52,Catanzaro,http://www.giornaledicalabria.it/,Il Giornale di Calabria,Newspaper,General Interest,Italian,N/A
+53,Crotone,http://www.corrieredelsud.it/nsite/,Il Corriere del Sud,Newspaper,General Interest,Italian,N/A
+55,Avellino,http://www.corriereirpinia.it/,Corriere,Newspaper,General Interest,Italian,N/A
+56,Ischia,http://www.ilgolfo.it/,Il Golfo,Newspaper,General Interest,Italian,N/A
+57,Napoli,http://www.dossiermagazine.it/,Dossier Magazine,Internet,General Interest,Italian,N/A
+58,Napoli,http://ildenaro.it/,Il Denaro,Newspaper,Business,Italian,N/A
+59,Napoli,http://www.ilmattino.it/,Il Mattino,Newspaper,General Interest,Italian,N/A
+60,Napoli,http://napoli.repubblica.it/,La Repubblica,Newspaper,General Interest,Italian,N/A
+61,Napoli,http://www.napoli.com/,Napoli,Internet,General Interest,Italian,N/A
+62,Napoli,http://www.napolitoday.it/,Napoli Today,Internet,General Interest,Italian,N/A
+63,Napoli - Naples,http://issuu.com/nsanaplespao,Panorama,Newspaper,Military,English,N/A
+64,Napoli,http://www.ilroma.net/,Roma,Newspaper,General Interest,Italian,N/A
+65,Napoli,http://www.videocomunicazioni.com/,Video Comunicazioni,Press Agency,General Interest,Italian,N/A
+66,Salerno,http://lacittadisalerno.gelocal.it/,La Citta di Salerno,Newspaper,General Interest,Italian,N/A
+68,Bologna,http://www.ilbologna.com/,Il Bologna,Newspaper,General Interest,Italian,N/A
+69,Bologna,http://www.ilrestodelcarlino.it/,Il Resto del Carlino,Newspaper,General Interest,Italian,N/A
+70,Bologna,http://bologna.repubblica.it/,La Repubblica,Newspaper,General Interest,Italian,N/A
+71,Ferrara,http://lanuovaferrara.gelocal.it/,La Nuova Ferrara,Newspaper,General Interest,Italian,N/A
+72,Forli,http://www.romagnaoggi.it/,Romagna Oggi,Newspaper,General Interest,Italian,N/A
+73,Modena,http://ilnuovo.redaweb.it/,Il Nuovo Giornale di Modena,Newspaper,General Interest,Italian,N/A
+74,Modena,http://gazzettadimodena.gelocal.it/,Gazzetta di Modena,Newspaper,General Interest,Italian,N/A
+75,Parma,http://www.gazzettadiparma.it/,La Gazzetta di Parma,Newspaper,General Interest,Italian,N/A
+76,Piacenza,http://www.liberta.it/,Liberta,Newspaper,General Interest,Italian,N/A
+77,Reggio Emilia,http://gazzettadireggio.gelocal.it/,La Gazzetta di Reggio,Newspaper,General Interest,Italian,N/A
+78,Reggio Emilia,http://www.viaemilianet.it/,Via Emilia Net,Internet,General Interest,Italian,N/A
+79,Rimini,http://www.corriereromagna.it/,Corriere Romagna,Newspaper,General Interest,Italian,N/A
+81,Trieste,http://ilpiccolo.gelocal.it/,Il Piccolo,Newspaper,General Interest,Italian,N/A
+82,Trieste - Trst,http://www.primorski.it/,Primorski Dnevnik,Newspaper,General Interest,Slovenian,N/A
+83,Udine,http://www.ilfriuli.it/,Il Friuli,Newspaper,General Interest,Italian,N/A
+84,Udine,http://messaggeroveneto.gelocal.it/,Il Messaggero Veneto,Newspaper,General Interest,Italian,N/A
+86,Roma,http://www.avantionline.it/,Avanti,Newspaper,General Interest,Italian,N/A
+87,Roma,http://www.corrieredellosport.it/,Corriere dello Sport,Newspaper,General Interest,Italian,N/A
+88,Roma,http://www.epolisroma.it/,E Polis Roma,Newspaper,General Interest,Italian,N/A
+89,Roma,https://www.ilfattoquotidiano.it/,Il Fatto Quotidiano,Newspaper,General Interest,Italian,N/A
+90,Roma,http://ilmanifesto.info/,Il Manifesto,Newspaper,General Interest,Italian,N/A
+91,Roma,http://www.ilmessaggero.it/,Il Messaggero,Newspaper,General Interest,Italian,N/A
+92,Roma,http://www.iltempo.it/,Il Tempo,Newspaper,General Interest,Italian,N/A
+93,Roma,http://roma.repubblica.it/,La Repubblica,Newspaper,General Interest,Italian,N/A
+94,Roma,http://www.leggo.it/,Leggo,Newspaper,General Interest,Italian,N/A
+95,Roma,http://www.liberazione.it/,Liberazione,Newspaper,General Interest,Italian,N/A
+96,Roma,http://www.indipendenteonline.it/,L'Indipendente,Newspaper,General Interest,Italian,N/A
+97,Roma,http://www.opinione.it/,L'Opinione delle Liberta,Newspaper,General Interest,Italian,N/A
+98,Roma,http://www.unita.it/,L'Unita,Newspaper,General Interest,Italian,N/A
+99,Roma,http://www.metronews.it/,Metro,Newspaper,General Interest,Italian,N/A
+100,Roma,http://www.romatoday.it/,Roma Today,Internet,General Interest,Italian,N/A
+101,Roma (Marconi),http://www.pontediferro.org/,Pontediferro,Newspaper,General Interest,Italian,N/A
+103,Chiavari,http://www.ilnuovolevante.it/,Il Nuovo Levante,Newspaper,General Interest,Italian,N/A
+104,Genova,http://www.ilsecoloxix.it/,Il Secolo XIX,Newspaper,General Interest,Italian,N/A
+105,Genova,http://genova.repubblica.it/,La Repubblica,Newspaper,General Interest,Italian,N/A
+106,Genova,http://www.ligurianotizie.it/,Liguria Notizie,Internet,General Interest,Italian,N/A
+107,Sanremo,http://lariviera.netweek.it/,La Riviera,Newspaper,General Interest,Italian,N/A
+109,Bergamo,http://www.bergamosette.it/,Bergamo 7,Newspaper,General Interest,Italian,N/A
+110,Bergamo,http://www.ecodibergamo.it/,L'Eco di Bergamo,Newspaper,General Interest,Italian,N/A
+111,Brescia,http://www.brescia7giorni.it/,Brescia 7,Newspaper,General Interest,Italian,N/A
+112,Brescia,http://www.bresciaoggi.it/,Brescia Oggi,Newspaper,General Interest,Italian,N/A
+113,Brescia,http://www.giornaledibrescia.it/,Il Giornale di Brescia,Newspaper,General Interest,Italian,N/A
+114,Como,http://www.giornaledicomo.it/,Como 7,Newspaper,General Interest,Italian,N/A
+115,Como,http://www.corrierecomo.it/,Corriere di Como,Newspaper,General Interest,Italian,N/A
+116,Como,http://www.laprovinciadicomo.it/,La Provincia di Como,Newspaper,General Interest,Italian,N/A
+117,Lecco,http://www.giornaledilecco.it/,Il Giornale di Lecco,Newspaper,General Interest,Italian,N/A
+118,Lecco,http://www.laprovinciadilecco.it/,La Provincia di Lecco,Newspaper,General Interest,Italian,N/A
+119,Legnano,http://www.cap025.it/,Cap 025,Internet,General Interest,Italian,N/A
+120,Lodi,http://www.ilcittadino.it/,Il Cittadino,Newspaper,General Interest,Italian,N/A
+121,Mantova,http://gazzettadimantova.gelocal.it/,La Gazzetta di Mantova,Newspaper,General Interest,Italian,N/A
+122,Mantova,http://www.vocedimantova.it/,La Voce di Mantova,Newspaper,General Interest,Italian,N/A
+123,Mantova,http://www.mantovasette.it/,Mantova 7,Newspaper,General Interest,Italian,N/A
+124,Milano,http://www.affaritaliani.it/,Affari Italiani,Newspaper,Business,Italian,N/A
+125,Milano,http://www.avvenire.it/Pagine/default.aspx,Avvenire,Newspaper,General Interest,Italian,N/A
+126,Milano,http://www.corriere.it/,Corriere della Sera,Newspaper,General Interest,Italian,N/A
+127,Milano,http://www.epolismilano.it/,E Polis Milano,Newspaper,General Interest,Italian,N/A
+128,Milano,http://www.ilfoglio.it/,Il Foglio,Newspaper,General Interest,Italian,N/A
+129,Milano,http://www.ilgiornale.it/,Il Giornale,Newspaper,General Interest,Italian,N/A
+130,Milano,http://www.ilgiorno.it/,Il Giorno,Newspaper,General Interest,Italian,N/A
+131,Milano,http://www.ilsole24ore.com/,Il Sole 24 Ore,Newspaper,Business,Italian,N/A
+132,Milano,http://www.italiaoggi.it/,Italia Oggi,Newspaper,General Interest,Italian,N/A
+133,Milano,http://www.gazzetta.it/,La Gazzetta dello Sport,Newspaper,Sport,Italian,N/A
+134,Milano,http://www.lapadania.com/,La Padania,Newspaper,General Interest,Italian,N/A
+135,Milano,http://milano.repubblica.it/,La Repubblica,Newspaper,General Interest,Italian,N/A
+136,Milano,https://www.laverita.info/,La Verita,Newspaper,General Interest,Italian,N/A
+137,Milano - Milan,http://www.lepetitjournal.com/milan,Le Petit Journal,Internet,General Interest,French,N/A
+138,Milano,http://www.liberoquotidiano.it/,Libero,Newspaper,General Interest,Italian,N/A
+139,Milano,http://www.metronews.it/,Metro,Newspaper,General Interest,Italian,N/A
+140,Milano,http://www.milanofinanza.it/,Milano Finanza,Newspaper,Business,Italian,N/A
+141,Milano,http://milanobordello.com/,Milano News,Internet,General Interest,Italian,N/A
+142,Milano,http://www.milanotoday.it/,Milano Today,Internet,General Interest,Italian,N/A
+143,Milano,http://www.tempi.it/,Tempi,Magazine,General Interest,Italian,N/A
+144,Pavia,http://www.agipapress.it/,A GI PA Press,Press Agency,General Interest,Italian,N/A
+145,Pavia,http://laprovinciapavese.gelocal.it/,La Provincia Pavese,Newspaper,General Interest,Italian,N/A
+146,Pavia,http://www.pavia7.it/,Pavia 7,Newspaper,General Interest,Italian,N/A
+147,Saronno,http://www.informazona.it/,Informa Zona,Newspaper,General Interest,Italian,N/A
+148,Sondrio,http://www.giornaledisondrio.it/,Il Giornale di Sondrio,Newspaper,General Interest,Italian,N/A
+149,Sondrio,http://www.laprovinciadisondrio.it/,La Provincia di Sondrio,Newspaper,General Interest,Italian,N/A
+150,Varese,http://www.varese7press.it/,Varese 7,Newspaper,General Interest,Italian,N/A
+151,Varese,http://www2.varesenews.it/,Varese News,Internet,General Interest,Italian,N/A
+153,Ancona,http://www.corriereadriatico.it/,Corriere Adriatico,Newspaper,General Interest,Italian,N/A
+154,Ascoli Piceno,http://www.ilquotidiano.it/,Il Quotidiano,Newspaper,General Interest,Italian,N/A
+156,Alessandria,http://www.alessandria7.it/,Alessandria 7,Newspaper,General Interest,Italian,N/A
+157,Arona,http://www.giornalediarona.it/,Il Giornale di Arona,Newspaper,General Interest,Italian,N/A
+158,Asti,http://www.inastinews.it/,Asti News,Internet,General Interest,Italian,N/A
+159,Biella,http://www.nuovaprovincia.it/,La Nuova Provincia di Biella,Newspaper,General Interest,Italian,N/A
+160,Borgosesia,http://www.notiziaoggi.it/,Notizia Oggi Borgosesia,Newspaper,General Interest,Italian,N/A
+161,Chivasso,http://www.nuovaperiferia.it/,La Nuova Periferia,Newspaper,General Interest,Italian,N/A
+162,Cirie,http://cirie.ilcanavese.it/,Il Canavese,Newspaper,General Interest,Italian,N/A
+163,Ivrea,http://lasentinella.gelocal.it/,La Sentinella del Canavese,Newspaper,General Interest,Italian,N/A
+164,Novara,http://www.novaraoggi.it/,Novara Oggi,Newspaper,General Interest,Italian,N/A
+165,San Giorgio Canavese,http://www.ilcanavese.it/,Il Canavese,Newspaper,General Interest,Italian,N/A
+166,Settimo Torinense,http://settimo.nuovaperiferia.it/,La Nuova Periferia,Newspaper,General Interest,Italian,N/A
+167,Torino,http://www.lagazzettaweb.it/,La Gazzetta Web,Internet,General Interest,Italian,N/A
+168,Torino,http://torino.repubblica.it/,La Repubblica,Newspaper,General Interest,Italian,N/A
+169,Torino,http://www.lastampa.it/,La Stampa,Newspaper,General Interest,Italian,N/A
+170,Torino,http://www.porter.it/,Porter,Internet,General Interest,Italian,N/A
+171,Torino,http://www.tuttosport.com/,Tuttosport,Newspaper,Sport,Italian,N/A
+172,Vercelli,http://www.notiziaoggivercelli.it/,Notizia Oggi Vercelli,Newspaper,General Interest,Italian,N/A
+174,Bari,http://www.barisera.it/,Barisera,Newspaper,General Interest,Italian,N/A
+175,Bari,http://www.lagazzettadelmezzogiorno.it/,La Gazzetta del Mezzogiorno,Newspaper,General Interest,Italian,N/A
+176,Bari,http://bari.repubblica.it/,La Repubblica,Newspaper,General Interest,Italian,N/A
+177,Foggia,http://ilgrecale.it/,Il Grecale,Internet,General Interest,Italian,N/A
+178,Taranto,http://www.corgiorno.it/,Corriere del Giorno,Newspaper,General Interest,Italian,N/A
+180,Cagliari,http://www.unionesarda.it/,L'Unione Sarda,Newspaper,General Interest,Italian,N/A
+181,Sassari,http://lanuovasardegna.gelocal.it/,La Nuova Sardegna,Newspaper,General Interest,Italian,N/A
+183,Catania,http://www.lasicilia.it/,La Sicilia,Newspaper,General Interest,Italian,NAS Sigonella
+184,Messina,http://www.gazzettadelsud.it/,Gazzetta del Sud,Newspaper,General Interest,Italian,N/A
+185,Palermo,http://palermo.repubblica.it/,La Repubblica,Newspaper,General Interest,Italian,N/A
+186,Palermo,http://press.sicilia.it/,Press Sicilia,Internet,General Interest,Italian,N/A
+187,Palermo,http://www.sicilianews24.it/,Sicilia News 24,Internet,General Interest,Italian,N/A
+188,Sigonella,http://issuu.com/nas_sigonella,Signature,Newspaper,Military,English,N/A
+190,Firenze - Florence,http://www.theflorentine.net/,Florentine,Newspaper,General Interest,English,N/A
+191,Firenze,http://www.firenzetoday.it/,Firenze Today,Internet,General Interest,Italian,N/A
+192,Firenze - Florence,http://www.florencenews.it/,Florence News,Newspaper,General Interest,English,N/A
+193,Firenze,http://www.ilfirenze.it/,Il Firenze,Newspaper,General Interest,Italian,N/A
+194,Firenze,http://www.lanazione.it/,La Nazione,Newspaper,General Interest,Italian,N/A
+195,Firenze,http://firenze.repubblica.it/,La Repubblica,Newspaper,General Interest,Italian,N/A
+196,Firenze,http://www.metropoliweb.it/,Metropoli Web,Internet,General Interest,Italian,N/A
+197,Firenze,http://www.nove.firenze.it/,Nove da Firenze,Internet,General Interest,Italian,N/A
+198,Livorno,http://iltirreno.gelocal.it/,Il Tirreno,Newspaper,General Interest,Italian,N/A
+200,Bolzano,http://altoadige.gelocal.it/,Alto Adige,Newspaper,General Interest,Italian,N/A
+201,Bolzano - Bozen,http://www.tageszeitung.it/,Die Neue Sudtiroler Tageszeitung,Newspaper,General Interest,Italian,N/A
+202,Bolzano - Bozen,http://www.stol.it/Dolomiten,Dolomiten,Newspaper,General Interest,German,N/A
+203,Bolzano - Bozen,http://www.ff-online.com/,FF,Magazine,General Interest,German,N/A
+204,Bolzano - Bozen,http://www.swz.it/de/home.html,Sudtiroler Wirtschaftszeitung,Newspaper,Business,German,N/A
+205,Bressanone - Brixen,http://www.brixner.info/de/home.html,Der Brixner,Magazine,General Interest,German,N/A
+206,Brunico - Bruneck,http://www.pzpz.it/,Pustertaler Zeitung,Newspaper,General Interest,German,N/A
+207,Meran -Merano,http://www.suedtirolernachrichten.it/,Sudtiroler Nachrichten,Magazine,General Interest,German,N/A
+208,Silandro - Schlanders,http://www.dervinschger.it/,Der Vinschger,Newspaper,General Interest,German,N/A
+209,Trento,http://www.ladige.it/,L'Adige,Newspaper,General Interest,Italian,N/A
+210,Trento,http://trentinocorrierealpi.gelocal.it/,Trentino,Newspaper,General Interest,Italian,N/A
+212,Perugia,http://www.corr.it/,Il Corriere dell'Umbria,Newspaper,General Interest,Italian,N/A
+213,Perugia,http://www.inumbria.it/,In Umbria,Internet,General Interest,Italian,N/A
+215,Aosta,http://www.aostaoggi.it/,Aosta Oggi,Internet,General Interest,Italian,N/A
+216,Aosta,http://lavallee.netweek.it/,La Vallee Notizie,Newspaper,General Interest,Italian,N/A
+218,Belluno,http://corrierealpi.gelocal.it/,Corriere delle Alpi,Newspaper,General Interest,Italian,N/A
+219,Padova,http://mattinopadova.gelocal.it/,Il Mattino di Padova,Newspaper,General Interest,Italian,N/A
+220,Padova,http://www.padovaoggi.it/,Padova Oggi,Internet,General Interest,Italian,N/A
+221,Treviso,http://tribunatreviso.gelocal.it/,La Tribuna di Treviso,Newspaper,General Interest,Italian,N/A
+222,Treviso,http://www.trevisotoday.it/,Treviso Today,Internet,General Interest,Italian,N/A
+223,Venezia,http://www.gazzettino.it/,Il Gazzettino,Newspaper,General Interest,Italian,N/A
+224,Venezia,http://nuovavenezia.gelocal.it/,La Nuova di Venezia e Mestre,Newspaper,General Interest,Italian,N/A
+225,Verona,http://www.larena.it/,L'Arena,Newspaper,General Interest,Italian,N/A
+226,Verona,http://www.veronaoggi.it/,Verona Oggi,Internet,General Interest,Italian,N/A
+227,Vicenza,http://www.ilgiornaledivicenza.it/,Il Giornale di Vicenza,Newspaper,General Interest,Italian,N/A
+228,Vicenza,http://www.usag.vicenza.army.mil/sites/local/outlook.asp,Outlook,Newspaper,Military,English,N/A
+230,Vicenza,http://issuu.com/usagvicenza,Outlook,Newspaper,Military,English,N/A
+232,Vicenza,http://www.vicenzatoday.it/,Vicenza Today,Newspaper,General Interest,Italian,N/A
+2,National,http://www.alphatv.gr/,Alpha TV,Broadcast,General Interest,Greek,TV
+3,National,http://www.antenna.gr/,ANT 1,Broadcast,General Interest,Greek,Radio TV
+4,National,http://www.megatv.com/default.asp,Mega,Broadcast,General Interest,Greek,TV
+5,National,http://www.nerit.gr/,NERIT,Broadcast,General Interest,Greek,Radio TV
+6,National,http://www.novasports.gr/home.aspx?a_id=256,Nova Sports,Broadcast,Sport,Greek,TV
+7,National,http://www.star.gr/Pages/Default.aspx,Star,Broadcast,General Interest,Greek,TV
+8,National,https://gr.voanews.com/,VOA,Broadcast,General Interest,Greek,Radio
+10,National,http://www.athensvoice.gr/,Athens Voice,Internet,General Interest,Greek,N/A
+11,National,http://www.cnn.gr/,CNN,Internet,General Interest,Greek,N/A
+12,National,http://www.daypress.gr/,Day Press,Internet,General Interest,Greek,N/A
+13,National,http://www.e-go.gr/default.asp,E Go,Internet,General Interest,Greek,N/A
+14,National,http://exelixeis.gr/,Exelixeis,Internet,General Interest,Greek,N/A
+15,National,http://www.flash.gr/,Flash,Internet,General Interest,Greek,N/A
+16,National,http://www.gavros.gr/,Gavros,Internet,Sport,Greek,N/A
+17,National,https://news.google.com/news/?ned=el_gr,Google,Internet,General Interest,Greek,N/A
+18,National,http://www.greeknewsagenda.gr/,Greek News Agenda,Internet,General Interest,English,N/A
+19,National,http://ipop.gr/,I Pop,Internet,General Interest,Greek,N/A
+20,National,http://www.iefimerida.gr/,Iefimerida,Internet,General Interest,Greek,N/A
+21,National,http://www.lifo.gr/,Lifo,Internet,General Interest,Greek,N/A
+22,National,http://www.msn.com/el-gr/news,MSN,Internet,General Interest,Greek,N/A
+23,National,http://www.newsbomb.gr/,News Bomb,Internet,General Interest,Greek,N/A
+24,National,http://www.newsbomb.gr/en,News Bomb,Internet,General Interest,English,N/A
+25,National,http://www.newsbomb.gr/ru,News Bomb,Internet,General Interest,Russian,N/A
+26,National,http://www.newsit.gr/,News It,Internet,General Interest,Greek,N/A
+27,National,http://www.newsnowgr.com/,News Now,Internet,General Interest,Greek,N/A
+28,National,http://www.polispress.gr/,Polis Press,Internet,General Interest,Greek,N/A
+29,National,http://www.politisonline.com/,Politis Online,Internet,General Interest,Greek,N/A
+30,National,http://www.protagon.gr/,Protagon,Internet,General Interest,Greek,N/A
+31,National,http://www.zougla.gr/,Zougla,Internet,General Interest,Greek,N/A
+33,National,http://www.enet.gr/,Eleftherotypia,Newspaper,General Interest,Greek,N/A
+34,National,http://www.enetenglish.gr/,Eleftherotypia,Newspaper,General Interest,English,N/A
+35,National,http://www.ethnos.gr/default.asp,Ethnos,Newspaper,General Interest,Greek,N/A
+36,National,http://www.kathimerini.gr/,Kathimerini,Newspaper,General Interest,Greek,N/A
+37,National,http://www.ekathimerini.com/,Kathimerini,Newspaper,General Interest,English,N/A
+38,National,http://www1.rizospastis.gr/,Rizospastis,Newspaper,General Interest,Greek,N/A
+39,National,http://www.tanea.gr/,Ta Nea,Newspaper,General Interest,Greek,N/A
+40,National,http://www.tovima.gr/,To Vima,Newspaper,General Interest,Greek,N/A
+42,National,http://www.amna.gr/,ANA MPA,Press Agency,General Interest,Greek,N/A
+43,National,http://www.amna.gr/english/,ANA MPA,Press Agency,General Interest,English,N/A
+44,National,http://www.amna.gr/french/,ANA MPA,Press Agency,General Interest,FrenchA,N/A
+45,National,http://www.amna.gr/russian/,ANA MPA,Press Agency,General Interest,Russian,N/A
+46,National,http://www.amna.gr/albanian/,ANA MPA,Press Agency,General Interest,Albanian,N/A
+47,National,http://www.amna.gr/chinese/,ANA MPA,Press Agency,General Interest,Chinese,N/A
+51,Drama,http://www.hxo.gr/,Hxo,Newspaper,General Interest,Greek,N/A
+52,Komotini,http://www.thrakikigi.gr/,Thrakiki Gi,Newspaper,Business,Greek,N/A
+53,Komotini,http://www.trakyaninsesi.com/,Trakyanin Sesi,Newspaper,General Interest,Turkish,N/A
+54,Komotini,http://www.xronos.gr/,Xronos,Newspaper,General Interest,Greek,N/A
+55,Xanthi,http://www.agonas.gr/,Agonas,Newspaper,General Interest,Greek,N/A
+57,Athens,http://www.agx.gr/,Aggelioxoros,Newspaper,Shopper,Greek,N/A
+58,Athens,http://www.alpha1.gr/,Alfa Ena,Newspaper,General Interest,Greek,N/A
+59,Athens,http://www.athinapoli.gr/,Athina Poli,Newspaper,General Interest,Greek,N/A
+60,Athens,http://www.athinorama.gr/,Athinorama,Newspaper,Alternative,Greek,N/A
+61,Athens,http://www.avgi.gr/,Avgi,Newspaper,General Interest,Greek,N/A
+62,Athens,http://www.enet.gr/,Eleftherotypia,Newspaper,General Interest,Greek,N/A
+63,Athens,http://www.enetenglish.gr/,Eleftherotypia,Newspaper,General Interest,English,N/A
+64,Athens,http://www.ethnos.gr/default.asp,Ethnos,Newspaper,General Interest,Greek,N/A
+65,Athens,http://www.espressonews.gr/,Espresso,Newspaper,General Interest,Greek,N/A
+66,Athens,http://www.express.gr/,Express,Newspaper,Business,Greek,N/A
+67,Athens,http://www.imerisia.gr/,Imerisia,Newspaper,Business,Greek,N/A
+68,Athens,http://www.kathimerini.gr/,Kathimerini,Newspaper,General Interest,Greek,N/A
+69,Athens,http://www.ekathimerini.com/,Kathimerini,Newspaper,General Interest,English,N/A
+70,Athens,http://www.kerdos.gr/,Kerdos,Newspaper,Business,Greek,N/A
+71,Athens,http://www.lepetitjournal.com/athenes,Le Petit Journal,Internet,General Interest,FrenchA,N/A
+72,Athens,http://www.naftemporiki.gr/,Naftemporiki,Newspaper,Business,Greek,N/A
+73,Athens,http://www.iospress.gr/,Ios,Newspaper,General Interest,Greek,N/A
+74,Athens,http://www.metrogreece.gr/,Metro,Newspaper,General Interest,Greek,N/A
+75,Athens,http://www.mkgreece.gr/,MK,Newspaper,Ethnic,Russian,N/A
+76,Athens,http://www.pga.al/,Plus Gazeta Athina,Newspaper,Ethnic,Albanian,N/A
+77,Athens,http://www.press-time.gr/,Press Time,Newspaper,General Interest,Greek,N/A
+78,Athens,http://www.protothema.gr/,Proto Thema,Newspaper,General Interest,Greek,N/A
+79,Athens,http://en.protothema.gr/,Proto Thema,Newspaper,General Interest,English,N/A
+80,Athens,http://www.real.gr/default.aspx?page=home,Real News,Newspaper,General Interest,Greek,N/A
+81,Athens,http://www.reporter.gr/,Reporter,Newspaper,Business,Greek,N/A
+82,Athens,http://www1.rizospastis.gr/,Rizospastis,Newspaper,General Interest,Greek,N/A
+83,Athens,http://www.tanea.gr/,Ta Nea,Newspaper,General Interest,Greek,N/A
+84,Athens,http://www.tovima.gr/,To Vima,Newspaper,General Interest,Greek,N/A
+85,Nea Makri,http://www.dhmoths.gr/,O Dimotis,Newspaper,General Interest,Greek,N/A
+87,Aigio,http://www.filodimos.gr/data/,Filodimos,Newspaper,General Interest,Greek,N/A
+88,Messolonghi,http://www.aixmi-news.gr/,Aixmi,Newspaper,General Interest,Greek,N/A
+89,Patras,http://www.pelop.gr/,Peloponnisos,Newspaper,General Interest,Greek,N/A
+90,Pyrgos,http://www.patrisnews.com/,Patris,Newspaper,General Interest,Greek,N/A
+92,Grevena,http://www.star-fm.gr/,Star FM,Broadcast,General Interest,Greek,Radio
+93,Florina - Lerin,http://novazora.gr/,Nova Zora,Newspaper,General Interest,MKD,Also ELL
+94,Kozani,http://ditiki.gr/,Ditiki Makedonia,Newspaper,General Interest,Greek,N/A
+95,Kozani,http://www.prlogos.gr/,Proinos Logos,Newspaper,General Interest,Greek,N/A
+97,Corfu,http://www.enimerosi.com/,Enimerosi,Newspaper,General Interest,Greek,N/A
+99,Ioannina,http://www.epirusnews.gr/,Epirus News,Internet,General Interest,Greek,N/A
+100,Ioannina,http://ioanninatoday.blogspot.com/,Ioannina Today,Internet,General Interest,Greek,N/A
+101,Ioannina,http://www.neoiagones.gr/,Neoi Agones,Newspaper,General Interest,Greek,N/A
+102,Ioannina,http://www.proinanea.gr/,Proina Nea,Newspaper,General Interest,Greek,N/A
+103,Ioannina,http://www.proinoslogos.gr/,Proinos Logos,Newspaper,General Interest,Greek,N/A
+105,Kilkis,http://www.kilkistoday.gr/,Kilkis Today,Internet,General Interest,Greek,N/A
+106,Thessaloniki,http://www.agelioforos.gr/,Agelioforos,Newspaper,General Interest,Greek,N/A
+107,Thessaloniki,http://www.makthes.gr/,Makedonia,Newspaper,General Interest,Greek,N/A
+108,Thessaloniki,http://www.metrosport.gr/,Metro Sport,Internet,Sport,Greek,N/A
+109,Veria,https://www.imerisia-ver.gr/,Imerisia,Newspaper,General Interest,Greek,N/A
+110,Veria,http://www.laos-epea.gr/,Laos,Newspaper,General Interest,Greek,N/A
+112,Chania,http://www.haniotika-nea.gr/,Haniotika Nea,Newspaper,General Interest,Greek,TV
+113,Heraklion,http://www.cretegazette.com/,Crete Gazette,Newspaper,General Interest,English,N/A
+114,Heraklion,http://www.cretetv.gr/,Kriti TV,Broadcast,General Interest,Greek,N/A
+115,Heraklion,http://www.mesogios.gr/,Mesogios,Newspaper,General Interest,Greek,N/A
+116,Heraklion,http://www.neakriti.gr/,Nea Kriti,Newspaper,General Interest,Greek,N/A
+117,Heraklion,http://www.patris.gr/frontpage,Patris,Newspaper,General Interest,Greek,N/A
+119,Rhodes,http://www.dimokratiki.gr/,Demokratiki,Newspaper,General Interest,Greek,N/A
+120,Rhodes,http://www.rodiaki.gr/,Rodiaki,Newspaper,General Interest,Greek,N/A
+122,Kalamata,http://www.eleftheriaonline.gr/,Eleftheria,Newspaper,General Interest,Greek,N/A
+124,Karpenisi,http://www.evrytanika.gr/,Evrytanika Nea,Newspaper,General Interest,Greek,N/A
+126,Larissa,http://www.eleftheria.gr/,Eleftheria,Newspaper,General Interest,Greek,N/A
+127,Larissa,http://www.kosmoslarissa.gr/,Kosmos,Newspaper,General Interest,Greek,N/A
+128,Volos,http://www.taxydromos.gr/,Taxydromos,Newspaper,General Interest,Greek,N/A
+129,Volos,http://e-thessalia.gr/,Thessalia,Newspaper,General Interest,Greek,N/A
+131,Chios,http://www.aegeanews.com/,APE,Press Agency,General Interest,Greek,N/A
+132,Chios,http://www.alithia.gr/,Alithia,Newspaper,General Interest,Greek,N/A
+133,Chios,http://www.chiosnews.com/,Chios News,Internet,General Interest,Greek,N/A
+134,Chios,http://www.dimokratiki.org/,Dimokratiki,Newspaper,General Interest,Greek,N/A
+135,Chios,http://www.politis-chios.gr/new/,Politis,Newspaper,General Interest,Greek,N/A
+136,Mytiline,http://www.emprosnet.gr/,Empros,Newspaper,General Interest,Greek,N/A
+2,National,http://www.een.be/teletekst,EEN,Broadcast,General Interest,Dutch,Teletext
+3,National,http://www.een.be/,EEN,Broadcast,General Interest,Dutch,TV
+4,National,http://kanaalz.rnews.be/,Kanaal Z,Broadcast,Business,Dutch,TV
+5,National,http://www.radio1.be/,Radio 1,Broadcast,General Interest,Dutch,Radio
+6,National,http://www.radiovisie.eu/,Radio Visie,Broadcast,General Interest,Dutch,Radio
+7,National,http://www.rtbf.be/,RTBF,Broadcast,General Interest,French,Radio TV
+8,National,http://www.rtbf.be/services/teletexte/,RTBF,Broadcast,General Interest,French,Teletext
+9,National,http://www.rtl.be/,RTL,Broadcast,General Interest,French,TV
+10,National,http://deredactie.be/cm/vrtnieuws.deutsch,VRT,Broadcast,General Interest,German,Radio TV
+11,National,http://deredactie.be/cm/vrtnieuws.english,VRT,Broadcast,General Interest,English,Radio TV
+12,National,http://deredactie.be/cm/vrtnieuws.francais,VRT,Broadcast,General Interest,French,Radio TV
+13,National,http://deredactie.be/cm/vrtnieuws,VRT,Broadcast,General Interest,Dutch,Radio TV
+14,National,https://www.vrt.be/nl/,VRT,Broadcast,General Interest,Dutch,Radio TV
+15,National,http://vtm.be/,VTM,Broadcast,General Interest,Dutch,TV
+17,National,http://www.7sur7.be/,7 sur 7,Internet,General Interest,French,N/A
+18,National,http://www.expatica.com/be/main.html,Expatica,Internet,General Interest,English,N/A
+19,National,https://news.google.com/news/?ned=fr_be,Google,Internet,General Interest,French,N/A
+20,National,https://news.google.com/news/?ned=nl_be,Google,Internet,General Interest,Dutch,N/A
+21,National,http://www.hoofdpunten.be/,Hoofdpunten,Internet,General Interest,Dutch,N/A
+22,National,http://www.krantenkoppen.be/,Kranten Koppen,Internet,General Interest,Dutch,N/A
+23,National,http://www.nieuwsanker.be/,Nieuws Anker,Internet,General Interest,Dutch,N/A
+24,National,http://www.politics.be/,Politics,Internet,General Interest,Dutch,N/A
+25,National,http://www.tscheldt.be/,''t Scheldt,Internet,Satire,Dutch,N/A
+26,National,http://www.vvb.org/,Vlaamse Volksbeweging,Internet,General Interest,Dutch,N/A
+27,National,http://www.waalsweekblad.be/,Waals Weekblad,Internet,General Interest,Dutch,N/A
+29,National,http://www.knack.be/,Knack,Magazine,General Interest,Dutch,N/A
+30,National,http://www.levif.be/,Le Vif,Magazine,General Interest,French,N/A
+31,National,http://www.meervoud.org/,Meervoud,Magazine,General Interest,Dutch,N/A
+32,National,http://www.mo.be/,Mo,Magazine,General Interest,Dutch,N/A
+33,National,http://trends.levif.be/,Trends,Magazine,Business,French,N/A
+34,National,http://trends.knack.be/,Trends,Magazine,Business,Dutch,N/A
+36,National,http://www.ejustice.just.fgov.be/cgi/welcome.pl,Belgisch Staatsblad,Newspaper,Government,Dutch,N/A
+37,National,http://www.ejustice.just.fgov.be/cgi/welcome.pl,Belgisches Staatsblatt,Newspaper,Government,German,N/A
+38,National,http://www.nieuwsblad.be/?ref=dg,De Gentenaar,Newspaper,General Interest,Dutch,N/A
+39,National,http://www.demorgen.be/,De Morgen,Newspaper,General Interest,Dutch,N/A
+40,National,http://www.standaard.be/,De Standaard,Newspaper,General Interest,Dutch,N/A
+41,National,http://www.tijd.be/,De Tijd,Newspaper,Business,Dutch,N/A
+42,National,http://www.hln.be/,Het Laatste Nieuws,Newspaper,General Interest,Dutch,N/A
+43,National,http://www.nieuwsblad.be/,Het Nieuwsblad,Newspaper,General Interest,Dutch,N/A
+44,National,http://www.dhnet.be/,La Derniere Heure,Newspaper,General Interest,French,N/A
+45,National,http://www.lalibre.be/,La Libre Belgique,Newspaper,General Interest,French,N/A
+46,National,http://www.lesoir.be/,Le Soir,Newspaper,General Interest,French,N/A
+47,National,http://www.lecho.be/,L'Echo,Newspaper,Business,French,N/A
+48,National,http://www.ejustice.just.fgov.be/cgi/welcome.pl,Moniteur Belge,Newspaper,Government,French,N/A
+49,National,http://www.nieuwsblad.be/sportwereld,Sportwereld,Newspaper,Sport,Dutch,N/A
+51,National,http://www.belga.be/fr/,Belga,Press Agency,General Interest,French,N/A
+52,National,http://www.belga.be/nl/,Belga,Press Agency,General Interest,Dutch,N/A
+56,Antwerp,http://atv.be/,ATV,Broadcast,General Interest,Dutch,TV
+57,Antwerp,http://www.gva.be/,Gazet van Antwerpen,Newspaper,General Interest,Dutch,N/A
+59,Wavre,http://www.lavenir.net/extra/bw-info,L'Avenir Brabant Wallon,Newspaper,General Interest,French,N/A
+61,Brussels,http://www.brusselstimes.com/,Brussels Times,Magazine,General Interest,English,TV
+62,Brussels,http://bx1.be/,BX1,Broadcast,General Interest,French,N/A
+63,Brussels,http://www.demorgen.be/,De Morgen,Newspaper,General Interest,Dutch,N/A
+64,Brussels,http://www.standaard.be/,De Standaard,Newspaper,General Interest,Dutch,N/A
+65,Brussels,http://www.tijd.be/,De Tijd,Newspaper,Business,Dutch,N/A
+66,Brussels,http://www.hln.be/,Het Laatste Nieuws,Newspaper,General Interest,Dutch,N/A
+67,Brussels,http://www.nieuwsblad.be/,Het Nieuwsblad,Newspaper,General Interest,Dutch,N/A
+68,Brussels,http://www.lacapitale.be/,La Capitale,Newspaper,General Interest,French,N/A
+69,Brussels,http://www.dhnet.be/,La Derniere Heure,Newspaper,General Interest,French,N/A
+70,Brussels,http://www.lalibre.be/,La Libre Belgique,Newspaper,General Interest,French,N/A
+71,Brussels,http://www.tbx.be/,La Tribune de Bruxelles,Newspaper,Alternative,French,N/A
+72,Brussels,http://www.lesoir.be/,Le Soir,Newspaper,General Interest,French,N/A
+73,Brussels,http://www.lecho.be/,L'Echo,Newspaper,Business,French,N/A
+74,Brussels,http://www.metrotime.be/fr/,Metro,Newspaper,General Interest,French,N/A
+75,Brussels,http://www.metrotime.be/nl/,Metro,Newspaper,General Interest,Dutch,N/A
+76,Brussels,http://www.nieuwsblad.be/sportwereld,Sportwereld,Newspaper,Sport,Dutch,N/A
+78,Charleroi,http://www.lanouvellegazette.be/,La Nouvelle Gazette,Internet,General Interest,French,TV
+79,Charleroi,http://www.lanouvellegazette.be/56/regions/charleroi,La Nouvelle Gazette,Newspaper,General Interest,French,N/A
+80,La Louviere,http://www.lanouvellegazette.be/57/regions/centre,La Nouvelle Gazette,Newspaper,General Interest,French,N/A
+81,Mons,http://www.laprovince.be/,La Province,Newspaper,General Interest,French,N/A
+82,Mons,http://www.telemb.be/,Tele MB,Broadcast,General Interest,French,N/A
+83,Mouscron,http://www.lavenir.net/regions/edition-le-courrier/,Le Courrier Mouscron,Newspaper,General Interest,French,N/A
+84,Mouscron,http://www.nordeclair.be/,Nord Eclair,Internet,General Interest,French,N/A
+85,Mouscron,http://www.nordeclair.be/60/regions/mouscron,Nord Eclair,Newspaper,General Interest,French,N/A
+86,Tournai,http://www.lavenir.net/regions/edition-le-courrier-escaut/,Le Courrier de L'Escaut,Newspaper,General Interest,French,N/A
+87,Tournai,http://www.nordeclair.be/59/regions/tournai,Nord Eclair,Newspaper,General Interest,French,N/A
+89,Eupen,http://brf.be/,BRF,Broadcast,General Interest,German,Radio TV
+90,Eupen,http://www.grenzecho.be/,Grenz Echo,Newspaper,General Interest,German,N/A
+91,Huy,http://www.lameuse.be/49/regions/huy-waremme,La Meuse,Newspaper,General Interest,French,N/A
+92,Huy,http://www.lavenir.net/regions/edition-huy-waremme/,L'Avenir Huy Waremme,Newspaper,General Interest,French,N/A
+93,Liege,http://www.lameuse.be/,La Meuse,Internet,General Interest,French,N/A
+94,Liege,http://www.lameuse.be/48/regions/liege,La Meuse,Newspaper,General Interest,French,N/A
+95,Liege,http://www.rtc.be/,RTC Tele Liege,Broadcast,General Interest,French,TV
+96,Verviers,http://www.lameuse.be/50/regions/verviers,La Meuse,Newspaper,General Interest,French,N/A
+97,Verviers,http://www.lavenir.net/regions/edition-verviers/,Le Jour Verviers,Newspaper,General Interest,French,N/A
+99,Bilzen,http://www.demer.be/,Weekblad de Demer,Newspaper,General Interest,Dutch,TV
+100,Hasselt,http://www.hbvl.be/,Het Belang van Limburg,Newspaper,General Interest,Dutch,N/A
+101,Hasselt,http://www.tvl.be/,TV Limburg,Broadcast,General Interest,Dutch,N/A
+103,Arlon,http://www.lameuse.be/51/regions/luxembourg,La Meuse,Newspaper,General Interest,French,N/A
+104,Arlon,http://www.lavenir.net/regions/luxembourg/,L'Avenir Luxembourg,Newspaper,General Interest,French,N/A
+106,Auvelais,http://www.lavenir.net/regions/edition-basse-sambre/,L'Avenir Basse Sambre,Newspaper,General Interest,French,N/A
+107,Namur,http://www.lameuse.be/53/regions/namur,La Meuse Namur,Newspaper,General Interest,French,N/A
+108,Namur,http://www.lavenir.net/,L'Avenir,Internet,General Interest,French,N/A
+109,Namur,http://www.lavenir.net/regions/namur/,L'Avenir Namur,Newspaper,General Interest,French,N/A
+110,Namur,http://www.sudinfo.be/,Sud Info,Internet,General Interest,French,N/A
+111,Philippeville,http://www.lanouvellegazette.be/58/regions/sambre-meuse,La Nouvelle Gazette,Newspaper,General Interest,French,N/A
+112,Philippeville,http://www.lavenir.net/regions/edition-sambre-meuse/,L'Avenir Entre Sambre et Meuse,Newspaper,General Interest,French,N/A
+114,Deinze,http://canteclaer.be/,Radio Canteclaer,Broadcast,General Interest,Dutch,Radio
+115,Ghent,http://www.nieuwsblad.be/?ref=dg,De Gentenaar,Newspaper,General Interest,Dutch,N/A
+117,Leuven,http://www.robtv.be/,ROB TV,Broadcast,General Interest,Dutch,TV
+119,Roeselare,http://kw.knack.be/west-vlaanderen/,Krant van West Vlaanderen,Internet,General Interest,Dutch,N/A
+2,National,http://www.bbc.co.uk/news/business/,BBC,Broadcast,Business,English,Radio TV
+3,National,http://www.bbc.co.uk/arabic/,BBC,Broadcast,General Interest,Arabic,Radio TV
+4,National,http://www.bbc.co.uk/news/,BBC,Broadcast,General Interest,English,Radio TV
+5,National,http://www.bbc.co.uk/news/england/,BBC England,Broadcast,General Interest,English,Radio TV
+6,National,http://www.bbc.co.uk/russian/,BBC,Broadcast,General Interest,Russian,Radio TV
+7,National,http://www.bbc.co.uk/mundo/,BBC,Broadcast,General Interest,Spanish,Radio TV
+8,National,http://www.bbc.co.uk/zhongwen/simp/,BBC,Broadcast,General Interest,Chinese,Radio TV
+9,National,http://www.channel4.com/,Channel 4,Broadcast,General Interest,English,TV
+10,National,http://www.espn.co.uk/,ESPN,Broadcast,Sport,English,TV
+11,National,http://www.irn.co.uk/,IRN,Broadcast,General Interest,English,Radio
+12,National,http://www.itn.co.uk/,ITN,Broadcast,General Interest,English,TV
+13,National,http://www.itv.com/,ITV,Broadcast,General Interest,English,TV
+14,National,http://news.sky.com/,Sky,Broadcast,General Interest,English,TV
+15,National,http://www.skysports.com/,Sky,Broadcast,Sport,English,TV
+17,National,https://www.90min.com/,90 Min,Internet,Sport,English,N/A
+18,National,http://www.anorak.co.uk/,Anorak,Internet,General Interest,English,N/A
+19,National,http://www.dailynewspaper.co.uk/,Daily Newspaper,Internet,General Interest,English,N/A
+20,National,http://descrier.co.uk/,Descrier,Internet,General Interest,English,N/A
+21,National,http://www.expatica.co.uk/,Expatica,Internet,General Interest,English,N/A
+22,National,https://news.google.com/news/?ned=uk,Google,Internet,General Interest,English,N/A
+23,National,http://www.huffingtonpost.co.uk/,Huffington Post,Internet,General Interest,English,N/A
+24,National,http://www.independent.co.uk/,Independent,Internet,General Interest,English,N/A
+25,National,http://www.ibtimes.co.uk/,International Business Times,Internet,Business,English,N/A
+26,National,http://isle-news.com/,Isle News,Internet,General Interest,English,N/A
+28,National,http://uk.msn.com/,MSN,Internet,General Interest,English,N/A
+29,National,http://www.newsdump.co.uk/,News Dump,Internet,General Interest,English,N/A
+30,National,http://www.orange.co.uk/,Orange,Internet,General Interest,English,N/A
+31,National,http://www.politics.co.uk/,Politics,Internet,General Interest,English,N/A
+32,National,http://www.politicshome.com/,Politics Home,Internet,General Interest,English,N/A
+33,National,http://www.sportinglife.com/,Sporting Life,Internet,Sport,English,N/A
+34,National,http://www.theuknews.com/,UK News,Internet,General Interest,English,N/A
+35,National,http://www.unitedkingdomnews.net/,United Kingdom News,Internet,General Interest,English,N/A
+36,National,https://uk.news.yahoo.com/,Yahoo,Internet,General Interest,English,N/A
+37,Foreign,http://www.britainnews.net/,Britain News,Internet,General Interest,English,N/A
+39,National,http://www.economist.com/,Economist,Magazine,General Interest,English,N/A
+40,National,https://www.hellomagazine.com/,Hello,Magazine,Entertainment,English,N/A
+41,National,http://moneyweek.com/,Money Week,Magazine,Business,English,N/A
+42,National,http://www.newstatesman.com/,New Statesman,Magazine,General Interest,English,N/A
+43,National,http://www.prospectmagazine.co.uk/,Prospect,Magazine,General Interest,English,N/A
+44,National,http://www.spectator.co.uk/,Spectator,Magazine,General Interest,English,N/A
+45,National,http://www.totalpolitics.com/,Total Politics,Magazine,General Interest,English,N/A
+46,National,http://www.theweek.co.uk/,Week,Magazine,General Interest,English,N/A
+48,National,http://www.express.co.uk/,Daily Express,Newspaper,General Interest,English,N/A
+49,National,http://www.dailymail.co.uk/,Daily Mail,Newspaper,General Interest,English,N/A
+50,National,http://www.dailystar.co.uk/,Daily Star,Newspaper,General Interest,English,N/A
+51,National,http://www.standard.co.uk/,Evening Standard,Newspaper,General Interest,English,N/A
+52,National,http://www.ft.com/home/uk,Financial Times,Newspaper,Business,English,N/A
+53,National,http://www.theguardian.com/uk,Guardian,Newspaper,General Interest,English,N/A
+54,National,http://www.theguardian.com/weekly,Guardian Weekly,Newspaper,General Interest,English,N/A
+55,National,http://www.mailonsunday.co.uk/mailonsunday/index.html,Mail on Sunday,Newspaper,General Interest,English,N/A
+56,National,http://metro.co.uk/,Metro,Newspaper,General Interest,English,N/A
+57,National,http://www.mirror.co.uk/,Mirror,Newspaper,General Interest,English,N/A
+58,National,http://www.morningstaronline.co.uk/,Morning Star,Newspaper,General Interest,English,N/A
+59,National,http://www.thenationalstudent.com/,National Student,Newspaper,Collegue University,English,N/A
+60,National,http://thenewday.co.uk/,New Day,Newspaper,General Interest,English,N/A
+61,National,http://observer.theguardian.com/,Observer,Newspaper,General Interest,English,N/A
+62,National,http://www.socialistworker.co.uk/,Socialist Worker,Newspaper,General Interest,English,N/A
+63,National,http://www.thesun.co.uk/sol/homepage/,Sun,Newspaper,General Interest,English,N/A
+64,National,http://www.mirror.co.uk/all-about/sunday-people,Sunday People,Newspaper,General Interest,English,N/A
+65,National,http://www.thesundaytimes.co.uk/sto/,Sunday Times,Newspaper,General Interest,English,N/A
+66,National,http://www.telegraph.co.uk/,Telegraph,Newspaper,General Interest,English,N/A
+67,National,http://www.thetimes.co.uk/tto/news/,Times,Newspaper,General Interest,English,N/A
+69,National,http://www.prnewswire.co.uk/,PR Newswire,Press Agency,General Interest,English,N/A
+70,National,http://www.pressassociation.com/,Press Association,Press Agency,General Interest,English,N/A
+71,National,http://www.pressat.co.uk/,Pressat,Press Agency,General Interest,English,N/A
+72,National,https://uk.reuters.com/,Reuters,Press Agency,General Interest,English,N/A
+75,London,http://thealbanian.co.uk/,Albanian,Press Agency,ET,SQI,N/A
+76,London,http://www.breitbart.com/breitbart-london,Breitbart,Internet,General Interest,English,N/A
+77,London,http://www.cityam.com/,City A.M.,Press Agency,Business,English,N/A
+78,London,http://www.express.co.uk/,Daily Express,Press Agency,General Interest,English,N/A
+79,London,http://www.dailymail.co.uk/,Daily Mail,Press Agency,General Interest,English,N/A
+80,London,http://www.dailystar.co.uk/,Daily Star,Press Agency,General Interest,English,N/A
+81,London,http://www.standard.co.uk/,Evening Standard,Press Agency,General Interest,English,N/A
+82,London,http://www.ft.com/home/uk,Financial Times,Press Agency,Business,English,N/A
+83,London,http://www.russianlondon.com/,Gazeta Russkiy London,Press Agency,ET,Russian,N/A
+84,London,http://www.theguardian.com/uk,Guardian,Press Agency,General Interest,English,N/A
+85,London,http://www.theguardian.com/weekly,Guardian Weekly,Press Agency,General Interest,English,N/A
+86,London,http://www.independent.co.uk/,Independent,Internet,General Interest,English,N/A
+87,London,http://www.thejc.com/,Jewish Chronicle,Press Agency,RL,English,N/A
+88,London,http://www.japanjournals.com/,Journey,Press Agency,ET,JPN,N/A
+89,London,http://londonbulletin.co.uk/,London Bulletin,Internet,General Interest,English,N/A
+90,London,http://www.london-info.org/,London Info,Press Agency,ET,Russian,N/A
+91,London,http://www.londonlovesbusiness.com/,London Loves Business,Internet,Business,English,N/A
+92,London,http://londonist.com/,Londonist,Internet,General Interest,English,N/A
+93,London,http://www.russianuk.com/,Londonskiy Kuryer,Press Agency,ET,Russian,N/A
+94,London,http://www.mailonsunday.co.uk/mailonsunday/index.html,Mail on Sunday,Press Agency,General Interest,English,N/A
+95,London,http://www.mauritiusnews.co.uk/,Mauritius News,Internet,ET,English,N/A
+96,London,http://metro.co.uk/,Metro,Press Agency,General Interest,English,N/A
+97,London,http://www.mirror.co.uk/,Mirror,Press Agency,General Interest,English,N/A
+98,London,http://mk-london.co.uk/,MK,Press Agency,ET,Russian,N/A
+99,London,http://www.morningstaronline.co.uk/,Morning Star,Press Agency,General Interest,English,N/A
+100,London,http://thenewday.co.uk/,New Day,Press Agency,General Interest,English,N/A
+101,London,http://www.nowyczas.co.uk/,Nowy Czas,Press Agency,ET,POL,N/A
+102,London,http://observer.theguardian.com/,Observer,Press Agency,General Interest,English,N/A
+103,London,http://pulse-uk.org.uk/,Pulse UK,Press Agency,ET,Russian,N/A
+104,London,http://www.socialistworker.co.uk/,Socialist Worker,Press Agency,General Interest,English,N/A
+105,London,http://www.thesun.co.uk/sol/homepage/,Sun,Press Agency,General Interest,English,N/A
+106,London,http://www.mirror.co.uk/all-about/sunday-people,Sunday People,Press Agency,General Interest,English,N/A
+107,London,http://www.thesundaytimes.co.uk/sto/,Sunday Times,Press Agency,General Interest,English,N/A
+108,London,http://www.telegraph.co.uk/,Telegraph,Press Agency,General Interest,English,N/A
+109,London,http://www.thetimes.co.uk/tto/news/,Times,Press Agency,General Interest,English,N/A
+110,London,http://ukbdnews.com/,UK BD News,Internet,General Interest,BEN,N/A
+3,National,https://www.cnbc.com/,CNBC,Broadcast,Business,English,Cable
+4,National,https://www.foxbusiness.com/,Fox Business,Broadcast,Business,English,Cable
+6,National,https://www.eonline.com/,Eonline,Broadcast,Entertainment,English,TV
+8,National,https://abcnews.go.com/,ABC,Broadcast,General IntereScience Tech,English,TV
+9,National,http://www.americasradionewsnetwork.com/,America's Radio News Network,Broadcast,General IntereScience Tech,English,Radio
+10,National,https://www.c-Spanishn.org/,C Spanishn,Broadcast,General IntereScience Tech,English,TV
+11,National,https://www.cbsnews.com/,CBS,Broadcast,General IntereScience Tech,English,TV
+12,National,https://us.cnn.com/,CNN,Broadcast,General IntereScience Tech,English,TV
+13,National,https://www.foxnews.com/,Fox News,Broadcast,General IntereScience Tech,English,TV
+14,National,https://www.msnbc.com/,MSNBC,Broadcast,General IntereScience Tech,English,TV
+15,National,https://www.npr.org/,NPR,Broadcast,General IntereScience Tech,English,Radio
+16,National,https://www.oann.com/,One America News Network,Broadcast,General IntereScience Tech,English,TV
+17,National,https://www.pbs.org/newshour/,PBS News Hour,Broadcast,General IntereScience Tech,English,TV
+18,National,http://www.reuters.tv/?edition=US,Reuters,Broadcast,General IntereScience Tech,English,TV
+19,National,https://www.univision.com/,Univision,Broadcast,General IntereScience Tech,Spanish,TV
+21,National,http://dsc.discovery.com/,Discovery,Broadcast,Science Tech,English,TV
+23,National,http://www.cbssports.com/,CBS Sports,Broadcast,Sport,English,TV
+24,National,http://www.espn.com/,ESPN,Broadcast,Sport,English,TV
+25,National,http://msn.foxsports.com/,Fox Sports,Broadcast,Sport,English,TV
+26,National,https://www.nbcsports.com/,NBC Sports,Broadcast,Sport,English,TV
+30,National,http://www.benzinga.com/,Benzinga,Internet,Business,English,N/A
+31,National,http://www.bizjournals.com/,Biz Journals,Internet,Business,English,N/A
+32,National,http://www.bloomberg.com/,Bloomberg,Internet,Business,English,N/A
+33,National,http://www.businessinsider.com/,Business Insider,Internet,Business,English,N/A
+34,National,http://www.ibtimes.com/,International Business Times,Internet,Business,English,N/A
+35,National,http://wire.kapitall.com/,Kapitall,Internet,Business,English,N/A
+36,National,http://www.marketwatch.com/,Market Watch,Internet,Business,English,N/A
+37,National,http://qz.com/,Quartz,Internet,Business,English,N/A
+38,National,http://www.rttnews.com/,RTT News,Internet,Business,English,N/A
+39,National,http://www.thestreet.com/,Street,Internet,Business,English,N/A
+40,National,http://www.businessreviewusa.com/,USA Business Review,Internet,Business,English,N/A
+41,National,https://finance.yahoo.com/,Yahoo Finance,Internet,Business,English,N/A
+42,National,http://www.zerohedge.com/,Zero Hedge,Internet,Business,English,N/A
+44,National,http://www.accesshollywood.com/,Access Hollywood,Internet,Entertainment,English,N/A
+45,National,http://elitedaily.com/,Elite Daily,Internet,Entertainment,English,N/A
+46,National,http://www.eurweb.com/,Eur Web,Internet,Entertainment,English,N/A
+47,National,http://jezebel.com/,Jezebel,Internet,Entertainment,English,N/A
+48,National,http://www.radaRomanianline.com/,Radar Online,Internet,Entertainment,English,N/A
+49,National,http://www.tmz.com/,TMZ,Internet,Entertainment,English,N/A
+50,National,http://www.2upbeatmag.com/,Upbeat,Internet,Entertainment,English,N/A
+51,National,http://www.thewrap.com/,Wrap,Internet,Entertainment,English,N/A
+52,National,http://www.x17online.com/,X17 Online,Internet,Entertainment,English,N/A
+54,National,http://www.americaru.com/,America RU,Internet,ET,RUS,Russian
+55,National,http://www.antena305.com/,Antena 305,Internet,ET,Spanish,HiSpanishnic
+56,National,http://www.blackelectorate.com/,Black Electorate,Internet,ET,English,African American
+57,National,http://www.huffingtonpost.com/black-voices/,Huffington Post Black Voices,Internet,ET,English,African American
+58,National,http://voces.huffingtonpost.com/,Huffington Post Voces,Internet,ET,Spanish,HiSpanishnic
+59,National,http://www.reznetnews.org/,Rez Net,Internet,ET,English,American Indian
+60,National,http://www.theroot.com/,Root,Internet,ET,English,African American
+62,National,http://www.1stheadlines.com/,1st Headlines,Internet,General IntereScience Tech,English,N/A
+63,National,http://www.20minutos.com/,20 Minutos,Internet,General IntereScience Tech,Spanish,N/A
+64,National,http://agonist.org/,Agonist,Internet,General IntereScience Tech,English,N/A
+65,National,http://theallegiant.com/,Allegiant,Internet,General IntereScience Tech,English,N/A
+66,National,http://www.alltop.com/,Alltop,Internet,General IntereScience Tech,English,N/A
+67,National,http://www.alternet.org/,Alter Net,Internet,General IntereScience Tech,English,N/A
+68,National,http://americanindependent.com/,American Independent,Internet,General IntereScience Tech,English,N/A
+69,National,http://americannews.com/,American News,Internet,General IntereScience Tech,English,N/A
+70,National,http://www.american-reporter.com/,American Reporter,Internet,General IntereScience Tech,English,N/A
+71,National,http://www.anhourago.us/,An Hour Ago,Internet,General IntereScience Tech,English,N/A
+72,National,http://theantimedia.com/,Anti Media,Internet,General IntereScience Tech,English,N/A
+73,National,http://www.antiwar.com/,Antiwar,Internet,General IntereScience Tech,English,N/A
+74,National,http://www.aol.com/,AOL,Internet,General IntereScience Tech,English,N/A
+75,National,http://axcessnews.com/,Axcess News,Internet,General IntereScience Tech,English,N/A
+76,National,http://www.bignewsnetwork.com/,Big News Network,Internet,General IntereScience Tech,English,N/A
+77,National,http://www.theblaze.com/,Blaze,Internet,General IntereScience Tech,English,N/A
+78,National,http://www.breakingnews.com/,Breaking News,Internet,General IntereScience Tech,English,N/A
+79,National,http://www.breitbart.com/,Breitbart,Internet,General IntereScience Tech,English,N/A
+80,National,http://www.briefsynopsis.com/,Brief Synopsis,Internet,General IntereScience Tech,English,N/A
+81,National,https://theBulgarianwark.com/,Bulgarianwark,Internet,General IntereScience Tech,English,N/A
+82,National,http://www.buzzfeed.com/,Buzz Feed,Internet,General IntereScience Tech,English,N/A
+83,National,http://www.buzztracker.org/,Buzz Tracker,Internet,General IntereScience Tech,English,N/A
+84,National,http://www.buzzle.com/,Buzzle,Internet,General IntereScience Tech,English,N/A
+85,National,http://cnsnews.com/,CNS News,Internet,General IntereScience Tech,English,N/A
+86,National,http://www.congoo.com/,Congoo,Internet,General IntereScience Tech,English,N/A
+87,National,http://www.thedailybeast.com/,Daily Beast,Internet,General IntereScience Tech,English,N/A
+88,National,http://www.dailycaller.com/,Daily Caller,Internet,General IntereScience Tech,English,N/A
+89,National,http://www.dailydot.com/,Daily Dot,Internet,General IntereScience Tech,English,N/A
+90,National,http://www.dailykos.com/,Daily Kos,Internet,General IntereScience Tech,English,N/A
+91,National,http://dailysignal.com/,Daily Signal,Internet,General IntereScience Tech,English,N/A
+92,National,http://www.dailysource.org/,Daily Source,Internet,General IntereScience Tech,English,N/A
+93,National,http://www.dailynewsus.com/,Daily US News,Internet,General IntereScience Tech,English,N/A
+94,National,http://www.daylife.com/,Daylife,Internet,General IntereScience Tech,English,N/A
+95,National,http://www.drudgereport.com/,Drudge Report,Internet,General IntereScience Tech,English,N/A
+96,National,http://www.efluxmedia.com/,E Flux Media,Internet,General IntereScience Tech,English,N/A
+97,National,http://news.excite.com/,Excite,Internet,General IntereScience Tech,English,N/A
+98,National,http://www.factcheck.org/,Fact Check,Internet,General IntereScience Tech,English,N/A
+99,National,http://www.fark.com/,Fark,Internet,General IntereScience Tech,English,N/A
+100,National,http://fivethirtyeight.com/,Five Thirty Eight,Internet,General IntereScience Tech,English,N/A
+101,National,http://fusion.net/,Fusion,Internet,General IntereScience Tech,English,N/A
+102,National,http://gawker.com/,Gawker,Internet,General IntereScience Tech,English,N/A
+103,National,https://news.google.com/news/?ned=us,Google,Internet,General IntereScience Tech,English,N/A
+104,National,https://news.google.com/news/?ned=es_us,Google,Internet,General IntereScience Tech,Spanish,N/A
+105,National,http://hotair.com/,Hot Air,Internet,General IntereScience Tech,English,N/A
+106,National,http://www.thehotjoints.com/,Hot Joints,Internet,General IntereScience Tech,English,N/A
+107,National,http://www.huffingtonpost.com/?country=US,Huffington Post,Internet,General IntereScience Tech,English,N/A
+108,National,http://www.ihavenet.com/,I Have Net,Internet,General IntereScience Tech,English,N/A
+109,National,http://idealmedia.com/,Ideal Media,Internet,General IntereScience Tech,English,N/A
+110,National,http://www.inquisitr.com/,Inquisitr,Internet,General IntereScience Tech,English,N/A
+111,National,https://theintercept.com/,Intercept,Internet,General IntereScience Tech,English,N/A
+112,National,http://www.lexisnexis.com/news/,Lexis Nexis,Internet,General IntereScience Tech,English,N/A
+113,National,http://mashable.com/,Mashable,Internet,General IntereScience Tech,English,N/A
+114,National,http://www.maximumedge.com/,Maximum Edge,Internet,General IntereScience Tech,English,N/A
+115,National,http://www.mediachat.net/,Media Chat,Internet,General IntereScience Tech,English,N/A
+116,National,http://mic.com/,Mic,Internet,General IntereScience Tech,English,N/A
+117,National,http://www.mintpressnews.com/,Mint Press News,Internet,General IntereScience Tech,English,N/A
+118,National,http://www.monstersandcritics.com/,Monsters and Critics,Internet,General IntereScience Tech,English,N/A
+119,National,http://www.msn.com/en-us,MSN,Internet,General IntereScience Tech,English,N/A
+120,National,http://www.msn.com/es-us,MSN,Internet,General IntereScience Tech,Spanish,N/A
+121,National,http://www.nationalmemo.com/,National Memo,Internet,General IntereScience Tech,English,N/A
+122,National,http://www.newwest.net/,New West,Internet,General IntereScience Tech,English,Covers Western
+124,National,http://www.newsandjava.com/,News and Java,Internet,General IntereScience Tech,English,N/A
+125,National,http://newsblogs.blogspot.com/,News at the Speed of Light,Internet,General IntereScience Tech,English,N/A
+126,National,http://newsblaze.com/,News Blaze,Internet,General IntereScience Tech,English,N/A
+127,National,http://newsbusters.org/,News Busters,Internet,General IntereScience Tech,English,N/A
+128,National,http://www.newsdump.com/,News Dump,Internet,General IntereScience Tech,English,N/A
+129,National,http://www.newshijack.net/,News Hijack,Internet,General IntereScience Tech,English,N/A
+130,National,http://www.newsisfree.com/,News Is Free,Internet,General IntereScience Tech,English,N/A
+131,National,http://www.newsmantis.com/,News Mantis,Internet,General IntereScience Tech,English,N/A
+132,National,http://www.newsmax.com/,News Max,Internet,General IntereScience Tech,English,N/A
+133,National,http://www.newsringer.com/,News Ringer,Internet,General IntereScience Tech,English,N/A
+134,National,http://www.newstelegram.com/,News Telegram,Internet,General IntereScience Tech,English,N/A
+135,National,http://www.newsvine.com/,News Vine,Internet,General IntereScience Tech,English,N/A
+136,National,http://www.newswithbob.com/,News with Bob,Internet,General IntereScience Tech,English,N/A
+137,National,http://www.newszoom.com/,News Zoom,Internet,General IntereScience Tech,English,N/A
+138,National,http://www.newsweek.com/,Newsweek,Internet,General IntereScience Tech,English,N/A
+139,National,http://www.newsy.com/,Newsy,Internet,General IntereScience Tech,English,N/A
+140,National,http://www.thenextbigstory.com/,Next Big Story,Internet,General IntereScience Tech,English,N/A
+141,National,http://observer.com/,Observer,Internet,General IntereScience Tech,English,N/A
+142,National,http://www.onlinejournal.com/,Online Journal,Internet,General IntereScience Tech,English,N/A
+143,National,http://www.opednews.com/,Op Ed News,Internet,General IntereScience Tech,English,N/A
+144,National,http://www.opposingviews.com/,Opposing Views,Internet,General IntereScience Tech,English,N/A
+145,National,http://patriotpost.us/,Patriot Post,Internet,General IntereScience Tech,English,N/A
+146,National,https://pjmedia.com/,PJ Media,Internet,General IntereScience Tech,English,N/A
+147,National,http://www.politicalsimpleton.com/,Political Simpleton,Internet,General IntereScience Tech,English,N/A
+148,National,http://politicker.com/,Politicker,Internet,General IntereScience Tech,English,N/A
+149,National,http://www.politico.com/,Politico,Internet,General IntereScience Tech,English,N/A
+150,National,http://www.postchRomanianicle.com/,Post ChRomanianicle,Internet,General IntereScience Tech,English,N/A
+151,National,http://www.prlog.org/,PR Log,Internet,General IntereScience Tech,English,N/A
+152,National,http://www.purepolitics.com/,Pure Politics,Internet,General IntereScience Tech,English,N/A
+153,National,http://www.rawstory.com/,Raw Story,Internet,General IntereScience Tech,English,N/A
+154,National,http://www.realclearpolitics.com/,Real Clear Politics,Internet,General IntereScience Tech,English,N/A
+155,National,http://therealnews.com/,Real News Network,Internet,General IntereScience Tech,English,N/A
+156,National,http://www.redstate.com/,Red State,Internet,General IntereScience Tech,English,N/A
+157,National,http://www.salon.com/,Salon,Internet,General IntereScience Tech,English,N/A
+158,National,http://www.schwartzreport.net/,Schwartz Report,Internet,General IntereScience Tech,English,N/A
+159,National,http://www.slate.com/,Slate,Internet,General IntereScience Tech,English,N/A
+160,National,http://www.socraticnews.com/All,Socratic News,Internet,General IntereScience Tech,English,N/A
+161,National,http://www.speakout.com/,Speak Out,Internet,General IntereScience Tech,English,N/A
+162,National,https://spectator.us/,Spectator USA,Internet,General IntereScience Tech,English,N/A
+163,National,http://www.pewstates.org/projects/stateline,Stateline,Internet,General IntereScience Tech,English,N/A
+164,National,http://politicalwire.com/,Taegan Goddard's Political Wire,Internet,General IntereScience Tech,English,N/A
+165,National,http://www.terra.com/,Terra,Internet,General IntereScience Tech,Spanish,N/A
+166,National,https://thebl.com/,The BL,Internet,General IntereScience Tech,English,N/A
+167,National,http://www.thirdreport.com/,Third Report,Internet,General IntereScience Tech,English,N/A
+168,National,http://www.timesofearth.com/,Times of Earth,Internet,General IntereScience Tech,English,N/A
+169,National,http://www.talkmedianews.com/,TMN Talk Media News,Internet,General IntereScience Tech,English,N/A
+170,National,http://townhall.com/,Townhall,Internet,General IntereScience Tech,English,N/A
+171,National,http://talkingpointsmemo.com/,TPM,Internet,General IntereScience Tech,English,N/A
+172,National,http://www.transworldnews.com/,Trans World News,Internet,General IntereScience Tech,English,N/A
+173,National,http://truth-out.org/,Truth Out,Internet,General IntereScience Tech,English,N/A
+174,National,http://www.upworthy.com/,Upworthy,Internet,General IntereScience Tech,English,N/A
+175,National,http://usdaily.com/,US Daily,Internet,General IntereScience Tech,English,N/A
+176,National,http://www.newshub.us/,U.S. News Hub,Internet,General IntereScience Tech,English,N/A
+177,National,http://www.usa-focus.com/,USA Focus,Internet,General IntereScience Tech,English,N/A
+178,National,http://www.usaheadlines.com/,USA. Headlines,Internet,General IntereScience Tech,English,N/A
+179,National,https://www.usanews.net/,USA News,Internet,General IntereScience Tech,English,N/A
+180,National,http://www.vice.com/en_us,Vice,Internet,General IntereScience Tech,English,N/A
+181,National,http://www.viewsandpreviews.com/,Views and Previews,Internet,General IntereScience Tech,English,N/A
+182,National,http://www.vox.com/,Vox,Internet,General IntereScience Tech,English,N/A
+183,National,http://washingtonindependent.com/,Washington Independent,Internet,General IntereScience Tech,English,N/A
+184,National,http://www.wnd.com/,WND,Internet,General IntereScience Tech,English,N/A
+185,National,http://wn.com/,World News,Internet,General IntereScience Tech,English,N/A
+186,National,http://www.worldpRomanianews.com/,World Pro News,Internet,General IntereScience Tech,English,N/A
+187,National,http://www.worldtribune.com/,World Tribune,Internet,General IntereScience Tech,English,N/A
+188,National,http://news.yahoo.com/,Yahoo News,Internet,General IntereScience Tech,English,N/A
+189,National,http://yaleglobal.yale.edu/,Yale Global Online,Internet,General IntereScience Tech,English,N/A
+191,National,http://www.usafns.com/,Armed Forces News Service,Internet,Military,English,N/A
+193,National,http://news.cnet.com/,C Net,Internet,Science Tech,English,N/A
+194,National,http://recode.net/,Recode,Internet,Science Tech,English,N/A
+195,National,http://www.talkingnewmedia.com/,Talking New Media,Internet,Science Tech,English,N/A
+196,National,http://www.thetechherald.com/,Tech Talk,Internet,Science Tech,English,N/A
+197,National,http://www.zdnet.com/,ZD Net,Internet,Science Tech,English,N/A
+199,National,http://bleacherreport.com/,Bleacher Report,Internet,Sport,English,N/A
+200,National,http://deadspin.com/,Deadspin,Internet,Sport,English,N/A
+201,National,http://fansided.com/,Fansided,Internet,Sport,English,N/A
+202,National,http://www.thepostgame.com/,Post Game,Internet,Sport,English,N/A
+203,National,http://www.rantsports.com/,Rant Sports,Internet,Sport,English,N/A
+204,National,http://www.sbnation.com/,SB Nation,Internet,Sport,English,N/A
+205,National,http://www.scout.com/,Scout,Internet,Sport,English,N/A
+206,National,http://aol.sportingnews.com/,Sporting News,Internet,Sport,English,N/A
+207,National,http://www.sportsonearth.com/,Sports on Earth,Internet,Sport,English,N/A
+208,National,http://sports.yahoo.com/,Yahoo Sports,Internet,Sport,English,N/A
+209,National,http://www.yardbarker.com/,Yard Barker,Internet,Sport,English,N/A
+213,National,https://www.barRomanians.com/,BarRomanian's,Magazine,Business,English,N/A
+214,National,http://www.businessweek.com/,Business Week,Magazine,Business,English,N/A
+215,National,http://www.forbes.com/,Forbes,Magazine,Business,English,N/A
+216,National,http://fortune.com/,Fortune,Magazine,Business,English,N/A
+217,National,http://money.com/,Money,Magazine,Business,English,N/A
+218,National,http://www.smartmoney.com/,Smart Money,Magazine,Business,English,N/A
+220,National,http://www.billboard.com/,Billboard,Magazine,Entertainment,English,N/A
+221,National,http://www.ew.com/ew/,Entertainment Weekly,Magazine,Entertainment,English,N/A
+222,National,https://us.hola.com/,Hola,Magazine,Entertainment,English,N/A
+223,National,https://us.hola.com/es/,Hola,Magazine,Entertainment,Spanish,N/A
+224,National,http://www.hollywoodreporter.com/,Hollywood Reporter,Magazine,Entertainment,English,N/A
+225,National,http://www.hollywoodweeklymagazine.com/,Hollywood Weekly,Magazine,Entertainment,English,N/A
+226,National,http://www.nationalenquirer.com/,National Enquirer,Magazine,Entertainment,English,N/A
+227,National,http://www.people.com/people/,People,Magazine,Entertainment,English,N/A
+228,National,http://www.rollingstone.com/,Rolling Stone,Magazine,Entertainment,English,N/A
+229,National,http://www.radaRomanianline.com/star,Star,Magazine,Entertainment,English,N/A
+230,National,http://www.usmagazine.com/,Us,Magazine,Entertainment,English,N/A
+232,National,http://www.american.com/,American,Magazine,General IntereScience Tech,English,Also English
+233,National,http://www.americanprofile.com/,American Profile,Magazine,General IntereScience Tech,English,N/A
+234,National,http://prospect.org/,American Prospect,Magazine,General IntereScience Tech,English,N/A
+235,National,http://spectator.org/,American Spectator,Magazine,General IntereScience Tech,English,N/A
+236,National,http://www.theatlantic.com/,Atlantic Monthly,Magazine,General IntereScience Tech,English,N/A
+237,National,http://www.csmonitor.com/,Christian Science Monitor,Magazine,General IntereScience Tech,English,N/A
+238,National,http://www.contactomagazine.com/,Contacto,Magazine,General IntereScience Tech,Spanish,N/A
+239,National,http://www.harpers.org/,Harper's,Magazine,General IntereScience Tech,English,N/A
+240,National,http://thehill.com/,Hill,Magazine,General IntereScience Tech,English,N/A
+241,National,http://www.motherjones.com/,Mother Jones,Magazine,General IntereScience Tech,English,N/A
+242,National,http://www.thenation.com/,Nation,Magazine,General IntereScience Tech,English,N/A
+243,National,http://www.nationaljournal.com/,National Journal,Magazine,General IntereScience Tech,English,N/A
+244,National,http://www.nationalreview.com/,National Review,Magazine,General IntereScience Tech,English,N/A
+245,National,http://www.tnr.com/,New Republic,Magazine,General IntereScience Tech,English,N/A
+246,National,http://www.newyorker.com/,New Yorker,Magazine,General IntereScience Tech,English,N/A
+247,National,http://www.parade.com/,Parade,Magazine,General IntereScience Tech,English,N/A
+248,National,https://www.politico.com/magazine/,Politico Magazine,Magazine,General IntereScience Tech,English,N/A
+249,National,http://reason.com/,Reason,Magazine,General IntereScience Tech,English,N/A
+250,National,http://www.rollcall.com/,Roll Call,Magazine,General IntereScience Tech,English,N/A
+251,National,http://www.saturdayeveningpost.com/,Saturday Evening Post,Magazine,General IntereScience Tech,English,N/A
+252,National,http://www.time.com/time/,Time,Magazine,General IntereScience Tech,English,N/A
+253,National,http://www.usnews.com/,U.S. News and World Report,Magazine,General IntereScience Tech,English,N/A
+254,National,http://www.usaweekend.com/,USA Weekend,Magazine,General IntereScience Tech,English,N/A
+255,National,http://www.vanityfair.com/,Vanity Fair,Magazine,General IntereScience Tech,English,N/A
+256,National,http://theweek.com/,Week,Magazine,General IntereScience Tech,English,N/A
+258,National,http://www.redherring.com/,Red Herring,Magazine,Science Tech,English,N/A
+259,National,http://www.scientificamerican.com/,Scientific American,Magazine,Science Tech,English,N/A
+260,National,https://www.thetechnologyheadlines.com/,The Technology Headlines,Magazine,Science Tech,English,N/A
+261,National,http://www.wired.com/,Wired,Magazine,Science Tech,English,N/A
+263,National,http://sportsillustrated.cnn.com/,Sports Illustrated,Magazine,Sport,English,N/A
+267,National,http://bbjonline.com/,Black Business Journal,Newspaper,Business,English,African American
+268,National,http://www.investors.com/default.htm,Investor's Business Daily,Newspaper,Business,English,N/A
+269,National,https://www.wsj.com/,Wall Street Journal,Newspaper,Business,English,N/A
+271,National,http://www.variety.com/Home/,Variety,Newspaper,Entertainment,English,N/A
+273,National,http://www.Bulgariangariasega.com/,Bulgariangaria Sega,Newspaper,ET,Bulgarian,Bulgariangarian
+274,National,http://www.vivelohoy.com/,Hoy,Newspaper,ET,Spanish,HiSpanishnic
+275,National,http://www.indiancountrytoday.com/,Indian Country Today,Newspaper,ET,English,American Indian
+276,National,http://www.nativetimes.com/,Native American Times,Newspaper,ET,English,American Indian
+277,National,http://www.indiancountrynews.com/,News from Indian Country,Newspaper,ET,English,American Indian
+278,National,http://www.polamjournal.com/,Polish American Journal,Newspaper,ET,English,Polish
+279,National,http://www.meridianul.com/,Romanian Meridian,Newspaper,ET,Romanian,Romanian
+280,National,http://www.singtaousa.com/,Sing Tao,Newspaper,ET,Chinese,Chinese
+281,National,http://www.worldjournal.com/wjEnglishlishnews,World Journal,Newspaper,ET,English,Chinese
+282,National,http://www.worldjournal.com/,World Journal,Newspaper,ET,Chinese,Chinese
+284,National,http://americanfreepress.net/,American Free Press,Newspaper,General IntereScience Tech,English,N/A
+285,National,http://www.examiner.com/,Examiner,Newspaper,General IntereScience Tech,English,N/A
+286,National,http://www.theguardian.com/us,Guardian,Newspaper,General IntereScience Tech,English,N/A
+287,National,http://www.nytimes.com/,New York Times,Newspaper,General IntereScience Tech,English,N/A
+288,National,http://www.politico.com/,Politico,Newspaper,General IntereScience Tech,English,N/A
+289,National,http://www.usatoday.com/,USA Today,Newspaper,General IntereScience Tech,English,N/A
+290,National,http://www.washingtonpost.com/,Washington Post,Newspaper,General IntereScience Tech,English,N/A
+292,National,http://www.airforcetimes.com/,Air Force Times,Newspaper,Military,English,N/A
+293,National,http://www.armytimes.com/,Army Times,Newspaper,Military,English,N/A
+294,National,http://www.marinetimes.com/,Marine Corps Times,Newspaper,Military,English,N/A
+295,National,http://www.navytimes.com/,Navy Times,Newspaper,Military,English,N/A
+296,National,http://www.stripes.com/,Stars and Stripes,Newspaper,Military,English,N/A
+298,National,http://www.theonion.com/,Onion,Newspaper,Satire,English,N/A
+300,National,http://www.ncregister.com/,National Catholic Register,Newspaper,Religion,English,Roman Catholic
+301,National,http://ncRomanianline.org/,National Catholic Reporter,Newspaper,Religion,English,Roman Catholic
+305,National,http://www.businesswire.com/portal/site/home/,Business Wire,Press Agency,Business,English,N/A
+307,National,http://www.splashnews.com/,Splash,Press Agency,Entertainment,English,N/A
+309,National,http://www.24-7pressrelease.com/,24 7 Press Release,Press Agency,General IntereScience Tech,English,N/A
+310,National,https://www.apnews.com/,Associated Press,Press Agency,General IntereScience Tech,English,N/A
+311,National,https://www.apnews.com/apf-Noticias,Associated Press,Press Agency,General IntereScience Tech,Spanish,N/A
+312,National,http://www.creators.com/,Creators Syndicate,Press Agency,General IntereScience Tech,English,N/A
+313,National,http://www.dolanmedianewswires.com/,Dolan Media Newswires,Press Agency,General IntereScience Tech,English,N/A
+314,National,http://www.einpresswire.com/,EIN Press Wire,Press Agency,General IntereScience Tech,English,N/A
+315,National,http://www.mcclatchydc.com/,McClatchy,Press Agency,General IntereScience Tech,English,N/A
+316,National,https://www.nytsyn.com/,New York Times News Service and,Press Agency,General IntereScience Tech,English,N/A
+318,National,http://www.prnewswire.com/,PR Newswire,Press Agency,General IntereScience Tech,English,N/A
+319,National,http://www.pressrelease365.com/,Press Release 365,Press Agency,General IntereScience Tech,English,N/A
+320,National,https://www.reuters.com/,Reuters,Press Agency,General IntereScience Tech,English,N/A
+321,National,http://www.shns.com/,Scripps Howard News Service,Press Agency,General IntereScience Tech,English,N/A
+322,National,http://www.scrippsnews.com/,Scripps News,Press Agency,General IntereScience Tech,English,N/A
+323,National,http://www.upi.com/,UPI,Press Agency,General IntereScience Tech,English,N/A
+325,National,http://www.worldjewishnewsagency.org/,World Jewish News Agency,Press Agency,Religion,English,Jewish
+2,National,http://www.bnr.nl/,BNR Nieuwsradio,BC,BU,NLD,Radio
+3,National,http://www.npo.nl/,Nederlandse Publieke Omroep,BC,GI,NLD,Radio TV
+4,National,http://nos.nl/,NOS,BC,GI,NLD,Radio TV
+5,National,http://nos.nl/teletekst/,NOS,BC,GI,NLD,Teletext
+6,National,http://www.radio1.nl/,Radio 1,BC,GI,NLD,Radio
+7,National,http://hunasotak.com/,RNW,BC,GI,ARA,Radio
+8,National,http://www.rnw.nl/english,RNW,BC,GI,ENG,Radio
+9,National,http://eltoque.com/,RNW,BC,GI,SPA,Radio
+10,National,http://helanonline.cn/,RNW,BC,GI,ZHO,Radio
+11,National,http://www.rtlnieuws.nl/,RTL,BC,GI,NLD,TV
+12,National,http://www.rtl.nl/videotext/,RTL,BC,GI,NLD,Teletext
+13,National,http://www.zoomin.tv/,Zoom In,BC,GI,NLD,TV
+15,National,http://www.112-nieuws.nl/,112 Nieuws,IN,GI,NLD,N/A
+16,National,http://www.amsterdamherald.com/,Amsterdam Herald,IN,GI,ENG,N/A
+17,National,http://www.blikopnieuws.nl/,Blik op Nieuws,IN,GI,NLD,N/A
+18,National,http://www.dutchdailynews.com/,Dutch Daily News,IN,GI,ENG,N/A
+19,National,http://www.dutchnews.nl/,Dutch News,IN,GI,ENG,N/A
+20,National,http://www.dnd.nl/,Dutch News Digest,IN,GI,ENG,N/A
+21,National,http://www.emea.nl/,EMEA Nieuws Netwerk,IN,GI,NLD,N/A
+22,National,https://www.eufin.nl/,Eufin,IN,BU,NLD,N/A
+23,National,https://news.google.com/news/?ned=nl_nl,Google,IN,GI,NLD,N/A
+24,National,http://www.government.nl/,Government,IN,GO,ENG,N/A
+25,National,http://www.headliner.nl/index.php?c=us,Headliner,IN,GI,ENG,N/A
+26,National,http://www.headliner.nl/index.php?c=nl,Headliner,IN,GI,NLD,N/A
+27,National,http://www.hollandarehberi.com/,Hollanda Rehberi,IN,ET,TUR,N/A
+28,National,http://www.iamexpat.nl/,I Am Expat,IN,GI,ENG,N/A
+29,National,http://www.kranten.com/,Kranten,IN,GI,NLD,N/A
+30,National,http://www.nederlandnieuws.nl/,Nederland Nieuws,IN,GI,NLD,N/A
+31,National,http://www.nieuws.nl/,Nieuws,IN,GI,NLD,N/A
+32,National,http://www.nieuwsgrazer.nl/,Nieuws Grazer,IN,GI,NLD,N/A
+33,National,http://www.nisnews.nl/,NIS News Bulletin,IN,GI,ENG,N/A
+34,National,http://www.nltimes.nl/,NL Times,IN,GI,ENG,N/A
+35,National,http://www.nu.nl/,NU,IN,GI,NLD,N/A
+36,National,http://www.oneworld.nl/,One World,IN,GI,NLD,N/A
+37,National,http://www.spitsnieuws.nl/,Spits,IN,GI,NLD,N/A
+38,Foreign,http://www.expatica.com/nl/main.html,Expatica,IN,GI,ENG,N/A
+40,National,http://www.beleggersbelangen.nl/,Beleggers Belangen,MG,BU,NLD,N/A
+41,National,http://www.elsevier.nl/,Elsevier,MG,GI,NLD,N/A
+42,National,http://www.quotenet.nl/,Quote,MG,BU,NLD,N/A
+43,National,http://www.roundabout.nl/,Roundabout,MG,GI,ENG,N/A
+44,National,http://www.vn.nl/,Vrij Nederland,MG,GI,NLD,N/A
+46,National,http://www.ad.nl/,Algemeen Dagblad,NP,GI,NLD,N/A
+47,National,http://www.telegraaf.nl/,De Telegraaf,NP,GI,NLD,N/A
+48,National,http://www.volkskrant.nl/,De Volkskrant,NP,GI,NLD,N/A
+49,National,http://fd.nl/,Het Financieele Dagblad,NP,BU,NLD,N/A
+50,National,http://www.parool.nl/,Het Parool,NP,GI,NLD,N/A
+51,National,http://www.metronieuws.nl/,Metro,NP,GI,NLD,N/A
+52,National,http://www.nd.nl/,Nederlands Dagblad,NP,GI,NLD,N/A
+53,National,http://www.nrc.nl/,NRC Handelsblad,NP,GI,NLD,N/A
+54,National,http://www.refdag.nl/,Reformatorisch Dagblad,NP,GI,NLD,N/A
+55,National,http://www.trouw.nl/,Trouw,NP,GI,NLD,N/A
+57,National,http://www.anp.nl/,ANP,PA,GI,NLD,N/A
+58,National,http://www.nieuwsbank.nl/,Nieuwsbank,PA,GI,NLD,N/A
+62,Assen,http://www.rtvdrenthe.nl/,RTV Drenthe,BC,GI,NLD,Radio TV
+63,Dwingeloo,http://www.dwingeloo-centraal.nl/,Dwingeloo Centraal,IN,GI,NLD,N/A
+64,Meppel,http://www.meppelercourant.nl/,Meppeler Courant,NP,GI,NLD,N/A
+65,Meppel,http://www.regiomeppel.nl/,Reggio Meppel,IN,GI,NLD,N/A
+66,Peize,http://noordenveld.nu/,Noordenveld,IN,GI,NLD,N/A
+67,Winde,http://www.burohba.nl/Noord-Drenthe-Krant.html,Noord-Drenthe-Krant,IN,GI,NLD,N/A
+69,Almere,http://www.almeredezeweek.nl/,Almere Deze Week,NP,GI,NLD,Radio TV
+70,Lelystad,http://www.omroepflevoland.nl/,Omroep Flevoland,BC,GI,NLD,N/A
+71,Urk,http://www.heturkerland.nl/,Het Urkerland,IN,GI,NLD,N/A
+73,Balk,http://www.balkstercourant.nl/,Balkster Courant,NP,GI,NLD,Radio TV
+74,Bolsward,http://www.bolswardsnieuwsblad.nl/,Bolswards Nieuwsblad,NP,GI,NLD,N/A
+75,Burgum,http://www.waldnet.nl/,Wald Net,NP,GI,NLD,N/A
+76,Drachten,http://debreeduit.nl/,De Breeduit,NP,GI,NLD,N/A
+77,Drachten,http://www.drachtstercourant.nl/,Drachtster Courant,NP,GI,NLD,N/A
+78,Gorredijk,http://www.dewoudklank.nl/,De Woudklank,NP,GI,NLD,N/A
+79,Grouw,http://www.degrouster.nl/,De Grouster,NP,GI,NLD,N/A
+80,Joure,http://www.joustercourant.nl/,Jouster Courant,NP,GI,NLD,N/A
+81,Heerenveen,http://www.heerenveensecourant.nl/,Heerenveense Courant,NP,GI,NLD,N/A
+82,Leeuwarden,http://www.dehuisaanhuis.nl/,De Huis aan Huis,NP,GI,NLD,N/A
+83,Leeuwarden,http://www.frieschdagblad.nl/,Friesch Dagblad,NP,GI,NLD,N/A
+84,Leeuwarden,http://www.lc.nl/,Leeuwarder Courant,IN,GI,NLD,N/A
+85,Leeuwarden,http://www.liwwadders.nl/,Liwwadders,IN,GI,NLD,N/A
+86,Lemmer,http://www.zuidfriesland.nl/,Zuid Friesland,NP,GI,NLD,N/A
+87,Ljouwert,http://www.omropfryslan.nl/,Omrop Fryslan,BC,GI,FRY,N/A
+88,Sneek,http://www.sneekernieuwsblad.nl/,Sneeker Nieuwsblad,NP,GI,NLD,N/A
+89,Surhuistvereen,http://www.defeanster.nl/,De Feanster,NP,GI,NLD,N/A
+90,Terschelling Hoorn,http://www.deterschellinger.nl/,De Terschellinger,NP,GI,NLD,N/A
+92,Aalten,http://aalten.streekgids.nl/,Streekgids,IN,GI,NLD,N/A
+93,Apeldoorn,http://www.destentor.nl/,De Stentor,NP,GI,NLD,N/A
+94,Apeldoorn,http://www.refdag.nl/,Reformatorisch Dagblad,NP,GI,NLD,N/A
+95,Arnhem,http://www.deweekkrant.nl/arnhemse_koerier,Arnhemse Koerier,NP,GI,NLD,N/A
+96,Arnhem,http://www.omroepgelderland.nl/,Omroep Gelderland,BC,GI,NLD,Radio TV
+97,Barneveld,http://www.deweekkrant.nl/barneveld_vandaag,Barneveld Vandaag,NP,GI,NLD,N/A
+98,Barneveld,http://www.barneveldsekrant.nl/,Barneveldse Krant,NP,GI,NLD,N/A
+99,Barneveld,http://www.nd.nl/,Nederlands Dagblad,NP,GI,NLD,N/A
+100,Ede,http://www.deweekkrant.nl/de_veluwepost,De Veluwepost,NP,GI,NLD,N/A
+101,Ede,http://www.edestad.nl/,Ede Stad,NP,GI,NLD,N/A
+102,Ermelo,http://www.hetkontakt.nl/,Het Kontakt,NP,GI,NLD,N/A
+103,Groenlo,http://www.streekgids.nl/,Streekgids,IN,GI,NLD,N/A
+104,Harderwijk,http://www.hetkontakt.nl/,Het Kontakt,NP,GI,NLD,N/A
+105,Nijmegen,http://www.deweekkrant.nl/de_brug_nijmegen,De Brug Nijmegen,NP,GI,NLD,N/A
+106,Nijmegen,http://www.gelderlander.nl/,De Gelderlander,NP,GI,NLD,N/A
+107,Nijmegen,http://www.n1.nl/,N1,BC,GI,NLD,Radio TV
+108,Overbetuwe,http://overbetuwe.nieuws.nl/,Over Betuwe Nieuws,IN,GI,NLD,N/A
+109,Tiel,http://www.deweekkrant.nl/de_zakengids_tiel,De Zaken Gids,NP,GI,NLD,N/A
+110,Wageningen,http://www.nieuwsblad.nu/,De Stad Wageningen,NP,GI,NLD,N/A
+111,Zutphen,http://www.b-fm.nl/,B FM,BC,GI,NLD,Radio
+113,Groningen,http://www.112groningen.nl/,112 Groningen,IN,GI,NLD,Radio TV
+114,Groningen,http://www.dvhn.nl/,Dagblad van het Noorden,NP,GI,NLD,N/A
+115,Groningen,http://www.gic.nl/,Groninger Internet Courant,IN,GI,NLD,N/A
+116,Groningen,http://www.rtvnoord.nl/home/home.asp,RTV Noord,BC,GI,NLD,N/A
+117,Haren,http://www.harenerweekblad.nl/,Harener Weekblad,NP,GI,NLD,N/A
+118,Stadskanaal,http://www.stadskanaal.nl/,Gemeente Stadskanaal,IN,GI,NLD,N/A
+120,Heerlen,http://www.limburger.nl/,Limburgs Dagblad,NP,GI,NLD,Radio TV
+121,Maastricht,http://www.limburger.nl/,Dagblad de Limburger,NP,GI,NLD,N/A
+122,Maastricht,http://www.l1.nl/,L1,BC,GI,NLD,N/A
+124,Boxtel,http://www.brabantscentrum.nl/,Brabant Centrum,NP,GI,NLD,Radio TV
+125,Breda,http://www.bndestem.nl/,BN de Stem,NP,GI,NLD,N/A
+126,Eindhoven,http://www.ed.nl/,Eindhovens Dagblad,NP,GI,NLD,N/A
+127,Eindhoven,http://www.omroepbrabant.nl/,Omroep Brabant,BC,GI,NLD,N/A
+128,Oisterwijk,http://www.oisterwijknieuws.nl/,Oisterwijk News,IN,GI,NLD,N/A
+129,Oss,http://www.oss-zuid.nl/,Oss Zuid,IN,GI,NLD,N/A
+130,'s Hertogenbosch,http://www.bd.nl/,Brabants Dagblad,NP,GI,NLD,N/A
+131,'s Hertogenbosch,http://www.katholieknieuwsblad.nl/,Katholiek Nieuwsblad,NP,RL,NLD,N/A
+133,Aalsmeer,http://www.meerbode.nl/news_am/laatste_am.html,Nieuwe Meerbode,NP,GI,NLD,N/A
+134,Alkmaar,http://www.noordhollandsdagblad.nl/,Noordhollands Dagblad,NP,GI,NLD,N/A
+135,Amsterdam,http://www.amsterdamnews.net/,Amsterdam News,IN,GI,ENG,N/A
+136,Amsterdam,http://teletext.at5.nl/,AT5,BC,GI,NLD,Teletext
+137,Amsterdam,http://www.at5.nl/,AT5,BC,GI,NLD,TV
+138,Amsterdam,http://www.groene.nl/,De Groene Amsterdammer,NP,AL,NLD,N/A
+139,Amsterdam,http://www.depers.nl/,De Pers,NP,GI,NLD,N/A
+140,Amsterdam,http://www.telegraaf.nl/,De Telegraaf,NP,GI,NLD,N/A
+141,Amsterdam,http://www.volkskrant.nl/,De Volkskrant,NP,GI,NLD,N/A
+142,Amsterdam,http://fd.nl/,Het Financieele Dagblad,NP,BU,NLD,N/A
+143,Amsterdam,http://www.parool.nl/,Het Parool,NP,GI,NLD,N/A
+144,Amsterdam,http://www.metronieuws.nl/,Metro,NP,GI,NLD,N/A
+145,Amsterdam,http://www.nrc.nl/,NRC Handelsblad,NP,GI,NLD,N/A
+146,Amsterdam,http://www.rtvnh.nl/,RTV Noord Holland,BC,GI,NLD,Radio TV
+147,Amsterdam,http://www.trouw.nl/,Trouw,NP,GI,NLD,N/A
+148,Amsterdam (Westerpark),http://www.staatskrant.com/,De Staatskrant De Buurtkrant,NP,GI,NLD,N/A
+149,Amsterdam (Zeeburg),http://www.zeeburgnieuws.nl/,Zeeburg Nieuws,IN,GI,NLD,N/A
+150,Den Burg,http://www.texelsecourant.nl/,Texelse Courant,NP,GI,NLD,N/A
+151,Haarlem,http://www.haarlem105.nl/,Haarlem 105,BC,GI,NLD,Radio TV
+152,Haarlem,http://www.haarlemsdagblad.nl/,Haarlems Dagblad,NP,GI,NLD,N/A
+153,Hilversum,http://www.dichtbij.nl/t-gooi/home/t-gooi.aspx?cid=1737,De Gooi en Eembode,NP,GI,NLD,N/A
+154,Hilversum,http://www.gooieneemlander.nl/,De Gooi en Eemlander,NP,GI,NLD,N/A
+155,IJmuiden,http://www.ijmuidercourant.nl/,IJmuider Courant,NP,GI,NLD,N/A
+156,Uithoorn,http://www.meerbode.nl/news_uh/laatste_uh.html,Nieuwe Meerbode,NP,GI,NLD,N/A
+157,Volendam,http://www.nieuw-volendam.nl/,Nieuw Volendam,NP,GI,NLD,N/A
+159,Almelo,http://www.roskam.nl/,De Roskam,NP,GI,NLD,N/A
+160,Dedemsvaarts,http://www.hardenberg.nu/,Dedemsvaartse Courant,NP,GI,NLD,N/A
+161,Denekamp,http://www.twentefm.nl/,Twente FM,BC,GI,NLD,Radio
+162,Deventer,http://www.schuttevaer.nl/,Schuttevaer,NP,GI,NLD,N/A
+163,Enschede,http://www.tubantia.nl/,De Twentsche Courant Tubantia,NP,GI,NLD,N/A
+164,Hengelo,http://www.rtvoost.nl/,RTV Oost,BC,GI,NLD,Radio TV
+165,Steenwijk,http://www.steenwijkercourant.nl/,Opregte Steenwijker Courant,NP,GI,NLD,N/A
+167,Mijdrecht,http://www.meerbode.nl/news_rv/laatste_rv.html,Nieuwe Meerbode,NP,GI,NLD,Radio TV
+168,Utrecht,http://www.rtvutrecht.nl/,RTV Utrecht,BC,GI,NLD,N/A
+170,Oost Souburg,http://www.omroepzeeland.nl/,Omroep Zeeland,BC,GI,NLD,Radio TV
+171,Sint Maartensdijk,http://www.omroeptholen.nl/,Omroep Tholen,BC,GI,NLD,Radio TV
+172,Vlissingen,http://www.pzc.nl/,Provinciale Zeeuwse Courant,NP,GI,NLD,N/A
+174,Den Haag,http://www.agd.nl/,Agrarisch Dagblad,NP,AG,NLD,N/A
+175,Den Haag,http://www.omroepwest.nl/,Omroep West,BC,GI,NLD,Radio TV
+176,Den Haag,https://www.officielebekendmakingen.nl/staatscourant,Staatscourant,NP,GI,NLD,N/A
+177,Dirksland,http://www.flakkeenieuws.nl/,Flakkee Nieuws,IN,GI,NLD,N/A
+178,Gorinchem,http://www.gorinchem-presenteert.nl/,Gorinchem Presenteert,IN,GI,NLD,N/A
+179,Leerdam,http://www.hetkontakt.nl/,Het Kontakt,NP,GI,NLD,N/A
+180,Leiden,http://www.hollandcentraal.nl/,Holland Centraal,NP,GI,NLD,Radio TV
+181,Leiden,http://www.leidschdagblad.nl/,Leidsche Dagblad,BC,GI,NLD,N/A
+182,Overschie,http://www.overschiesekrant.nl/,Overschiese Krant,NP,GI,NLD,N/A
+183,Papendrecht,http://www.hetkontakt.nl/,Het Kontakt,NP,GI,NLD,N/A
+184,Rotterdam,http://www.ad.nl/,Algemeen Dagblad,NP,GI,NLD,N/A
+185,Rotterdam,http://www.rijnmond.nl/,RTV Rijnmond,BC,GI,NLD,Radio TV
+186,Rotterdam,http://www.rnn7.nl/,RNN7,BC,GI,NLD,TV
+187,S Gravenzande,http://www.wos.nl/,WOS,BC,GI,NLD,Radio TV
+188,Sliedrecht,http://www.sliedrecht.net/,Sliedrecht,IN,GI,NLD,N/A
+189,Vianen,http://www.hetkontakt.nl/,Het Kontakt,NP,GI,NLD,N/A
+190,Voorburg,http://voorburginsite.nl/,Voorburg Insite,IN,GI,NLD,N/A
+191,Wassenaar,http://www.publiceyewassenaar.nl/,Public Eye Wassenaar,IN,GI,NLD,N/A
+192,Wassenaar,http://www.welkominwassenaar.nl/,Welkom in Wassenaar,IN,GI,NLD,N/A
+193,Woudrichem,http://www.hetkontakt.nl/,Het Kontakt,NP,GI,NLD,N/A
+2,National,http://www.europe1.fr/,Europe 1,BC,GI,FRA,Radio
+3,National,http://www.france24.com/ar/,France 24,BC,GI,ARA,TV
+4,National,http://www.france24.com/en/,France 24,BC,GI,ENG,TV
+5,National,http://www.france24.com/fr/,France 24,BC,GI,FRA,TV
+6,National,http://www.france24.com/es/,France 24,BC,GI,SPA,TV
+7,National,https://www.francetvinfo.fr/,France Info,BC,GI,FRA,TV
+8,National,http://www.la1ere.fr/,La 1ere,BC,GI,FRA,Radio TV
+9,National,http://www.m6.fr/,M6,BC,GI,FRA,TV
+10,National,http://www.rfi.fr/,Radio France Internationale,BC,GI,FRA,Radio
+11,National,http://lci.tf1.fr/,TF1,BC,GI,FRA,TV
+13,National,https://www.90min.com/fr,90 Min,IN,SP,FRA,N/A
+14,National,http://www.euroinvestor.fr/,Euro Investor,IN,BU,FRA,N/A
+15,National,http://www.french-news-online.com/,France News Online,IN,GI,ENG,N/A
+16,National,https://news.google.com/news/?ned=fr,Google,IN,GI,FRA,N/A
+17,National,http://www.maire-info.com/,Maire Info,IN,GI,FRA,N/A
+18,National,http://www.mediapart.fr/,Mediapart,IN,GI,FRA,N/A
+19,National,http://www.metronews.fr/,Metro,IN,GI,FRA,N/A
+20,National,http://rue89.nouvelobs.com/,Rue 89,IN,GI,FRA,N/A
+21,National,http://suite101.fr/,Suite 101,IN,GI,FRA,N/A
+22,National,http://www.thelocal.fr/,The Local,IN,GI,ENG,N/A
+23,National,http://www.webmatin.com/,Web Matin,IN,GI,FRA,N/A
+24,National,https://fr.news.yahoo.com/,Yahoo,IN,GI,FRA,N/A
+25,Foreign,http://www.expatica.com/fr/main.html,Expatica,IN,GI,ENG,N/A
+27,National,http://www.courrierinternational.com/,Courrier International,MG,GI,FRA,N/A
+28,National,http://www.francecourtoise.info/,Le Libre Journal,MG,GI,FRA,N/A
+29,National,http://tempsreel.nouvelobs.com/,Le Nouvel Observateur,MG,GI,FRA,N/A
+30,National,http://www.lepoint.fr/,Le Point,MG,GI,FRA,N/A
+31,National,http://www.lerevenu.com/home,Le Revenu,MG,BU,FRA,N/A
+32,National,http://lexpansion.lexpress.fr/,L'Expansion,MG,BU,FRA,N/A
+33,National,http://www.lexpress.fr/,L'Express,MG,GI,FRA,N/A
+34,National,http://www.marianne.net/,Marianne,MG,GI,FRA,N/A
+35,National,http://www.parismatch.com/,Paris Match,MG,GI,FRA,N/A
+36,National,http://www.valeursactuelles.com/,Valeurs Actuelles,MG,BU,FRA,N/A
+38,National,http://www.la-croix.com/,La Croix,NP,GI,FRA,N/A
+39,National,http://www.latribune.fr/,La Tribune,NP,BU,FRA,N/A
+40,National,http://www.lefigaro.fr/,Le Figaro,NP,GI,FRA,N/A
+41,National,http://www.lejdd.fr/,Le Journal du Dimanche,NP,GI,FRA,N/A
+42,National,http://www.lemonde.fr/,Le Monde,NP,GI,FRA,N/A
+43,National,http://www.leparisien.fr/,Le Parisien,NP,GI,FRA,N/A
+44,National,http://www.lequipe.fr/,L'Equipe,NP,SP,FRA,N/A
+45,National,http://www.lesechos.fr/,Les Echos,NP,BU,FRA,N/A
+46,National,http://www.humanite.fr/,L'Humanite,NP,GI,FRA,N/A
+47,National,http://www.liberation.fr/,Liberation,NP,GI,FRA,N/A
+49,National,http://www.afp.com/ar,Agence France Presse,PA,GI,ARA,N/A
+50,National,http://www.afp.com/de,Agence France Presse,PA,GI,DEU,N/A
+51,National,http://www.afp.com/en,Agence France Presse,PA,GI,ENG,N/A
+52,National,http://www.afp.com/fr,Agence France Presse,PA,GI,FRA,N/A
+53,National,http://www.afp.com/pt,Agence France Presse,PA,GI,POR,N/A
+54,National,http://www.afp.com/es,Agence France Presse,PA,GI,SPA,N/A
+55,National,http://www.newspress.fr/,News Press,PA,GI,FRA,N/A
+56,National,http://www.prnewswire.fr/,PR Newswire,PA,BU,FRA,N/A
+57,National,https://fr.reuters.com/,Reuters,PA,GI,FRA,N/A
+61,Mulhouse,http://www.lalsace.fr/,L'Alsace,NP,GI,FRA,N/A
+62,Strasbourg,http://www.dna.fr/,Dernieres Nouvelles d'Alsace,NP,GI,FRA,N/A
+63,Strasbourg,http://www.readmetro.com/fr/france/grand-est/,Metro,NP,GI,FRA,N/A
+65,Bayonne,http://www.lejpb.com/,Le Journal du Pays Basque,NP,GI,FRA,N/A
+66,Bordeaux,http://www.aquitainepresse.com/,Aquitaine Presse Service,PA,GI,FRA,N/A
+67,Bordeaux,http://www.bordeaux7.com/,Bordeaux 7,NP,GI,FRA,N/A
+68,Bordeaux,http://www.readmetro.com/fr/france/bordeaux/,Metro,NP,GI,FRA,N/A
+69,Bordeaux,http://www.sudouest.fr/,Sud Ouest,NP,GI,FRA,N/A
+70,Pau,http://www.larepubliquedespyrenees.fr/,La Republique des Pyrenees,NP,GI,FRA,N/A
+71,Perigueux,http://www.dordognelibre.fr/,Dordogne Libre,NP,GI,FRA,N/A
+72,Saint Laurent Medoc,http://www.lejournaldumedoc.fr/,Le Journal du Medoc,NP,GI,FRA,N/A
+74,Aurillac,http://www.auvergnat.com/,L'Auvergnat de Paris,NP,GI,FRA,N/A
+75,Le Puy en Velay,http://www.leveil.fr/,L'Eveil de La Haute Loire,NP,GI,FRA,N/A
+77,Cherbourg-Octeville,http://www.lapressedelamanche.fr/,La Presse de la Manche,NP,GI,FRA,N/A
+79,Auxerre,http://www.lyonne.fr/accueil.html,L'Yonne Republicaine,NP,GI,FRA,N/A
+80,Chalon-sur-Saone,http://www.lejsl.com/,Le Journal de Saone et Loire,NP,GI,FRA,N/A
+81,Dijon,http://www.bienpublic.com/,Le Bien Public,BC,GI,FRA,N/A
+83,Brest,http://www.letelegramme.fr/,Le Telegramme,NP,GI,FRA,N/A
+84,Rennes,http://www.readmetro.com/fr/france/rennes/,Metro,NP,GI,FRA,N/A
+85,Rennes,http://www.ouest-france.fr/,Ouest France,NP,GI,FRA,N/A
+87,Bouges,http://www.leberry.fr/accueil.html,Le Berry Republicain,NP,GI,FRA,N/A
+88,Chartres,http://www.lechorepublicain.fr/accueil.html,L'Echo Republicain,NP,GI,FRA,N/A
+89,Montargis,http://www.eclaireurdugatinais.com/,L'Eclaireur du Gatinais et du Centre,NP,GI,FRA,N/A
+90,Orleans,http://www.larep.fr/accueil.html,La Republique du Centre,NP,GI,FRA,N/A
+91,Tours,http://www.lanouvellerepublique.fr/,La Nouvelle Republique du Centre,NP,GI,FRA,N/A
+94,Chaumont,http://www.jhm.fr/,Le Journal de la Haute Marne,NP,GI,FRA,N/A
+95,Reims,http://www.lunion.presse.fr/,L'Ardennais,NP,GI,FRA,N/A
+96,Reims,http://www.lunion.presse.fr/,L'Union,NP,GI,FRA,N/A
+97,Troyes,http://www.lest-eclair.fr/,L'Est Eclair,NP,GI,FRA,N/A
+99,Ajaccio,http://www.corsematin.com/,Corse Matin,NP,GI,FRA,N/A
+100,Ajaccio,http://www.jdcorse.fr/,Journal de la Corse,NP,GI,FRA,N/A
+101,Bastia,http://www.lepetitbastiais.com/,Le Petit Bastiais,NP,GI,FRA,N/A
+102,Bastia,http://www.corse-information.info/,L'Informateur Corse Nouvelle,NP,GI,FRA,N/A
+104,Besancon,http://www.laterredecheznous.com/,La Terre de Chez Nous,NP,GI,FRA,N/A
+105,Lons le Saunier,http://www.juragricole.com/,Le Jura Agricole et Rural,NP,AG,FRA,N/A
+106,Lons le Saunier,http://www.voixdujura.fr/,Voix du Jura,NP,GI,FRA,N/A
+107,Vesoul,http://www.hautesaoneagricole.com/,La Haute Saone Agricole et Rurale,NP,AG,FRA,N/A
+109,Eu,http://www.linformateur-leclaireur.fr/,L'Informateur,NP,GI,FRA,N/A
+110,Le Havre,http://www.infoceane.com/,Infoceane,IN,GI,FRA,N/A
+111,Rouen,http://www.paris-normandie.fr/,Paris Normandie,NP,GI,FRA,N/A
+112,Yvetot,http://www.lecourriercauchois.fr/,Le Courrier Cauchois,NP,GI,FRA,N/A
+114,Paris,http://www.20minutes.fr/,20 Minutes,NP,GI,FRA,English
+115,Pais,http://www.connexionfrance.com/,Connexion,NP,ET,ENG,N/A
+116,Paris,http://www.directmatin.fr/,Direct Matin,NP,GI,FRA,N/A
+117,Paris,http://www.la-croix.com/,La Croix,NP,GI,FRA,N/A
+118,Paris,http://www.latribune.fr/,La Tribune,NP,BU,FRA,N/A
+119,Paris,http://www.lefigaro.fr/,Le Figaro,NP,GI,FRA,N/A
+120,Paris,http://www.lejdd.fr/,Le Journal du Dimanche,NP,GI,FRA,N/A
+121,Paris,http://www.lemonde.fr/,Le Monde,NP,GI,FRA,N/A
+122,Paris,http://www.monde-diplomatique.fr/,Le Monde Diplomatique,NP,GI,FRA,N/A
+123,Paris,http://www.leparisien.fr/,Le Parisien,NP,GI,FRA,N/A
+124,Paris,http://www.lequipe.fr/,L'Equipe,NP,SP,FRA,N/A
+125,Paris,http://www.lesechos.fr/,Les Echos,NP,BU,FRA,N/A
+126,Paris,http://www.humanite.fr/,L'Humanite,NP,GI,FRA,N/A
+127,Paris,http://www.liberation.fr/,Liberation,NP,GI,FRA,N/A
+128,Paris,http://www.readmetro.com/fr/france/paris/,Metro,NP,GI,FRA,N/A
+130,Mende,http://www.48info.fr/,La Lozere Nouvelle,NP,GI,FRA,N/A
+131,Montpellier,http://www.direct-montpellier-plus.com/,Direct Matin Montpellier Plus,NP,GI,FRA,N/A
+132,Montpellier,http://www.midilibre.fr/,Midi Libre,NP,GI,FRA,N/A
+133,Perpignan,http://www.lindependant.fr/,L'Independant,NP,GI,FRA,N/A
+135,Limoges,http://www.lepopulaire.fr/accueil.html,Le Populaire,NP,GI,FRA,N/A
+136,Limoges,http://www.l-echo.info/,L'Echo,NP,GI,FRA,N/A
+138,Epinal,http://www.vosgesmatin.fr/,Vosges Matin,NP,GI,FRA,N/A
+139,Metz,http://www.republicain-lorrain.fr/,Le Republicain Lorrain,NP,GI,FRA,N/A
+140,Nancy,http://www.estrepublicain.fr/,L'Est Republicain,NP,GI,FRA,N/A
+141,Vandoeuvre,http://www.infodujour.fr/,Info du Jour,IN,GI,FRA,N/A
+143,Millau,http://www.journaldemillau.fr/,Journal de Millau,NP,GI,FRA,N/A
+144,Rodez,http://www.centrepresseaveyron.fr/,Centre Presse Aveyron,NP,GI,FRA,N/A
+145,Tarbes,http://www.nrpyrenees.fr/,La Nouvelle Republique des,NP,GI,FRA,N/A
+147,Toulouse,http://www.ladepeche.fr/,La Depeche du Midi,NP,GI,FRA,N/A
+148,Toulouse,http://www.readmetro.com/fr/france/toulouse/,Metro,NP,GI,FRA,N/A
+150,Anor,http://www.avesnois.com/,Avesnois,IN,GI,FRA,N/A
+151,Hazebrouck,http://dailynord.fr/,Daily Nord,IN,GI,FRA,N/A
+152,Lille,http://www.lavoixdunord.fr/,La Voix du Nord,NP,GI,FRA,N/A
+153,Lille,http://www.libertehebdo.com/,Liberte Hebdo,NP,AL,FRA,N/A
+154,Lille,http://www.readmetro.com/fr/france/lille/,Metro,NP,GI,FRA,N/A
+155,Lillers,http://www.echo62.com/,L'Echo du Pas de Calais,NP,GI,FRA,N/A
+157,Angers,http://www.courrierdelouest.fr/,Le Courrier de l'Ouest,NP,GI,FRA,N/A
+158,Chateaubriant,http://www.journal-la-mee.info/,Journal La Mee a Chateaubriant,IN,GI,FRA,N/A
+159,Le Mans,http://www.lemainelibre.fr/,Le Maine Libre,NP,GI,FRA,N/A
+160,Nantes,http://www.readmetro.com/fr/france/nantes/,Metro,NP,GI,FRA,N/A
+161,Nantes,http://www.presseocean.fr/,Presse Ocean,NP,GI,FRA,N/A
+163,Amiens,http://www.courrier-picard.fr/,Le Courrier Picard,NP,GI,FRA,N/A
+164,Amiens,http://www.picardiegazette.fr/,Picardie la Gazette,NP,GI,FRA,N/A
+165,Gamaches,http://www.linformateur-leclaireur.fr/,L'Eclaireur,NP,GI,FRA,N/A
+167,Angouleme,http://www.charentelibre.fr/,Charente Libre,NP,GI,FRA,N/A
+168,Poitiers,http://www.centre-presse.fr/,Centre Presse,NP,GI,FRA,N/A
+170,Cannes,http://www.avenir-cotedazur.com/,L'Avenir Cote d'Azur,NP,GI,FRA,English
+171,Gap,http://www.alpes-et-midi.fr/,Alpes et Midi,NP,GI,FRA,N/A
+172,Manosque,http://www.hauteprovenceinfo.com/,Haute Provence Info,NP,GI,FRA,N/A
+173,Marseille,http://www.laprovence.com/,La Provence,NP,GI,FRA,N/A
+174,Marseille,http://www.marseilleplus.com/,Marseille Plus,NP,GI,FRA,N/A
+175,Marseille,http://www.readmetro.com/fr/france/provence/,Metro,NP,GI,FRA,N/A
+176,Mougins,http://www.riviera-reporter.com/,Riviera Reporter,MG,GI,FRA,N/A
+177,Nice,http://www.letsgoriviera.com/,Let's Go Riviera,NP,ET,ENG,N/A
+178,Nice,http://www.readmetro.com/fr/france/cotedazur/,Metro,NP,GI,FRA,N/A
+179,Nice,http://www.nicematin.com/,Nice Matin,NP,GI,FRA,N/A
+180,Nice,http://www.rczeitung.com/,Riviera Cote d'Azur Zeitung,NP,GI,DEU,N/A
+181,Nice,http://www.rivieratimes.com/,Riviera Times,NP,GI,FRA,N/A
+182,Nice,http://www.tribuca.fr/,Tribune Bulletin Cote d'Azur,NP,GI,FRA,N/A
+183,Nice,http://www.varmatin.com/,Var Matin,NP,GI,FRA,N/A
+184,Sophia Antipolis,http://www.webtimemedias.com/sophianet,Sophia Net,IN,GI,FRA,N/A
+186,Bourg-en-Bresse,http://www.voixdelain.fr/,Voix de l'Ain,NP,GI,FRA,N/A
+187,Grenoble,http://www.ledauphine.com/,Le Dauphin Libere,NP,GI,FRA,N/A
+188,Lyon,http://www.leprogres.fr/,Le Progres,NP,GI,FRA,N/A
+189,Lyon,http://www.lyoncapitale.fr/Journal/France-monde,Lyon Capitale,NP,AL,FRA,N/A
+190,Lyon,http://www.lyon-passionnement.com/,Lyon Passionement,MG,GI,FRA,N/A
+191,Lyon,http://www.readmetro.com/fr/france/rhonealpes/,Metro,NP,GI,FRA,N/A
+2,National,http://www.1tv.ru/,1 TV,BC,GI,RUS,TV
+3,National,http://www.ntv.ru/,NTV,BC,GI,RUS,TV
+4,National,http://www.rferl.org/section/Russia/161.html,Radio Free Europe Radio Liberty,BC,GI,ENG,Radio
+5,National,http://www.radiomayak.ru/,Radio Mayak,BC,GI,RUS,Radio
+6,National,http://www.radonezh.ru/,Radio Radonezh,BC,GI,RUS,Radio
+7,National,http://www.radiorus.ru/,Radio Rossii,BC,GI,RUS,Radio
+8,National,http://www.svoboda.org/,Radio Svoboda,BC,GI,RUS,Radio
+9,National,http://www.ren-tv.com/,REN TV,BC,GI,RUS,TV
+10,National,http://rt.com/,RT,BC,GI,RUS,TV
+11,National,http://www.vesti.ru/,RTR,BC,GI,RUS,TV
+12,National,http://news.sportbox.ru/,RTR,BC,SP,RUS,TV
+13,National,http://www.tvc.ru/,TV Tsentr,BC,GI,RUS,TV
+14,National,https://www.golos-ameriki.ru/,VOA Golos Ameriki,BC,GI,RUS,Radio TV
+16,National,http://agroinfo.com/en/,Agro Info,IN,AG,ENG,N/A
+17,National,http://agroinfo.com/,Agro Info,IN,AG,RUS,N/A
+18,National,http://www.chaskor.ru/,Chastny Korrespondent,IN,GI,RUS,N/A
+19,National,http://www.expatica.ru/,Expatica,IN,GI,ENG,N/A
+20,National,http://www.gazeta.ru/,Gazeta,IN,GI,RUS,N/A
+21,National,https://news.google.com/news/?ned=ru_ru,Google,IN,GI,RUS,N/A
+22,National,http://www.integrum.ru/,Integrum,IN,GI,RUS,N/A
+23,National,http://last24.info/,Last 24,IN,GI,RUS,N/A
+24,National,http://lenta.ru/,Lenta,IN,GI,RUS,N/A
+25,National,http://lifenews.ru/,Life News,IN,GI,RUS,N/A
+26,National,https://meduza.io/,Meduza,IN,GI,RUS,N/A
+27,National,http://www.mosnews.com/,Mos News,IN,GI,ENG,N/A
+28,National,http://www.newsru.com/,News RU,IN,GI,RUS,N/A
+29,National,http://www.polit.ru/,Polit,IN,GI,RUS,N/A
+30,National,http://english.pravda.ru/,Pravda,IN,GI,ENG,N/A
+31,National,http://italia.pravda.ru/,Pravda,IN,GI,ITA,N/A
+32,National,http://port.pravda.ru/,Pravda,IN,GI,POR,N/A
+33,National,http://www.pravda.ru/,Pravda,IN,GI,RUS,N/A
+34,National,http://www.rupoisk.ru/,RU Poisk,IN,GI,RUS,N/A
+35,National,http://de.rusbiznews.com/,Rus Business News,IN,BU,DEU,N/A
+36,National,http://www.rusbiznews.com/,Rus Business News,IN,BU,ENG,N/A
+37,National,http://fr.rusbiznews.com/,Rus Business News,IN,BU,FRA,N/A
+38,National,http://www.rusbiznews.ru/,Rus Business News,IN,BU,RUS,N/A
+39,National,http://es.rusbiznews.com/,Rus Business News,IN,BU,SPA,N/A
+40,National,http://cn.rusbiznews.com/,Rus Business News,IN,BU,ZHO,N/A
+41,National,http://www.rustv.ru/,RUS TV,IN,GI,RUS,N/A
+42,National,http://rbth.com/,Russia Beyond the Headlines,IN,GI,ENG,N/A
+43,National,http://russiaregionpress.ru/,Russia Region Press,IN,GI,RUS,N/A
+44,National,http://www.aktuell.ru/,Russland Aktuell,IN,GI,DEU,N/A
+45,National,http://www.aktuell.ru/russland/russian/,Russland Aktuell,IN,GI,RUS,N/A
+46,National,http://www.sovecon.ru/,Sovekon,IN,BU,RUS,N/A
+47,National,http://www.sports.ru/,Sport Segodnia,IN,SP,RUS,N/A
+48,National,http://strana.ru/,Strana,IN,GI,RUS,N/A
+49,National,http://www.utro.ru/,Utro,IN,GI,RUS,N/A
+51,National,https://ru.hellomagazine.com/,Hello,MG,EN,RUS,N/A
+52,National,http://www.itogi.ru/,Itogi,MG,GI,RUS,N/A
+53,National,http://www.profile.ru/,Profil,MG,GI,RUS,N/A
+54,National,http://www.russiaprofile.org/,Russia Profile,MG,GI,ENG,N/A
+55,Foreign,http://www.bsr-russia.com/,Business Special Report,MG,BU,ENG,N/A
+57,National,http://www.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+58,National,http://www.akdi.ru/,Ekonomika i Zhizn,NP,BU,RUS,N/A
+59,National,http://izvestia.ru/,Izvestiia,NP,GI,RUS,N/A
+60,National,http://www.kommersant.ru/,Kommersant,NP,BU,RUS,N/A
+61,National,http://www.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+62,National,http://www.agronews.ru/,Krestyanskiye Vedomosti,NP,AG,RUS,N/A
+63,National,http://www.lgz.ru/,Literaturnaia Gazeta,NP,GI,RUS,N/A
+64,National,http://www.mk.ru/,MK,NP,GI,RUS,N/A
+65,National,http://www.ng.ru/,Nezavizimaia Gazeta,NP,GI,RUS,N/A
+66,National,http://www.novayagazeta.ru/,Novaia Gazeta,NP,GI,RUS,N/A
+67,National,http://www.pnp.ru/,Parlamentskaia Gazeta,NP,GI,RUS,N/A
+68,National,http://www.province.ru/,Provinchiia,NP,GI,RUS,N/A
+69,National,http://www.rg.ru/,Rossiyskaia Gazeta,NP,GI,RUS,N/A
+70,National,http://www.ruscur.ru/,Russkii Kurer,NP,GI,RUS,N/A
+71,National,http://www.rv.ru/,Russkii Vestnik,NP,GI,RUS,N/A
+72,National,http://sgazeta.ru/,Selskaia Zhizn,NP,GI,RUS,N/A
+73,National,http://www.sovsport.ru/,Sovetskii Sport,NP,SP,RUS,N/A
+74,National,http://www.sport-express.ru/,Sport Ekspress,NP,SP,RUS,N/A
+75,National,http://www.trud.ru/,Trud,NP,GI,RUS,N/A
+76,National,http://www.ug.ru/,Uchitelskaia Gazeta,NP,GI,RUS,N/A
+77,National,http://www.vedomosti.ru/,Vedomosti,NP,GI,RUS,N/A
+78,National,https://versia.ru/,Versia,NP,GI,RUS,N/A
+80,National,http://www.akm.ru/eng/,AK i M,PA,GI,ENG,N/A
+81,National,http://www.akm.ru/,AK i M,PA,GI,RUS,N/A
+82,National,http://www.apn.ru/,APN,PA,GI,RUS,N/A
+83,National,http://ari.ru/show/des:obj/tags/eng,ARI,PA,GI,ENG,N/A
+84,National,http://ari.ru/,ARI,PA,GI,RUS,N/A
+85,National,http://www.militarynews.ru/default.asp?lang=eng,AVN,PA,ML,ENG,N/A
+86,National,http://www.militarynews.ru/default.asp?lang=rus,AVN,PA,ML,RUS,N/A
+87,National,http://www.interfax.com/,Interfax,PA,GI,ENG,N/A
+88,National,http://www.interfax.ru/,Interfax,PA,GI,RUS,N/A
+89,National,http://en.itar-tass.com/,ITAR TASS,PA,GI,ENG,N/A
+90,National,http://itar-tass.com/,ITAR TASS,PA,GI,RUS,N/A
+91,National,https://ru.reuters.com/,Reuters,PA,GI,RUS,N/A
+92,National,http://anbamoscow.com/,RIA Novosti,PA,GI,ARA,N/A
+93,National,http://de.ria.ru/,RIA Novosti,PA,GI,DEU,N/A
+94,National,http://en.ria.ru/,RIA Novosti,PA,GI,ENG,N/A
+95,National,http://pe.rian.ru/,RIA Novosti,PA,GI,FAS,N/A
+96,National,http://fr.ria.ru/,RIA Novosti,PA,GI,FRA,N/A
+97,National,http://www.rian-japan.com/,RIA Novosti,PA,GI,JPN,N/A
+98,National,http://ria.ru/,RIA Novosti,PA,GI,RUS,N/A
+99,National,http://sp.ria.ru/,RIA Novosti,PA,GI,SPA,N/A
+100,National,http://www.rosbalt.ru/,Rosbalt,PA,GI,RUS,N/A
+101,National,http://www.severinform.ru/,Sever Inform,PA,GI,RUS,N/A
+105,Maikop,http://www.adigea.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+106,Maikop,http://www.maykopnews.ru/,Maikopskie Novosti,NP,GI,RUS,N/A
+107,Maikop,http://www.sov-adyg.ru/,Sovetskaia Adygeia,NP,GI,RUS,N/A
+109,Barnaul,http://altapress.ru/,Altapress,PA,GI,RUS,N/A
+110,Barnaul,http://www.ap22.ru/,Altaiskaia Pravda,NP,GI,RUS,N/A
+111,Barnaul,http://www.amic.ru/,AMIC,IN,GI,RUS,N/A
+112,Barnaul,http://www.altai.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+113,Barnaul,http://alt.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+114,Barnaul,http://brl.mk.ru/,MK,NP,GI,RUS,N/A
+115,Barnaul,http://altapress.ru/source/1,Svobodnyi Kurs,NP,GI,RUS,N/A
+116,Barnaul,http://info-vb.ru/,Vechernii Barnaul,NP,GI,RUS,N/A
+117,Barnaul,http://zvezdaltaya.ru/,Zvezda Altaia,NP,GI,RUS,N/A
+119,Blagoveshchensk,http://www.amurpravda.ru/,Amurskaia Pravda,NP,GI,RUS,N/A
+120,Blagoveshchensk,http://amur.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+121,Blagoveshchensk,http://blag.mk.ru/,MK,NP,GI,RUS,N/A
+123,Arkhangelsk,http://www.arh.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+124,Arkhangelsk,http://arh.mk.ru/,MK,NP,GI,RUS,N/A
+125,Arkhangelsk,http://www.pravdasevera.ru/,Pravda Severa,NP,GI,RUS,N/A
+126,Arkhangelsk,http://www.arhpress.ru/volna/,Volna,NP,GI,RUS,N/A
+128,Astrakhan,http://www.province.ru/astrahan,Khronometr Astrakhan,NP,GI,RUS,N/A
+129,Astrakhan,http://ast.mk.ru/,MK,NP,GI,RUS,N/A
+130,Astrakhan,http://www.volga-astrakhan.ru/,Volga,NP,GI,RUS,N/A
+132,Ufa,http://www.azatliq.org/,Azatliq Radiosi,BC,GI,BAK,Radio Also TAT
+133,Ufa,http://www.bashinform.ru/bash/,Bash Inform,PA,GI,BAK,N/A
+134,Ufa,http://www.bashinform.ru/eng/,Bash Inform,PA,GI,ENG,N/A
+135,Ufa,http://www.bashinform.ru/,Bash Inform,PA,GI,RUS,N/A
+136,Ufa,http://ufa.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+137,Ufa,http://www.mkset.ru/,Media Korset,NP,GI,RUS,N/A
+138,Ufa,http://ufa.mk.ru/,MK,NP,GI,RUS,N/A
+139,Ufa,http://www.rferl.org/section/Tatarstan_Bashkorstan/166.html,Radio Free Europe Radio Liberty,BC,GI,ENG,Radio
+140,Ufa,http://www.resbash.ru/,Respublika Bashkortostan,NP,GI,RUS,N/A
+141,Ufa,http://www.journal-ufa.ru/,Ufa,NP,GI,RUS,N/A
+142,Ufa,http://webvechufa.agidel.ru/,Vecherniaia Ufa ,NP,GI,RUS,N/A
+144,Belgorod,http://www.chr.aif.ru/belgorod,Argumenty i Fakty,NP,GI,RUS,N/A
+145,Belgorod,http://www.bel.ru/,Bel,PA,GI,RUS,N/A
+146,Belgorod,http://www.belpravda.belnet.ru/,Belgorodskaia Pravda,NP,GI,RUS,N/A
+147,Belgorod,http://belnovosti.ru/,Belgorodskie Novosti,IN,GI,RUS,N/A
+148,Belgorod,http://bel.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+149,Belgorod,http://www.nbgazeta.ru/,Nash Belgorod,NP,GI,RUS,N/A
+151,Briansk,http://www.bryansk.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+152,Briansk,http://www.province.ru/bryansk,Desnitsa,NP,GI,RUS,N/A
+153,Briansk,http://bryansk.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+154,Briansk,http://www.news.nashbryansk.ru/,Nash Briansk,NP,GI,RUS,N/A
+156,Ulan Ude,http://www.bol.ru/,BOL,IN,GI,RUS,N/A
+157,Ulan Ude,http://ulan.mk.ru/,MK,NP,GI,RUS,N/A
+159,Groznyi,http://www.stolicaplus.ru/,Stolitsa Plius,NP,GI,RUS,N/A
+160,Groznyi,http://vesti95.ru/,Vesti Respubliki,NP,GI,RUS,N/A
+162,Cheliabinsk,http://www.chel.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+163,Cheliabinsk,http://chel.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+164,Cheliabinsk,http://chel.mk.ru/,MK,NP,GI,RUS,N/A
+165,Cheliabinsk,http://www.province.ru/chelyabinsk,Sinegorye,NP,GI,RUS,N/A
+166,Cheliabinsk,http://uralpress.ru/,Ural Press,PA,GI,RUS,N/A
+167,Cheliabinsk,http://vecherka.su/,Vechernii Cheliabinsk,NP,GI,RUS,N/A
+169,Cheboksary,http://www.chv.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+170,Cheboksary,http://cheb.mk.ru/,MK,NP,GI,RUS,N/A
+171,Cheboksary,http://sovch.chuvashia.com/,Sovetskaia Chuvashiya,NP,GI,RUS,N/A
+173,Makhachkala,http://www.dag.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+174,Makhachkala,http://www.dagpravda.ru/,Dagestanskaia Pravda,NP,GI,RUS,N/A
+175,Makhachkala,http://mkala.mk.ru/,MK,NP,GI,RUS,N/A
+177,Iaroslavl,http://www.yar.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+178,Iaroslavl,http://www.province.ru/yaroslavl,Karavan ROS,NP,GI,RUS,N/A
+179,Iaroslavl,http://yar.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+180,Iaroslavl,http://yar.mk.ru/,MK,NP,GI,RUS,N/A
+182,Irkutsk,http://www.irk.aif.ru/,Argumenty i Fakty,NP,GI,RUS,TV
+183,Irkutsk,http://as.baikal.tv/,AS Baykal TV,BC,GI,RUS,N/A
+184,Irkutsk,http://sia.ru/?section=398,Delo,NP,GI,RUS,N/A
+185,Irkutsk,http://www.irk.ru/,Irk,IN,GI,RUS,N/A
+186,Irkutsk,http://irk.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+187,Irkutsk,http://baikal.mk.ru/,MK,NP,GI,RUS,N/A
+188,Irkutsk,http://sia.ru/,Sibirskoye Informatsionnoye,PA,GI,RUS,N/A
+190,Irkutsk,http://www.vsp.ru/,Vostochno Sibirskaia Pravda,NP,GI,RUS,N/A
+192,Ivanovo,http://www.ivanovonews.ru/,Ivanovo News,IN,GI,RUS,N/A
+193,Ivanovo,http://www.ivpress.ru/,Ivanovo Press,NP,GI,RUS,N/A
+194,Ivanovo,http://www.province.ru/ivanovo,Khronometr,NP,GI,RUS,N/A
+196,Nalchik,http://www.gazetayuga.ru/,Gazeta Yuga,NP,GI,RUS,N/A
+197,Nalchik,http://www.kbpravda.ru/,Kabardino Balkarskaia Pravda,NP,GI,RUS,N/A
+199,Kaliningrad,http://www.klg.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+200,Kaliningrad,http://www.kaliningradka.ru/,Kaliningradskaia Pravda,NP,GI,RUS,N/A
+201,Kaliningrad - Konigsberg,http://www.koenigsberger-express.com/,Konigsberger Express,NP,GI,DEU,N/A
+202,Kaliningrad,http://kaliningrad.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+203,Kaliningrad,http://kaliningradfirst.ru/,Yantarnyi Kray,NP,GI,RUS,N/A
+205,Obninsk,http://gazeta.obninsk.ru/,Vy i My,NP,GI,RUS,N/A
+207,Petropavlovsk,http://www.kamchatka.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+209,Petropavlovsk,http://kamkrai.com/,Kamchatskii Krai,NP,GI,RUS,N/A
+212,Petrozavodsk,http://karel.mk.ru/,MK,NP,GI,RUS,N/A
+213,Petrozavodsk,http://www.petrozavodsk.ru/,Petrozavodsk,NP,GI,RUS,N/A
+214,Petrozavodsk,http://vse.karelia.ru/,VSE,NP,BU,RUS,N/A
+216,Kemerovo,http://www.kuzbass.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+217,Kemerovo,http://kem.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+218,Kemerovo,http://www.province.ru/kemerovo,Tom,NP,GI,RUS,N/A
+220,Khabarovsk,http://www.province.ru/khabarovsk,Amurskii Meridian,NP,GI,RUS,N/A
+221,Khaborovsk,http://www.hab.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+222,Khabarovsk,http://hab.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+223,Khabarovsk,http://hab.mk.ru/,MK,NP,GI,RUS,N/A
+224,Khabarovsk,http://www.mdmk.ru/,Molodoy Dalnevostochnik,NP,GI,RUS,N/A
+225,Khabarovsk,http://toz.khv.ru/,Tikhookeanskaia Zvezda,NP,GI,RUS,N/A
+227,Abakan,http://abakan-gazeta.ru/,Abakan,NP,GI,RUS,N/A
+229,Surgut,http://www.ugra.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+230,Surgut,http://ugra.mk.ru/,MK,NP,GI,RUS,N/A
+232,Kirov,http://www.kirpravda.ru/,Kirovskaya Pravda,NP,GI,RUS,N/A
+233,Kirov,http://kirov.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+234,Kirov,http://www.nabludatel.ru/new/,Vyatskiy Nablyudatel,NP,GI,RUS,N/A
+235,Kirov,http://www.vk-smi.ru/,Vyatskiy Kray,NP,GI,RUS,N/A
+237,Syktyvkar,http://komi.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+238,Syktyvkar,http://www.mskomi.ru/,Molodezh Severa,NP,GI,RUS,N/A
+239,Syktyvkar,http://www.gazeta-respublika.ru/,Respublika,NP,GI,RUS,N/A
+241,Kostroma,http://www.province.ru/kostroma,Khronometr,NP,GI,RUS,N/A
+242,Kostroma,http://kostroma.mk.ru/,MK,NP,GI,RUS,N/A
+243,Kostroma,http://www.pravda44.ru/,Severnaia Pravda,NP,GI,RUS,N/A
+245,Krasnodar,http://www.kuban.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+246,Krasnodar,http://kuban.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+247,Krasnodar,http://kubnews.ru/,Kubanskiye Novosti,NP,GI,RUS,N/A
+248,Krasnodar,http://kuban.mk.ru/,MK,NP,GI,RUS,N/A
+249,Sochi,http://sochi.mk.ru/,MK,NP,GI,RUS,N/A
+251,Krasnoiarsk,http://www.krsk.aif.ru/,Argumenty i Fakty,NP,GI,RUS,Radio
+252,Krasnoiarsk,http://www.avtoradio.ru/,Avto Radio,BC,GI,RUS,N/A
+253,Krasnoiarsk,http://www.kgs.ru/,KGS,IN,GI,RUS,N/A
+254,Krasnoiarsk,http://krsk.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+255,Krasnoiarsk,http://www.yarsk.ru/,Krasnoiarsk,IN,GI,RUS,N/A
+256,Krasnoiarsk,http://www.xn--80aaaannntb3alvdldw6se.xn--p1ai/,Krasnoiarskaia Gazeta,NP,GI,RUS,N/A
+257,Krasnoiarsk,http://www.krasrab.com/,Krasnoiarskii Rabochiy,NP,GI,RUS,N/A
+258,Krasnoiarsk,http://kras.mk.ru/,MK,NP,GI,RUS,N/A
+259,Krasnoiarsk,http://www.sgzt.com/,Sevodniashnyaia Gazeta,NP,GI,RUS,N/A
+260,Norilsk,http://www.gazetazp.ru/,Zapoliarnaia Pravda,NP,GI,RUS,N/A
+262,Kurgan,http://www.province.ru/kurgan,Meridian,NP,GI,RUS,N/A
+264,Kursk,http://www.chr.aif.ru/kursk,Argumenty i Fakty,NP,GI,RUS,N/A
+265,Kursk,http://www.dddkursk.ru/,Drug Dlya Druga,NP,GI,RUS,N/A
+266,Kursk,http://kursk.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+267,Kursk,http://www.kpravda.ru/,Kurskaia Pravda,NP,GI,RUS,N/A
+268,Kursk,http://chr.mk.ru/,MK,NP,GI,RUS,N/A
+270,Lipetsk,http://www.chr.aif.ru/lip,Argumenty i Fakty,NP,GI,RUS,N/A
+271,Lipetsk,http://lipetsk.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+272,Lipetsk,http://www.lpgzt.ru/,Lipetskaia Gazeta,NP,GI,RUS,N/A
+274,Magadan,http://www.magpravda.ru/,Magadanskaia Pravda,NP,GI,RUS,N/A
+275,Magadan,http://vm.mag-city.ru/,Vechernii Magadan,NP,GI,RUS,N/A
+277,Ioshkar Ola,http://www.marinews.ru/,Mari News,IN,GI,RUS,N/A
+278,Ioshkar Ola,http://www.marpravda.ru/,Mariyskaia Pravda,NP,GI,RUS,N/A
+279,Ioshkar Ola,http://mrl.mk.ru/,MK,NP,GI,RUS,N/A
+281,Saransk,http://izvmor.ru/,Izvestiia Mordovii,NP,GI,RUS,N/A
+282,Saransk,http://www.vsar.ru/,Vechernii Saransk,NP,GI,RUS,N/A
+284,Dolgoprudny,http://www.mosoblpress.ru/dolgoprud/,Dolgoprudnenskie Stranitsy,NP,GI,RUS,N/A
+285,Dubna,http://www.dubna.ru/,Dubna,IN,GI,RUS,N/A
+286,Dubna,http://www.mosoblpress.ru/meeting/,Vstrecha,NP,GI,RUS,N/A
+287,Dzerzhinsky,http://www.mosoblpress.ru/ugresh/,Ugreshskie Vesti,NP,GI,RUS,N/A
+288,Klimovsk,http://www.op-klimovsk.ru/,Oktyabrskaia Ploshchad,NP,GI,RUS,N/A
+289,Klimovsk,http://www.mosoblpress.ru/uvm/,Utro Vechera Mudrenee,NP,GI,RUS,N/A
+290,Noginsk,http://www.mosoblpress.ru/volhonka/,Volkhonka,NP,GI,RUS,N/A
+291,Orekhovo Zuevo,http://www.mosoblpress.ru/oreh/,Orekhovo Zuevskaya Pravda,NP,GI,RUS,N/A
+292,Sergiev Posad,http://www.mosoblpress.ru/sergpos/,Vpered,NP,GI,RUS,N/A
+293,Serpukhov,http://serp.mk.ru/,MK,NP,GI,RUS,N/A
+294,Serpukhov,http://www.mosoblpress.ru/mig/,Moya Informatsionnaya Gazeta,NP,GI,RUS,N/A
+295,Serpukhov,http://www.oka-info.ru/,Oka Info,NP,GI,RUS,N/A
+296,Staraya Kupavna,http://www.mosoblpress.ru/alter/,Alternativnaya Gazeta,NP,GI,RUS,N/A
+298,Moskva,http://www.aif.ru/,Argumenty i Fakty,NP,GI,RUS,Radio
+299,Moskva,http://echo.msk.ru/,Ekho Moskvy,BC,GI,RUS,N/A
+300,Mosdva,http://www.akdi.ru/,Ekonomika i Zhizn,NP,BU,RUS,N/A
+301,Moskva,http://izvestia.ru/,Izvestiia,NP,GI,RUS,N/A
+302,Moskva,http://www.kommersant.ru/,Kommersant,NP,BU,RUS,N/A
+303,Moskva,http://www.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+304,Moskva,http://www.redstar.ru/,Krasnaya Zvezda,NP,GI,RUS,N/A
+305,Moskva,http://www.agronews.ru/,Krestyanskiye Vedomosti,NP,AG,RUS,N/A
+306,Moskva,http://www.lgz.ru/,Literaturnaya Gazeta,NP,GI,RUS,N/A
+307,Moskva,http://www.metronews.ru/,Metro,NP,GI,RUS,N/A
+308,Moskva,http://mospravda.ru/,Moskovskaia Pravda,NP,GI,RUS,N/A
+309,Moskva,http://www.mk.ru/,MK,NP,GI,RUS,N/A
+310,Moskva - Moscow,http://www.themoscownews.com/,Moscow News,NP,GI,ENG,N/A
+311,Moskva - Moscow,http://www.themoscowtimes.com/,Moscow Times,NP,GI,ENG,N/A
+312,Moskva - Moskau,http://www.mdz-moskau.eu/,Moskauer Deutsche Zeitung,NP,GI,DEU,N/A
+313,Moskva,http://www.ng.ru/,Nezavizimaia Gazeta,NP,GI,RUS,N/A
+314,Moskva,http://www.novayagazeta.ru/,Novaya Gazeta,NP,GI,RUS,N/A
+315,Moskva,http://www.og.ru/,Obshchaya Gazeta,NP,GI,RUS,N/A
+316,Moskva,http://www.pnp.ru/,Parlamentskaia Gazeta,NP,GI,RUS,N/A
+317,Moskva,http://www.province.ru/,Provinchiia,NP,GI,RUS,N/A
+318,Moskva - Moscow,http://www.russiajournal.com/,Russia Journal,NP,BU,ENG,N/A
+319,Moskva,http://www.rg.ru/,Rossiiskaia Gazeta,NP,GI,RUS,N/A
+320,Moskva,http://www.rv.ru/,Rossky Vestnik,NP,GI,RUS,N/A
+321,Moskva,http://www.rm-daily.com/,Russkaya Mysl,NP,GI,RUS,N/A
+322,Moskva,http://www.ruscur.ru/,Russkii Kurer,NP,GI,RUS,N/A
+323,Moskva,http://www.rv.ru/,Russkiy Vestnik,NP,GI,RUS,N/A
+324,Moskva,http://www.semya.ru/,Semya,NP,GI,RUS,N/A
+325,Moskva,http://sobesednik.ru/,Sobesednik,NP,GI,RUS,N/A
+326,Moskva,http://www.rednews.ru/,Sovetskaia Rossiya,NP,GI,RUS,N/A
+327,Moskva,http://www.sovsport.ru/,Sovetskii Sport,NP,SP,RUS,N/A
+328,Moskva,http://www.sport-express.ru/,Sport Ekspress,NP,SP,RUS,N/A
+329,Moskva,http://www.trud.ru/,Trud,NP,GI,RUS,N/A
+330,Moskva,http://www.tden.ru/,Tvoi Den,NP,GI,RUS,N/A
+331,Moskva,http://www.ug.ru/,Uchitelskaya Gazeta,NP,GI,RUS,N/A
+332,Moskva,http://vm.ru/,Vechernaia Moskva,NP,GI,RUS,N/A
+333,Moskva,http://www.vedomosti.ru/,Vedomosti,NP,GI,RUS,N/A
+334,Moskva,https://versia.ru/,Versia,NP,GI,RUS,N/A
+335,Moskva,http://www.vremya.ru/,Vremya Novostei,NP,GI,RUS,N/A
+336,Zelenograd,http://www.zelenograd41news.ru/,Sorok Odin,NP,GI,RUS,N/A
+338,Murmansk,http://gazeta2x2.ru/,Dvazhdy Dva,NP,GI,RUS,TV
+339,Murmansk,http://murmansk.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+340,Murmansk,http://murmansk.mk.ru/,MK,NP,GI,RUS,N/A
+341,Murmansk,http://www.mvestnik.ru/,Murmanskiy Vestnik,NP,GI,RUS,N/A
+342,Murmansk,http://www.ppmurmansk.ru/,Polyarnaia Pravda,NP,GI,RUS,N/A
+343,Murmansk,http://murman.rfn.ru/,TV Murman,BC,GI,RUS,N/A
+344,Murmansk,http://vmnews.ru/,Vechernii Murmansk,NP,GI,RUS,N/A
+346,Naryan Mar,http://nvinder.ru/,Naryana Vynder,NP,GI,RUS,N/A
+348,Nizhnii Novgorod,http://www.aif-nn.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+349,Nizhnii Novgorod,http://www.birzhaplus.ru/,Birhza,NP,GI,RUS,N/A
+350,Nizhnii Novgorod,http://nnov.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+351,Nizhnii Novgorod,http://nn.mk.ru/,MK,NP,GI,RUS,N/A
+352,Nizhnii Novgorod,http://www.pravda-nn.ru/,Nizhegorodskaia Pravda,NP,GI,RUS,N/A
+353,Nizhnii Novgorod,http://www.nnews.nnov.ru/,Nizhegorodskiye Novosti,NP,GI,RUS,N/A
+354,Nizhnii Novgorod,http://www.nr-gazeta.ru/,Nizhegorodskii Rabochii,NP,GI,RUS,N/A
+355,Nizhnii Novgorod,http://www.province.ru/nn,Prospekt,NP,GI,RUS,N/A
+356,Sarov,http://www.gazeta-sarov.ru/,Sarov,NP,GI,RUS,N/A
+358,Velikiy Novgorod,http://novved.ru/,Novgorodskie Vedomosti,NP,GI,RUS,N/A
+359,Velikiy Novgorod,http://www.province.ru/vnovgorod,Volkhov,NP,GI,RUS,N/A
+361,Novosibirsk,http://www.nsk.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+362,Novosibirsk,http://www.chslovo.com/,Chestnoye Slovo,NP,GI,RUS,N/A
+363,Novosibirsk,http://fis.ru/,FIS,PA,BU,RUS,N/A
+364,Novosibirsk,http://nsk.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+365,Novosibirsk,http://novos.mk.ru/,MK,NP,GI,RUS,N/A
+366,Novosibirsk,http://www.newsib.net/,Novaya Sibir,NP,GI,RUS,N/A
+367,Novosibirsk,http://www.sovsibir.ru/,Sovetskaya Sibir,NP,GI,RUS,N/A
+368,Novosibirsk,http://www.vn.ru/,Vecherniy Novosibirsk,NP,GI,RUS,N/A
+370,Omsk,http://www.omsk.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+371,Omsk,http://doinfo.ru/,DO Info,PA,GI,RUS,N/A
+372,Omsk,http://omsk.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+373,Omsk,http://omsk.mk.ru/,MK,NP,GI,RUS,N/A
+374,Omsk,http://www.tvoiomsk.ru/fo/op/,Omskaia Pravda,NP,GI,RUS,N/A
+376,Orenburg,http://www.oren.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+377,Orenburg,http://oren.mk.ru/,MK,NP,GI,RUS,N/A
+378,Orenburg,http://www.orenburzhie.ru/,Orenburzhye,NP,GI,RUS,N/A
+379,Orenburg,http://www.vecherniyorenburg.ru/,Vecherniy Orenburg,NP,GI,RUS,N/A
+380,Orenburg,http://www.province.ru/orenburg,Yaik,NP,GI,RUS,N/A
+382,Orel,http://www.chr.aif.ru/orel,Argumenty i Fakty,NP,GI,RUS,N/A
+383,Orel,http://orel.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+384,Orel,http://opravda.ru/,Orlovskaya Pravda,NP,GI,RUS,N/A
+385,Orel,http://orel-news.ru/,Orlovskiye Novosti,NP,GI,RUS,N/A
+386,Orel,http://www.province.ru/orel,Orlovskii Meridian,NP,GI,RUS,N/A
+388,Penza,http://hands.penza.com.ru/,Iz Pervikh Ruk,NP,SH,RUS,N/A
+389,Penza,http://penza.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+390,Penza,http://www.penzenskaya-pravda.ru/,Penzenskaia Pravda,NP,GI,RUS,N/A
+391,Penza,http://www.province.ru/penza,Reporter,NP,GI,RUS,N/A
+393,Perm,http://www.perm.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+394,Perm,http://perm.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+395,Perm,http://www.permv.ru/,Mestnoye Vremya,NP,GI,RUS,N/A
+396,Perm,http://perm.mk.ru/,MK,NP,GI,RUS,N/A
+397,Perm,http://zwezda.perm.ru/,Zvezda,NP,GI,RUS,N/A
+399,Vladivostok,http://www.vl.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+400,Vladivostok,http://dv.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+401,Vladivostok,http://vlad.mk.ru/,MK,NP,GI,RUS,N/A
+402,Vladivostok,http://www.vladnews.ru/,Vladivostok,NP,GI,RUS,N/A
+403,Vladivostok,http://vladivostoktimes.ru/,Vladivostok Times,IN,GI,ENG,N/A
+404,Vladivostok,http://www.novostivl.ru/,Yezhednevnye Novosti,NP,GI,RUS,N/A
+405,Vladivostok,http://www.zrpress.ru/,Zolotoy Rog,NP,GI,RUS,N/A
+407,Pskov,http://www.pskov.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+408,Pskov,http://pskov.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+409,Pskov,http://www.province.ru/pskov,Kurer,NP,GI,RUS,N/A
+410,Pskov,http://pln-pskov.ru/,Pskovskaia Lenta Novostey,IN,GI,RUS,N/A
+411,Pskov,http://pravda.pskov.ru/,Pskovskaia Pravda,NP,GI,RUS,N/A
+413,Riazan,http://www.rzn.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+414,Riazan,http://ryazan.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+415,Riazan,http://www.province.ru/ryazan,Meshcherskaia Storona,NP,GI,RUS,N/A
+416,Riazan,http://rzn.mk.ru/,MK,NP,GI,RUS,N/A
+417,Riazan,http://rv.ryazan.ru/,Riazanskiye Vedomosti,NP,GI,RUS,N/A
+418,Riazan,http://www.rzn.info/,RZN,IN,GI,RUS,N/A
+420,Rostov na Donu,http://www.rostov.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+421,Rostov na Donu,http://www.gorodn.ru/,Delovoi Rostov,NP,BU,RUS,N/A
+422,Rostov na Donu,http://www.province.ru/rostov,Gazeta Dona,NP,GI,RUS,N/A
+423,Rostov na Donu,http://rostov.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+424,Rostov na Donu,http://rostov.mk.ru/,MK,NP,GI,RUS,N/A
+425,Rostov na Donu,http://www.molotro.ru/,Molot,NP,GI,RUS,N/A
+426,Rostov na Donu,http://www.rostov.ru/,Rostov,IN,GI,RUS,N/A
+427,Rostov na Donu,http://www.vechrost.ru/,Vechernii Rostov,NP,GI,RUS,N/A
+429,Iakutsk,http://yakutia.mk.ru/,MK,NP,GI,RUS,N/A
+430,Iakutsk,http://www.gazetayakutia.ru/,Yakutiya,NP,GI,RUS,N/A
+432,Yuzhno Sakhalinsk,http://www.gtrk.ru/,GTRK,BC,GI,RUS,TV
+433,Yuzhno Sakhalinsk,http://www.sakhalin.info/,Sakhalin,IN,GI,RUS,N/A
+435,Samara,http://www.samara.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+436,Samara,http://www.golossamara.ru/,Golos Samara,IN,GI,RUS,N/A
+437,Samara,http://samara.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+438,Samara,http://samara.mk.ru/,MK,NP,GI,RUS,N/A
+439,Samara,http://www.province.ru/samara,Puls Povolzhya,NP,GI,RUS,N/A
+440,Samara,http://www.samara.ru/,Samara,IN,GI,RUS,N/A
+441,Samara,http://samaratoday.ru/,Samara Segodnya,IN,GI,RUS,N/A
+442,Samara,http://www.sgpress.ru/,Samarskaia Gazeta,NP,GI,RUS,N/A
+443,Samara,http://www.samarskieizvestia.ru/,Samarskiye Izvestiiya,NP,GI,RUS,N/A
+444,Samara,http://www.trkterra.ru/,Terra,IN,GI,RUS,N/A
+445,Samara,http://www.vkd.ru/,V Kazhdyi Dom,NP,GI,RUS,N/A
+446,Samara,http://www.vkonline.ru/,Volzhskaia Kommuna,NP,GI,RUS,N/A
+448,Sankt Peterburg,http://www.spb.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+449,Sankt Peterburg,http://www.dp.ru/,Delovoi Peterburg,NP,BU,RUS,N/A
+450,Sankt Peterburg,http://itar-tass.com/spb,ITAR TASS,PA,GI,RUS,N/A
+451,Sankt Peterburg,http://spb.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+452,Sankt Peterburg,http://www.lenpravda.ru/,Leningradskaia Pravda,NP,GI,RUS,N/A
+453,Sankt Peterburg,http://spb.mk.ru/,MK,NP,GI,RUS,N/A
+454,Sankt Peterburg,http://www.nvspb.ru/,Nevskoe Vremya,NP,GI,RUS,N/A
+455,Sankt Peterburg,http://saint-petersburg.ru/,Sankt Peterburg,IN,GI,RUS,N/A
+456,Sankt Peterburg,http://www.spbvedomosti.ru/,Sankt Peterburgskiye Vedomosti,NP,GI,RUS,N/A
+457,Sankt Peterburg,http://www.smena.ru/,Smena,NP,GI,RUS,N/A
+458,Sankt Peterburg -,http://www.sptimes.ru/,St. Petersburg Times,NP,GI,ENG,N/A
+460,Sankt Peterburg,http://www.vppress.ru/,Vecherniy Peterburg,NP,GI,RUS,N/A
+461,Sankt Peterburg,http://www.wn.ru/,What's New,NP,GI,RUS,N/A
+463,Saratov,http://www.saratov.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+464,Saratov,http://saratov.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+465,Saratov,http://saratov.mk.ru/,MK,NP,GI,RUS,N/A
+466,Saratov,http://www.province.ru/saratov,Saratovskii Arbat,NP,GI,RUS,N/A
+468,Smolensk,http://www.smol.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+469,Smolensk,http://smol.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+470,Smolensk,http://www.province.ru/smolensk,Nikolskoe Koltso,NP,GI,RUS,N/A
+471,Smolensk,http://www.rabochy-put.ru/,Rabochiy Put,NP,GI,RUS,N/A
+473,Stavropol,http://www.stav.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+474,Stavropol,http://stav.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+475,Stavropol,http://kavkaz.mk.ru/,MK,NP,GI,RUS,N/A
+476,Stavropol,http://www.stapravda.ru/,Stavropolskaia Pravda,NP,GI,RUS,N/A
+477,Stavropol,http://www.vechorka.ru/,Vechernii Stavropol,NP,GI,RUS,N/A
+478,Tolyatti,http://www.tltoboz.ru/,Tolyattinskoe Obozreniye,NP,GI,RUS,N/A
+480,Ekaterinburg,http://www.ural.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+481,Ekaterinburg,http://ural.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+482,Ekaterinburg,http://eburg.mk.ru/,MK,NP,GI,RUS,N/A
+483,Ekaterinburg,http://www.oblgazeta.ru/,Oblastnaia Gazeta,NP,GI,RUS,N/A
+484,Ekaterinburg,http://ura.ru/,Ura,PA,GI,RUS,N/A
+486,Michurinsk,http://www.michpravda.ru/,Michurinskaia Pravda,NP,GI,RUS,N/A
+487,Tambov,http://www.chr.aif.ru/tambov,Argumenty i Fakty,NP,GI,RUS,N/A
+488,Tambov,http://tambov.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+489,Tambov,http://tambov.mk.ru/,MK,NP,GI,RUS,N/A
+490,Tambov,http://www.province.ru/tambov,Tambovskii Meridian,NP,GI,RUS,N/A
+492,Kazan,http://www.kazan.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+493,Kazan,http://www.azatliq.org/,Azatliq Radiosi,BC,GI,TAT,Radio Also BAK
+494,Kazan,http://www.kazved.ru/,Kazanskiye Vedomosti,NP,GI,RUS,N/A
+495,Kazan,http://kazan.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+496,Kazan,http://kazan.mk.ru/,MK,NP,GI,RUS,N/A
+497,Kazan,http://www.rferl.org/section/Tatarstan_Bashkorstan/166.html,Radio Free Europe Radio Liberty,BC,GI,ENG,Radio
+498,Kazan,http://www.rt-online.ru/,Respublika Tatarstan,NP,GI,RUS,N/A
+499,Kazan,http://www.e-vid.ru/,Vremya i Dengi,NP,GI,RUS,N/A
+501,Tiumen,http://tumen.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+502,Tiumen,http://tyum-pravda.ru/,Tiumenskaia Pravda,NP,GI,RUS,N/A
+503,Tiumen,http://www.t-i.ru/,Tiumenskiye Izvestiia,NP,GI,RUS,N/A
+504,Tiumen,http://www.tm-courier.ru/,Tiumenskiy Kurer,NP,GI,RUS,N/A
+505,Tiumen,http://www.province.ru/tyumen,Yamskaya Sloboda,NP,GI,RUS,N/A
+507,Tomsk,http://tomsk.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+509,Tula,http://www.tula.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+510,Tula,http://tula.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+511,Tula,http://tula.mk.ru/,MK,NP,GI,RUS,N/A
+512,Tula,http://myslo.ru/,Sloboda,NP,GI,RUS,N/A
+513,Tula,http://tnews.tula.net/,Tulskie Izvestiia,NP,GI,RUS,N/A
+514,Yefremov,http://www.efremov.net/,Yefremov,IN,GI,RUS,N/A
+516,Tver,http://tver.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+518,Kzyzl,http://susanin.udm.ru/,Tsentr Asii,NP,GI,RUS,N/A
+520,Izhevsk,http://www.udm.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+521,Izhevsk,http://izh.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+522,Izhevsk,http://izhevsk.mk.ru/,MK,NP,GI,RUS,N/A
+523,Izhevsk,http://susanin.udm.ru/,Susanin,IN,GI,RUS,N/A
+525,Ulianovsk,http://www.ul.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+526,Ulianovsk,http://ul.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+527,Ulianovsk,http://www.nargaz.ru/,Narodnaia Gazeta,NP,GI,RUS,N/A
+529,Vladimir,http://www.vlad.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+530,Vladimir,http://www.province.ru/vladimir,Khronometr,NP,GI,RUS,N/A
+531,Vladimir,http://vladimir.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+532,Vladimir,http://vladimir.mk.ru/,MK,NP,GI,RUS,N/A
+534,Volgograd,http://www.vlg.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+535,Volgograd,http://inter-volgograd.ru/,Inter,PA,GI,RUS,N/A
+536,Volgograd,http://volgograd.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+537,Volgograd,http://volg.mk.ru/,MK,NP,GI,RUS,N/A
+538,Volgograd,http://vpravda.ru/,Volgogradskaia Pravda,NP,GI,RUS,N/A
+540,Vologda,http://www.vologda.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+541,Vologda,http://www.province.ru/vologda,Khronometr,NP,GI,RUS,N/A
+542,Vologda,http://vologda.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+543,Vologda,http://www.krassever.ru/,Krasnyi Sever,NP,GI,RUS,N/A
+544,Vologda,http://vologda.mk.ru/,MK,NP,GI,RUS,N/A
+546,Voronezh,http://www.chr.aif.ru/,Argumenty i Fakty,NP,GI,RUS,Site 1
+547,Voronezh,http://www.chr.aif.ru/voronezh,Argumenty i Fakty,NP,GI,RUS,Site 2
+548,Voronezh,http://www.bereg.vrn.ru/,Bereg,NP,GI,RUS,N/A
+549,Voronezh,http://www.communa.ru/,Kommuna,NP,GI,RUS,N/A
+550,Voronezh,http://vrn.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+551,Voronezh,http://vrn.mk.ru/,MK,NP,GI,RUS,N/A
+552,Voronezh,http://www.mkommunar.ru/,Molodoi Kommunar,NP,GI,RUS,N/A
+554,Salekhard,http://yamal.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A
+555,Salekhard,http://www.yamal.org/,Sever Press,PA,GI,RUS,N/A
+557,Chita,http://www.chita.aif.ru/,Argumenty i Fakty,NP,GI,RUS,N/A
+558,Chita,http://www.chita.ru/,Chita,IN,GI,RUS,N/A
+559,Chita,http://chita.kp.ru/,Komsomolskaia Pravda,NP,GI,RUS,N/A

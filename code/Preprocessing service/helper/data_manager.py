@@ -1,0 +1,90 @@
+from helper import config as cfg
+from models.article import Article
+from json import loads
+from helper.kafka_connector import KafkaConnector
+from preprocessing.data_preprocessing import DataPreprocessing
+
+
+class DataManager:
+    def __init__(self, service):
+        self.service = service
+        self.data_preprocessing_manager = None
+        # Kafka Parameters
+        self.topic_consumer = cfg.topic_consumer
+        self.topic_producer = cfg.topic_producer
+        self.group_id = cfg.group_id
+        self.kafka_server = cfg.kafka_server
+        self.enable_auto_commit = False
+        self.timeout = 3000
+        self.auto_offset_reset = "earliest"
+        self.kafka_manager = None
+
+        # Elasticsearch Parameters
+        self.es_port = cfg.es_port
+        self.es_host = cfg.es_host
+        self.elasticsearch_manager = None
+
+    def init_kafka_manager(self):
+        try:
+            self.kafka_manager = KafkaConnector(topic_consumer=self.topic_consumer,
+                                                topic_producer=self.topic_producer,
+                                                group_id=self.group_id,
+                                                bootstrap_servers=[self.kafka_server],
+                                                enable_auto_commit=self.enable_auto_commit,
+                                                consumer_timeout_ms=self.timeout,
+                                                auto_offset_reset=self.auto_offset_reset)
+            self.kafka_manager.init_kafka_consumer()
+            self.kafka_manager.init_kafka_producer()
+        except Exception as e:
+            cfg.logger.error(e)
+        return self
+
+    def init_preprocessing(self):
+        try:
+            self.data_preprocessing_manager = DataPreprocessing()
+        except Exception as e:
+            cfg.logger.error(e)
+        return self
+
+    def execute_preprocessing(self, data, manual_annot=False):
+        article = None
+        try:
+            if self.data_preprocessing_manager is None:
+                self.init_preprocessing()
+            # Pre-process data
+            cleaned_data = self.data_preprocessing_manager.apply_preprocessing(data=data,
+                                                                               manual_annot=manual_annot)
+            article = Article(cleaned_data)
+        except Exception as e:
+            cfg.logger.error(e)
+        return article
+
+    def start_kafka_process(self):
+        done = True
+        while done:
+            try:
+                self.kafka_manager.consumer.poll()
+                for msg in self.kafka_manager.consumer:
+                    try:
+                        cfg.logger.info('Loading Kafka Message')
+                        data = loads(msg.value)
+                        cfg.logger.info('Executing Preprocessing')
+                        article_obj = self.execute_preprocessing(data=data)
+                        if article_obj is not None:
+                            article = article_obj.article_to_dict()
+                            cfg.logger.info('Putting article into Kafka')
+                            self.kafka_manager.put_data_into_topic(data=article)
+                            self.kafka_manager.consumer.commit()
+                            cfg.logger.info('Done!')
+                        else:
+                            cfg.logger.warning("Article not ingested into Kafka")
+                    except Exception as e:
+                        cfg.logger.error(e)
+                        self.kafka_manager.consumer.commit()
+                        continue
+            except Exception as e:
+                cfg.logger.warning(e)
+                continue
+        return self
+
+
