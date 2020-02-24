@@ -1,0 +1,15 @@
+version: '3'
+services:
+    graph_analysis:   
+      image: "fandangorg/fandango_source_credibility:1.0.6"
+      container_name: docker_graph
+      volumes:
+        - neo4j_vol:/var/lib/neo4j/data/
+      ports:
+        - "5000:5000"
+        - "7474:7474"
+        - "7687:7687"
+      command : bash -c "neo4j restart  & sleep 40 && python3 /app/init_service.py & sleep 1m && curl -X POST  http://0.0.0.0:5000/graph_analysis/offline/start && tail -F anything"
+
+volumes:
+      neo4j_vol:
