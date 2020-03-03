@@ -21,18 +21,19 @@ from keras.wrappers.scikit_learn import KerasClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, PowerTransformer, RobustScaler
 import matplotlib.pyplot as plt
-from fake_news_detection.config.AppConfig import dataset_beta, picklepath,\
+from fake_news_detection.config.AppConfig import dataset_beta, picklepath, \
     resources_path
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO
 from fake_news_detection.model.predictor import LGBMFakePredictor, Preprocessing
 
 
 class FSdataframeDAO:
-    def __init__(self, dir_path:str= dataset_beta):
+
+    def __init__(self, dir_path:str=dataset_beta):
         self.dir_path = dir_path
 
     def load(self, id:str) -> DataFrame:
-        return read_csv(self.dir_path+"/"+id+".csv", encoding='utf-8')
+        return read_csv(self.dir_path + "/" + id + ".csv", encoding='utf-8')
 
 
 def get_performance(y_test:List, y_pred:List):
@@ -52,14 +53,15 @@ def get_performance(y_test:List, y_pred:List):
 def create_lstm_moderl(input_dim):
     model = Sequential()
     print(input_dim) 
-    model.add(LSTM(100, input_shape=(11455,17), return_sequences=True))
+    model.add(LSTM(100, input_shape=(11455, 17), return_sequences=True))
     model.add(Dropout(0.2))
-    model.add(LSTM( 100, return_sequences=True))
+    model.add(LSTM(100, return_sequences=True))
     model.add(Dropout(0.2))
-    model.add(LSTM(1,return_sequences=True, activation='linear'))
+    model.add(LSTM(1, return_sequences=True, activation='linear'))
     model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
     model.summary()
     return model
+
 
 def create_model1(input_dim):
     """
@@ -78,7 +80,6 @@ def create_model1(input_dim):
     return model
 
 
-
 if __name__ == '__main__':    
     #===========================================================================
     # daopredictor = FSMemoryPredictorDAO(picklepath)
@@ -95,9 +96,8 @@ if __name__ == '__main__':
     epochs = 300
     batch_size = int(23860 / 20)
 
-
     ########## Load and split dataset ##########
-    df = pandas.read_csv( resources_path+"/default_train_en.csv" ).iloc[:, 1:]
+    df = pandas.read_csv(resources_path + "/default_train_en.csv").iloc[:, 1:]
     print("\n > df shape:", df.shape)
     print("\n columns", df.columns)
 
@@ -108,8 +108,6 @@ if __name__ == '__main__':
     X = df
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
     print(X_train.shape, y_train.shape, X_test.shape, y_test.shape)
-
-
 
     ########## Transform data ##########
 
@@ -130,12 +128,11 @@ if __name__ == '__main__':
     X_test_transf = X_test 
 
     print("\n > transform complete!")
-    input_dim = X_train_transf.shape[1]            # Number of features (columns)
-
+    input_dim = X_train_transf.shape[1]  # Number of features (columns)
 
     ########## Training ##########
-    #model1 = KerasClassifier(build_fn=create_model1, epochs=epochs, batch_size=batch_size, verbose=1, validation_split=0.2)
-    #model1 = LogisticRegression()
+    # model1 = KerasClassifier(build_fn=create_model1, epochs=epochs, batch_size=batch_size, verbose=1, validation_split=0.2)
+    # model1 = LogisticRegression()
     model1 = LGBMClassifier() 
     model1.fit(X_train_transf, y_train)
     """ Plot the significance scores of feautures """
@@ -149,7 +146,7 @@ if __name__ == '__main__':
     ########## Prediction ##########
     # y_pred = model1.predict(X_test_transf)
     probs = model1.predict_proba(X_test_transf)
-    #y_pred = ['FAKE' if single_pred[0] >= single_pred[1] else 'REAL' for single_pred in probs]
+    # y_pred = ['FAKE' if single_pred[0] >= single_pred[1] else 'REAL' for single_pred in probs]
     y_pred = [0 if single_pred[0] >= single_pred[1] else 1 for single_pred in probs]
     print("\n Classes: \n", model1.classes_)
     print("\n Probabilities: \n", probs[0:10])

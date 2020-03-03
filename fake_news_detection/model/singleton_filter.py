@@ -14,17 +14,19 @@ lock = threading.Lock()
 lock_2 = threading.Lock()
 
 
-
 def synchronized(lock):
     """ Synchronization decorator """
+
     def wrapper(f):
+
         @functools.wraps(f)
         def inner_wrapper(*args, **kw):
             with lock:
                 return f(*args, **kw)
-        return inner_wrapper
-    return wrapper
 
+        return inner_wrapper
+
+    return wrapper
 
 
 class Singleton(type):
@@ -35,5 +37,4 @@ class Singleton(type):
         if cls not in cls._instances:
             cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
         return cls._instances[cls]
-
 

@@ -100,22 +100,17 @@ def crawl_prep(url:str, old:str="False") -> News_DataModel:
     news_preprocessed = service_scrapy.scrapy(url)
     prest, analisy2 = service_analyzer.analyzer(news_preprocessed, old=old)
     news_preprocessed.results = prest
-    print("presssssssssssssssst", analisy2)
     news_preprocessed.similarnews = similar_news(news_preprocessed.identifier)
     topics = []
-    # topics = topics_getter(news_preprocessed)
+    #remove comment when service's ready
+    #topics = topics_getter(news_preprocessed)
     news_preprocessed.calculateRatingDetail = analisy2
-    print("calculateddddddddddddddddddddddddddd", news_preprocessed.calculateRatingDetail)
     opendata = Open_Data(text=news_preprocessed.headline, category=news_preprocessed.headline, topics=topics)
     news_preprocessed.calculateRatingDetail['textRating'] = news_preprocessed.calculateRatingDetail['textRating'] * 100
-    print(news_preprocessed.calculateRatingDetail['textRating'])
     news_preprocessed.calculateRating = round(agg_score(news_preprocessed.identifier, news_preprocessed.calculateRatingDetail), 2)
-    
-    print("calculated ratinggggggggggggggggg", round(news_preprocessed.calculateRating, 2))
-
     op = get_opendata(opendata)
     prest = {"news_preprocessed": news_preprocessed , "opendata" : op}
-    print(prest)
+    #print(prest)
     return prest
 
 
