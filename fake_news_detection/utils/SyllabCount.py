@@ -5,7 +5,7 @@ Created on 1 mar 2019
 '''
 
     
-def syllcounten( word):
+def syllcounten(word):
     count = 0
     vowels = "aeiouy"
     if word[0] in vowels:
@@ -18,8 +18,9 @@ def syllcounten( word):
     if count == 0:
         count += 1
     return count
+
             
-def syllcountit( word):
+def syllcountit(word):
     count = 0
     vowels = "aeiouy"
     if word[0] in vowels:
@@ -32,14 +33,10 @@ def syllcountit( word):
     if count == 0:
         count += 1
     return count  
+
         
 if __name__ == '__main__':
     
     print(syllcounten('love'))
-            
-    
-
-
-    
         
         

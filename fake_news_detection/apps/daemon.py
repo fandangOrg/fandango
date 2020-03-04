@@ -5,12 +5,12 @@ Created on Jan 21, 2019
 '''
 import time
 from threading import Thread
-from fake_news_detection.config.AppConfig import url_kafka, port_kafka,\
+from fake_news_detection.config.AppConfig import url_kafka, port_kafka, \
     n_consumer, topic_input_kafka, topic_output_kafka
 from fake_news_detection.business.jobs import run_job
 from fake_news_detection.apps.Task import Task_Analyzer
 
-#import schedule
+# import schedule
 
 
 def daemon_run():
@@ -19,9 +19,9 @@ def daemon_run():
     # In this case 'urls' is a list of urls to be crawled. 
     #     We start one thread per url present.
     #===========================================================================
-    print("coda: ",url_kafka, port_kafka )
+    print("coda: ", url_kafka, port_kafka)
     print("RUN ANALYZER")
-    process = Thread(target=run_job, kwargs={"n_job":n_consumer,"input_queue":topic_input_kafka,"output_queue":topic_output_kafka,"task": Task_Analyzer})
+    process = Thread(target=run_job, kwargs={"n_job":n_consumer, "input_queue":topic_input_kafka, "output_queue":topic_output_kafka, "task": Task_Analyzer})
     process.start()
     threads.append(process)
  
@@ -35,7 +35,6 @@ if __name__ == '__main__':
     # process.start()
     # threads.append(process)
     #===========================================================================
-    
 
 #===============================================================================
 # def schedule_task():

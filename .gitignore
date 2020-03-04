@@ -12,3 +12,4 @@ __pycache__/
 /node_modules
 /fake_news_detection/resources
 log.txt
+fake_news_detection/test/test1.py

@@ -55,6 +55,7 @@ def evaluate_with_ds4biz_predictor_core(conf:TransformingPredictor) -> dict:
     print("recall", diz["recall"])
     return diz
 
+
 def get_scikit_transformer(conf:TransformingPredictor) -> TransformerMixin:
     return conf.transformer
 
@@ -64,7 +65,7 @@ def get_scikit_predictor(conf:TransformingPredictor) -> ClassifierMixin:
 
 
 def store_ds4biz_model(conf:TransformingPredictor, id:str, path:str) -> TransformingPredictor:
-    conf.id = id                              #set unique name
+    conf.id = id  # set unique name
     return FSPredictorDAO(path).save(conf)
 
 
@@ -74,11 +75,10 @@ def load_ds4biz_model(id:str, path:str) -> TransformingPredictor:
     return loaded_model
 
 
-
 if __name__ == "__main__":
 
     X_title_new = ["title A", "title B", "title C", "title D", "title E", "title F", "title G", "title H", "title I", "title L"]
-    X_text_new = [ "i worked on sunday so i had monday off",  "the desk has three drawers",
+    X_text_new = [ "i worked on sunday so i had monday off", "the desk has three drawers",
                    "he is about your age", "yes but i still don't have many friends here yet",
                    "where are you", "i can't figure out what she really wants",
                    "it's none of my business", "mary can dance well",
@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
     ### merge 'title' and 'text' columns and set X and y ###
     training_set = get_train_dataset()
-    #training_set = training_set.sample(frac=0.05)   # sampling for quickly test
+    # training_set = training_set.sample(frac=0.05)   # sampling for quickly test
     X = training_set['title'].map(str) + ' ' + training_set['text'].map(str)
     y = training_set['label']
     print('\n training_set', training_set.shape, "\n X", X.shape, "\n y", y.shape)
@@ -116,7 +116,7 @@ if __name__ == "__main__":
     print("\n Holdout method (80% train | 20% test)")
     evaluate_with_ds4biz_predictor_core(conf)
     print("\n 5-fold cross validation")
-    evaluate_trought_CV_with_ds4biz_predictor_core(conf, X, y)     # accuracy 0.953
+    evaluate_trought_CV_with_ds4biz_predictor_core(conf, X, y)  # accuracy 0.953
 
     ### store and load from disk ###
     store_ds4biz_model(conf, id="clf-fandango", path="/home/camila/workspace/fandango-fake-news/fake_news_detection/resources/model")

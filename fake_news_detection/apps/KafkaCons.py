@@ -10,7 +10,7 @@ import time
 import json
 import random
 import os
-#from fake_news_detection.apps.consumers import Task, Task_1
+# from fake_news_detection.apps.consumers import Task, Task_1
 from fake_news_detection.apps.Task import Task, Task_Analyzer
 from fake_news_detection.config.AppConfig import path_training
 from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains
@@ -18,8 +18,9 @@ from brokermanager.model.publishers import KafkaPublisher
  
 
 class Consumer:
-    def __init__(self,topic,group_id,bootstrap_servers,auto_offset_reset="earliest",enable_auto_commit=False,retry_interval=1):
-        print("bootstrap_servers",bootstrap_servers)
+
+    def __init__(self, topic, group_id, bootstrap_servers, auto_offset_reset="earliest", enable_auto_commit=False, retry_interval=1):
+        print("bootstrap_servers", bootstrap_servers)
         self.group_id = group_id
         self.bootstrap_servers = bootstrap_servers
         self.auto_offset_reset = auto_offset_reset
@@ -28,14 +29,14 @@ class Consumer:
         self.topic = topic
 
     def consume_forever(self):
-        consumer=None
+        consumer = None
         while True:
             try:
-                consumer=KafkaConsumer(self.topic,group_id=self.group_id,bootstrap_servers=self.bootstrap_servers,auto_offset_reset=self.auto_offset_reset,enable_auto_commit=self.enable_auto_commit)
+                consumer = KafkaConsumer(self.topic, group_id=self.group_id, bootstrap_servers=self.bootstrap_servers, auto_offset_reset=self.auto_offset_reset, enable_auto_commit=self.enable_auto_commit)
                 consumer.poll()
                 for msg in consumer:
                     try:
-                        obj=self.parse(msg)
+                        obj = self.parse(msg)
                         self.process(obj)
                         consumer.commit()
                     except Exception as elab:
@@ -50,57 +51,53 @@ class Consumer:
                     except Exception as cl:
                         logging.exception(cl)
 
-    def parse(self,msg):
+    def parse(self, msg):
         raise Exception("Not implemented")
     
-    def process(self,obj):
+    def process(self, obj):
         raise Exception("Not implemented")
-    
     
 
 class JsonConsumer(Consumer):
+
     def parse(self, msg):
         try:
             return json.loads(msg.value)
         except Exception as inst:
             print(inst)
             return None
+
     
-    #take just one function at time
+    # take just one function at time
 class InjectableJSONConsumer(JsonConsumer):
-    def __init__(self,topic,group_id,bootstrap_servers,fun,auto_offset_reset="earliest",enable_auto_commit=True,retry_interval=1):
-        super().__init__(topic,group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
-        self.fun=fun
+
+    def __init__(self, topic, group_id, bootstrap_servers, fun, auto_offset_reset="earliest", enable_auto_commit=True, retry_interval=1):
+        super().__init__(topic, group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
+        self.fun = fun
+
     def process(self, obj):
         return self.fun(obj)
     
     
-    
-    #take some tasks together
+    # take some tasks together
 class InjectableTASKJSONConsumer(JsonConsumer):  
-    #auto_offset_reset="earliest"
-    def __init__(self,topic,group_id,bootstrap_servers,task:Task,auto_offset_reset="earliest",enable_auto_commit=True,retry_interval=1):
-        super().__init__(topic,group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
-        self.task=task
-        #self.file_output=open(path_training+"/dataset_kafka.csv", mode='a+')
+
+    # auto_offset_reset="earliest"
+    def __init__(self, topic, group_id, bootstrap_servers, task:Task, auto_offset_reset="earliest", enable_auto_commit=True, retry_interval=1):
+        super().__init__(topic, group_id, bootstrap_servers, auto_offset_reset, enable_auto_commit, retry_interval)
+        self.task = task
+        # self.file_output=open(path_training+"/dataset_kafka.csv", mode='a+')
         dao = DAOTrainingElasticByDomains()
         self.dic_domains = dao.get_domains_from_elastic()
-
-
        
     def process(self, obj):
-        #print(self.task.do(obj))
-        return self.task.do(obj,self.dic_domains )
-    
-    
+        # print(self.task.do(obj))
+        return self.task.do(obj, self.dic_domains)
 
     def init_system(self):
-    #load (carica modelli)    
-    #{"it":modello,"en":modello}
+    # load (carica modelli)    
+    # {"it":modello,"en":modello}
         pass
-      
-      
-
 
 
 if __name__ == '__main__':
@@ -118,27 +115,20 @@ if __name__ == '__main__':
     consumer.consume_forever()
  
     '''
-    
-    
-    
           
-    #consumer=InjectableJSONConsumer(topic="score_ml", group_id="cami2", bootstrap_servers=["localhost:9092"], fun=print_f)
-    #consumer.consume_forever()
-    #print("errore")
-    
+    # consumer=InjectableJSONConsumer(topic="score_ml", group_id="cami2", bootstrap_servers=["localhost:9092"], fun=print_f)
+    # consumer.consume_forever()
+    # print("errore")
     
     print('  1      ')
-    queue_output=KafkaPublisher("localhost","9092")#provo se la coda è stata creata
-    topic="input_preprocessed"
-    output_topic =  "analyzed_text"
+    queue_output = KafkaPublisher("localhost", "9092")  # provo se la coda è stata creata
+    topic = "input_preprocessed"
+    output_topic = "analyzed_text"
     print('     2                ')
-    consumer=InjectableTASKJSONConsumer(topic = topic, group_id="lvt_group12", bootstrap_servers=["localhost:9092"], task=Task_Analyzer())
+    consumer = InjectableTASKJSONConsumer(topic=topic, group_id="lvt_group12", bootstrap_servers=["localhost:9092"], task=Task_Analyzer())
     print('          3            ')
     consumer.consume_forever()
     print('                4           ')
     print("in ascolto")
-
-    
-    
     
     

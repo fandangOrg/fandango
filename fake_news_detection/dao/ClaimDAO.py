@@ -7,8 +7,8 @@ Created on 27 set 2018
 
 '''
 
-from fake_news_detection.config.AppConfig import  get_elastic_connector,\
-    docType, mapping, index_name_claims, train_claims,\
+from fake_news_detection.config.AppConfig import  get_elastic_connector, \
+    docType, mapping, index_name_claims, train_claims, \
     mapping_claim
 from fake_news_detection.utils.logger import getLogger
 from elasticsearch import helpers
@@ -20,6 +20,7 @@ log = getLogger(__name__)
 
 
 class DAOClaimInput:
+
     def all(self):
         raise NotImplementedError()
     
@@ -27,29 +28,30 @@ class DAOClaimInput:
 class DAOClaimInputDummy:
     
     def all(self):
-        claims="ciao questo è il claim numero "
+        claims = "ciao questo è il claim numero "
         for k in range(100):
             claim = {}
             claim["id_json"] = str(k)
-            claim["label"] =  "label"+str(k)
-            claim["claim"] =  claims+str(k)
-            claim["topic"] = "topic"+str(k)
-            claim["author"] = "author"+str(k)
-            claim["role_of_the_authors"] = "role_of_the_authors"+str(k)
+            claim["label"] = "label" + str(k)
+            claim["claim"] = claims + str(k)
+            claim["topic"] = "topic" + str(k)
+            claim["author"] = "author" + str(k)
+            claim["role_of_the_authors"] = "role_of_the_authors" + str(k)
             yield claim
+
             
 class DAOClaimInputCSV:
-    def __init__(self,path,delimiter='\t'):
-        self.path=path
-        self.delimeter=delimiter
+
+    def __init__(self, path, delimiter='\t'):
+        self.path = path
+        self.delimeter = delimiter
         
     def all(self):
-        with open( self.path) as f:
+        with open(self.path) as f:
             reader = csv.reader(f, delimiter=self.delimeter)
             for r in reader:
                 claim = Claim(r[1], r[2], r[4])
                 yield claim
-        
  
 
 class DAOClaimsOutput:
@@ -63,7 +65,7 @@ class DAOClaimsOutput:
     def add_claims(self, dao:DAOClaimInput):
         raise NotImplementedError()
     
-    def get_similarity_claims_from_text(self,text):
+    def get_similarity_claims_from_text(self, text):
         raise NotImplementedError()
 
 
@@ -74,11 +76,9 @@ class DAOClaimsOutputElastic:
         self.index_name = index_name_claims 
         self.docType = docType  
         
-        #self.domain_name_index = index_name_domain 
-    
+        # self.domain_name_index = index_name_domain 
     
     def check_claim_existence(self, text):
-        
         
         body = {
                 "query": {
@@ -88,8 +88,7 @@ class DAOClaimsOutputElastic:
                 }
               }
         
-        
-        res = self.es_client.search(index=self.index_name, body= body)
+        res = self.es_client.search(index=self.index_name, body=body)
         if len(res['hits']['hits']) < 1:
             log.debug('Claim you want to add does not exist')
             return True
@@ -97,8 +96,7 @@ class DAOClaimsOutputElastic:
             log.debug('Claim you want to add already exists')
             return False
         
-        
-    def get_similarity_claims_from_text(self,text):
+    def get_similarity_claims_from_text(self, text):
         
         """
         retrieve a similar claim, querying against elastic
@@ -139,18 +137,18 @@ class DAOClaimsOutputElastic:
                     }
                 }
         try:
-            res = self.es_client.search(index= self.index_name, body= body1)
+            res = self.es_client.search(index=self.index_name, body=body1)
         except Exception as e:
             log.error("Could not perform similarity claim query: {err}".format(err=e))
             raise FandangoException("Could not perform similarity claim query: {err}".format(err=e))
-        lista_claim =[]
+        lista_claim = []
         for r in res['hits']['hits']:
-            if r["_score"]>5:
-                d=r['_source']
-                d['score']=r["_score"]
-                d["claim"]=r["highlight"]["claim"][0]
-                #{"score": r['_score'], "claim": r["highlight"]["claim"][0],}
-                lista_claim.append( d )               
+            if r["_score"] > 5:
+                d = r['_source']
+                d['score'] = r["_score"]
+                d["claim"] = r["highlight"]["claim"][0]
+                # {"score": r['_score'], "claim": r["highlight"]["claim"][0],}
+                lista_claim.append(d)               
                 log.debug("New similar claim founded, original claim: {ori}, found: {cl}".format(ori=text, cl=r['_source']['claim'])) 
             
         return lista_claim
@@ -161,11 +159,10 @@ class DAOClaimsOutputElastic:
         @param indice: str
         """
         try:
-            self.es_client.indices.delete(indice, ignore=[400,404])
+            self.es_client.indices.delete(indice, ignore=[400, 404])
         except:
             log.info("Could not delete index: {ind}".format(ind=indice))
             raise FandangoException("Could not delete index: {ind}".format(ind=indice))
-            
             
     def restart_source(self):
         """
@@ -173,7 +170,7 @@ class DAOClaimsOutputElastic:
         """
         try:
             for templ in self.es_client.cat.templates(format="json"):
-                if templ["index_patterns"]== "[*]":
+                if templ["index_patterns"] == "[*]":
                     self.es_client.indices.delete_template(templ["name"])
         except:
             pass
@@ -184,24 +181,23 @@ class DAOClaimsOutputElastic:
             with open(mapping , "r") as f:
                 body = f.read()
                 try:
-                    self.es_client.indices.create(index = self.index_name, body = body)
-                    log.info("Mapping successfully loaded for index: {ind}".format(ind =self.index_name))
+                    self.es_client.indices.create(index=self.index_name, body=body)
+                    log.info("Mapping successfully loaded for index: {ind}".format(ind=self.index_name))
                 except:
-                    log.info("Could not create new index: {ind}".format(ind =self.index_name))
-                    raise FandangoException("Could not create new index: {ind}".format(ind = self.index_name))
+                    log.info("Could not create new index: {ind}".format(ind=self.index_name))
+                    raise FandangoException("Could not create new index: {ind}".format(ind=self.index_name))
             
-        if self.es_client.indices.exists(index= self.index_name):
+        if self.es_client.indices.exists(index=self.index_name):
             self.__delete_index(self.index_name)
             
             with open(mapping_claim , "r") as f:
                 body = f.read()
                 try:
-                    self.es_client.indices.create(index = self.index_name, body = body)
-                    log.info("Mapping successfully loaded for index: {ind}".format(ind =self.index_name))
+                    self.es_client.indices.create(index=self.index_name, body=body)
+                    log.info("Mapping successfully loaded for index: {ind}".format(ind=self.index_name))
                 except:
-                    log.info("Could not create new index: {ind}".format(ind =self.index_name))
-                    raise FandangoException("Could not create new index: {ind}".format(ind = self.index_name))
- 
+                    log.info("Could not create new index: {ind}".format(ind=self.index_name))
+                    raise FandangoException("Could not create new index: {ind}".format(ind=self.index_name))
 
     def add_claim(self, claim):
         """
@@ -209,12 +205,11 @@ class DAOClaimsOutputElastic:
         @param claim: str
         """
         try:
-            self.es_client.index(index=self.index_name, doc_type=self.docType,  body=claim)
+            self.es_client.index(index=self.index_name, doc_type=self.docType, body=claim)
             log.debug("New document successfully indexed")
         except Exception as e:
             log.error("Can't index document, an error has occurred: {err}".format(err=e))
             raise FandangoException("Can't index document, an error has occurred: {err}".format(err=e))
- 
     
     def add_claims(self, dao:DAOClaimInput):
         """
@@ -222,10 +217,10 @@ class DAOClaimsOutputElastic:
         @param dao: class
         """
         lista_claims = []
-        for c,claim in enumerate(dao.all()):
-            if c%1000==0:
+        for c, claim in enumerate(dao.all()):
+            if c % 1000 == 0:
                 log.info("Number claims: {c}".format(c=c))
-            lista_claims.append( {
+            lista_claims.append({
                     '_op_type': 'index',
                     '_index': self.index_name,
                     '_type': self.docType,
@@ -246,25 +241,20 @@ class DAOClaimsOutputElastic:
                 raise FandangoException("Can't index documents, an error has occurred: {err}".format(err=info))
                 
         log.info("New documents successfully indexed")
-
-    
     
        
 if __name__ == '__main__':
-    name=train_claims+"/train.tsv"
-    #dao_input= DAOClaimInputCSV(name)
-    #for claim in dao_input.all():
+    name = train_claims + "/train.tsv"
+    # dao_input= DAOClaimInputCSV(name)
+    # for claim in dao_input.all():
     #    print(claim)
         
-    #dao_input= DAOClaimInputDummy()
+    # dao_input= DAOClaimInputDummy()
     dao_output = DAOClaimsOutputElastic()
-    #dao_output.restart_source()
-    #dao_output.add_claims(dao_input)
-    a=dao_output.get_similarity_claims_from_text("ciao questo é il claim numero 4")
+    # dao_output.restart_source()
+    # dao_output.add_claims(dao_input)
+    a = dao_output.get_similarity_claims_from_text("ciao questo é il claim numero 4")
     print(a)
-    #popola_all()
-    
-    
-    
+    # popola_all()
                     
         

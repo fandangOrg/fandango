@@ -3,7 +3,7 @@ Created on 8 feb 2019
 
 @author: daniele
 '''
-from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains,\
+from fake_news_detection.dao.TrainingDAO import DAOTrainingElasticByDomains, \
     DAOTrainingPD
 from fake_news_detection.dao.DAO import FSMemoryPredictorDAO, DAONewsElastic
 from fake_news_detection.apps.training_model import Train_model
@@ -28,8 +28,6 @@ import pandas
 # print(device_lib.list_local_devices())
 #===============================================================================
 
-
-
 #===============================================================================
 # oo = DAOTrainingPD(dataset_beta)
 # X=oo.get_train_dataset()
@@ -45,14 +43,14 @@ import pandas
 # print(X.shape )
 # print(X.columns)
 #===============================================================================
-#X=pandas.read_csv(dataset_beta+"/train.csv").iloc[:, 1:]
+# X=pandas.read_csv(dataset_beta+"/train.csv").iloc[:, 1:]
+
 
 class Train_model:
     
-    
-    def load_df(self,path_to_dataset:str, sample_size:float=0.05) -> DataFrame:
-        df = read_csv(path_to_dataset, sep = '|')
-        print("\n > load dataframe from \'", path_to_dataset, "\'" )
+    def load_df(self, path_to_dataset:str, sample_size:float=0.05) -> DataFrame:
+        df = read_csv(path_to_dataset, sep='|')
+        print("\n > load dataframe from \'", path_to_dataset, "\'")
         if sample_size < 1.0:
             sample = df.sample(frac=sample_size)
             print("\n > sample (", sample_size, "%)", "[", sample.columns, "]")
@@ -60,8 +58,7 @@ class Train_model:
         else:
             return df
     
-    
-    def preprocess_df(self,training_set:DataFrame, path_for_store_preprocessed_df:str="./prova.csv", store:bool=True) -> DataFrame:
+    def preprocess_df(self, training_set:DataFrame, path_for_store_preprocessed_df:str="./prova.csv", store:bool=True) -> DataFrame:
         training_set_modified = preprocess_features_of_df(df=training_set.dropna(), mapping=text_preprocessing_mapping)
         print("\n 1) Training_set_modified: \n", training_set_modified.iloc[0, :])
         training_set_improved = add_new_features_to_df(df=training_set_modified.dropna(), mapping=new_features_mapping)
@@ -72,8 +69,7 @@ class Train_model:
             training_set_final.to_csv(path_for_store_preprocessed_df)
         return training_set_final
     
-    
-    def training(self,model_name:str, training_set_final, daopredictor):
+    def training(self, model_name:str, training_set_final, daopredictor):
         y = training_set_final['label']
         X = training_set_final.drop(['label'], axis=1)
         print("Shape of X:", X.shape)
@@ -90,10 +86,9 @@ class Train_model:
         print("   - Accuracy:", model.predictor.accuracy)
         print("   - Precision:", model.predictor.precision)
         print("   - Recall:", model.predictor.recall)
-        print("   - F-measure:",  2 * (model.predictor.precision * model.predictor.recall) / (model.predictor.precision + model.predictor.recall))
+        print("   - F-measure:", 2 * (model.predictor.precision * model.predictor.recall) / (model.predictor.precision + model.predictor.recall))
     
-    
-    def evaluate(self,model_name:str, test_set_final, daopredictor):
+    def evaluate(self, model_name:str, test_set_final, daopredictor):
         y_test = test_set_final['label']
         X_test = test_set_final.drop(['label'], axis=1)
         model = daopredictor.get_by_id(model_name)
@@ -102,17 +97,16 @@ class Train_model:
         print("   - Accuracy:", accuracy_score(y_test, y_pred))
         print("   - Precision:", precision_score(y_test, y_pred, average='macro'))
         print("   - Recall:", recall_score(y_test, y_pred, average='macro'))
-        print("   - F-measure:",  f1_score(y_test, y_pred, average='macro'))
+        print("   - F-measure:", f1_score(y_test, y_pred, average='macro'))
 
 
-
-X=pandas.read_csv("/home/daniele/Scaricati"+"/data.csv")
+X = pandas.read_csv("/home/daniele/Scaricati" + "/data.csv")
 print(X)
 print(X.groupby(['Label']).agg(['count']))
-print(X.shape )
-y= X['Label']
+print(X.shape)
+y = X['Label']
 X = X.drop(['Label'], axis=1)
 X = X.drop(['Body'], axis=1)
 X = X.drop(['Headline'], axis=1)
-X=X.mean()
+X = X.mean()
 print(X)

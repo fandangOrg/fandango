@@ -25,7 +25,6 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 from sklearn.model_selection import train_test_split
 
-
 from fake_news_detection.dao.TrainingDAO import DAOTrainingPD
 from fake_news_detection.config.AppConfig import dataset_beta, resources_path
 from keras.engine.sequential import Sequential
@@ -39,8 +38,9 @@ from fake_news_detection.model.predictor import Preprocessing
 import pandas
 K.tensorflow_backend._get_available_gpus()
 import os
-#os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"   # see issue #152
-#os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+# os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"   # see issue #152
+# os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
 
 class FSdataframeDAO:
 
@@ -48,22 +48,15 @@ class FSdataframeDAO:
 
         self.dir_path = dir_path
 
-
-
     def load(self, id:str) -> DataFrame:
 
-        df = read_csv(self.dir_path+"/"+id+".tsv", sep='\t', encoding='utf-8')
+        df = read_csv(self.dir_path + "/" + id + ".tsv", sep='\t', encoding='utf-8')
 
         return df
 
-
-
     def store(self, df:DataFrame, id:str):
 
-        df.to_csv(self.dir_path+"/"+id+".tsv", sep='\t', encoding='utf-8', index=False)
-
-
-
+        df.to_csv(self.dir_path + "/" + id + ".tsv", sep='\t', encoding='utf-8', index=False)
 
 
 def get_performance(y_test:List, y_pred:List):
@@ -85,9 +78,6 @@ def get_performance(y_test:List, y_pred:List):
     print("\t - Recall:", recall)
 
     print("\t - F-measure:", f1, "\n")
-
-
-
 
 
 def create_model1():
@@ -112,16 +102,13 @@ def create_model1():
 
     model.add(Dropout(rate=0.20))
 
-    model.add(Dense(2, activation='softmax'))   #'sigmoid'
+    model.add(Dense(2, activation='softmax'))  # 'sigmoid'
 
     model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
     model.summary()
 
     return model
-
-
-
 
 
 def create_model2():
@@ -155,9 +142,6 @@ def create_model2():
     return model
 
 
-
-
-
 def create_model3():
 
     """
@@ -174,7 +158,7 @@ def create_model3():
 
     model.add(Embedding(input_dim=vocab_size, output_dim=embedding_dim, input_length=input_dim))
 
-    #model.add(Conv1D(filters=48, kernel_size=3, padding='same', activation='relu'))
+    # model.add(Conv1D(filters=48, kernel_size=3, padding='same', activation='relu'))
 
     model.add(LSTM(18, dropout=0.2, recurrent_dropout=0.2))
 
@@ -187,22 +171,13 @@ def create_model3():
     return model
 
 
-
-
-
 if __name__ == "__main__":
 
-
-
     warnings.filterwarnings("ignore")
-
-
 
     input_dim = -1
 
     vocab_size = -1
-
-
 
     ########## Load and split dataset ##########
 
@@ -215,7 +190,7 @@ if __name__ == "__main__":
     # X.to_csv(dataset_beta+"/train.csv")
     # X=pandas.read_csv(dataset_beta+"/train.csv").iloc[:, 1:]
     #===========================================================================
-     #print(X.shape )
+     # print(X.shape )
     #===========================================================================
     # X=pandas.read_csv("/home/daniele/Scaricati"+"/data.csv")
     # X=X.rename(index=str, columns={"Label": "label", "Body": "text","Headline":"title"})
@@ -234,24 +209,24 @@ if __name__ == "__main__":
     # X=Preprocessing().execution(X)
     # X.drop(['URLs'], axis=1)
     #===========================================================================
-    X=pandas.read_csv( resources_path+"/default_train_en.csv" ).iloc[:, 1:]
+    X = pandas.read_csv(resources_path + "/default_train_en.csv").iloc[:, 1:]
     #===========================================================================
     # y= X['Label']
     # X = X.drop(['Label'], axis=1)
     # X = X.drop(['Body'], axis=1)
     # X = X.drop(['Headline'], axis=1)
     #===========================================================================
-    y= X['label']
+    y = X['label']
     X = X.drop(['label'], axis=1)
     X = X.drop(['text'], axis=1)
     X = X.drop(['title'], axis=1)
    
-    print(X.shape )
+    print(X.shape)
     print(y)
 
-    #print(df.shape)
+    # print(df.shape)
 
-    #df['text'] = df['oggetto'].map(str) + " " + df["body_parts"].map(str) + " " + df['attachments'].map(str)
+    # df['text'] = df['oggetto'].map(str) + " " + df["body_parts"].map(str) + " " + df['attachments'].map(str)
 
 #===============================================================================
 #     X =df.drop(['label'], axis=1)
@@ -265,15 +240,9 @@ if __name__ == "__main__":
 
     epochs = 1000
 
-    batch_size = int(8507/20)+1
-
-
-
-
+    batch_size = int(8507 / 20) + 1
 
     ########## Transform data ##########
-
-
 
     # tf-idf vectorizer  + random projection
 
@@ -330,23 +299,20 @@ if __name__ == "__main__":
 #===============================================================================
     input_dim = X.shape[1]
 
-
-
     ########## Training ##########
 
-    #print("\n\t > Shape of 'X_train_transf':", X_train_transf.shape)
+    # print("\n\t > Shape of 'X_train_transf':", X_train_transf.shape)
 
     print(" \t > vocabulary size:", X_train.columns)
 
     print(" \t > input dimension:", input_dim, "\n")
 
     model1 = KerasClassifier(build_fn=create_model1, epochs=epochs, batch_size=batch_size, verbose=1)
-    print("fit",X_train)
+    print("fit", X_train)
 #    model1.fit(X_train , y_train)
 
     model1.fit(X_test, y_test)
     model1.fit(X_train , y_train)
-
 
  #==============================================================================
  # Evaluation performance:
@@ -358,15 +324,11 @@ if __name__ == "__main__":
 
     ########## Prediction ##########
 
-    y_pred = model1.predict(X_test )
+    y_pred = model1.predict(X_test)
 
     probs = model1.predict_proba(X_test)
 
     print("\n Probabilities: \n", probs[0:10])
-
-
-
-
 
     ########## evaluation ##########
 
