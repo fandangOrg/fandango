@@ -1,6 +1,6 @@
 from helper import config as cfg
 from helper import global_variables as gv
-from helper.data_manager import DataManager
+from managers.data_manager import DataManager
 from threading import Thread
 
 
@@ -16,7 +16,7 @@ class GraphAnalysisService:
         except Exception as e:
             cfg.logger.error(e)
         return self
-
+        
     def offline_service(self):
         try:
             self.service_task = cfg.offline_service_name

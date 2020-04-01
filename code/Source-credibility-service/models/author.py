@@ -4,7 +4,7 @@ from helper import config as cfg
 
 class Author:
     def __init__(self, identifier=None, name=None, affiliation=None, url=None, nationality="", bias="",
-                 job_title="", gender="", status="started", trustworthiness=None):
+                 job_title="", gender="", status="inProgress", trustworthiness=None, relevance=None):
         self.identifier = identifier
         self.name = name
         if isinstance(affiliation, list):
@@ -24,6 +24,11 @@ class Author:
         else:
             self.trustworthiness = normalize_value()
 
+        if relevance is not None:
+            self.relevance = relevance
+        else:
+            self.relevance = 0
+
     def author_to_dict(self):
         return self.build_output()
 
@@ -36,7 +41,7 @@ class Author:
             output = {"identifier": self.identifier, "name": self.name, "url": self.url,
                       "nationality": self.nationality, "bias": self.bias, "jobTitle": self.job_title,
                       "gender": self.gender, "affiliation": self.affiliation, "status": self.status,
-                      "trustworthiness": self.trustworthiness}
+                      "trustworthiness": self.trustworthiness, "relevance": self.relevance}
         except Exception as e:
             cfg.logger.error(e)
         return output
@@ -47,7 +52,7 @@ class Author:
             output = {"name": self.name, "url": self.url,
                       "nationality": self.nationality, "bias": self.bias, "jobTitle": self.job_title,
                       "gender": self.gender, "affiliation": self.affiliation, "status": self.status,
-                      "trustworthiness": self.trustworthiness}
+                      "trustworthiness": self.trustworthiness, "relevance": self.relevance}
         except Exception as e:
             cfg.logger.error(e)
         return output

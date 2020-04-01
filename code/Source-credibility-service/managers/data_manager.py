@@ -1,10 +1,10 @@
 from helper import config as cfg
 from models.article import Article
 from json import loads
-from helper.kafka_connector import KafkaConnector
-from helper.elasticsearch_connector import ElasticsearchManager
-from helper.neo4j_connector import NEO4JConnector
-from graph_analysis.graph_analysis import GraphAnalysis
+from managers.kafka_connector import KafkaConnector
+from managers.elasticsearch_connector import ElasticsearchManager
+from managers.neo4j_connector import NEO4JConnector
+from managers.graph_analysis_connector import GraphAnalysis
 
 
 class DataManager:
@@ -56,6 +56,7 @@ class DataManager:
                 self.elasticsearch_manager.connect()
         except Exception as e:
             cfg.logger.error(e)
+            self.elasticsearch_manager = None
         return self
 
     def init_neo4j_manager(self):
@@ -149,7 +150,7 @@ class DataManager:
         try:
             if self.graph_analysis_manager is None:
                 self.init_graph_analysis()
-            response = self.graph_analysis_manager.analyse_source_domain(full_domain=full_domain)
+            response = self.graph_analysis_manager.analyse_publisher_ui(full_domain=full_domain)
         except Exception as e:
             cfg.logger.error(e)
         return response

@@ -26,17 +26,20 @@ kafka_server = kf_host + ":" + kf_port
 topic_consumer = 'input_raw'
 topic_producer = 'input_preprocessed'
 group_id = 'upm_group'
+temp_es_index = "article_preprocessed_temp"
 
 # Process name
 offline_service_name = "Offline service"
 online_service_name = "Online service"
 manual_annotation_service_name = "Manual Annotation service"
+experimental_service_name = "Experimental Offline service"
 
 service_name = "Pre-processing"
 error_msg = "An error ocurred when applying preprocessing"
 running_msg = "Running"
 aborted_msg = "Aborted"
-
+stop_msg = "Stopped"
+already_stop_msg = "The service is already stopped"
 countries_websites = ["spain", "italy", "greece", "belgium", "uk", "usa"]
 resources_dir = "resources"
 csv_filepath = "domains.csv"

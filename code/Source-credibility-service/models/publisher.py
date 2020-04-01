@@ -3,8 +3,8 @@ from helper.helper import normalize_value
 
 
 class Publisher:
-    def __init__(self, identifier=None, name=None, url=None, country=None, nationality=None, bias="", parent_organization="",
-                 status="started", trustworthiness=None):
+    def __init__(self, identifier=None, name=None, url=None, country=None, nationality=None, bias="",
+                 parent_organization="", status="inProgress", trustworthiness=None, relevance=None):
         self.identifier = identifier
         self.name = name
         if isinstance(url, list):
@@ -23,6 +23,11 @@ class Publisher:
         else:
             self.trustworthiness = normalize_value()
 
+        if relevance is not None:
+            self.relevance = relevance
+        else:
+            self.relevance = 0
+
     def publisher_to_dict(self):
         return self.build_output()
 
@@ -35,7 +40,7 @@ class Publisher:
             output = {"identifier": self.identifier, "name": self.name, "url": self.url,
                       "nationality": self.nationality, "country": self.country, "bias": self.bias,
                       "parentOrganization": self.parent_organization, "status": self.status,
-                      "trustworthiness": self.trustworthiness}
+                      "trustworthiness": self.trustworthiness, "relevance": self.relevance}
         except Exception as e:
             cfg.logger.error(e)
         return output
@@ -46,10 +51,7 @@ class Publisher:
             output = {"name": self.name, "url": self.url,
                       "nationality": self.nationality, "country": self.country, "bias": self.bias,
                       "parentOrganization": self.parent_organization, "status": self.status,
-                      "trustworthiness": self.trustworthiness}
+                      "trustworthiness": self.trustworthiness, "relevance": self.relevance}
         except Exception as e:
             cfg.logger.error(e)
         return output
-
-
-

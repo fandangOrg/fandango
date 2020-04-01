@@ -15,14 +15,14 @@ class ElasticsearchManager:
 
     def connect(self):
         try:
-            self.es = elast.Elasticsearch([{'host': self.host, 'port': self.port}],
-                                          timeout=1000)
+            self.es = elast.Elasticsearch([{'host': self.host, 'port': self.port}])
             if self.es.ping(request_timeout=1):
                 self.connection = True
                 cfg.logger.info('Connected to ElasticSearch at \'%s:%s\'.', self.host, self.port)
             else:
                 self.connection = False
                 cfg.logger.info('It was not possible to connect to \'%s:%s\'.', self.host, self.port)
+
         except Exception as e:
             cfg.logger.error(e)
         return self
@@ -98,12 +98,21 @@ class ElasticsearchManager:
 
     def retrieve_data_from_index_by_id(self, index, uuid):
         try:
-            results = self.es.get(index=index, doc_type="doc", id=uuid)
+            response = self.retrieve_doc_from_index_by_id(es=self.es, index=index, uuid=uuid)
+        except Exception as e:
+            cfg.logger.warning(e)
+            response = {}
+        return response
+
+    @staticmethod
+    def retrieve_doc_from_index_by_id(es, index, uuid):
+        response = {}
+        try:
+            results = es.get(index=index, doc_type="doc", id=uuid)
             # Check results from generator
             response = results['_source']
         except Exception as e:
             cfg.logger.warning(e)
-            response = {}
         return response
 
     def retrieve_data_from_index_by_searching(self, index, search_key, search_value, fuzzy_threshold=95,

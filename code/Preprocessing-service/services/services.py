@@ -73,6 +73,50 @@ class PreprocessingServices:
                                        message=cfg.aborted_msg)
         return output
 
+    def experimental_offline_service(self):
+        try:
+            self.service_task = cfg.experimental_service_name
+            if gv.thread is None:
+                # Set up data manager
+                self.set_up_data_manager(service=self.service_task)
+
+                # Init Kafka and Elasticsearch objects
+                self.data_manager.init_kafka_manager()
+                self.data_manager.init_elasticsearch_manager()
+                # Check Elasticsearch index
+                self.data_manager.elasticsearch_manager.create_new_index(index=cfg.temp_es_index,
+                                                                         body=None)
+                kafka = self.data_manager.kafka_manager
+                if (kafka.consumer is not None):
+                    gv.thread = Thread(target=self.data_manager.start_experimental_kafka_process)
+                    gv.thread.start()
+
+            output = self.build_output(task_name=self.service_task, status=200,
+                                       message=cfg.running_msg)
+        except Exception as e:
+            cfg.logger.error(e)
+            output = self.build_output(task_name=self.service_task, status=400,
+                                       message=cfg.aborted_msg)
+            output['error'] = str(e)
+        return output
+
+    def stop_service(self, service_name):
+        try:
+            self.service_task = service_name
+            if gv.thread is not None and gv.thread.isAlive():
+                gv.thread._stop()
+                output = self.build_output(task_name=self.service_task, status=200,
+                                           message=cfg.stop_msg)
+            else:
+                output = self.build_output(task_name=self.service_task, status=400,
+                                           message=cfg.already_stop_msg)
+        except Exception as e:
+            cfg.logger.error(e)
+            output = self.build_output(task_name=self.service_task, status=400,
+                                       message=cfg.aborted_msg)
+            output['error'] = str(e)
+        return output
+
     @staticmethod
     def build_output(task_name, status, message, data=None):
         output = {'service': task_name, 'status': status, 'message': message}

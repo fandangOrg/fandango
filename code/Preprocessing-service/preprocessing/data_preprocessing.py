@@ -6,8 +6,9 @@ from langdetect import detect
 from helper import config as cfg
 from flair.models import SequenceTagger
 from flair.data import Sentence
-from helper.helper import (extract_publisher_info,
-                           create_websites_db)
+from helper.helper import (extract_publisher_info, create_websites_db,
+                           retrieve_image_by_url, filter_by_size,
+                           filter_by_apect_ratio)
 
 
 class DataPreprocessing:
@@ -115,7 +116,7 @@ class DataPreprocessing:
         return ner_model
 
     @staticmethod
-    def detect_language(text):
+    def detect_language(data, key):
         # ================================================
         # INPUT:
         #       - text: text
@@ -124,8 +125,8 @@ class DataPreprocessing:
         # =================================================
         lang = None
         try:
-            if len(text)>5 and text != '':
-                lang = detect(text)
+            if len(data[key])>5 and data[key] != '':
+                lang = detect(data[key])
         except Exception as e:
             cfg.logger.error(e)
         return lang
@@ -198,6 +199,21 @@ class DataPreprocessing:
         return publisher_info
 
     @staticmethod
+    def remove_banner_images(images):
+        filter_images = []
+        try:
+            for img_url in images:
+                res = DataPreprocessing.filter_image_by_url(img_url)
+                # Not filter case
+                if not res:
+                    filter_images.append(img_url)
+            # Check uniqueness
+            filter_images = list(set(filter_images))
+        except Exception as e:
+            cfg.logger.error(e)
+        return filter_images
+
+    @staticmethod
     def get_unique_values(data, fuzzy=True, fuzzy_threshold=.8):
         unique_data = []
         try:
@@ -210,6 +226,29 @@ class DataPreprocessing:
             cfg.logger.error(e)
         return unique_data
 
+    @staticmethod
+    def filter_news(data, threshold=10, col_key="articleBody"):
+        filter = False
+        try:
+            if len(data[col_key]) < threshold:
+                filter = True
+        except Exception as e:
+            cfg.logger.error(e)
+        return filter
+
+    @staticmethod
+    def filter_image_by_url(img_url):
+        filter = False
+        try:
+            img = retrieve_image_by_url(img_url)
+            filter_size = filter_by_size(img)
+            filter_ar = filter_by_apect_ratio(img)
+            if filter_size or filter_ar:
+                filter = True
+        except Exception as e:
+            cfg.logger.error(e)
+        return filter
+
     def apply_preprocessing(self, data, manual_annot=False):
         try:
             # Check input structure
@@ -217,17 +256,21 @@ class DataPreprocessing:
                 features = self.required_cols(manual_annot=manual_annot)
                 # All the required features are available
                 if not features >= data.keys():
-                    # 1) Detect language and init NER
-                    data["language"] = self.detect_language(text=data["text"])
+                    # 2) Detect language and init NER
+                    lang = self.detect_language(data=data, key="text")
+                    if lang is None:
+                        lang = self.detect_language(data=data, key="title")
+                    data["language"] = lang
+
                     self.init_ner_models(lang_model=data["language"])
 
-                    # 2) Cleaning authors
+                    # 3) Cleaning authors
                     cleaned_authors = [self.preprocess_author_name(author_name=i,
                                                                    ner_library=self.ner_library,
                                                                    ner_model=self.ner_model) for i in data["authors"]]
                     data["authors"] = self.get_unique_values(data=cleaned_authors, fuzzy=False,
                                                              fuzzy_threshold=.8)
-                    # 3) Retrieving publisher name
+                    # 4) Retrieving publisher name
                     if self.websites_list is None:
                         self.websites_list = pd.read_csv(self.csv_filepath, index_col=0)
 
@@ -239,6 +282,11 @@ class DataPreprocessing:
                     data["publisher"] = publisher_info["name"]
                     data["country"] = publisher_info["country"]
                     data["nationality"] = publisher_info["nationality"]
+
+                    # Filter images by url
+                    if not manual_annot:
+                        data["images"] = self.remove_banner_images(images=data["images"])
+
 
         except Exception as e:
             cfg.logger.error(e)

@@ -1,6 +1,5 @@
 from fuzzywuzzy import fuzz
 import numpy as np
-import datetime
 import pytz
 import requests
 import pycountry
@@ -16,10 +15,12 @@ from difflib import SequenceMatcher
 from restcountries import RestCountryApiV2 as rapi
 from dateutil.relativedelta import relativedelta
 from bs4 import BeautifulSoup
+from datetime import date, datetime, timedelta
+from scipy import stats
 
 def get_country_by_code(country_code):
     try:
-        country_domain = cfg.country_domains
+        country_domain = get_countries_domains()
         country = country_domain[country_code]
     except Exception as e:
         cfg.logger.warning(e)
@@ -28,7 +29,7 @@ def get_country_by_code(country_code):
 
 
 def get_datetime():
-    now = datetime.datetime.now()
+    now = datetime.now()
     date_time = now.strftime("%m/%d/%Y, %H:%M:%S %z")
     return date_time
 
@@ -62,7 +63,7 @@ def extract_publisher_info(source_domain, list_of_websites=None, threshold=95, d
                 if isinstance(source_domain_data["creation_date"], list):
                     source_domain_data["creation_date"] = source_domain_data["creation_date"][0]
                 # Add time zone utc
-                if isinstance(source_domain_data["creation_date"], datetime.datetime):
+                if isinstance(source_domain_data["creation_date"], datetime):
                     d = pytz.UTC.localize(source_domain_data["creation_date"])
                     source_domain_data["creation_date"] = d.strftime("%Y-%m-%d %H:%M:%S %Z")
                 if source_domain_data["creation_date"] is None:
@@ -75,7 +76,7 @@ def extract_publisher_info(source_domain, list_of_websites=None, threshold=95, d
                 if isinstance(source_domain_data["expiration_date"], list):
                     source_domain_data["expiration_date"] = source_domain_data["expiration_date"][0]
                 # Add time zone utc
-                if isinstance(source_domain_data["expiration_date"], datetime.datetime):
+                if isinstance(source_domain_data["expiration_date"], datetime):
                     d = pytz.UTC.localize(source_domain_data["expiration_date"])
                     source_domain_data["expiration_date"] = d.strftime("%Y-%m-%d %H:%M:%S %Z")
                 if source_domain_data["expiration_date"] is None:
@@ -88,7 +89,7 @@ def extract_publisher_info(source_domain, list_of_websites=None, threshold=95, d
                 if isinstance(source_domain_data["updated_date"], list):
                     source_domain_data["updated_date"] = source_domain_data["updated_date"][0]
                 # Add time zone utc
-                if isinstance(source_domain_data["updated_date"], datetime.datetime):
+                if isinstance(source_domain_data["updated_date"], datetime):
                     d = pytz.UTC.localize(source_domain_data["updated_date"])
                     source_domain_data["updated_date"] = d.strftime("%Y-%m-%d %H:%M:%S %Z")
                 if source_domain_data["updated_date"] is None:
@@ -289,18 +290,50 @@ def read_tld_data(filepath, sheet_names):
     return df_data
 
 
+def get_suffix_importance():
+    # com ||org ||net ||int || edu ||gov || mil
+    return np.round(100*np.array([2*stats.norm.pdf(1), 2*stats.norm.pdf(0),
+            2*stats.norm.pdf(3), 2*stats.norm.pdf(2),
+            2*stats.norm.pdf(0), 2*stats.norm.pdf(0),
+            2*stats.norm.pdf(1)]),2)
+
+def media_type_importance(domain_data):
+    domain_importance = {"media_type_importance": 2*stats.norm.pdf(1.5),
+                         "malicious_importance": 2*stats.norm.pdf(1.5) }
+    try:
+        # Malicious
+        if domain_data["malicious"]:
+            importance_malicius = 2*stats.norm.pdf(1.5)
+        else:
+            importance_malicius = 2*stats.norm.pdf(3)
+
+        if domain_data["media_type"] == "Broadcast" or domain_data["media_type"] == "Press Agency":
+            importance = 2*stats.norm.pdf(0)
+        elif domain_data["media_type"] == "Newspaper":
+            importance= 2*stats.norm.pdf(0.20)
+        elif domain_data["media_type"] == "Magazine":
+            importance = 2*stats.norm.pdf(1.5)
+        else:
+            importance = 2*stats.norm.pdf(2)
+
+        domain_importance["media_type_importance"] = np.round(100*importance, 2)
+        domain_importance["malicious_importance"] = np.round(100*importance_malicius, 2)
+    except Exception as e:
+        cfg.logger.error(e)
+    return domain_importance
+
 def extract_country_tld_weight(row):
     total_weight = 0
     try:
-        importance_weights = {"Yes": cfg.rho_suffix_pos, "No": cfg.rho_suffix_neg,
-                              "N/A": cfg.rho_suffix_non}
+        importance_weights = {"Yes": 0.25, "No": 0,
+                              "N/A": 0}
         dnssec = row["DNSSEC"]
         idn = row["IDN"]
         ipv6 = row["IPv6"]
         sld = row["SLD"]
 
         if dnssec in importance_weights:
-            total_weight += importance_weights[dnssec]
+            total_weight = importance_weights[dnssec]
         if idn in importance_weights:
             total_weight += importance_weights[idn]
         if ipv6 in importance_weights:
@@ -308,10 +341,13 @@ def extract_country_tld_weight(row):
         if sld in importance_weights:
             total_weight += importance_weights[sld]
 
+        total_weight = np.round(100*total_weight, 2)
     except Exception as e:
         cfg.logger.error(e)
     return total_weight
 
+def get_default_importance():
+    return round(100*(2*stats.norm.pdf(2)),2 )
 
 def diff_month(d1, d2):
     return (d1.year - d2.year) * 12 + d1.month - d2.month
@@ -319,7 +355,7 @@ def diff_month(d1, d2):
 
 def get_datetime_from_str(str_date):
     try:
-        date_obj = datetime.datetime.strptime(str_date, '%Y-%m-%d %H:%M:%S UTC')
+        date_obj = datetime.strptime(str_date, '%Y-%m-%d %H:%M:%S UTC')
     except Exception as e:
         cfg.logger.warning(e)
         date_obj = None
@@ -356,6 +392,18 @@ def normalize_trustworthiness(score):
     except Exception as e:
         cfg.logger.error(e)
     return trustworthiness
+
+def change_importance(data, key, importance_data, new_importance=0):
+    importance_data_ls = []
+    try:
+        # -------------------------------------------------------
+        idx = list(data.keys()).index(key)
+        importance_data_ls = list(importance_data)
+        importance_data_ls[idx] = float(new_importance)
+        # -------------------------------------------------------
+    except Exception as e:
+        cfg.logger.error(e)
+    return importance_data_ls
 
 
 def join_dict_from_nested_list(nested_dict, ls1_id, ls2_id):
@@ -493,13 +541,12 @@ def fuzzy_distance(str_1, str_2):
     return similarity
 
 def extract_domain_from_url(url):
-    domain = None
+    domain_info = None
     try:
-        info = tldextract.extract(url)
-        domain = info.registered_domain
+        domain_info = tldextract.extract(url)
     except Exception as e:
         cfg.logger.error(e)
-    return domain
+    return domain_info
 
 def add_protocol_to_domain(domain, protocol="http"):
     full_domain = None
@@ -561,3 +608,312 @@ def retrieve_neo4j_features_from_db(filepath, domain):
     except Exception as e:
         cfg.logger.info(e)
     return data_neo4j
+
+
+def merge_dataframes(df1, df2):
+    df = None
+    try:
+        # Reset index
+        df2 = df2.reset_index(drop=True)
+        df = pd.concat([df1, df2], axis=0)
+        df = df.reset_index(drop=True)
+    except Exception as e:
+        cfg.logger.error(e)
+    return df
+
+
+def json_serial(obj):
+    """JSON serializer for objects not serializable by default json code"""
+
+    if isinstance(obj, (datetime, date)):
+        return obj.__str__()
+    raise TypeError ("Type %s not serializable" % type(obj))
+
+def select_keys_from_dict(data, keys):
+    data_obj = {}
+    try:
+        data_obj = dict((k, data[k]) for k in keys if k in data)
+    except Exception as e:
+        cfg.logger.error(e)
+    return data_obj
+
+def get_current_timestamp():
+    timestamp = ""
+    try:
+        current_time = datetime.now()
+        timestamp = datetime.timestamp(current_time)
+    except Exception as e:
+        cfg.logger.error(e)
+    return timestamp
+
+def compare_timestamps(t1:{float}, t2:{float}):
+    dt_diff = -1
+    try:
+        dt1 = datetime.fromtimestamp(t1)
+        dt2 = datetime.fromtimestamp(t2)
+        dt_diff = abs(dt2 - dt1)
+    except Exception as e:
+        cfg.logger.error(e)
+    return dt_diff
+
+def check_datetime_threshold(dt_diff:{timedelta}, threshold=7):
+    response = False
+    try:
+        if dt_diff.days > threshold:
+            response = True
+    except Exception as e:
+        cfg.logger.error(e)
+    return response
+
+def get_countries_domains():
+    country_domains = {}
+    try:
+        country_domains = {'ac': 'Ascension Island (UK)',
+                           'ad': 'Andorra',
+                           'ae': 'United Arab Emirates',
+                           'af': 'Afghanistan',
+                           'ag': 'Antigua and Barbuda',
+                           'ai': 'Anguilla (UK)',
+                           'al': 'Albania',
+                           'am': 'Armenia',
+                           'ao': 'Angola',
+                           'ar': 'Argentina',
+                           'as': 'American Samoa (USA)',
+                           'at': 'Austria',
+                           'au': 'Australia',
+                           'aw': 'Aruba (Netherlands)',
+                           'ax': 'Aland Islands (Finland)',
+                           'az': 'Azerbaijan',
+                           'ba': 'Bosnia and Herzegovina',
+                           'bb': 'Barbados',
+                           'bd': 'Bangladesh',
+                           'be': 'Belgium',
+                           'bf': 'Burkina Faso',
+                           'bg': 'Bulgaria',
+                           'bh': 'Bahrain',
+                           'bi': 'Burundi',
+                           'bj': 'Benin',
+                           'bm': 'Bermuda (UK)',
+                           'bn': 'Brunei',
+                           'bo': 'Bolivia',
+                           'br': 'Brazil',
+                           'bs': 'Bahamas',
+                           'bt': 'Bhutan',
+                           'bv': 'Bouvet Island (Norway)',
+                           'bw': 'Botswana',
+                           'by': 'Belarus',
+                           'bz': 'Belize',
+                           'ca': 'Canada',
+                           'cc': 'Cocos (Keeling) Islands (Australia)',
+                           'cd': 'Democratic Republic of the Congo',
+                           'cf': 'Central African Republic',
+                           'cg': 'Republic of the Congo',
+                           'ch': 'Switzerland',
+                           'ci': 'Cote d\'Ivoire',
+                           'ck': 'Cook Islands (New Zealand)',
+                           'cl': 'Chile',
+                           'cm': 'Cameroon',
+                           'cn': 'China',
+                           'co': 'Colombia',
+                           'cr': 'Costa Rica',
+                           'cu': 'Cuba',
+                           'cv': 'Cabo Verde',
+                           'cw': 'Curacao (Netherlands)',
+                           'cx': 'Christmas Island (Australia)',
+                           'cy': 'Cyprus',
+                           'cz': 'Czechia',
+                           'de': 'Germany',
+                           'dj': 'Djibouti',
+                           'dk': 'Denmark',
+                           'dm': 'Dominica',
+                           'do': 'Dominican Republic',
+                           'dz': 'Algeria',
+                           'ec': 'Ecuador',
+                           'ee': 'Estonia',
+                           'eg': 'Egypt',
+                           'er': 'Eritrea',
+                           'es': 'Spain',
+                           'et': 'Ethiopia',
+                           'eu': 'European Union',
+                           'fi': 'Finland',
+                           'fj': 'Fiji',
+                           'fk': 'Falkland Islands (UK)',
+                           'fm': 'Federated States of Micronesia',
+                           'fo': 'Faroe Islands (Denmark)',
+                           'fr': 'France',
+                           'ga': 'Gabon',
+                           'gb': 'United Kingdom',
+                           'gd': 'Grenada',
+                           'ge': 'Georgia',
+                           'gf': 'French Guiana (France)',
+                           'gg': 'Guernsey (UK)',
+                           'gh': 'Ghana',
+                           'gi': 'Gibraltar (UK)',
+                           'gl': 'Greenland (Denmark)',
+                           'gm': 'Gambia',
+                           'gn': 'Guinea',
+                           'gp': 'Guadeloupe (France)',
+                           'gq': 'Equatorial Guinea',
+                           'gr': 'Greece',
+                           'gs': 'South Georgia and the South Sandwich Islands (UK)',
+                           'gt': 'Guatemala',
+                           'gu': 'Guam (USA)',
+                           'gw': 'Guinea-Bissau',
+                           'gy': 'Guyana',
+                           'hk': 'Hong Kong (China)',
+                           'hm': 'Heard Island and McDonald Islands (Australia)',
+                           'hn': 'Honduras',
+                           'hr': 'Croatia',
+                           'ht': 'Haiti',
+                           'hu': 'Hungary',
+                           'id': 'Indonesia',
+                           'ie': 'Ireland',
+                           'il': 'Israel',
+                           'im': 'Isle of Man (UK)',
+                           'in': 'India',
+                           'io': 'British Indian Ocean Territory (UK)',
+                           'iq': 'Iraq',
+                           'ir': 'Iran',
+                           'is': 'Iceland',
+                           'it': 'Italy',
+                           'je': 'Jersey (UK)',
+                           'jm': 'Jamaica',
+                           'jo': 'Jordan',
+                           'jp': 'Japan',
+                           'ke': 'Kenya',
+                           'kg': 'Kyrgyzstan',
+                           'kh': 'Cambodia',
+                           'ki': 'Kiribati',
+                           'km': 'Comoros',
+                           'kn': 'Saint Kitts and Nevis',
+                           'kp': 'North Korea',
+                           'kr': 'South Koreav',
+                           'kw': 'Kuwait',
+                           'ky': 'Cayman Islands (UK)',
+                           'kz': 'Kazakhstan',
+                           'la': 'Laos',
+                           'lb': 'Lebanon',
+                           'lc': 'Saint Lucia',
+                           'li': 'Liechtenstein',
+                           'lk': 'Sri Lanka',
+                           'lr': 'Liberia',
+                           'ls': 'Lesotho',
+                           'lt': 'Lithuania',
+                           'lu': 'Luxembourg',
+                           'lv': 'Latvia',
+                           'ly': 'Libya',
+                           'ma': 'Morocco',
+                           'mc': 'Monaco',
+                           'md': 'Moldova',
+                           'me': 'Montenegro',
+                           'mg': 'Madagascar',
+                           'mh': 'Marshall Islands',
+                           'mk': 'North Macedonia (formerly Macedonia)',
+                           'ml': 'Mali',
+                           'mm': 'Myanmar (formerly Burma)',
+                           'mn': 'Mongolia',
+                           'mo': 'Macau (China)',
+                           'mp': 'Northern Mariana Islands (USA)',
+                           'mq': 'Martinique (France)',
+                           'mr': 'Mauritania',
+                           'ms': 'Montserrat (UK)',
+                           'mt': 'Malta',
+                           'mu': 'Mauritius',
+                           'mv': 'Maldives',
+                           'mw': 'Malawi',
+                           'mx': 'Mexico',
+                           'my': 'Malaysia',
+                           'mz': 'Mozambique',
+                           'na': 'Namibia',
+                           'nc': 'New Caledonia (France)',
+                           'ne': 'Niger',
+                           'nf': 'Norfolk Island (Australia)',
+                           'ng': 'Nigeria',
+                           'ni': 'Nicaragua',
+                           'nl': 'Netherlands',
+                           'no': 'Norway',
+                           'np': 'Nepal',
+                           'nr': 'Nauru',
+                           'nu': 'Niue (New Zealand)',
+                           'nz': 'New Zealand',
+                           'om': 'Oman',
+                           'pa': 'Panama',
+                           'pe': 'Peru',
+                           'pf': 'French Polynesia (France)',
+                           'pg': 'Papua New Guinea',
+                           'ph': 'Philippines',
+                           'pk': 'Pakistan',
+                           'pl': 'Poland',
+                           'pm': 'Saint Pierre and Miquelon (France)',
+                           'pn': 'Pitcairn Islands (UK)',
+                           'pr': 'Puerto Rico (USA)',
+                           'ps': 'Palestine',
+                           'pt': 'Portugal',
+                           'pw': 'Palau',
+                           'py': 'Paraguay',
+                           'qa': 'Qatar',
+                           're': 'Reunion (France)',
+                           'ro': 'Romania',
+                           'rs': 'Serbia',
+                           'ru': 'Russia',
+                           'rw': 'Rwanda',
+                           'sa': 'Saudi Arabia',
+                           'sb': 'Solomon Islands',
+                           'sc': 'Seychelles',
+                           'sd': 'Sudan',
+                           'se': 'Sweden',
+                           'sg': 'Singapore',
+                           'sh': 'Saint Helena (UK)',
+                           'si': 'Slovenia',
+                           'sj': 'Svalbard and Jan Mayen (Norway)',
+                           'sk': 'Slovakia',
+                           'sl': 'Sierra Leone',
+                           'sm': 'San Marino',
+                           'sn': 'Senegal',
+                           'so': 'Somalia',
+                           'sr': 'Suriname',
+                           'st': 'Sao Tome and Principe',
+                           'su': 'Soviet Union (former)top-level domain is still in use',
+                           'sv': 'El Salvador',
+                           'sx': 'Sint Maarten (Netherlands)',
+                           'sy': 'Syria',
+                           'sz': 'Eswatini (formerly Swaziland)',
+                           'tc': 'Turks and Caicos Islands (UK)',
+                           'td': 'Chad',
+                           'tf': 'French Southern Territories (France)',
+                           'tg': 'Togo',
+                           'th': 'Thailand',
+                           'tj': 'Tajikistan',
+                           'tk': 'Tokelau (New Zealand)',
+                           'tl': 'Timor-Leste',
+                           'tm': 'Turkmenistan',
+                           'tn': 'Tunisia',
+                           'to': 'Tonga',
+                           'tr': 'Turkey',
+                           'tt': 'Trinidad and Tobago',
+                           'tv': 'Tuvalu',
+                           'tw': 'Taiwan',
+                           'tz': 'Tanzania',
+                           'ua': 'Ukraine',
+                           'ug': 'Uganda',
+                           'uk': 'United Kingdom',
+                           'us': 'United States of America',
+                           'uy': 'Uruguay',
+                           'uz': 'Uzbekistan',
+                           'va': 'Vatican City (Holy See)',
+                           'vc': 'Saint Vincent and the Grenadines',
+                           've': 'Venezuela',
+                           'vg': 'British Virgin Islands (UK)',
+                           'vi': 'US Virgin Islands (USA)',
+                           'vn': 'Vietnam',
+                           'vu': 'Vanuatu',
+                           'wf': 'Wallis and Futuna (France)',
+                           'ws': 'Samoa',
+                           'ye': 'Yemen',
+                           'yt': 'Mayotte (France)',
+                           'za': 'South Africa',
+                           'zm': 'Zambia',
+                           'zw': 'Zimbabwe'}
+    except Exception as e:
+        cfg.logger.error(e)
+    return country_domains

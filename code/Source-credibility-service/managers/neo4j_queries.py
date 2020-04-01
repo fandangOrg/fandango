@@ -14,6 +14,19 @@ class Neo4jQueries:
         self.article_publisher_relationship = "WAS_PUBLISHED_BY"
         self.author_publisher_relationship = "IS_AFFILIATED_TO"
 
+    def get_publisher_node_label(self):
+        return self.publisher_node_label
+    def get_article_node_label(self):
+        return self.article_node_label
+    def get_author_node_label(self):
+        return self.author_node_label
+    def get_article_author_relationship(self):
+        return self.article_author_relationship
+    def get_article_publisher_relationship(self):
+        return self.article_publisher_relationship
+    def get_author_publisher_relationship(self):
+        return self.author_publisher_relationship
+
     @staticmethod
     def create_author_node(label):
         query = None
@@ -103,6 +116,44 @@ class Neo4jQueries:
         query = None
         try:
             query_doc = """MATCH (a:LABEL_A)-[r:RELATIONSHIP]-(n:LABEL_B) WHERE n.UUID_LABEL="UUID" RETURN COUNT(a) as Total"""
+            query = query_doc.replace("LABEL_A", label_a).replace(
+                "LABEL_B", label_b).replace("RELATIONSHIP", relationship).replace(
+                "UUID_LABEL", uuid_label).replace("UUID", uuid)
+        except Exception as e:
+            cfg.logger.error(e)
+        return query
+
+    @staticmethod
+    def get_nodes_ids_by_relationship(label_a, label_b, relationship, uuid, uuid_label="identifier"):
+        query = None
+        try:
+            query_doc = """MATCH (a:LABEL_A)-[r:RELATIONSHIP]-(n:LABEL_B) WHERE n.UUID_LABEL="UUID" RETURN (a.UUID_LABEL) as Identifiers"""
+            query = query_doc.replace("LABEL_A", label_a).replace(
+                "LABEL_B", label_b).replace("RELATIONSHIP", relationship).replace(
+                "UUID_LABEL", uuid_label).replace("UUID", uuid)
+        except Exception as e:
+            cfg.logger.error(e)
+        return query
+
+    @staticmethod
+    def get_nodes_by_relationship(label_a, label_b, relationship, uuid, uuid_label="identifier"):
+        query = None
+        try:
+            query_doc = """MATCH (a:LABEL_A)-[r:RELATIONSHIP]-(n:LABEL_B) WHERE a.UUID_LABEL="UUID" RETURN n as publisher
+                        """
+            query = query_doc.replace("LABEL_A", label_a).replace(
+                "LABEL_B", label_b).replace("RELATIONSHIP", relationship).replace(
+                "UUID_LABEL", uuid_label).replace("UUID", uuid)
+        except Exception as e:
+            cfg.logger.error(e)
+        return query
+
+    @staticmethod
+    def get_nodes_by_relationship_opposite(label_a, label_b, relationship, uuid, uuid_label="identifier"):
+        query = None
+        try:
+            query_doc = """MATCH (a:LABEL_A)-[r:RELATIONSHIP]-(n:LABEL_B) WHERE n.UUID_LABEL="UUID" RETURN a as 
+            data"""
             query = query_doc.replace("LABEL_A", label_a).replace(
                 "LABEL_B", label_b).replace("RELATIONSHIP", relationship).replace(
                 "UUID_LABEL", uuid_label).replace("UUID", uuid)

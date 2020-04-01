@@ -390,36 +390,25 @@
         }
       }
     },
-    "SourceDomainAnalysisOutput": {
+    "SourceBasicInformation": {
       "type": "object",
       "required": [
-        "favicon",
-        "url",
-        "malicious",
         "location",
         "media_type",
         "media_focus",
         "language",
         "platform",
-        "malicious_importance",
-        "media_type_importance",
-        "whois_features",
-        "whois_importance",
-        "suffix_information",
-        "neo4j_features"
+        "malicious",
+        "favicon"
       ],
       "properties": {
-        "favicon": {
-          "type": "string",
-          "example": "https://ep01.epimg.net/iconos/v1.x/v1.0/promos/promo_og_elpais.png"
-        },
-        "url": {
-          "type": "string",
-          "example": "http://www.elpais.com"
-        },
         "malicious": {
           "type": "boolean",
           "example": false
+        },
+        "favicon": {
+          "type": "string",
+          "example": "https://ep01.epimg.net/iconos/v1.x/v1.0/promos/promo_og_elpais.png"
         },
         "location": {
           "type": "string",
@@ -452,272 +441,159 @@
             "Radio",
             "TV"
           ]
-        },
-        "malicious_importance": {
-          "type": "number",
-          "description": "Importance of feature malicious. Range (0, 1).",
-          "example": 0.59
-        },
-        "media_type_importance": {
-          "type": "number",
-          "description": "Importance of feature malicious. Range (0, 1).",
-          "example": 0.67
-        },
-        "whois_features": {
-          "$ref": "#/definitions/WhoisFeatures"
-        },
-        "whois_importance": {
-          "$ref": "#/definitions/WhoisImportance"
-        },
-        "suffix_information": {
-          "$ref": "#/definitions/SuffixInformation"
-        },
-        "neo4j_features": {
-          "$ref": "#/definitions/Neo4jFeatures"
         }
       }
     },
-    "WhoisFeatures": {
+    "SourceDomainAnalysisOutput": {
       "type": "object",
       "required": [
-        "domain_name",
-        "creation_date",
-        "expiration_date",
-        "status",
-        "name",
-        "org",
-        "city",
-        "zip",
-        "state",
-        "country",
-        "whois_name",
-        "suffix",
-        "whois_country",
-        "nationality"
+        "source_information"
       ],
       "properties": {
-        "domain_name": {
-          "type": "string",
-          "example": "elpais.com",
-          "description": "Domain name of the input url."
+        "source_information": {
+          "$ref": "#/definitions/SourceBasicInformation"
         },
-        "creation_date": {
-          "type": "string",
-          "example": "2018-03-05 11:22:08 UTC",
-          "description": "Creation date of the website"
+        "twiter_information": {
+          "$ref": "#/definitions/TwitterInformation"
         },
-        "expiration_date": {
-          "type": "string",
-          "example": "2018-03-05 11:22:08 UTC",
-          "description": "Expiration date of the website."
+        "neo4j_information": {
+          "$ref": "#/definitions/Neo4jInformation"
+        }
+      }
+    },
+    "TwitterInformation": {
+      "type": "object",
+      "required": [
+        "id",
+        "id_str",
+        "screen_name",
+        "name",
+        "followers_count",
+        "favourites_count",
+        "friends_count",
+        "statuses_count",
+        "location",
+        "verified",
+        "created_at",
+        "url",
+        "description",
+        "protected",
+        "profile_banner_url",
+        "profile_image_url_https"
+      ],
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 8795458545
         },
-        "status": {
+        "id_str": {
           "type": "string",
-          "example": "clientTransferProhibited",
-          "description": "Status of the website."
+          "example": "8795458545"
+        },
+        "screen_name": {
+          "type": "string",
+          "example": "el_pais"
         },
         "name": {
           "type": "string",
-          "example": "El Pais",
-          "description": "Name of the publisher extracted using similarity distance."
+          "example": "El País"
         },
-        "org": {
-          "type": "string",
-          "example": "DIARIO EL PAIS, S.L",
-          "description": "Organization of the publisher."
+        "followers_count": {
+          "type": "integer",
+          "example": 2345432
         },
-        "city": {
-          "type": "string",
-          "example": "Madrid",
-          "description": "City where the domain is registered."
+        "friends_count": {
+          "type": "integer",
+          "example": 234593
         },
-        "zip": {
-          "type": "string",
-          "example": "2037",
-          "description": "Zip code where the domain is registered."
+        "favourites_count": {
+          "type": "integer",
+          "example": 1923
         },
-        "state": {
-          "type": "string",
-          "example": "Madrid",
-          "description": "State where the domain is registered."
+        "statuses_count": {
+          "type": "integer",
+          "example": 3453421
         },
-        "country": {
+        "location": {
           "type": "string",
-          "example": "Kingdom of Spain",
-          "description": "Country where the domain is registered (extracted using suffix)."
+          "example": "Madrid"
         },
-        "whois_name": {
+        "created_at": {
           "type": "string",
-          "example": "DIARIO EL PAIS SL",
-          "description": "Name of the publisher using Whois."
+          "example": "2009-11-05 23:49:19"
         },
-        "suffix": {
-          "type": "string",
-          "example": "com",
-          "description": "Suffix of the domain."
+        "verified": {
+          "type": "boolean",
+          "example": true
         },
-        "whois_country": {
+        "url": {
           "type": "string",
-          "example": "Kingdom of Spain",
-          "description": "Country  where the domain is registered using Whois"
+          "example": "https://t.co/c53pnmnuIT"
         },
-        "nationality": {
+        "description": {
           "type": "string",
-          "example": "Spanish",
-          "description": "Nationality of the publisher"
+          "example": "This is a description of Twitter"
+        },
+        "protected": {
+          "type": "boolean",
+          "example": true
+        },
+        "profile_banner_url": {
+          "type": "string",
+          "example": "https://pbs.twimg.com/profile_banners/87818409/1569228354"
+        },
+        "profile_image_url_https": {
+          "type": "string",
+          "example": "https://pbs.twimg.com/profile_images/1175141826870861825/K2qKoGla_normal.png"
         }
       }
     },
-    "WhoisImportance": {
+    "Neo4jInformation": {
       "type": "object",
       "required": [
-        "date",
-        "exp_date",
-        "country",
-        "name",
-        "date_importance",
-        "exp_date_importance",
-        "country_importance",
-        "name_importance"
-      ],
-      "properties": {
-        "date": {
-          "type": "number",
-          "example": 224,
-          "description": "Number of months since the creation date of the website. Range (0, +inf)"
-        },
-        "exp_date": {
-          "type": "number",
-          "example": 5,
-          "description": "Number of months to be expired. If negative, it indicates that it already expired. Range (-inf, +inf)."
-        },
-        "country": {
-          "type": "number",
-          "example": 1,
-          "description": "Verification of the name using Whois. Range (-50,50)."
-        },
-        "name": {
-          "type": "number",
-          "example": 0,
-          "description": "Verification of the domain name using whois. Range (-50,50)."
-        },
-        "date_importance": {
-          "type": "number",
-          "example": 0.5,
-          "description": "Importance of the number of months since the creation date of the website. Range (0,1)."
-        },
-        "exp_date_importance": {
-          "type": "number",
-          "example": 0.15,
-          "description": "Importance of the number of months to be expired. Range (0,1)."
-        },
-        "country_importance": {
-          "type": "number",
-          "example": 0.1,
-          "description": "Importance of the verification of the name using Whois. Range (0,1)."
-        },
-        "name_importance": {
-          "type": "number",
-          "example": 0.2,
-          "description": "Importance of the verification of the domain name using Whois. Range (0,1)."
-        }
-      }
-    },
-    "SuffixInformation": {
-      "type": "object",
-      "required": [
-        "name",
-        "entity",
-        "administrator",
-        "idn",
-        "dnssec",
-        "sld",
-        "ipv6",
-        "importance_weight"
-      ],
-      "properties": {
-        "name": {
-          "type": "string",
-          "example": ".com",
-          "description": "Suffix name."
-        },
-        "entity": {
-          "type": "string",
-          "example": "commercial",
-          "description": "Suffix entity information."
-        },
-        "administrator": {
-          "type": "string",
-          "example": "Education",
-          "description": "Brief explanation of the administrator of the suffix."
-        },
-        "idn": {
-          "type": "string",
-          "example": "Yes",
-          "description": "Suffix has IDN."
-        },
-        "dnssec": {
-          "type": "string",
-          "example": "Yes",
-          "description": "Suffix has DNSSEC."
-        },
-        "sld": {
-          "type": "string",
-          "example": "Yes",
-          "description": "Suffix has SLD."
-        },
-        "ipv6": {
-          "type": "string",
-          "example": "Yes",
-          "description": "Suffix has IPv6."
-        },
-        "importance_weight": {
-          "type": "number",
-          "example": 0.3,
-          "description": "Total suffix importance weight based on the aforementioned features. Range(0, 4)"
-        }
-      }
-    },
-    "Neo4jFeatures": {
-      "type": "object",
-      "required": [
-        "anonymous_rank",
-        "centrality_rank",
-        "anonymous_rank_importance",
-        "centrality_importance",
+        "page_rank",
+        "suffix_rank",
+        "text_rank",
+        "twitter_rank",
+        "media_type_rank",
         "trustworthiness",
-        "available_data"
+        "available_fandango"
       ],
       "properties": {
-        "anonymous_rank": {
+        "page_rank": {
           "type": "number",
-          "example": 0.8,
-          "description": "Anonymous authors Rank. Range(0, +inf)"
+          "example": 80.52,
+          "description": "Open Page Rank. Range(0, 100)"
         },
-        "centrality_rank": {
+        "suffix_rank": {
           "type": "number",
-          "example": 28.6,
-          "description": "Centrality Rank. Range(0, +inf)"
+          "example": 30,
+          "description": "Suffix Rank based on the suffix. Range(0, 100)"
         },
-        "anonymous_rank_importance": {
+        "text_rank": {
           "type": "number",
-          "example": 0.3,
-          "description": "Anonymous Rank importance. Range(0, 1)"
+          "example": 28.56,
+          "description": "Text rank based on the NLP performance. Range(0, 100)"
         },
-        "centrality_importance": {
+        "twitter_rank": {
           "type": "number",
-          "example": 0.7,
-          "description": "Percentage of anonymous authors importance. Range(0, 1)"
+          "example": 88.85,
+          "description": "Credibility of the Twitter account. Range(0, 100)"
+        },
+        "media_type_rank": {
+          "type": "number",
+          "example": 70.23,
+          "description": "Ranking based on the type of media. Range (0, 100)"
         },
         "trustworthiness": {
           "type": "number",
           "example": 72.25,
           "description": "Trustworthiness score. Range(0, 100)"
         },
-        "available_data": {
+        "available_fandango": {
           "type": "boolean",
-          "example": false,
-          "description": "Boolean to check whether the neo4j database contains the domain."
+          "example": true,
+          "description": "Boolean to check whether FANDANGO database contains the domain."
         }
       }
     },

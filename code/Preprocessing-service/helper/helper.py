@@ -18,6 +18,9 @@ from helper import config as cfg
 from difflib import SequenceMatcher
 from restcountries import RestCountryApiV2 as rapi
 from urllib.parse import urlparse
+from PIL import Image
+import requests
+from io import BytesIO
 
 
 def get_stop_words():
@@ -713,3 +716,45 @@ def extract_domain_from_url(url):
     except Exception as e:
         cfg.logger.error(e)
     return domain
+
+def retrieve_image_by_url(url):
+    img = None
+    try:
+        response = requests.get(url)
+        img = Image.open(BytesIO(response.content))
+    except Exception as e:
+        cfg.logger.error(e)
+    return img
+
+def filter_by_size(img):
+    filter = False
+    try:
+        filter_size = 100*100
+        image_size = img.size[0]*img.size[1]
+        # if the image is smaller than the filter size
+        if image_size <= filter_size:
+            filter = True
+    except Exception as e:
+        cfg.logger.error(e)
+    return filter
+
+def filter_by_apect_ratio(img):
+    filter = False
+    try:
+
+        filter_ratio_h = 5
+        filter_ratio_w = 0.5
+        image_ratio = img.width / img.height
+
+        # Horizontal banner
+        if image_ratio >= filter_ratio_h:
+            filter = True
+            cfg.logger.warning("Horizontal banner")
+
+        # Vertical banner
+        if image_ratio <= filter_ratio_w:
+            filter = True
+            cfg.logger.warning("Vertical banner")
+    except Exception as e:
+        cfg.logger.error(e)
+    return filter

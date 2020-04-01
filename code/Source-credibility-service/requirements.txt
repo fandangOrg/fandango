@@ -5,7 +5,6 @@ fuzzywuzzy
 kafka-python
 elasticsearch
 xlrd
-numpy
 flask
 flask_cors
 flask_swagger_ui
@@ -23,3 +22,6 @@ pysafebrowsing
 python-restcountries
 bs4
 pytz
+scipy
+tweepy
+hiscore

@@ -34,6 +34,11 @@ def preprocessing_offline_service():
     output = serv.offline_service()
     return json.dumps(output)
 
+@app.route('/preprocessing/offline/stop', methods=['POST'])
+def stop_preprocessing_offline_service():
+    serv = PreprocessingServices()
+    output = serv.stop_service(service_name=cfg.offline_service_name)
+    return json.dumps(output)
 
 @app.route('/preprocessing/online/preprocess_article', methods=['POST'])
 def preprocessing_online_service():
@@ -49,6 +54,21 @@ def preprocessing_online_manual_service():
     output = serv.online_manual_service(data=data)
     return json.dumps(output)
 
+@app.route('/preprocessing/experimental_offline/start', methods=['POST'])
+def start_experimental_offline_service():
+    serv = PreprocessingServices()
+    output = serv.experimental_offline_service()
+    return json.dumps(output)
+
+@app.route('/preprocessing/experimental_offline/stop', methods=['POST'])
+def stop_experimental_offline_service():
+    serv = PreprocessingServices()
+    output = serv.stop_service(service_name=cfg.experimental_service_name)
+    return json.dumps(output)
+
+# ==================================================================
+# ==================================================================
+# ==================================================================
 
 if __name__ == '__main__':
     gv.init()

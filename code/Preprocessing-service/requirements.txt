@@ -20,3 +20,4 @@ tld
 tldextract
 unidecode
 pytz
+pillow

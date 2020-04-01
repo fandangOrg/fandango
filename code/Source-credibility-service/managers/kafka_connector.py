@@ -49,4 +49,3 @@ class KafkaConnector:
         except Exception as e:
             cfg.logger.error(e)
         return self
-

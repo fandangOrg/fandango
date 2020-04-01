@@ -2,6 +2,7 @@ from helper import config as cfg
 from models.article import Article
 from json import loads
 from helper.kafka_connector import KafkaConnector
+from helper.elasticsearch_manager import ElasticsearchConnector
 from preprocessing.data_preprocessing import DataPreprocessing
 
 
@@ -26,15 +27,28 @@ class DataManager:
 
     def init_kafka_manager(self):
         try:
-            self.kafka_manager = KafkaConnector(topic_consumer=self.topic_consumer,
-                                                topic_producer=self.topic_producer,
-                                                group_id=self.group_id,
-                                                bootstrap_servers=[self.kafka_server],
-                                                enable_auto_commit=self.enable_auto_commit,
-                                                consumer_timeout_ms=self.timeout,
-                                                auto_offset_reset=self.auto_offset_reset)
-            self.kafka_manager.init_kafka_consumer()
-            self.kafka_manager.init_kafka_producer()
+            if self.kafka_manager is None:
+                self.kafka_manager = KafkaConnector(topic_consumer=self.topic_consumer,
+                                                    topic_producer=self.topic_producer,
+                                                    group_id=self.group_id,
+                                                    bootstrap_servers=[self.kafka_server],
+                                                    enable_auto_commit=self.enable_auto_commit,
+                                                    consumer_timeout_ms=self.timeout,
+                                                    auto_offset_reset=self.auto_offset_reset)
+                self.kafka_manager.init_kafka_consumer()
+                self.kafka_manager.init_kafka_producer()
+        except Exception as e:
+            cfg.logger.error(e)
+        return self
+
+    def init_elasticsearch_manager(self):
+        try:
+            if self.elasticsearch_manager is None:
+                self.elasticsearch_manager = ElasticsearchConnector(host=self.es_host,
+                                                                    port=self.es_port)
+            if self.elasticsearch_manager.es is None:
+                self.elasticsearch_manager.connect()
+
         except Exception as e:
             cfg.logger.error(e)
         return self
@@ -72,10 +86,53 @@ class DataManager:
                         article_obj = self.execute_preprocessing(data=data)
                         if article_obj is not None:
                             article = article_obj.article_to_dict()
-                            cfg.logger.info('Putting article into Kafka')
-                            self.kafka_manager.put_data_into_topic(data=article)
-                            self.kafka_manager.consumer.commit()
-                            cfg.logger.info('Done!')
+
+                            # TODO: Add filter
+                            if not self.data_preprocessing_manager.filter_news(article,
+                                                                               threshold=10,
+                                                                               col_key="articleBody"):
+
+                                cfg.logger.info('Putting article into Kafka')
+                                self.kafka_manager.put_data_into_topic(data=article)
+                                self.kafka_manager.consumer.commit()
+                                cfg.logger.info('Done!')
+                        else:
+                            cfg.logger.warning("Article not ingested into Kafka")
+                    except Exception as e:
+                        cfg.logger.error(e)
+                        self.kafka_manager.consumer.commit()
+                        continue
+            except Exception as e:
+                cfg.logger.warning(e)
+                continue
+        return self
+
+    def start_experimental_kafka_process(self):
+        done = True
+        while done:
+            try:
+                self.kafka_manager.consumer.poll()
+                for msg in self.kafka_manager.consumer:
+                    try:
+                        cfg.logger.info('Loading Kafka Message')
+                        data = loads(msg.value)
+                        cfg.logger.info('Executing Pre-processing')
+                        article_obj = self.execute_preprocessing(data=data)
+                        if article_obj is not None:
+                            article = article_obj.article_to_dict()
+
+                            # TODO: Add filter
+                            if not self.data_preprocessing_manager.filter_news(article,
+                                                                               threshold=10,
+                                                                               col_key="articleBody"):
+
+                                cfg.logger.info('Putting article into Temporal ES index')
+                                res = self.elasticsearch_manager.bulk_data_into_index(index=cfg.temp_es_index,
+                                                                                      uuid=article["identifier"],
+                                                                                      source_data=article)
+                                if res:
+                                    self.kafka_manager.consumer.commit()
+                                    cfg.logger.info('Done!')
                         else:
                             cfg.logger.warning("Article not ingested into Kafka")
                     except Exception as e:
