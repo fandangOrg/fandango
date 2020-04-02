@@ -5,7 +5,7 @@ from fake_news_detection.config.AppConfig import picklepath, resources_path, \
 from lightgbm.sklearn import LGBMClassifier
 from fake_news_detection.model.predictor import Preprocessing, FakePredictor, \
     KerasFakePredictor, VotingClassifierPredictor, BERTFakePredictor, \
-    BertPreprocessing
+    BertPreprocessing, BERTFakePredictorWithStyleBase
 from keras.wrappers.scikit_learn import KerasClassifier
 from fake_news_detection.test.keras_no_deep import create_model1
 import torch
@@ -13,6 +13,9 @@ from pytorch_pretrained_bert.modeling import BertForPreTraining
 from bert.modeling import BertModel
 import torch.nn as nn
 import matplotlib.pyplot as plt
+from fake_news_detection.business.featureEngineeringDeepL import FeaturesEngineering
+from fake_news_detection.config.constants import N_FEATURES_STYLE
+from fake_news_detection.business.ModelDeepLearning import BertStyleAndTextFeatures
 
 
 class BertForMultiClass(BertForPreTraining):
@@ -87,21 +90,31 @@ def build_model_BERT(name="model_3"):
     daopredictor.save(model, id='all')
 
     
+def train_model_BERT_stylebase(name,X):
+    model = BertStyleAndTextFeatures.from_pretrained("bert-base-multilingual-uncased" ,num_labels=2,device='cuda',features_style_number=N_FEATURES_STYLE)
+    predictor=BERTFakePredictorWithStyleBase(model,FeaturesEngineering(),name,device=model.device)
+    predictor.fit(X, y=None)
 if __name__ == '__main__':
-    build_model_BERT()
+    #build_model_BERT()
     
-    # for lang,train in [('en','default_train_v3_only_kaggle_new_features_text_en.csv')]:
     # for lang,train in [('it','default_train_domains_text_it.csv'),('nl','default_train_domains_text_nl.csv'),('es','default_train_domains_text_es.csv')]:
-    for lang, train in [('en', 'default_train_domains_text_en.csv'), ('it', 'default_train_domains_text_it.csv'), ('nl', 'default_train_domains_text_nl.csv'), ('es', 'default_train_domains_text_es.csv')]:
+   # for lang, train in [('en', 'default_train_domains_text_en.csv'), ('it', 'default_train_domains_text_it.csv'), ('nl', 'default_train_domains_text_nl.csv'), ('es', 'default_train_domains_text_es.csv')]:
+     for lang,train in [('en','default_train_v3_only_kaggle_new_features_text_en.csv')]:
         print("leggi train")
         X = pandas.read_csv(resources_path + "/" + train).iloc[:, 1:]
+        X=X.sample(100)
         X['label'] = X['label'].map({0: "FAKE", 1: "GOOD"})
+        X['label'] = X['label'].map({"FAKE":0,"GOOD":1})
         # ##
-        if lang == "en":
-            X_test = pandas.read_csv(resources_path + "/default_train_v3_only_kaggle_new_features_text_en.csv").iloc[:, 1:]
-            X_test['label'] = X_test['label'].map({0: "FAKE", 1: "GOOD"})
-            print(len(X))
-            X = X.append(X_test)
-            print(len(X))
-        training_model_LGBMClassifier(lang, X)
+        append=False
+        if append:
+            if lang == "en":
+                #SE USIAMO L'INGLESE APPENDEVA ANCHE KAGGLE OLTRE QUELLO DAI DOMINI
+                X_test = pandas.read_csv(resources_path + "/default_train_v3_only_kaggle_new_features_text_en.csv").iloc[:, 1:]
+                X_test['label'] = X_test['label'].map({0: "FAKE", 1: "GOOD"})
+                print(len(X))
+                X = X.append(X_test)
+                print(len(X))
+        train_model_BERT_stylebase("bert_"+lang,X)   
+        #training_model_LGBMClassifier(lang, X)
         print("---")

@@ -64,5 +64,7 @@ consumer = 1
 [train]
 path=/home/daniele/resources/fandango/train
 
+[path]
+path_features_deep_learning=/home/daniele/resources/fandango/model_train/features/
 
 
