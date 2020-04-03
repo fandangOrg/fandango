@@ -102,12 +102,12 @@ def crawl_prep(url:str, old:str="False") -> News_DataModel:
     news_preprocessed.results = prest
     news_preprocessed.similarnews = similar_news(news_preprocessed.identifier)
     topics = []
-    #remove comment when service's ready
+    #remove comment when service's ready and setting it in pipeline
     #topics = topics_getter(news_preprocessed)
-    news_preprocessed.calculateRatingDetail = analisy2
+    news_preprocessed.calculatedRatingDetail = analisy2
     opendata = Open_Data(text=news_preprocessed.headline, category=news_preprocessed.headline, topics=topics)
-    news_preprocessed.calculateRatingDetail['textRating'] = news_preprocessed.calculateRatingDetail['textRating'] * 100
-    news_preprocessed.calculateRating = round(agg_score(news_preprocessed.identifier, news_preprocessed.calculateRatingDetail), 2)
+    #news_preprocessed.calculatedRatingDetail['textRating'] = news_preprocessed.calculatedRatingDetail['textRating'] * 100
+    #news_preprocessed.calculatedRating = round(agg_score(news_preprocessed.identifier, news_preprocessed.calculatedRatingDetail), 2)
     op = get_opendata(opendata)
     prest = {"news_preprocessed": news_preprocessed , "opendata" : op}
     #print(prest)
@@ -168,8 +168,8 @@ def author_org_getter(news_preprocessed:News_DataModel) -> Author_org_DataModel:
                "images": news_preprocessed.images,
                "video": news_preprocessed.video,
                "sourceDomain": news_preprocessed.sourceDomain,
-               "calculateRatingDetail": news_preprocessed.calculateRatingDetail,
-               "calculateRating":-news_preprocessed.calculateRating,
+               "calculatedRatingDetail": news_preprocessed.calculatedRatingDetail,
+               "calculatedRating":-news_preprocessed.calculatedRating,
                "identifier": news_preprocessed.identifier}
 
     u = URLRequest(url_service_authors + "/graph/article")
@@ -236,16 +236,18 @@ def similar_news(id_news:str) -> list:
     return response["results"]
 
 
-def agg_score(id_news:str, calculatedRatingDetail:list) -> str:
-    u = URLRequest(url_overall_score + "/api/fusion_score")
-    print(calculatedRatingDetail)
-    payload = {"identifier": id_news, "calculatedRatingDetail":calculatedRatingDetail}
-    headers = {"Content-Type":  "application/json"}
-    j = json.dumps(payload)
-    response = u.post(data=j, headers=headers)
-    
-    print(response["calculatedRating"])
-    return response["calculatedRating"]
+#===============================================================================
+# def agg_score(id_news:str, calculatedRatingDetail:list) -> str:
+#     u = URLRequest(url_overall_score + "/api/fusion_score")
+#     print(calculatedRatingDetail)
+#     payload = {"identifier": id_news, "calculatedRatingDetail":calculatedRatingDetail}
+#     headers = {"Content-Type":  "application/json"}
+#     j = json.dumps(payload)
+#     response = u.post(data=j, headers=headers)
+#     
+#     print(response["calculatedRating"])
+#     return response["calculatedRating"]
+#===============================================================================
 
 #------------------------------------>App FLASK <----------------------------------
 

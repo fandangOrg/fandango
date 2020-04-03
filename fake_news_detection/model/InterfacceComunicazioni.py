@@ -46,7 +46,7 @@ class News_raw:
 
 class News_DataModel:
 
-    def __init__(self, url:str, language:str, identifier:list, headline:str, articleBody:str, dateCreated:str, dateModified:str, datePublished:str, author:list, publisher:list, calculateRating: int,
+    def __init__(self, url:str, language:str, identifier:str, headline:str, articleBody:str, dateCreated:str, dateModified:str, datePublished:str, author:list, publisher:list, calculateRating: int,
                  calculateRatingDetail:str, images:list, videos:list,
                  sourceDomain:list, country:str, nationality:str,
                  publishDateEstimated:bool,
@@ -119,8 +119,8 @@ class Topics_DataModel:
         
 class Final_DataModel:
 
-    def __init__(self, identifier:str, headline:str, articleBody:str, dateCreated:str, dateModified:str, datePublished:str, author:list, publisher:list, calculateRating: int,
-                 calculateRatingDetail:str, images:list, videos:list, sourceDomain:str, mentions:list, about:list, videosanal:dict, imagesanal:dict):
+    def __init__(self, identifier:str, headline:str, articleBody:str, dateCreated:str, dateModified:str, datePublished:str, author:list, publisher:list, calculatedRating: int,
+                 calculatedRatingDetail:str, images:list, videos:list, sourceDomain:str, mentions:list, about:list, videosanal:dict, imagesanal:dict):
         self.identifier = identifier
         self.headline = headline
         self.articleBody = articleBody
@@ -129,8 +129,8 @@ class Final_DataModel:
         self.datePublished = datePublished
         self.author = author
         self.publisher = publisher
-        self.calculateRating = calculateRating
-        self.calculateRatingDetail = calculateRatingDetail
+        self.calculatedRating = calculatedRating
+        self.calculatedRatingDetail = calculatedRatingDetail
         self.images = images
         self.videos = videos
         self.sourceDomain = sourceDomain

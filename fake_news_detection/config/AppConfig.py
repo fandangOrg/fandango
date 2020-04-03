@@ -49,16 +49,19 @@ picklepath = os.environ.get("MODEL_PATH") or  pkg_resources.resource_filename("f
 # dataset_beta =  config.get("train", "path")  or pkg_resources.resource_filename("fake_news_detection.resources", "")   # @UndefinedVariable 
 static_folder = pkg_resources.resource_filename("new_static", "")  # @UndefinedVariable
 static_folder_annotation = pkg_resources.resource_filename("static", "")  # @UndefinedVariable
+file_manual_annotation = config.get("default", "manual_annotation_file") or pkg_resources.resource_filename("fake_news_detection.resources", "")
 
 path_training = os.environ.get("PATH_FOR_TRAININGFILE") or config.get("default", "path_training")
 resources_path = pkg_resources.resource_filename("fake_news_detection.resources", "")
 resources_path_train = config.get("default", "path_training_preprocessed") or pkg_resources.resource_filename("fake_news_detection.resources", "")
 
+
+
 template_path = pkg_resources.resource_filename("fake_news_detection.config", "mapping_annotation.json")
 
 ##################################################################################################################à
 dataset_beta = pkg_resources.resource_filename("fake_news_detection.resources", "")  # @UndefinedVariable
- 
+
 #---------------------------->ELASTIC VARIABLES<----------------------------------------------------------------------------
 index_name_news = os.environ.get("INDEX_ELASTIC_NEWS") or config.get("elasticsearch", "article_index") or "news_article_current"
 docType_article = os.environ.get("DOCTYPE_NEWS") or config.get("elasticsearch", "doctype_news") or "article"

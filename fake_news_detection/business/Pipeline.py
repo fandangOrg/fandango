@@ -5,7 +5,8 @@ Created on 30 apr 2019
 '''
 import pandas as pd 
 from fake_news_detection.config.AppConfig import picklepath, url_service_media, url_service_authors, \
-    url_service_preprocessing, url_crawler, url_service_video, url_service_image
+    url_service_preprocessing, url_crawler, url_service_video, url_service_image,\
+    url_overall_score
 from ds4biz_commons.utils.requests_utils import URLRequest
 from fake_news_detection.utils.logger import getLogger
 import json
@@ -26,6 +27,7 @@ from fake_news_detection.utils.score_utils import normalizer_neg, normalizer_pos
 import bert
 from fake_news_detection.model.predictor import BERTFakePredictor
 from pprint import pprint
+from typing import Dict
 log = getLogger(__name__)
 
 
@@ -60,7 +62,7 @@ class ScrapyService:
         self.headers = {'content-type': "application/json", 'accept': "application/json"}
 
     @log_info
-    def _crawling(self, url):
+    def crawling(self, url):
         try:
             # print("CRAWLING CERTH "+url)
             u = URLRequest(self.url_crawler + "/api/retrieve_article")
@@ -77,7 +79,7 @@ class ScrapyService:
             return None
 
     @log_info
-    def _preprocessing(self, raw_news:News_raw) -> News_DataModel:
+    def preprocessing(self, raw_news:News_raw) -> News_DataModel:
         payload = raw_news.__dict__
         # #print("payload",payload)
         # payload["fakeness" ]= ""
@@ -94,9 +96,9 @@ class ScrapyService:
     @log_info
     def scrapy(self, url) -> News_DataModel:
         # print("start _crawling")
-        raw_article = self._crawling(url)
+        raw_article = self.crawling(url)
         # print("start _preprocessing") 
-        prepo_article = self._preprocessing(raw_article)
+        prepo_article = self.preprocessing(raw_article)
         prepo_article.sourceDomain = prepo_article.sourceDomain
         # prepo_article.video = ["https://www.youtube.com/watch?v=wZZ7oFKsKzY","https://www.youtube.com/watch?v=w0AOGeqOnFY"]
         return(prepo_article)
@@ -196,34 +198,24 @@ class AnalyticsService(metaclass=Singleton):
         try:
             if disable:
                 return Media_DataModel('', [], [])
-            # print("......start request image and video")
             u = URLRequest(self.url_media_service + "/api/media_analysis")
             payload = {"images": news_preprocessed.images, "videos": news_preprocessed.videos, "identifier": news_preprocessed.identifier}
-            # #print("RICHIESTA VIDEOIMMAGINI  ",payload)
             j = json.dumps(payload)
             response = u.post(data=j, headers=self.headers)
-            print("VIDEOIMMAGINI RESPONSE", response)
-            # print("......start request image and video")
             return Media_DataModel(**response)
         except Exception as e :
-            # print("ERROR SERVICE MEDIA IDS:  "+str(e))
             return Media_DataModel('', [], [])
     
     def _get_media_ids(self, news_preprocessed:News_DataModel, disable=False) -> Media_DataModel:
         try:
             if disable:
                 return Media_DataModel('', [], [])
-            # print("......start request image and video")
             u = URLRequest(self.url_media_service + "/api/media_analysis")
             payload = {"images": news_preprocessed.images, "videos": news_preprocessed.videos, "identifier": news_preprocessed.identifier}
-            # #print("RICHIESTA VIDEOIMMAGINI  ",payload)
             j = json.dumps(payload)
             response = u.post(data=j, headers=self.headers)
-            print("VIDEOIMMAGINI RESPONSE", response)
-            # print("......start request image and video")
             return Media_DataModel(**response)
         except Exception as e :
-            # print("ERROR SERVICE MEDIA IDS:  "+str(e))
             return Media_DataModel('', [], [])
 
     @log_info    
@@ -240,7 +232,16 @@ class AnalyticsService(metaclass=Singleton):
         except Exception as e:
             print("ERROR SERVICE TOPIC", e)
             return Topics_DataModel('', '', [], [])
-
+    
+    def _agg_score(self, identifier_news, calculatedRatingDetail: Dict):
+        u = URLRequest(url_overall_score + "/api/fusion_score")
+        payload = {"identifier": identifier_news , "calculatedRatingDetail":calculatedRatingDetail}
+        headers = {"Content-Type":  "application/json"}
+        j = json.dumps(payload)
+        response = u.post(data=j, headers=headers)
+        return response["calculatedRating"]
+    
+    
     def _clear(self, data):
         return str(data).split(" ")[0]
     
@@ -255,7 +256,6 @@ class AnalyticsService(metaclass=Singleton):
             "author": news_preprocessed.author,
             "publisher": news_preprocessed.publisher,
             "sourceDomain": news_preprocessed.sourceDomain,
-            "calculatedRating": 0.0,
             "identifier": news_preprocessed.identifier,
             "inLanguage": news_preprocessed.language,
             "url": news_preprocessed.url,
@@ -292,9 +292,11 @@ class AnalyticsService(metaclass=Singleton):
         calculatedRatingDetail['authorRating'] = autors_org.authorRating
         calculatedRatingDetail['publisherRating'] = autors_org.publisherRating
         calculatedRatingDetail['mediaRating'] = []
-        print(calculatedRatingDetail)
         ####
         d['calculatedRatingDetail'] = calculatedRatingDetail
+        print(calculatedRatingDetail)
+        print("IDENTIFIER",news_preprocessed.identifier)
+        d['calculatedRating'] = round(self._agg_score(news_preprocessed.identifier, calculatedRatingDetail), 2)
         d['author'] = autors_org.author
         d['publisher'] = autors_org.publisher
         # d['images'] = media.images
@@ -380,7 +382,7 @@ class AnalyticsService(metaclass=Singleton):
             list_publishs = []
             list_images = []
             list_videos = []
-            score = pd_text[1][0]
+            score = pd_text[1][0] * 100 
             news = self._save_news(news_preprocessed, js_t, score, old)
             # #
             #

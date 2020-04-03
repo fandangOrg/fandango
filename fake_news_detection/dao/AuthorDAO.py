@@ -3,18 +3,23 @@ Created on 19 feb 2019
 
 @author: camila
 '''
-from fake_news_detection.config.AppConfig import get_elastic_connector, index_author_org, docType
+from fake_news_detection.config.AppConfig import get_elastic_connector,\
+    index_name_news, docType_article, index_annotation
 
 
 class DAOAuthorOutputElastic:
     '''
-    classdocs
+    insert article annotated manually 
     '''
 
     def __init__(self):
         self.es_client = get_elastic_connector()
-        self.index_name = index_author_org
-        self.docType = docType
+        self.index_name = index_name_news
+        self.docType = docType_article
+        self.index_annotation = index_annotation
+        self.check_index_exists()
+        dao = DAOTrainingElasticByDomains()
+        self.dic_domains = dao.get_domains_from_elastic()
         
     def outout_author_organization(self, author_or_org):
         
