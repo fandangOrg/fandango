@@ -35,7 +35,7 @@
     
     
     
-    <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">python3-Fandango</pydev_property>
+    <pydev_property name="org.python.pydev.PYTHON_PROJECT_INTERPRETER">python_fandango</pydev_property>
                                 
 
 

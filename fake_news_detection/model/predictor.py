@@ -7,7 +7,8 @@ from ds4biz_predictor_core.model.predictors.predictors import TransformingPredic
     DS4BizPredictor
 import datetime
 from fake_news_detection.business.textPreprocessing import TextPreprocessor
-from fake_news_detection.config.constants import QUOTES
+from fake_news_detection.config.constants import QUOTES, TRAIN_BATCH_SIZE,\
+    NUM_TRAIN_EPOCHS, GRADIENT_ACCUMULATION_STEPS
 from fake_news_detection.business.featureEngineering import preprocess_features_of_df, \
     add_new_features_to_df
 from fake_news_detection.config.MLprocessConfig import new_features_mapping, \
@@ -15,7 +16,7 @@ from fake_news_detection.config.MLprocessConfig import new_features_mapping, \
 from fake_news_detection.model.InterfacceComunicazioni import Prestazioni
 from lightgbm.sklearn import LGBMClassifier
 from fake_news_detection.config.AppConfig import dataset_beta  , \
-    resources_path_train
+    resources_path_train, path_features_deep_learning
 import pandas
 from sklearn.ensemble.voting_classifier import VotingClassifier
 from sklearn.preprocessing.label import LabelEncoder
@@ -30,6 +31,12 @@ from torch.utils.data.sampler import RandomSampler
 from torch.utils.data.dataloader import DataLoader
 import bert
 import pandas as pd 
+from torch import optim
+from fake_news_detection.business.featureEngineeringDeepL import FeaturesEngineering
+from tqdm._tqdm import trange
+from torch.nn.modules.loss import CrossEntropyLoss
+from _testcapi import awaitType
+from tensorflow.python.ops.gen_math_ops import xdivy
 
 
 class Preprocessing:
@@ -100,7 +107,7 @@ class FakePredictor(DS4BizPredictor):
     def __init__(self, predictor:TransformingPredictor,
                  preprocessing:Preprocessing, id:str):
         '''
-        Constructor
+        Constructortorch.load(picklepath + "/" + name)
         '''
         now = datetime.datetime.now()
         now_string = now.strftime(('%d/%m/%Y %H:%M'))
@@ -427,7 +434,148 @@ class BERTFakePredictor(DS4BizPredictor):
     def _update_prestazioni_model(self, predictor, prestazioni):
         raise NotImplemented()
         
+   
+class BERTFakePredictorWithStyleBase(DS4BizPredictor):
+    '''
+    classdocs
+    '''
+
+    def __init__(self, predictor:BertForPreTraining,
+                 preprocessing:FeaturesEngineering, id:str,device='cpu'):
+        '''
+            Constructor
+        '''
+        now = datetime.datetime.now()
+        now_string = now.strftime(('%d/%m/%Y %H:%M'))
+        self.date = now_string
+        self.predictor = predictor
+        self.predictor.id = id
+        self.id=id
+        self.predictor.to(device)
+        self.preprocessing = preprocessing
+        self.device=device
+        self.num_labels=2
         
+    def fit(self, X=None, y=None):
+        lrlast = 0.001
+        lrmain = 0.01
+        optimizer = optim.Adam(
+         [
+         {"params":self.predictor.bert.parameters(),"lr": lrmain},
+         {"params":self.predictor.classifier.parameters(), "lr": lrlast}, 
+         {"params":self.predictor.lstm.parameters(), "lr": lrlast}, 
+         {"params":self.predictor.dense_style.parameters(), "lr": lrlast}, 
+         
+         ])
+        train_text=X[["text","label"]]
+        X = X.drop(['text','title'], axis=1)
+        print(X.columns)
+        #X = X.drop(['title'], axis=1)
+        features_style = X.drop(['label'], axis=1)
+        
+        train_examples_len = len(features_style)
+        print("***** Running training *****")
+        print("  Num examples = %d", train_examples_len)
+        print("  Batch size = %d", TRAIN_BATCH_SIZE)
+        list_tensor=self.preprocessing.transform_in_tensor(train_text, features_style, Y=True, name_save="feature_"+self.id)
+        #tensor_text,tensor_mask,tensor_text_style,tensor_label
+        
+        train_data = TensorDataset(*list_tensor)
+        train_sampler = RandomSampler(train_data)
+        train_dataloader = DataLoader(train_data, sampler=train_sampler, batch_size=TRAIN_BATCH_SIZE)
+        self.predictor.train()
+        epoch=0
+        for _ in trange(int(NUM_TRAIN_EPOCHS), desc="Epoch"):
+            epoch+=1
+            tr_loss = 0
+            nb_tr_examples, nb_tr_steps = 0, 0
+            #n_batch=len(train_dataloader)
+            print("train_dataloader",len(train_dataloader),self.device)
+            for step, batch in enumerate(train_dataloader):
+                batch = tuple(t.to(self.device) for t in batch)
+                input_ids, input_ids_style,input_mask, label_ids = batch
+                #optimizer.zero_grad()
+                logits = self.predictor(input_ids,input_ids_style, None, input_mask)
+                loss_fct = CrossEntropyLoss()
+                #label_ids=label_ids
+                loss = loss_fct(logits.view(-1, self.num_labels), label_ids.view(-1))
+                #logits = logits.detach().cpu().numpy()
+                #label_ids = label_ids.to('cpu').numpy()
+                #tmp_eval_accuracy = flat_accuracy(logits, label_ids)
+                print(step,"/",len(train_dataloader),"...loss",loss)
+                
+                #print("accuracy tmp ",tmp_eval_accuracy)
+                if GRADIENT_ACCUMULATION_STEPS > 1:
+                    loss = loss / GRADIENT_ACCUMULATION_STEPS
+                
+                loss.backward()
+                #print("lost=\r%f\n" % loss, end='')
+                #tr_loss += loss.item()
+                #nb_tr_examples += input_ids.size(0)
+                #nb_tr_steps += 1
+                if (step + 1) % GRADIENT_ACCUMULATION_STEPS == 0:
+                    optimizer.step()
+                    optimizer.zero_grad()
+
+            torch.save(self.predictor, path_features_deep_learning+"/bert_model/"+str(self.id)+"_epoch_"+str(epoch))    
+        torch.save(self.predictor, path_features_deep_learning+'/bert_model/'+self.id)
+        
+    def predict(self, X):
+        raise NotImplemented()
+        
+    def _input_converter(self, features, train=False):
+        if train:
+            all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
+            all_input_mask = torch.tensor([f.input_mask for f in features], dtype=torch.long)
+            all_label_ids = torch.tensor([f.label_id for f in features], dtype=torch.long)
+        else:
+            all_input_ids = torch.tensor([f.input_ids for f in features], dtype=torch.long)
+            all_input_mask = torch.tensor([f.input_mask for f in features], dtype=torch.long)
+            all_label_ids = None
+            
+        return all_input_ids, all_input_mask, all_label_ids
+    
+    def predict_proba(self, X):
+        features = self.preprocessing.execution(X, 'text')
+        l = list()
+        for f in features:
+            l.append(f.input_ids)
+            break
+        self.predictor.eval()
+        all_input_ids = torch.tensor(l, dtype=torch.long)
+        all_input_ids.to('cpu')
+    
+        labels_fakeness = self.predictor(all_input_ids)
+        result = labels_fakeness.data[0]
+        fake = float(result[0])
+        real = float(result[1])
+        old_min = min([fake, real]) - 1
+        old_range = max([fake, real]) + 1 - old_min
+        new_min = 0
+        new_range = 1 - new_min
+        output = [ (n - old_min) / old_range * new_range + new_min  for n in [fake, real]]
+        return [output], pd.DataFrame(['UNDEFINED'], columns=['Features'])
+    
+    def is_partially_fittable(self):
+        return True
+    
+    def partial_fit(self, X, y=None):
+        raise NotImplemented()
+        
+    def get_language(self):
+        raise NotImplemented()
+    
+    def _create_prestazioni(self, predictor):
+       raise NotImplemented()
+    
+    def get_prestazioni(self):
+       raise NotImplemented()
+   
+    def _update_prestazioni_model(self, predictor, prestazioni):
+        raise NotImplemented()
+        
+      
+              
 def get_performance(y_test, y_pred, classes):
     accuracy = accuracy_score(y_test, y_pred)
     precision = precision_score(y_test, y_pred, average='weighted', labels=classes)
@@ -442,7 +590,8 @@ def get_performance(y_test, y_pred, classes):
     print("\t - F-measure:", f1, "\n")
 
     
-if __name__ == '__main__':   
+if __name__ == '__main__':  
+
     for lang, train in [('it', 'default_train_v2_en.csv')]:
         X = pandas.read_csv(resources_path_train + "/" + train).iloc[:, 1:] 
         print(X.columns)

@@ -98,6 +98,9 @@ topic_output_kafka = os.environ.get("TOPIC_OUTPUT") or config.get("kafka", "topi
 group_id = "lvt_group22"
 n_consumer = os.environ.get("N_CONSUMER") or config.get("kafka", "consumer")
 
+####DEEPLEARNING PATH ############
+path_features_deep_learning = os.environ.get("PATH_FEATURES_DEEP_LEARING") or config.get("path", "path_features_deep_learning")
+
 if __name__ == '__main__':
     print(static_folder)
 

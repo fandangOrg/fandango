@@ -27,3 +27,10 @@ LABEL_SCORE = {
                     "text_AVGWordsCounter": 'words Average  in an article body',
                     'title_AVGWordsCounter': 'words Average  in the title of an article'
                     }
+#### VARIABILI DEEPLEARNING
+#massima lunghezza delle news
+MAX_SEQ_LENGTH = 1000
+TRAIN_BATCH_SIZE=200
+N_FEATURES_STYLE=34
+NUM_TRAIN_EPOCHS = 5
+GRADIENT_ACCUMULATION_STEPS = 2
