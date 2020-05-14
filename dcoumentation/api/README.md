@@ -5,4 +5,4 @@ The definition of the API is defined in the excel file in google docs /Shared/AP
 
 ## Swagger
 Here the list of the swagger endpoints:
-..* [http://fpreprocessing.westeurope.cloudapp.azure.com:5001/docs/]
+* [http://fpreprocessing.westeurope.cloudapp.azure.com:5001/docs/]
