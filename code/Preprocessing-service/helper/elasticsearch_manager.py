@@ -4,6 +4,7 @@ from fuzzywuzzy import fuzz
 import elasticsearch as elast
 import pandas as pd
 import hashlib
+import sys
 
 
 class ElasticsearchConnector:
@@ -22,10 +23,9 @@ class ElasticsearchConnector:
                 cfg.logger.info('Connected to ElasticSearch at \'%s:%s\'.', self.host, self.port)
             else:
                 self.connection = False
-                cfg.logger.info('It was not possible to connect to \'%s:%s\'.', self.host, self.port)
-        except Exception as e:
+        except ConnectionError as e:
             cfg.logger.error(e)
-        return self
+            sys.exit(141)
 
     def get_indexes(self):
         self.indexes = list(self.es.indices.get_alias("*").keys())

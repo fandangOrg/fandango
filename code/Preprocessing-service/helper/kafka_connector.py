@@ -22,6 +22,7 @@ class KafkaConnector:
         self.auto_offset_reset = auto_offset_reset
         self.consumer = None
         self.producer = None
+        self.connection = False
 
     def init_kafka_consumer(self):
         try:
@@ -30,17 +31,20 @@ class KafkaConnector:
                                           bootstrap_servers=self.bootstrap_servers,
                                           auto_offset_reset=self.auto_offset_reset,
                                           enable_auto_commit=self.enable_auto_commit)
+
+            self.connection = True
         except Exception as e:
             cfg.logger.error(e)
-        return self
+            self.connection = False
 
     def init_kafka_producer(self):
         try:
             self.producer = KafkaProducer(bootstrap_servers=self.bootstrap_servers,
                                           value_serializer=lambda x: dumps(x).encode('utf-8'))
+            self.connection = True
         except Exception as e:
             cfg.logger.error(e)
-        return self
+            self.connection = False
 
     def put_data_into_topic(self, data):
         try:

@@ -1,7 +1,5 @@
 from bs4 import BeautifulSoup
 from fuzzywuzzy import fuzz
-import requests
-import elasticsearch
 import numpy as np
 from datetime import datetime
 import time
@@ -328,51 +326,6 @@ def check_organization_data(organization, organizations_list, threshold=90):
     return org_data
 
 
-def tail(f, n, offset=None):
-    """Reads a n lines from f with an offset of offset lines.  The return
-    value is a tuple in the form ``(lines, has_more)`` where `has_more` is
-    an indicator that is `True` if there are more lines in the file.
-    """
-    avg_line_length = 74
-    to_read = n + (offset or 0)
-
-    while 1:
-        try:
-            f.seek(-(avg_line_length * to_read), 2)
-        except IOError:
-            # woops.  apparently file is smaller than what we want
-            # to step back, go to the beginning instead
-            f.seek(0)
-        pos = f.tell()
-        lines = f.read().splitlines()
-        if len(lines) >= to_read or pos == 0:
-            return lines[-to_read:offset and -offset or None]
-        avg_line_length *= 1.3
-
-
-def kafka_running(group="David", server="fandangoedge01:9092", consumer_timeout_ms=3000):
-    import kafka
-    try:
-        client =kafka.KafkaClient(server)
-        if len(client.topic_partitions) > 0:
-            client.close()
-            return True
-        else:
-            return False
-    except Exception as e:
-        return False
-
-def elastic_running(host="host", port="port"):
-    try:
-        elastic = elasticsearch.Elasticsearch([{'host': host, 'port': port}],max_retries=2,
-                                              http_compress=True)
-        if elastic.ping(request_timeout=1):
-            elastic.transport.close()
-            return True
-        else:
-            return False
-    except Exception as e:
-        return False
 
 def check_authorname_org(authorName, organizations_list, threshold=90):
     try:
@@ -699,6 +652,7 @@ def create_csv_from_df(df, filepath):
     except Exception as e:
         cfg.logger.error(e)
 
+
 def generate_uuid_article(url):
     identifier = ""
     try:
@@ -707,6 +661,23 @@ def generate_uuid_article(url):
     except Exception as e:
         cfg.logger.error(e)
     return identifier
+
+
+def generate_uuid_from_string(data_uuid):
+    identifier = ""
+    try:
+        if len(data_uuid) == 1:
+            hash_fuct = hashlib.sha512
+            n_iter = 1
+        else:
+            hash_fuct = hashlib.sha256
+            n_iter = 2
+        for i in range(n_iter):
+            identifier += hash_fuct(data_uuid[i].encode('utf-8')).hexdigest()
+    except Exception as e:
+        cfg.logger.error(e)
+    return identifier
+
 
 def extract_domain_from_url(url):
     domain = None

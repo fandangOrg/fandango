@@ -57,15 +57,15 @@ class Article:
             self.nationality = data["nationality"]
 
         # Non-required parameters
-        if 'calculateRating' in list(data.keys()):
-            self.calculateRating = data['calculateRating']
+        if 'calculatedRating' in list(data.keys()):
+            self.calculatedRating = data['calculatedRating']
         else:
-            self.calculateRating = -99
+            self.calculatedRating = -99
 
-        if 'calculateRatingDetail' in list(data.keys()):
-            self.calculateRatingDetail = data['calculateRatingDetail']
+        if 'calculatedRatingDetail' in list(data.keys()):
+            self.calculatedRatingDetail = data['calculatedRatingDetail']
         else:
-            self.calculateRatingDetail = ""
+            self.calculatedRatingDetail = ""
 
     def article_to_dict(self):
         return self.build_kafka_output()
@@ -80,8 +80,8 @@ class Article:
                       "dateModified": self.dateModified, "datePublished": self.datePublished,
                       "publishDateEstimated": self.publish_date_estimated, "author": self.authors,
                       "publisher": self.publisher, "sourceDomain": self.sourceDomain, "country": self.country,
-                      "nationality": self.nationality, "calculateRating": self.calculateRating,
-                      "calculateRatingDetail": self.calculateRatingDetail}
+                      "nationality": self.nationality, "calculatedRating": self.calculatedRating,
+                      "calculatedRatingDetail": self.calculatedRatingDetail}
 
         except Exception as e:
             cfg.logger.error(e)

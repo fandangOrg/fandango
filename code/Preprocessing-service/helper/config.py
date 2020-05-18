@@ -1,11 +1,10 @@
 import os
 from helper.custom_log import init_logger
 
-log_file_name = os.path.join("app_logs","app.log")
+log_file_name = os.path.join("app_logs", "app.log")
 logger = init_logger(__name__, testing_mode=False)
 thread = None
 service = None
-
 
 # Pre-processing Params
 default_field = 'Unknown'
@@ -16,17 +15,50 @@ idf_es_index = "crawled-articles"
 ner_library = "spacy"
 
 # Ports and Hosts
-host = "0.0.0.0"
-port = "5001"
-es_host = "fandangoedge02"
-es_port = "9220"
-kf_host = "fandangoedge01"
-kf_port = "9092"
+# Add environment variables
+host = os.getenv("HOST_PORT") if "HOST_PORT" in os.environ else "0.0.0.0"
+port = int(os.getenv("API_PORT")) if "API_PORT" in os.environ else 5001
+
+
+""" Elasticsearch environment variables"""
+if os.getenv('ELASTICSEARCH_SERVER') is not None:
+    es_host = str(os.getenv('ELASTICSEARCH_SERVER'))
+else:
+    es_host = "fandangoedge02"
+
+if os.getenv('ELASTICSEARCH_PORT') is not None:
+    es_port = str(os.getenv('ELASTICSEARCH_PORT'))
+else:
+    es_port = "9220"
+
+if os.getenv('ELASTICSEARCH_INDEX_ANNOT') is not None:
+    temp_es_index = str(os.getenv('ELASTICSEARCH_INDEX_ANNOT'))
+else:
+    temp_es_index = "article_preprocessed_temp"
+
+""" Kafka environment variables"""
+if os.getenv('KAFKA_SERVER') is not None:
+    kf_host = str(os.getenv('KAFKA_SERVER'))
+else:
+    kf_host = "fandangoedge01"
+
+if os.getenv('KAFKA_PORT') is not None:
+    kf_port = str(os.getenv('KAFKA_PORT'))
+else:
+    kf_port = "9092"
+
+if os.getenv('KAFKA_TOPIC_CONSUMER') is not None:
+    topic_consumer = str(os.getenv('KAFKA_TOPIC_CONSUMER'))
+else:
+    topic_consumer = 'input_raw'
+
+if os.getenv('KAFKA_TOPIC_PRODUCER') is not None:
+    topic_producer = str(os.getenv('KAFKA_TOPIC_PRODUCER'))
+else:
+    topic_producer = 'input_preprocessed'
+
 kafka_server = kf_host + ":" + kf_port
-topic_consumer = 'input_raw'
-topic_producer = 'input_preprocessed'
 group_id = 'upm_group'
-temp_es_index = "article_preprocessed_temp"
 
 # Process name
 offline_service_name = "Offline service"
@@ -35,7 +67,7 @@ manual_annotation_service_name = "Manual Annotation service"
 experimental_service_name = "Experimental Offline service"
 
 service_name = "Pre-processing"
-error_msg = "An error ocurred when applying preprocessing"
+error_msg = "An error occurred when applying pre-processing"
 running_msg = "Running"
 aborted_msg = "Aborted"
 stop_msg = "Stopped"

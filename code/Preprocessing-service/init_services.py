@@ -1,4 +1,4 @@
-import json
+import json, os
 from flask import Flask, request
 from flask_cors import CORS
 from services.services import PreprocessingServices
@@ -24,41 +24,55 @@ app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 # ----------------------------------------------- PRE-PROCESSING SERVICES ----------------------------------------------
 # ======================================================================================================================
 
+
 @app.route('/preprocessing/offline/start', methods=['POST'])
 def preprocessing_offline_service():
     # -------------------------------------
     # ------------ DOCKER ----------------
     # os.system('./tunnel_kafka.sh')
     # --------------------------------------
-    serv = PreprocessingServices()
-    output = serv.offline_service()
-    return json.dumps(output)
+    serv: PreprocessingServices = PreprocessingServices()
+    output: dict = serv.offline_service()
+    if output["status"] == 200:
+        return json.dumps(output)
+    else:
+        # Kill the process
+        os._exit(0)
+
 
 @app.route('/preprocessing/offline/stop', methods=['POST'])
 def stop_preprocessing_offline_service():
-    serv = PreprocessingServices()
-    output = serv.stop_service(service_name=cfg.offline_service_name)
+    serv: PreprocessingServices = PreprocessingServices()
+    output: dict = serv.stop_service(service_name=cfg.offline_service_name)
     return json.dumps(output)
+
 
 @app.route('/preprocessing/online/preprocess_article', methods=['POST'])
 def preprocessing_online_service():
-    serv = PreprocessingServices()
+    serv: PreprocessingServices = PreprocessingServices()
     data = request.get_json(force=True)
-    output = serv.online_service(data=data)
+    output: dict = serv.online_service(data=data)
     return json.dumps(output)
+
 
 @app.route('/preprocessing/manual_annotation/preprocess_annotation', methods=['POST'])
 def preprocessing_online_manual_service():
-    serv = PreprocessingServices()
+    serv: PreprocessingServices = PreprocessingServices()
     data = request.get_json(force=True)
     output = serv.online_manual_service(data=data)
     return json.dumps(output)
 
+
 @app.route('/preprocessing/experimental_offline/start', methods=['POST'])
 def start_experimental_offline_service():
     serv = PreprocessingServices()
-    output = serv.experimental_offline_service()
-    return json.dumps(output)
+    output: dict = serv.experimental_offline_service()
+    if output["status"] == 200:
+        return json.dumps(output)
+    else:
+        # Kill the process
+        os._exit(0)
+
 
 @app.route('/preprocessing/experimental_offline/stop', methods=['POST'])
 def stop_experimental_offline_service():
@@ -70,11 +84,8 @@ def stop_experimental_offline_service():
 # ==================================================================
 # ==================================================================
 
+
 if __name__ == '__main__':
     gv.init()
-    app.run(debug=False, host=cfg.host, port=cfg.port)
+    app.run(debug=False, host=cfg.host, port=cfg.port, threaded=True)
 
-    #-------------------------------------
-    # ------------ DOCKER ----------------
-    #app.run(debug=False, host="0.0.0.0",port="5001")
-    # -------------------------------------
