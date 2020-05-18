@@ -27,7 +27,7 @@ As we said before, we need this value to be in the range (0, 100), so that, we n
 
 
 
-Where *S* denotes the sigmoid function, $`\Omega`$ indicates the **Open Page Rank metric** and finally $`\alpha`$ refers to the **normalized page rank metric** that will be fused in the final stage.
+Where *S* denotes the sigmoid function, ![equation](https://latex.codecogs.com/gif.latex?%5COmega) indicates the **Open Page Rank metric** and finally $`\alpha`$ refers to the **normalized page rank metric** that will be fused in the final stage.
 
 
 ### Twitter Rank
