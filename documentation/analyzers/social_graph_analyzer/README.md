@@ -107,21 +107,20 @@ The final overall score is computed by taking a weighted average of the aforemen
 
 As expected, the weights must be normalized between 0 and 1 and must sum up 1. To do so, we again employed a Gaussian distribution for obtaining the weights in the aforementioned specific order.
 
-```mermaid
-graph LR
-A[publisher] --> B(Open Page Rank)
-A --> C(Twitter Rank)
-A --> D(Suffix Rank)
-A --> E(Article Rank)
-A --> F(Media Type Rank)
-B --> G{Get Rank Importance}
-C --> G{Get Rank Importance}
-D --> G{Get Rank Importance}
-E --> G{Get Rank Importance}
-F --> G{Get Rank Importance}
-G --> H{Weighted Average}
-H --> I((trustworthiness))
-```
+graph TD;
+ A[publisher] --> B(Open Page Rank);
+ A --> C(Twitter Rank);
+ A --> D(Suffix Rank);
+ A --> E(Article Rank);
+ A --> F(Media Type Rank);
+ B --> G{Get Rank Importance};
+ C --> G{Get Rank Importance};
+ D --> G{Get Rank Importance};
+ E --> G{Get Rank Importance};
+ F --> G{Get Rank Importance};
+ G --> H{Weighted Average};
+ H --> I((trustworthiness));
+
 Similar diagram showing the extraction of the trustworthiness regarding the authors involved in the writing of the document:
 
 ```mermaid
