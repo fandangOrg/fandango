@@ -23,11 +23,12 @@ Using the Open Page Rank API, we are capable of measuring the importance of the 
 Basically, the higher the rank is, the higher the importance of the source on the Internet. Therefore, the range of the algorithm is (0, +inf). 
 
 As we said before, we need this value to be in the range (0, 100), so that, we need a mapping function to our purpose. 
+
 ![equation](https://latex.codecogs.com/gif.latex?%5Calpha%20%3D%20100%5Chspace%7B0.05cm%7D%20%5Cmathit%7BS%7D%20%5Cleft%28%20log%282%29%20*%20log%28%5COmega%29%20%5Cright%29) 
 
 
 
-Where *S* denotes the sigmoid function, ![equation](https://latex.codecogs.com/gif.latex?%5COmega) indicates the **Open Page Rank metric** and finally $`\alpha`$ refers to the **normalized page rank metric** that will be fused in the final stage.
+Where *S* denotes the sigmoid function, ![equation](https://latex.codecogs.com/gif.latex?%5COmega) indicates the **Open Page Rank metric** and finally ![equation](https://latex.codecogs.com/gif.latex?%5Calpha) refers to the **normalized page rank metric** that will be fused in the final stage.
 
 
 ### Twitter Rank
@@ -52,7 +53,7 @@ Finally, the **verification score** is computed by analysing whether the account
 ### Suffix Analysis
 The next metric considers the suffix of the domain since many domains are well known such as the .edu (Academic), .org(Organizations) or .gov (Goverment). On the other hand, there exist other well-known suffix such as the commercial one (.com), the network domain (.net) as well as all the countries domains. 
 
-Therefore this metric is a straighforward calculation where each specific suffix has a **deterministic score** (i.e Academic or Goverement Suffix will have a much higher score than a .com suffix). More specifically, the weights are extracted from a Gaussian distribution $`G(\mu =0, \sigma =1)`$ where for instance the Goverment or the Academic sufixes will have a weight corresponding to the highest probability of the distribution $`(x=0)`$ and so on.
+Therefore this metric is a straighforward calculation where each specific suffix has a **deterministic score** (i.e Academic or Goverement Suffix will have a much higher score than a .com suffix). More specifically, the weights are extracted from a Gaussian distribution ![equation](https://latex.codecogs.com/gif.latex?G%28%5Cmu%20%3D0%2C%20%5Csigma%20%3D1%29) where for instance the Goverment or the Academic sufixes will have a weight corresponding to the highest probability of the distribution ![equation](https://latex.codecogs.com/gif.latex?%28x%3D0%29) and so on.
 
 ### Article Rank
 As expected, we are also analysing the content of the document in order to verify its level of trustworthiness based on Natural Language Processing (NLP) techniques. 
@@ -64,17 +65,17 @@ Consequently, we incorporate a feature based on the result of the Deep Learning 
  3. Measure the relevance of the ratings considering a relevance function to normalize the ratings.
  4. Perform a median of the normalized ratings.
 
-The relevance function $`r(x;\mu)`$ is used to measure how important the results are based on how many documents a certain source has. The following function is used for this purpose:
+The relevance function ![equation](https://latex.codecogs.com/gif.latex?r%28x%3B%5Cmu%29) is used to measure how important the results are based on how many documents a certain source has. The following function is used for this purpose:
 
 ![equation](https://latex.codecogs.com/gif.latex?r%28x%3B%20%5Cmu%29%20%3D%201%20-%20%5Cleft%28%20%5Cfrac%7B1%7D%7B%281&plus;%5Cmu%20x%29%7D%5Cright%29) 
 
-where $`\mu=0.20`$ and is defined as a controlled parameter, whereas $`x`$ represents the number of documents associated to the source. 
+where ![equation](https://latex.codecogs.com/gif.latex?%5Cmu%3D0.20) and is defined as a controlled parameter, whereas ![equation](https://latex.codecogs.com/gif.latex?x) represents the number of documents associated to the source. 
 
-Therefore, each independent text rating $`t_r`$ is "normalized" using the following expression:
+Therefore, each independent text rating ![equation](https://latex.codecogs.com/gif.latex?t_r) is "normalized" using the following expression:
 
 ![equation](https://latex.codecogs.com/gif.latex?%5Cbar%7Bt%7D_r%20%3D%20100%28t_r%29%20r%28x%3B%20%5Cmu%3D0.20%29)
 
-where $`\bar{t}_r`$ indicates the normalized text rating. Finally, all these normalized ratings are averaged by taking the median.
+where ![equation](https://latex.codecogs.com/gif.latex?%5Cbar%7Bt%7D_r) indicates the normalized text rating. Finally, all these normalized ratings are averaged by taking the median.
 
 
 ### Media Type Rank
@@ -91,7 +92,7 @@ Then, we established a weight for the following media type in the following orde
  4. Magazine
  5. Other media type
 
-More specifically, the weights are extracted from a Gaussian distribution $`G(\mu =0, \sigma =1)`$ where the Broadcast or the Press Agency will have a weight corresponding to the highest probability of the distribution $`(x=0)`$ and so on.
+More specifically, the weights are extracted from a Gaussian distribution ![equation](https://latex.codecogs.com/gif.latex?G%28%5Cmu%20%3D0%2C%20%5Csigma%20%3D1%29) where the Broadcast or the Press Agency will have a weight corresponding to the highest probability of the distribution ![equation](https://latex.codecogs.com/gif.latex?%28x%3D0%29) and so on.
 
 
 ## Overall Score
