@@ -23,11 +23,8 @@ Using the Open Page Rank API, we are capable of measuring the importance of the 
 Basically, the higher the rank is, the higher the importance of the source on the Internet. Therefore, the range of the algorithm is (0, +inf). 
 
 As we said before, we need this value to be in the range (0, 100), so that, we need a mapping function to our purpose. 
+![equation](https://latex.codecogs.com/gif.latex?%5Calpha%20%3D%20100%5Chspace%7B0.05cm%7D%20%5Cmathit%7BS%7D%20%5Cleft%28%20log%282%29%20*%20log%28%5COmega%29%20%5Cright%29) 
 
-\begin{equation}
-
-\alpha = 100\hspace{0.05cm} \mathit{S} \left( log(2) * log(\Omega) \right)
-\end{equation}
 
 
 Where *S* denotes the sigmoid function, $`\Omega`$ indicates the **Open Page Rank metric** and finally $`\alpha`$ refers to the **normalized page rank metric** that will be fused in the final stage.
@@ -69,17 +66,13 @@ Consequently, we incorporate a feature based on the result of the Deep Learning 
 
 The relevance function $`r(x;\mu)`$ is used to measure how important the results are based on how many documents a certain source has. The following function is used for this purpose:
 
-```math
-r(x; \mu) = 1 - \left( \frac{1}{(1+\mu x)}\right)
-```
+![equation](https://latex.codecogs.com/gif.latex?r%28x%3B%20%5Cmu%29%20%3D%201%20-%20%5Cleft%28%20%5Cfrac%7B1%7D%7B%281&plus;%5Cmu%20x%29%7D%5Cright%29) 
 
 where $`\mu=0.20`$ and is defined as a controlled parameter, whereas $`x`$ represents the number of documents associated to the source. 
 
 Therefore, each independent text rating $`t_r`$ is "normalized" using the following expression:
 
-```math
-\bar{t}_r = 100(t_r) r(x; \mu=0.20)
-```
+![equation](https://latex.codecogs.com/gif.latex?%5Cbar%7Bt%7D_r%20%3D%20100%28t_r%29%20r%28x%3B%20%5Cmu%3D0.20%29)
 
 where $`\bar{t}_r`$ indicates the normalized text rating. Finally, all these normalized ratings are averaged by taking the median.
 
