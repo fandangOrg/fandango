@@ -24,10 +24,11 @@ Basically, the higher the rank is, the higher the importance of the source on th
 
 As we said before, we need this value to be in the range (0, 100), so that, we need a mapping function to our purpose. 
 
-```math
+\begin{equation}
 
 \alpha = 100\hspace{0.05cm} \mathit{S} \left( log(2) * log(\Omega) \right)
-```
+\end{equation}
+
 
 Where *S* denotes the sigmoid function, $`\Omega`$ indicates the **Open Page Rank metric** and finally $`\alpha`$ refers to the **normalized page rank metric** that will be fused in the final stage.
 
