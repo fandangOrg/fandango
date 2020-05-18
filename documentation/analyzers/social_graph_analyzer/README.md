@@ -42,7 +42,7 @@ The use of Twitter in this analysis lies in the importance of Social networks wh
 
 The **level of activity** is measured by infering the **average of the number of tweets posted per day**. Subsequently, the level of **social popularity** is measured using the following equation:
 
-![formula](https://render.githubusercontent.com/render/math?math=p = (log(followers) - log(friends)))
+<img src="https://render.githubusercontent.com/render/math?math=p=(log(followers) - log(friends))">
 
 where *followers* refers to the number of followers whereas *friends* refers to the amount of friends of the account.
 
