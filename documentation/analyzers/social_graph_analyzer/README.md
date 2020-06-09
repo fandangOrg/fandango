@@ -106,7 +106,7 @@ The final overall score is computed by taking a weighted average of the aforemen
  5. Suffix Rank
 
 As expected, the weights must be normalized between 0 and 1 and must sum up 1. To do so, we again employed a Gaussian distribution for obtaining the weights in the aforementioned specific order.
-![image](https://github.com/fandangOrg/fandango/tree/master/documentation/analyzers/social_graph_analyzer/images/publisher_author.PNG)
+![image](https://github.com/fandangOrg/fandango/blob/master/documentation/analyzers/social_graph_analyzer/images/publisher_author.PNG)
 
 Similar diagram showing the extraction of the trustworthiness regarding the authors involved in the writing of the document:
 
