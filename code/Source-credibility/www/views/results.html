@@ -1,0 +1,574 @@
+ <div class="container">
+
+    <section class="my-5">
+
+      <!-- Grid row -->
+      <div class="row">
+
+        <!-- Grid column -->
+        <div class="col-md-12">
+
+          <!-- Newsfeed -->
+          <div class="feed">
+            <div class="blur" ng-click="highlight('')"></div>
+            <div class="s003">
+				<form>
+					<fieldset>
+						<div class="inner-form">
+							<div class="input-field">
+								<input class="form-control" id="choices-text-preset-values" type="text" placeholder="Type to search..." />
+								<button class="btn-search" type="button" ng-click="search()">
+									<i class="fas fa-search fa-2x"></i>
+
+
+								</button>
+
+							</div>
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+            <!-- First news -->
+            <div class="news positive group1" ng-click="highlight('group1')">
+
+              <!-- Label -->
+              <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1-mini.jpg" class="rounded-circle z-depth-1-half">
+              </div>
+
+              <!-- Excerpt -->
+              <div class="excerpt">
+
+                <!-- Brief -->
+                <div class="brief">
+                  <a class="name">John Doe</a> posted on twitter
+                  <div class="date">1 hour ago</div>
+                </div>
+                 <!-- Added text -->
+                <div class="added-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero inventore,
+                  iste quas libero eius? Vitae sint neque animi alias sunt dolor, accusantium ducimus, non placeat
+                  voluptate.</div>
+                <!-- Feed footer -->
+                <div class="feed-footer">
+                  <a class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>5 likes</span>
+                  </a>
+                  <a class="retweet">
+                    <i class="fas fa-retweet"></i>
+                    <span> 5 retweets</span>
+                  </a>
+                  <a class="following">
+                    <span> 5 followers</span>
+                  </a>
+                    <a class="followers">
+                    <span> 5 followers</span>
+                  </a>
+                  <a class="feelings">
+                    <i class="fas fa-minus"></i>
+                    <span class="progress" style="--p:20%"></span> 
+                    <i class="fas fa-plus"></i>
+                    Polarity
+                  </a>
+                   <a class="subjectivity">
+                    <i class="fas fa-minus"></i>
+                    <span class="progress" style="--p:20%"></span> 
+                    <i class="fas fa-plus"></i>
+                    Subjectivity
+                  </a>
+                </div>
+
+
+              </div>
+              <!-- Excerpt -->
+
+            </div>
+            <!-- First news -->
+
+            <!-- Second news -->
+            <div class="news neutral group2" ng-click="highlight('group2')">
+
+              <!-- Label -->
+              <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(17)-mini.jpg" class="rounded-circle z-depth-1-half">
+              </div>
+
+              <!-- Excerpt -->
+              <div class="excerpt">
+
+                <!-- Brief -->
+                <div class="brief">
+                  <a class="name">Anna Smith</a> posted on twitter
+                  <a> 2 new illustrations</a>
+                  <div class="date">4 hours ago</div>
+                </div>
+
+                <div class="added-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero inventore,
+                  iste quas libero eius? Vitae sint neque animi alias sunt dolor, accusantium ducimus, non placeat
+                  voluptate.</div>
+                <!-- Added images -->
+                <div class="added-images">
+                  <img src="https://mdbootstrap.com/img/Photos/Others/images/71.jpg" class="z-depth-1 rounded mb-md-0 mb-2">
+                  <img src="https://mdbootstrap.com/img/Photos/Others/images/74.jpg" class="z-depth-1 rounded">
+                </div>
+                <!-- Feed footer -->
+                <div class="feed-footer">
+                  <a class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>5 likes</span>
+                  </a>
+                  <a class="retweet">
+                    <i class="fas fa-retweet"></i>
+                    <span> 5 retweets</span>
+                  </a>
+                  <a class="following">
+                    <span> 5 followers</span>
+                  </a>
+                    <a class="followers">
+                    <span> 5 followers</span>
+                  </a>
+                  <a class="feelings">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span class="progress" style="--p:60%"></span> 
+                    <i class="fas fa-thumbs-up"></i>
+                  </a>
+                </div>
+              
+
+
+
+              </div>
+              <!-- Excerpt -->
+
+            </div>
+            <!-- Second news -->
+
+            <!-- Third news -->
+            <div class="news negative group3" ng-click="highlight('group3')">
+
+              <!-- Label -->
+              <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9)-mini.jpg" class="rounded-circle z-depth-1-half">
+              </div>
+
+              <!-- Excerpt -->
+              <div class="excerpt">
+
+                <!-- Brief -->
+                <div class="brief">
+                  <a class="name">Danny Moore</a> posted on twitter
+                  <div class="date">7 hours ago</div>
+                </div>
+                  <!-- Added text -->
+                <div class="added-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero inventore,
+                  iste quas libero eius? Vitae sint neque animi alias sunt dolor, accusantium ducimus, non placeat
+                  voluptate.
+                </div>
+                <!-- Feed footer -->
+                <div class="feed-footer">
+                  <a class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>5 likes</span>
+                  </a>
+                  <a class="retweet">
+                    <i class="fas fa-retweet"></i>
+                    <span> 5 retweets</span>
+                  </a>
+                  <a class="following">
+                    <span> 5 followers</span>
+                  </a>
+                    <a class="followers">
+                    <span> 5 followers</span>
+                  </a>
+                  <a class="feelings">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span class="progress" style="--p:10%"></span> 
+                    <i class="fas fa-thumbs-up"></i>
+                  </a>
+                </div>
+
+              </div>
+              <!-- Excerpt -->
+
+            </div>
+
+            <!-- Fourth news -->
+            <div class="news group1 positive" ng-click="highlight('group1')">
+
+              <!-- Label -->
+              <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(18)-mini.jpg" class="rounded-circle z-depth-1-half">
+              </div>
+
+              <!-- Excerpt -->
+              <div class="excerpt">
+
+                <!-- Brief -->
+                <div class="brief">
+                  <a class="name">Lili Rose</a> posted on twitter
+                  <div class="date">2 days ago</div>
+                </div>
+
+                <!-- Added text -->
+                <div class="added-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero inventore,
+                  iste quas libero eius? Vitae sint neque animi alias sunt dolor, accusantium ducimus, non placeat
+                  voluptate.</div>
+
+                <!-- Feed footer -->
+                <div class="feed-footer">
+                  <a class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>5 likes</span>
+                  </a>
+                  <a class="retweet">
+                    <i class="fas fa-retweet"></i>
+                    <span> 5 retweets</span>
+                  </a>
+                  <a class="following">
+                    <span> 5 followers</span>
+                  </a>
+                    <a class="followers">
+                    <span> 5 followers</span>
+                  </a>
+                  <a class="feelings">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span class="progress" style="--p:80%"></span> 
+                    <i class="fas fa-thumbs-up"></i>
+                  </a>
+                </div>
+
+              </div>
+              <!-- Excerpt -->
+
+            </div>
+            <!-- Fourth news -->
+
+            <!-- Fifth news -->
+            <div class="news group5 neutral" ng-click="highlight('group5')">
+
+              <!-- Label -->
+              <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20)-mini.jpg" class="rounded-circle z-depth-1-half">
+              </div>
+
+              <!-- Excerpt -->
+              <div class="excerpt mb-0">
+
+                <!-- Brief -->
+                <div class="brief">
+                  <a class="name">Kate Harrison</a> posted on twitter
+                  <a> 2 new photos</a> of you
+                  <div class="date">3 days ago</div>
+                </div>
+
+                <!-- Added images -->
+                <div class="added-images">
+                  <img src="https://mdbootstrap.com/img/Photos/Others/images/29.jpg" class="z-depth-1 rounded mb-md-0 mb-2">
+                  <img src="https://mdbootstrap.com/img/Photos/Others/images/31.jpg" class="z-depth-1 rounded">
+                </div>
+
+                <!-- Feed footer -->
+                <div class="feed-footer">
+                  <a class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>5 likes</span>
+                  </a>
+                  <a class="retweet">
+                    <i class="fas fa-retweet"></i>
+                    <span> 5 retweets</span>
+                  </a>
+                  <a class="following">
+                    <span> 15 followers</span>
+                  </a>
+                    <a class="followers">
+                    <span> 5 following</span>
+                  </a>
+                  <a class="feelings">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span class="progress" style="--p:40%"></span> 
+                    <i class="fas fa-thumbs-up"></i>
+                  </a>
+                </div>
+
+              </div>
+              <!-- Excerpt -->
+
+            </div>
+            <!-- First news -->
+            <div class="news positive group1" ng-click="highlight('group1')">
+
+              <!-- Label -->
+              <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-1-mini.jpg" class="rounded-circle z-depth-1-half">
+              </div>
+
+              <!-- Excerpt -->
+              <div class="excerpt">
+
+                <!-- Brief -->
+                <div class="brief">
+                  <a class="name">John Doe</a> posted on twitter
+                  <div class="date">1 hour ago</div>
+                </div>
+                 <!-- Added text -->
+                <div class="added-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero inventore,
+                  iste quas libero eius? Vitae sint neque animi alias sunt dolor, accusantium ducimus, non placeat
+                  voluptate.</div>
+                <!-- Feed footer -->
+                <div class="feed-footer">
+                  <a class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>5 likes</span>
+                  </a>
+                  <a class="retweet">
+                    <i class="fas fa-retweet"></i>
+                    <span> 5 retweets</span>
+                  </a>
+                  <a class="following">
+                    <span> 5 followers</span>
+                  </a>
+                    <a class="followers">
+                    <span> 5 followers</span>
+                  </a>
+                  <a class="feelings">
+                    <i class="fas fa-minus"></i>
+                    <span class="progress" style="--p:20%"></span> 
+                    <i class="fas fa-plus"></i>
+                    Polarity
+                  </a>
+                   <a class="subjectivity">
+                    <i class="fas fa-minus"></i>
+                    <span class="progress" style="--p:20%"></span> 
+                    <i class="fas fa-plus"></i>
+                    Subjectivity
+                  </a>
+                </div>
+
+
+              </div>
+              <!-- Excerpt -->
+
+            </div>
+            <!-- First news -->
+
+            <!-- Second news -->
+            <div class="news neutral group2" ng-click="highlight('group2')">
+
+              <!-- Label -->
+              <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(17)-mini.jpg" class="rounded-circle z-depth-1-half">
+              </div>
+
+              <!-- Excerpt -->
+              <div class="excerpt">
+
+                <!-- Brief -->
+                <div class="brief">
+                  <a class="name">Anna Smith</a> posted on twitter
+                  <a> 2 new illustrations</a>
+                  <div class="date">4 hours ago</div>
+                </div>
+
+                <div class="added-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero inventore,
+                  iste quas libero eius? Vitae sint neque animi alias sunt dolor, accusantium ducimus, non placeat
+                  voluptate.</div>
+                <!-- Added images -->
+                <div class="added-images">
+                  <img src="https://mdbootstrap.com/img/Photos/Others/images/71.jpg" class="z-depth-1 rounded mb-md-0 mb-2">
+                  <img src="https://mdbootstrap.com/img/Photos/Others/images/74.jpg" class="z-depth-1 rounded">
+                </div>
+                <!-- Feed footer -->
+                <div class="feed-footer">
+                  <a class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>5 likes</span>
+                  </a>
+                  <a class="retweet">
+                    <i class="fas fa-retweet"></i>
+                    <span> 5 retweets</span>
+                  </a>
+                  <a class="following">
+                    <span> 5 followers</span>
+                  </a>
+                    <a class="followers">
+                    <span> 5 followers</span>
+                  </a>
+                  <a class="feelings">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span class="progress" style="--p:60%"></span> 
+                    <i class="fas fa-thumbs-up"></i>
+                  </a>
+                </div>
+              
+
+
+
+              </div>
+              <!-- Excerpt -->
+
+            </div>
+            <!-- Second news -->
+
+            <!-- Third news -->
+            <div class="news negative group3" ng-click="highlight('group3')">
+
+              <!-- Label -->
+              <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(9)-mini.jpg" class="rounded-circle z-depth-1-half">
+              </div>
+
+              <!-- Excerpt -->
+              <div class="excerpt">
+
+                <!-- Brief -->
+                <div class="brief">
+                  <a class="name">Danny Moore</a> posted on twitter
+                  <div class="date">7 hours ago</div>
+                </div>
+                  <!-- Added text -->
+                <div class="added-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero inventore,
+                  iste quas libero eius? Vitae sint neque animi alias sunt dolor, accusantium ducimus, non placeat
+                  voluptate.
+                </div>
+                <!-- Feed footer -->
+                <div class="feed-footer">
+                  <a class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>5 likes</span>
+                  </a>
+                  <a class="retweet">
+                    <i class="fas fa-retweet"></i>
+                    <span> 5 retweets</span>
+                  </a>
+                  <a class="following">
+                    <span> 5 followers</span>
+                  </a>
+                    <a class="followers">
+                    <span> 5 followers</span>
+                  </a>
+                  <a class="feelings">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span class="progress" style="--p:10%"></span> 
+                    <i class="fas fa-thumbs-up"></i>
+                  </a>
+                </div>
+
+              </div>
+              <!-- Excerpt -->
+
+            </div>
+
+            <!-- Fourth news -->
+            <div class="news group1 positive" ng-click="highlight('group1')">
+
+              <!-- Label -->
+              <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(18)-mini.jpg" class="rounded-circle z-depth-1-half">
+              </div>
+
+              <!-- Excerpt -->
+              <div class="excerpt">
+
+                <!-- Brief -->
+                <div class="brief">
+                  <a class="name">Lili Rose</a> posted on twitter
+                  <div class="date">2 days ago</div>
+                </div>
+
+                <!-- Added text -->
+                <div class="added-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero inventore,
+                  iste quas libero eius? Vitae sint neque animi alias sunt dolor, accusantium ducimus, non placeat
+                  voluptate.</div>
+
+                <!-- Feed footer -->
+                <div class="feed-footer">
+                  <a class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>5 likes</span>
+                  </a>
+                  <a class="retweet">
+                    <i class="fas fa-retweet"></i>
+                    <span> 5 retweets</span>
+                  </a>
+                  <a class="following">
+                    <span> 5 followers</span>
+                  </a>
+                    <a class="followers">
+                    <span> 5 followers</span>
+                  </a>
+                  <a class="feelings">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span class="progress" style="--p:80%"></span> 
+                    <i class="fas fa-thumbs-up"></i>
+                  </a>
+                </div>
+
+              </div>
+              <!-- Excerpt -->
+
+            </div>
+            <!-- Fourth news -->
+
+            <!-- Fifth news -->
+            <div class="news group5 neutral" ng-click="highlight('group5')">
+
+              <!-- Label -->
+              <div class="label">
+                <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(20)-mini.jpg" class="rounded-circle z-depth-1-half">
+              </div>
+
+              <!-- Excerpt -->
+              <div class="excerpt mb-0">
+
+                <!-- Brief -->
+                <div class="brief">
+                  <a class="name">Kate Harrison</a> posted on twitter
+                  <a> 2 new photos</a> of you
+                  <div class="date">3 days ago</div>
+                </div>
+
+                <!-- Added images -->
+                <div class="added-images">
+                  <img src="https://mdbootstrap.com/img/Photos/Others/images/29.jpg" class="z-depth-1 rounded mb-md-0 mb-2">
+                  <img src="https://mdbootstrap.com/img/Photos/Others/images/31.jpg" class="z-depth-1 rounded">
+                </div>
+
+                <!-- Feed footer -->
+                <div class="feed-footer">
+                  <a class="like">
+                    <i class="fas fa-heart"></i>
+                    <span>5 likes</span>
+                  </a>
+                  <a class="retweet">
+                    <i class="fas fa-retweet"></i>
+                    <span> 5 retweets</span>
+                  </a>
+                  <a class="following">
+                    <span> 15 followers</span>
+                  </a>
+                    <a class="followers">
+                    <span> 5 following</span>
+                  </a>
+                  <a class="feelings">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span class="progress" style="--p:40%"></span> 
+                    <i class="fas fa-thumbs-up"></i>
+                  </a>
+                </div>
+
+              </div>
+              <!-- Excerpt -->
+
+            </div>
+          </div>
+          <!-- Newsfeed -->
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+
+    </section>
+			</div>
