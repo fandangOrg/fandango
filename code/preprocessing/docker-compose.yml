@@ -1,0 +1,18 @@
+version: '3'
+services:
+    preprocessing :   
+      image: "fandangorg/fandango_preprocessing:1.0.11"
+      #image: "test_preproc_img"
+      container_name: docker_fandango_pre
+      ports:
+        - "5001:5001"
+      command : bash -c "python /app/init_services.py & sleep 15 && curl -X POST http://0.0.0.0:5001/preprocessing/offline/start && tail -F /dev/null"
+      environment:
+        - ELASTICSEARCH_SERVER=0.0.0.0
+        - ELASTICSEARCH_PORT=9220
+        - ELASTICSEARCH_INDEX_ANNOT=article_preprocessed_temp
+        - KAFKA_SERVER=0.0.0.0
+        - KAFKA_PORT=9092
+        - KAFKA_TOPIC_CONSUMER=input_raw
+        - KAFKA_TOPIC_PRODUCER=input_preprocessed
+
