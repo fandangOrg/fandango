@@ -25,3 +25,4 @@ pytz
 scipy
 tweepy
 hiscore
+dotmap

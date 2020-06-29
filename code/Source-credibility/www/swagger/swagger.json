@@ -56,13 +56,19 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/ApiResponse"
+              "$ref": "#/definitions/OfflineResponse"
             }
           },
           "405": {
             "description": "Invalid input",
             "schema": {
-              "$ref": "#/definitions/ApiResponse"
+              "$ref": "#/definitions/OfflineResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/OfflineResponse"
             }
           }
         },
@@ -108,19 +114,19 @@
           "200": {
             "description": "Article analysed",
             "schema": {
-              "$ref": "#/definitions/GraphAnalysisOutput"
+              "$ref": "#/definitions/GraphOnlineResponse"
             }
           },
           "400": {
             "description": "Invalid input format",
             "schema": {
-              "$ref": "#/definitions/ApiResponse"
+              "$ref": "#/definitions/OfflineResponse"
             }
           },
-          "405": {
-            "description": "Validation exception",
+          "500": {
+            "description": "Internal Server Error",
             "schema": {
-              "$ref": "#/definitions/ApiResponse"
+              "$ref": "#/definitions/OfflineResponse"
             }
           }
         },
@@ -198,7 +204,53 @@
     }
   },
   "definitions": {
+    "OfflineResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "message",
+        "data"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "status code",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "description": "informative response message",
+          "example": "Successful Operation"
+        },
+        "data": {
+          "type": "object"
+        }
+      }
+    },
     "GraphAnalysisInput": {
+      "type": "object",
+      "required": [
+        "status",
+        "message",
+        "data"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "status code",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "description": "informative response message",
+          "example": "Successful Operation"
+        },
+        "data": {
+          "$ref": "#/definitions/ArticleInput"
+        }
+      }
+    },
+    "ArticleInput": {
       "type": "object",
       "required": [
         "identifier",
@@ -327,6 +379,29 @@
       },
       "xml": {
         "name": "GraphAnalysisInput"
+      }
+    },
+    "GraphOnlineResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "message",
+        "data"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "status code",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "description": "informative response message",
+          "example": "Successful Operation"
+        },
+        "data": {
+          "$ref": "#/definitions/GraphAnalysisOutput"
+        }
       }
     },
     "GraphAnalysisOutput": {
