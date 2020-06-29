@@ -1,0 +1,517 @@
+swagger: '2.0'
+info:
+  description: This is a micro-service developed within the FANDANGO EU project. The service is used to score the reliability of both domains and authors based on graph analytics.
+  version: 1.0.0
+  title: FANDANGO Graph Analysis Service
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: dmz@gatv.ssr.upm.es
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: '51.138.37.2:5000'
+basePath: /
+tags:
+  - name: graphAnalysisService
+    description: Scoring authors and publishers
+    externalDocs:
+      description: Find out more
+      url: 'https://fandango-project.eu/'
+schemes:
+  - http
+paths:
+  /graph_analysis/offline/start:
+    post:
+      tags:
+        - graphAnalysisService
+      summary: Start the offline graph analysis service
+      description: ''
+      operationId: addDoc
+      consumes:
+        - application/json
+        - text/plain
+      produces:
+        - application/json
+      parameters:
+        - name: api_key
+          in: header
+          required: false
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/OfflineResponse'
+        '405':
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/OfflineResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/OfflineResponse'
+      security:
+        - api_key: []
+  /graph_analysis/online/analyse_article:
+    post:
+      tags:
+        - graphAnalysisService
+      summary: Ranking authors and publishers from an article by HTTP
+      description: ''
+      operationId: updateDoc
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: api_key
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: body
+          description: Document object that needs to be added.
+          required: true
+          schema:
+            $ref: '#/definitions/GraphAnalysisInput'
+      responses:
+        '200':
+          description: Article analysed
+          schema:
+            $ref: '#/definitions/GraphOnlineResponse'
+        '400':
+          description: Invalid input format
+          schema:
+            $ref: '#/definitions/OfflineResponse'
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/OfflineResponse'
+      security:
+        - api_key: []
+  /graph_analysis/ui/domain_analysis:
+    post:
+      tags:
+        - graphAnalysisService
+      summary: Analyse a given domain
+      description: ''
+      operationId: analyseDomain
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: api_key
+          in: header
+          required: false
+          type: string
+        - in: body
+          name: body
+          description: Document object that needs to be added.
+          required: true
+          schema:
+            $ref: '#/definitions/SourceDomainAnalysisInput'
+      responses:
+        '200':
+          description: Article analysed
+          schema:
+            $ref: '#/definitions/SourceDomainAnalysisOutput'
+        '400':
+          description: Invalid input format
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        '405':
+          description: Validation exception
+          schema:
+            $ref: '#/definitions/ApiResponse'
+      security:
+        - api_key: []
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  OfflineResponse:
+    type: object
+    required:
+      - status
+      - message
+      - data
+    properties:
+      code:
+        type: integer
+        description: status code
+        example: 200
+      message:
+        type: string
+        description: informative response message
+        example: Successful Operation
+      data:
+        type: object
+        
+  GraphAnalysisInput:
+    type: object
+    required:
+      - status
+      - message
+      - data
+    properties:
+      code:
+        type: integer
+        description: status code
+        example: 200
+      message:
+        type: string
+        description: informative response message
+        example: Successful Operation
+      data:
+        $ref: '#/definitions/ArticleInput'
+
+  ArticleInput:
+    type: object
+    required:
+      - identifier
+      - headline
+      - articleBody
+      - url
+      - language
+      - images
+      - videos
+      - dateCreated
+      - dateModified
+      - datePublished
+      - publishDateEstimated
+      - author
+      - publisher
+      - sourceDomain
+      - country
+      - nationality
+      - calculatedRating
+      - calculatedRatingDetail
+    properties:
+      identifier:
+        type: string
+        description: 128 char identifier
+        example: 92ce19eea1e0b639b790e1cf359c90acb8e0c30a999e73f59396c868b8a7bbb055e5071cb70b995a9bd7b62b47f5012f24f9647952262bd5c3c6a91fb616f70a
+      headline:
+        type: string
+        description: Article title
+        example: Las estadísticas de la Agencia Tributaria permiten trazar un perfil más o menos realista de la realidad económica del país.
+      author:
+        type: array
+        description: authors of the article
+        items:
+          type: string
+        example:
+          - Jesús Sérvulo González
+      dateCreated:
+        type: string
+        example: '2019-11-05T13:45:35Z'
+        description: Article date created (UTC)
+      dateModified:
+        type: string
+        description: Article date modified (UTC)
+        example: '2019-11-05T13:45:35Z'
+      datePublished:
+        type: string
+        description: Article date published (UTC)
+        example: '2019-11-04T00:00:00Z'
+      publishDateEstimated:
+        type: string
+        description: Estimated published date flag
+        example: 'no'
+      publisher:
+        type: string
+        description: Publisher of the article
+        example: EL País
+      images:
+        type: array
+        description: Images of the article
+        items:
+          type: string
+        example:
+          - 'https://ep00.epimg.net/economia/imagenes/2018/06/20/actualidad/1529518143_236168_1529519211_rrss_normal.jpg'
+          - 'https://ep00.epimg.net/t.gif'
+      country:
+        type: string
+        description: Country of the publisher
+        example: Kingdom of Spain
+      nationality:
+        type: string
+        description: Nationality of the publisher
+        example: Kingdom of Spain
+      language:
+        type: string
+        description: Article language
+        example: es
+      sourceDomain:
+        type: string
+        description: Source domain
+        example: elpais.com
+      articleBody:
+        type: string
+        description: Article content
+        example: 'Las estadísticas de la Agencia Tributaria permiten trazar un perfil más o menos realista de la realidad económica del país. Una de las recientes remesas de datos de Hacienda, sobre los Rendimientos de Actividades Económicas del IRPF de 2016, sirven para ilustrar como la mayoría de los 2,1 millones de profesionales y autónomos del país se declaran mileuristas, pese a que la economía avanza a todo trapo y las empresas cada vez ganan más. Lorenzo Amor, presidente de la patronal ATA, precisa que en las cifras difundidas por Hacienda no se incluyen las cotizaciones a la Seguridad Social, unos 3.300 euros al año.  Aún así, los ingresos netos declarados por estos emprendedores son muy inferiores a los que confiesan los asalariados al fisco. Los 16,2 millones de trabajadores por cuenta ajena que presentaron la declaración del IRPF en 2016 confesaron al fisco percibir unos ingresos medios de 20.558 euros, 2.158 euros más que en 2007. La diferencia entre las rentas declaradas por los autónomos que se acogen al régimen de módulos y los asalariados (10.484 euros) es la mayor desde, al menos, 2007, cuando la crisis financiera comenzó a mostrar sus colmillos.  Notarios y registradores, los que más tributan  Escarbando en las fuentes tributarias se vislumbra que los notarios y registradores son los profesionales que más tributan por el IRPF en España, casi un 40% de sus rentas netas. Los auditores de cuentas y los entrenadores y jugadores de fútbol completan el podio de los profesionales que más pagan al fisco en su declaración de la renta.  En el extremo opuesto, sobresalen los autónomos que tributan en el régimen de módulos, conocidos como moduleros. A diferencia de los anteriores que pagan por estimación directa —el fisco les aplica un gravamen en función de sus ingresos reales—, los autónomos que tributan el IRPF por estimación objetiva o módulos pagan al fisco en función de unos coeficientes relacionados con los metros cuadrados de su local, el número de empleados o el consumo eléctrico, entre otros indicadores. La estadística de Hacienda dice que apenas pagan un 7,27% de sus ingresos.  Entre todos ellos, destacan los empresarios de transporte de viajeros (taxistas) y mercancías por carretera, que solo tributan un 2%. Aún menos contribuyen los emprendedores del sector de servicios prestados a las empresas —gestorías, las pequeñas empresas de seguridad...— que únicamente pagan al fisco el 1,82% de sus rentas. Aunque la explicación podría ser que al generar pocos ingresos pagan pocos impuestos, estos autónomos son uno de los colectivos que carga con el sambenito de cometer más fraude fiscal.  Limitar el régimen de módulos  Son frecuentes los casos en los que algunos de estos profesionales de sectores concretos preguntan "¿Sin factura o con factura?". "Estos contribuyentes tienen más opciones que los asalariados para rebajar de forma legal su factura fiscal, pero también es conocido que en este colectivo hay algunas bolsas de fraude", reconoce Leandro Sequeiros, experto fiscalista y socio de Lean Abogados. "Mientras que toda la información fiscal de un asalariado está en su nómina, un autónomo puede obtener rentas de las que Hacienda no tiene conocimiento si no las declara él mismo", agrega. Es decir, pueden no declarar al fisco todos sus ingresos.'
+      calculatedRating:
+        type: number
+        description: Rating of the article
+        example: 45.65
+      calculatedRatingDetail:
+        type: string
+        description: Detail of the rating
+        example: ''
+      url:
+        type: string
+        description: Article url
+        example: 'https://elpais.com/economia/2019/05/23/actualidad/1558638881_652034.html'
+      videos:
+        type: array
+        items:
+          type: string
+        example: []
+    xml:
+      name: GraphAnalysisInput
+    
+  GraphOnlineResponse:
+    type: object
+    required: 
+      - status
+      - message
+      - data
+    properties:
+      code:
+        type: integer
+        description: status code
+        example: 200
+      message:
+        type: string
+        description: informative response message
+        example: Successful Operation
+      data:
+          $ref: '#/definitions/GraphAnalysisOutput'
+      
+  GraphAnalysisOutput:
+    type: object
+    required:
+      - identifier
+      - authors
+      - publisher
+      - authorRating
+      - publisherRating
+    properties:
+      identifier:
+        type: string
+        description: 128 char identifier
+        example: 92ce19eea1e0b639b790e1cf359c90acb8e0c30a999e73f59396c868b8a7bbb055e5071cb70b995a9bd7b62b47f5012f24f9647952262bd5c3c6a91fb616f70a
+      authors:
+        type: array
+        items:
+          type: string
+        example:
+          - 7428993498469512227c084ed4cc4426851804b270faeeef0ad19baa18bc5620a749c74a9f31e6adf397fd65e30e4f82931bd552cd638b8a3433edeb6d7a53a8
+      publisher:
+        type: array
+        items:
+          type: string
+        example:
+          - 0ff1b7ae57505236c67111d46cc4a66755108db5067187466974feae894c98a351d65a712ef686a7d16727ad170180bd3250b94dd6c2336eea14a36bbfc2bfe0
+      authorRating:
+        type: array
+        items:
+          type: number
+          example: 94.45
+      publisherRating:
+        type: array
+        items:
+          type: number
+          example: 74.45
+  SourceDomainAnalysisInput:
+    type: object
+    required:
+      - domain
+    properties:
+      domain:
+        type: string
+        example: 'https://elpais.com/'
+  SourceBasicInformation:
+    type: object
+    required:
+      - location
+      - media_type
+      - media_focus
+      - language
+      - platform
+      - malicious
+      - favicon
+    properties:
+      malicious:
+        type: boolean
+        example: false
+      favicon:
+        type: string
+        example: 'https://ep01.epimg.net/iconos/v1.x/v1.0/promos/promo_og_elpais.png'
+      location:
+        type: string
+        example: National
+      media_type:
+        type: string
+        example: Newspaper
+      media_focus:
+        type: string
+        example: General Interest
+      language:
+        type: array
+        items:
+          type: string
+        example:
+          - Spanish
+          - English
+      platform:
+        type: array
+        items:
+          type: string
+        example:
+          - Radio
+          - TV
+  SourceDomainAnalysisOutput:
+    type: object
+    required:
+      - source_information
+    properties:
+      source_information:
+        $ref: '#/definitions/SourceBasicInformation'
+      twiter_information:
+        $ref: '#/definitions/TwitterInformation'
+      neo4j_information:
+        $ref: '#/definitions/Neo4jInformation'
+  TwitterInformation:
+    type: object
+    required:
+      - id
+      - id_str
+      - screen_name
+      - name
+      - followers_count
+      - favourites_count
+      - friends_count
+      - statuses_count
+      - location
+      - verified
+      - created_at
+      - url
+      - description
+      - protected
+      - profile_banner_url
+      - profile_image_url_https
+    properties:
+      id:
+        type: number
+        example: 8795458545
+      id_str:
+        type: string
+        example: '8795458545'
+      screen_name:
+        type: string
+        example: el_pais
+      name:
+        type: string
+        example: El País
+      followers_count:
+        type: integer
+        example: 2345432
+      friends_count:
+        type: integer
+        example: 234593
+      favourites_count:
+        type: integer
+        example: 1923
+      statuses_count:
+        type: integer
+        example: 3453421
+      location:
+        type: string
+        example: Madrid
+      created_at:
+        type: string
+        example: '2009-11-05 23:49:19'
+      verified:
+        type: boolean
+        example: true
+      url:
+        type: string
+        example: 'https://t.co/c53pnmnuIT'
+      description:
+        type: string
+        example: This is a description of Twitter
+      protected:
+        type: boolean
+        example: true
+      profile_banner_url:
+        type: string
+        example: 'https://pbs.twimg.com/profile_banners/87818409/1569228354'
+      profile_image_url_https:
+        type: string
+        example: 'https://pbs.twimg.com/profile_images/1175141826870861825/K2qKoGla_normal.png'
+  Neo4jInformation:
+    type: object
+    required:
+      - page_rank
+      - suffix_rank
+      - text_rank
+      - twitter_rank
+      - media_type_rank
+      - trustworthiness
+      - available_fandango
+    properties:
+      page_rank:
+        type: number
+        example: 80.52
+        description: 'Open Page Rank. Range(0, 100)'
+      suffix_rank:
+        type: number
+        example: 30
+        description: 'Suffix Rank based on the suffix. Range(0, 100)'
+      text_rank:
+        type: number
+        example: 28.56
+        description: 'Text rank based on the NLP performance. Range(0, 100)'
+      twitter_rank:
+        type: number
+        example: 88.85
+        description: 'Credibility of the Twitter account. Range(0, 100)'
+      media_type_rank:
+        type: number
+        example: 70.23
+        description: 'Ranking based on the type of media. Range (0, 100)'
+      trustworthiness:
+        type: number
+        example: 72.25
+        description: 'Trustworthiness score. Range(0, 100)'
+      available_fandango:
+        type: boolean
+        example: true
+        description: Boolean to check whether FANDANGO database contains the domain.
+  ApiResponse:
+    type: object
+    required:
+      - task
+      - status
+      - message
+      - output
+    properties:
+      task:
+        type: string
+        example: Offline process
+      status:
+        type: integer
+        format: int32
+        example: 500
+      message:
+        type: string
+        example: This is a sample of information regarding graph analysis
+      output:
+        type: object
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
