@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: topics-service
+  name: topics-service
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      io.kompose.service: topics-service
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: topics-service
+    spec:
+      containers:
+      - command:
+        - python
+        - run_topics_as_service.py
+        env:
+        - name: CERTH_ELASTIC_SERVICE
+          value: fandangoedge02:9220
+        - name: ENG_ELASTIC_SERVICE
+          value: fandangoedge02:9220
+        - name: ENTITY_INDEX
+          value: fdg-entity
+        - name: SERVING_IP
+          value: 0.0.0.0
+        - name: SERVING_PORT
+          value: "11010"
+        - name: TOPICS_INDEX
+          value: fdg-topics
+        image: stalidisiti/certh_topic_extraction_service:v2.0
+        name: topics-and-entities
+        ports:
+        - containerPort: 11010
+          hostIP: 127.0.0.1
+        resources: {}
+      restartPolicy: Always
+status: {}

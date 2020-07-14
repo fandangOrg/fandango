@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: certh-news-crawlers
+  name: certh-news-crawlers
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: certh-news-crawlers
+    spec:
+      containers:
+      - command:
+        - ./start_groundtruth
+        env:
+        - name: ELASTIC_SERVICE
+          value: fandangoedge02:9220
+        - name: ELASTIC_STORAGE
+          value: test-article
+        - name: KAFKA_SERVER
+          value: fandangoedge02:9092
+        - name: KAFKA_TOPIC
+          value: input_raw
+        - name: OUTPUT_ELASTIC
+          value: "0"
+        - name: OUTPUT_KAFKA
+          value: "1"
+        - name: OUTPUT_NIFI
+          value: "0"
+        - name: SCHEDULER_INDEX
+          value: temporary-scheduler
+        - name: SCHEDULER_PORT
+          value: "9220"
+        - name: SCHEDULER_QUEUE
+          value: FifoQueue
+        - name: SCHEDULER_SERVER
+          value: fandangoedge02
+        image: stalidisiti/certh_news_crawlers:v2.0
+        name: certh-news-crawler
+        resources: {}
+      restartPolicy: Always
+status: {}

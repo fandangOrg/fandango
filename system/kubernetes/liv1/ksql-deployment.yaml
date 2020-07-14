@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ksql
+  name: ksql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: ksql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: ksql
+    spec:  
+      containers:
+      - env:
+        - name: KSQL_LISTENERS
+          value: http://0.0.0.0:8088
+        - name: KSQL_BOOTSTRAP_SERVERS
+          value: fandangoedge02:9092
+        - name: KSQL_PORT
+          value: "8088"
+        image: confluentinc/cp-ksql-server:latest
+        name: docker-ksql
+        ports:
+        - containerPort: 8088
+        resources: {}
+      restartPolicy: Always
+status: {}

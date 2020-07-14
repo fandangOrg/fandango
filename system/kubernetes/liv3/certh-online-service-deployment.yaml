@@ -1,0 +1,74 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: certh-online-service
+  name: certh-online-service
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: certh-online-service
+    spec:
+      containers:
+      - command:
+        - python
+        - online_process.py
+        env:
+        - name: ELASTIC_SERVICE
+          value: fandangoedge02:9220
+        - name: ENTITY_SERVICE_END
+          value: api/NamedEntities
+        - name: ENTITY_SERVICE_IP
+          value: ftopic.westeurope.cloudapp.azure.com
+        - name: ENTITY_SERVICE_PORT
+          value: "11010"
+        - name: FORCE_IMAGE
+          value: "0"
+        - name: FORCE_VIDEO
+          value: "0"
+        - name: FUSION_SERVICE_END
+          value: api/fusion_score
+        - name: FUSION_SERVICE_IP
+          value: 195.251.117.141
+        - name: FUSION_SERVICE_PORT
+          value: "10003"
+        - name: IMAGE_SERVICE_END
+          value: api/analyze_image
+        - name: IMAGE_SERVICE_IP
+          value: fimage.westeurope.cloudapp.azure.com
+        - name: IMAGE_SERVICE_PORT
+          value: "5000"
+        - name: SERVING_IP
+          value: 0.0.0.0
+        - name: SERVING_PORT
+          value: "5006"
+        - name: TOPICS_SERVICE_END
+          value: api/Topics
+        - name: TOPICS_SERVICE_IP
+          value: ftopic.westeurope.cloudapp.azure.com
+        - name: TOPICS_SERVICE_PORT
+          value: "11010"
+        - name: VIDEO_SERVICE_END
+          value: api/analyze_video
+        - name: VIDEO_SERVICE_IP
+          value: fvideo.westeurope.cloudapp.azure.com
+        - name: VIDEO_SERVICE_PORT
+          value: "5000"
+        image: fandangorg/certh_online_services:v2.0
+        name: certh-online-services
+        ports:
+        - containerPort: 5006
+        resources: {}
+      restartPolicy: Always
+status: {}

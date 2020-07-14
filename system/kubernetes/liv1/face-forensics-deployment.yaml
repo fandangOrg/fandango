@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: face-forensics
+  name: face-forensics
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: face-forensics
+    spec:
+      containers:
+      - command:
+        - python
+        - run_face_as_service.py
+        env:
+        - name: SERVING_IP
+          value: 0.0.0.0
+        - name: SERVING_PORT
+          value: "11006"
+        - name: THRESHOLD
+          value: "0.5"
+        image: stalidisiti/face_recognition:v2.0-cpu
+        name: deepfakes
+        resources: {}
+      restartPolicy: Always
+status: {}

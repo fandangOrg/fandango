@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: fkafkaksql
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: ksql
+  name: ksql
+spec:
+  ports:
+  - name: "8088"
+    port: 8088
+    targetPort: 8088
+  selector:
+    io.kompose.service: ksql
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "8088"
+    port: 8088
+  selector:
+    io.kompose.service: ksql

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: fvideo
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: video-analysis-services
+  name: video-analysis-services
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "10002"
+    port: 10002
+    targetPort: 5000
+  selector:
+    io.kompose.service: video-analysis-services

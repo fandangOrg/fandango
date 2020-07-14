@@ -1,0 +1,40 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: maskrcnn-detection
+  name: maskrcnn-detection
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: maskrcnn-detection
+    spec:
+      containers:
+      - command:
+        - python
+        - run_maskrcnn_as_service.py
+        env:
+        - name: SERVING_IP
+          value: 0.0.0.0
+        - name: SERVING_PORT
+          value: "11004"
+        - name: THRESHOLD
+          value: "0.5"
+        image: stalidisiti/maskrcnn:v2.0-cpu
+        name: maskrcnn
+        resources:
+            limits:
+              memory: 2048Mi
+      restartPolicy: Always
+status: {}

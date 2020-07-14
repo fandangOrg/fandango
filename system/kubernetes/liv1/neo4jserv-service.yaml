@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: fneo4j
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: neo4jserv
+  name: neo4jserv
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "7474"
+    port: 7474
+    targetPort: 7474
+  - name: "7687"
+    port: 7687
+    targetPort: 7687
+  selector:
+    io.kompose.service: neo4jserv
+

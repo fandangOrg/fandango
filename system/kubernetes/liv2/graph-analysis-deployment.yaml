@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: graph-analysis
+  name: graph-analysis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: graph-analysis
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: graph-analysis
+    spec:
+      containers:
+      - args:
+        - bash
+        - -c
+        - python3 /app/init_service.py & sleep 20 &&
+          curl -X POST  http://0.0.0.0:5000/graph_analysis/offline/start && tail -F /dev/null
+        env:
+        - name: ELASTICSEARCH_INDEX_ORG
+          value: fdg-ap-organization
+        - name: ELASTICSEARCH_INDEX_PER
+          value: fdg-ap-person
+        - name: ELASTICSEARCH_PORT
+          value: "9220"
+        - name: ELASTICSEARCH_SERVER
+          value: fandangoedge02
+        - name: KAFKA_PORT
+          value: "9092"
+        - name: KAFKA_SERVER
+          value: fandangoedge02.internal.cloudapp.net
+        - name: KAFKA_TOPIC_CONSUMER
+          value: input_preprocessed
+        - name: KAFKA_TOPIC_PRODUCER
+          value: analyzed_auth_org
+        - name: NEO4J_HOST
+          value: fneo4j.westeurope.cloudapp.azure.com
+        - name: NEO4J_PASSWORD
+          value: fandango
+        - name: NEO4J_PROTOCOL
+          value: bolt
+        - name: NEO4J_USERNAME
+          value: neo4j
+        image: fandangorg/fandango_source_credibility:1.0.11
+        name: docker-graph
+        ports:
+        - containerPort: 5000
+        resources: {}
+      restartPolicy: Always
+status: {}

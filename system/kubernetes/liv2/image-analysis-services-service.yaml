@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: fimage
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: image-analysis-services
+  name: image-analysis-services
+
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "5000"
+    port: 5000
+    targetPort: 5000
+  selector:
+    io.kompose.service: image-analysis-services

@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: video-analysis-services
+  name: video-analysis-services
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      io.kompose.service: video-analysis-services
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: video-analysis-services
+    spec:
+      containers:
+      - command:
+        - python
+        - run_video_analysis.py
+        env:
+        - name: AZURE_BLOB_CONTAINER
+          value: fandangoimages
+        - name: AZURE_BLOB_KEY
+          value: a2gy4SX9I6RS5xDDdF2KhVjl5mgQcW7kb8auS5K8H5sieNEXmkZGskbADQE6wI10yTza8dkEeI9xtPnItayhtA==
+        - name: AZURE_BLOB_NAME
+          value: fandangostorage
+        - name: BATCH_SIZE
+          value: "1"
+        - name: ELASTIC_SERVICE
+          value: fandangoedge02:9220
+        - name: MEDIA_INDEX
+          value: fdg-media
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "0"
+        - name: SERVING_IP
+          value: 0.0.0.0
+        - name: SERVING_PORT
+          value: "5000"
+        image: stalidisiti/certh_video_analysis_service:v2.1-cpu
+        name: certh-video-analysis
+        ports:
+        - containerPort: 5000
+          hostIP: 127.0.0.1
+        resources: {}
+        volumeMounts:
+        - mountPath: /store/
+          name: video-analysis-services-claim0
+      restartPolicy: Always
+      volumes:
+      - name: video-analysis-services-claim0
+        persistentVolumeClaim:
+          claimName: video-analysis-services-claim0
+status: {}

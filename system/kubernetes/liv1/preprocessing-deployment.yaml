@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: preprocessing
+  name: preprocessing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: preprocessing
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: preprocessing
+    spec:
+      containers:
+      - args:
+        - bash
+        - -c
+        - python /app/init_services.py & sleep 20 && curl -X POST http://0.0.0.0:5001/preprocessing/offline/start && tail -F /dev/null
+        env:
+        - name: ELASTICSEARCH_INDEX_ANNOT
+          value: article_preprocessed_temp
+        - name: ELASTICSEARCH_PORT
+          value: "9220"
+        - name: ELASTICSEARCH_SERVER
+          value: fandangoedge02
+        - name: KAFKA_PORT
+          value: "9092"
+        - name: KAFKA_SERVER
+          value: fandangoedge02
+        - name: KAFKA_TOPIC_CONSUMER
+          value: input_raw
+        - name: KAFKA_TOPIC_PRODUCER
+          value: input_preprocessed
+        image: fandangorg/fandango_preprocessing:1.0.11
+        name: docker-fandango-pre
+        ports:
+        - containerPort: 5001
+        resources: {}
+      restartPolicy: Always
+status: {}

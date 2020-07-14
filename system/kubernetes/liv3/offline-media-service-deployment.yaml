@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: offline-media-service
+  name: offline-media-service
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: offline-media-service
+    spec:
+      containers:
+      - command:
+        - python
+        - media_sync_process.py
+        env:
+        - name: CERTH_ELASTIC_SERVICE
+          value: fandangoedge02:9220
+        - name: ENG_ELASTIC_SERVICE
+          value: fandangoedge02:9220
+        - name: IMAGE_SERVICE_END
+          value: api/analyze_image
+        - name: IMAGE_SERVICE_IP
+          value: fimage.westeurope.cloudapp.azure.com
+        - name: IMAGE_SERVICE_PORT
+          value: "5000"
+        - name: INPUT_TOPIC
+          value: input_preprocessed
+        - name: LOCAL_KAFKA
+          value: fandangoedge02:9092
+        - name: OUTPUT_TOPIC
+          value: analyzed_media
+        - name: READ_GROUP
+          value: certh_media_group
+        - name: VIDEO_SERVICE_END
+          value: api/analyze_video
+        - name: VIDEO_SERVICE_IP
+          value: fvideo.westeurope.cloudapp.azure.com
+        - name: VIDEO_SERVICE_PORT
+          value: "5000"
+        image: fandangorg/certh_offline_media_service:v2.0
+        name: certh-offline-media
+        resources: {}
+      restartPolicy: Always
+status: {}

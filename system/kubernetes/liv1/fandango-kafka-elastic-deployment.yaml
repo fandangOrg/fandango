@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fandango-kafka-elastic
+  labels:
+    app: fandango-kafka-elastic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fandango-kafka-elastic
+  template:
+    metadata:
+      labels:
+        app: fandango-kafka-elastic
+    spec:
+      containers:
+        - name: fandango-kafka-elastic
+
+          image: fandangorg/fandango_kafka_elastic:1.0.1
+          
+          command: [ "python" ]
+          args: [ "fandango_kafka_elastic.py" ]
+          # args: [ "/usr/src/app/fandango_kafka_elastic.py" ]
+          
+          # alternative: infinite loop to access the pod from the dashboard and run script manually (test purposes)
+          # command: [ "/bin/bash", "-c", "--" ]
+          # args: [ "while true; do sleep 30; done;" ]
+          
+          env:
+            
+            # KAFKA PARAMETERS
+            - name: KAFKA_HOST
+              value: fandangoedge02
+            - name: KAFKA_PORT
+              value: "9092"
+            - name: KAFKA_TOPIC
+              value: ANALYZED_ARTICLE
+              # value: input_raw
+            - name: KAFKA_CONSUMER_GROUP
+              value: elastic_group
+            - name: INPUT_JSON_ID_FIELD_NAME
+              value: IDENTIFIER
+              # value: identifier
+
+
+            # ELASTICSEARCH PARAMETERS
+            - name: ES_HOST
+              value: fandangoedge02
+            - name: ES_PORT
+              value: "9220"
+            - name: ES_INDEX_NAME
+              value: fdg-article-connect
+              # value: test-kafka-es
+            - name: ES_DOC_TYPE
+              value: doc
+              
+            # GENERAL PARAMETERS
+            - name: LOG_TYPE
+              value: BOTH # CONSOLE, FILES, BOTH or NONE
+            - name: CONSOLE_LOG_LEVEL # considered only if LOG_TYPE is set to CONSOLE or BOTH
+              value: INFO
+            - name: LOG_EXPIRATION_TIME # time in hours, if the folder log will not be modified for this time, it will be cleaned
+              value: "2"
+              
+              
+          resources:
+            requests:
+              cpu: "100m"
+              memory: 0.3Gi
+            limits:
+              cpu: "300m"
+              memory: 0.6Gi
+

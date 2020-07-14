@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.kubernetes.io/azure-dns-label-name: fexif
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: self-similarity
+  name: self-similarity
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "11005"
+    port: 11005
+    targetPort: 11005
+  selector:
+    io.kompose.service: self-similarity

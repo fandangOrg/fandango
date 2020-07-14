@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: neo4jserv
+  name: neo4jserv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: neo4jserv
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        io.kompose.service: neo4jserv
+    spec:
+      containers:
+      - env:
+        - name: NEO4J_AUTH
+          value: neo4j/fandango
+        - name: NEO4J_dbms_connectors_default__listen__address
+          value: 0.0.0.0
+        - name: NEO4JLABS_PLUGINS
+          value: '["apoc"]'
+        image: neo4j:4.0.0
+        name: docker-neo4j
+        ports:
+        - containerPort: 7474
+        - containerPort: 7687
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/neo4j/data/
+          name: neo4j-vol
+      restartPolicy: Always
+      volumes:
+      - name: neo4j-vol
+        persistentVolumeClaim:
+          claimName: neo4j-vol
+status: {}

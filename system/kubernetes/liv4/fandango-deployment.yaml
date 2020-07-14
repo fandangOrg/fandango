@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: fandango
+  name: fandango
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: fandango
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: fandango
+    spec:
+      containers:
+      - env:
+        - name: BASEPORT_SERVICE
+          value: "9800"
+        - name: BASEURL_SERVICE
+          value: http://0.0.0.0
+        - name: KAFKA_PORT
+          value: "9092"
+        - name: KAFKA_URL
+          value: fandangoedge02.internal.cloudapp.net
+        - name: N_CONSUMER
+          value: "100"
+        - name: TAGDIR
+          value: /treetagger/
+        - name: URL_ELASTIC
+          value: fandangoedge02:9220
+        - name: URL_SERVICE_UPLOADIMAGE
+          value: fcerthonline.westeurope.cloudapp.azure.com
+        - name: URL_SERVICE_UPM
+          #value: 40.114.234.51:35006
+          value: fpreprocessing.westeurope.cloudapp.azure.com
+        image: livetech/fandango-fake-news:0.5.8  
+        name: fandango
+        ports:
+        - containerPort: 9800
+        resources:
+         limits:
+           memory: 3000Mi
+         requests:
+           memory: 2048Mi
+        volumeMounts:
+        - mountPath: /data/
+          name: fandango-claim1
+      restartPolicy: Always
+      volumes:
+      - name: fandango-claim1
+        persistentVolumeClaim:
+          claimName: fandango-claim1
+status: {}

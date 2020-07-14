@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+    kompose.version: 1.19.0 (f63a961c)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: quadratic-detection
+  name: quadratic-detection
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\Program Files\Kubernetes\bin\kompose.exe convert
+        kompose.version: 1.19.0 (f63a961c)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: quadratic-detection
+    spec:
+      containers:
+      - command:
+        - python
+        - run_quadratic_as_service.py
+        env:
+        - name: CUDA_DEVICE_ORDER
+          value: PCI_BUS_ID
+        - name: CUDA_VISIBLE_DEVICES
+          value: "1"
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "1"
+        - name: SERVING_IP
+          value: 0.0.0.0
+        - name: SERVING_PORT
+          value: "11002"
+        - name: THRESHOLD
+          value: "0.5"
+        image: stalidisiti/quadratic:v2.0-cpu
+        name: quadratic
+        resources: {}
+      restartPolicy: Always
+status: {}
