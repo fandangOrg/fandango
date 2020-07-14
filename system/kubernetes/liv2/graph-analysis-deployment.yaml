@@ -59,6 +59,13 @@ spec:
         name: docker-graph
         ports:
         - containerPort: 5000
-        resources: {}
+        resources:
+            requests:
+              cpu: "200m"
+              memory: 512Mi
+            limits:
+              cpu: "400m"
+              memory: 1500Mi
+
       restartPolicy: Always
 status: {}

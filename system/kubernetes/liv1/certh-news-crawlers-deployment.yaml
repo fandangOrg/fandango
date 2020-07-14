@@ -48,6 +48,14 @@ spec:
           value: fandangoedge02
         image: stalidisiti/certh_news_crawlers:v2.0
         name: certh-news-crawler
-        resources: {}
+        resources:
+            requests:
+              cpu: "200m"
+              memory: 512Mi
+            limits:
+              cpu: "400m"
+              memory: 1024Mi
+
+
       restartPolicy: Always
 status: {}

@@ -6,8 +6,8 @@ metadata:
     kompose.version: 1.19.0 (f63a961c)
   creationTimestamp: null
   labels:
-    io.kompose.service: busternet-detection
-  name: busternet-detection
+    io.kompose.service: certh-fusion-score-service
+  name: certh-fusion-score-service
 spec:
   replicas: 1
   strategy: {}
@@ -18,34 +18,32 @@ spec:
         kompose.version: 1.19.0 (f63a961c)
       creationTimestamp: null
       labels:
-        io.kompose.service: busternet-detection
+        io.kompose.service: certh-fusion-score-service
     spec:
       containers:
       - command:
         - python
-        - run_buster_as_service.py
+        - run_fusion_as_service.py
         env:
-        - name: CUDA_DEVICE_ORDER
-          value: PCI_BUS_ID
-        - name: CUDA_VISIBLE_DEVICES
-          value: "0"
-        - name: NVIDIA_VISIBLE_DEVICES
-          value: "0"
+        - name: ELASTIC_SERVICE
+          value: fandangoedge02:9220
         - name: SERVING_IP
           value: 0.0.0.0
         - name: SERVING_PORT
-          value: "11001"
-        - name: THRESHOLD
-          value: "0.5"
-        image: stalidisiti/busternet:v2.0-cpu
-        name: busternet
+          value: "10003"
+        - name: SCORE_FUNCTION
+          value: overall
+        image: stalidisiti/certh_fusion_score:v1.0
+        name: certh-fusion-score-services
+        ports:
+        - containerPort: 10003
         resources:
             requests:
               cpu: "200m"
               memory: 512Mi
             limits:
-              cpu: "750m"
-              memory: 2500Mi
+              cpu: "300m"
+              memory: 1024Mi
 
 
       restartPolicy: Always

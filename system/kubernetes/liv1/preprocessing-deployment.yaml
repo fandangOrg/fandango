@@ -40,6 +40,16 @@ spec:
         name: docker-fandango-pre
         ports:
         - containerPort: 5001
-        resources: {}
+        resources:
+            requests:
+              cpu: "300m"
+              memory: 512Mi
+            limits:
+              cpu: "600m"
+              memory: 1500Mi
+
+
+
+
       restartPolicy: Always
 status: {}

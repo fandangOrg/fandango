@@ -33,8 +33,16 @@ spec:
           value: "0.5"
         image: stalidisiti/maskrcnn:v2.0-cpu
         name: maskrcnn
+        
         resources:
+            requests:
+              cpu: "200m"
+              memory: 512Mi
             limits:
-              memory: 2048Mi
+              cpu: "750m"
+              memory: 2500Mi
+
+
+
       restartPolicy: Always
 status: {}

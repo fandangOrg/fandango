@@ -51,6 +51,14 @@ spec:
           value: "5000"
         image: fandangorg/certh_offline_media_service:v2.0
         name: certh-offline-media
-        resources: {}
+        resources:
+            requests:
+              cpu: "200m"
+              memory: 256Mi
+            limits:
+              cpu: "300m"
+              memory: 1024Mi
+
+
       restartPolicy: Always
 status: {}

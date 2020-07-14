@@ -50,10 +50,13 @@ spec:
         ports:
         - containerPort: 9800
         resources:
-         limits:
-           memory: 3000Mi
-         requests:
-           memory: 2048Mi
+            requests:
+              cpu: "200m"
+              memory: 2048Mi
+            limits:
+              cpu: "600m"
+              memory: 3000Mi
+
         volumeMounts:
         - mountPath: /data/
           name: fandango-claim1

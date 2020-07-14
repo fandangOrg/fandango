@@ -33,6 +33,14 @@ spec:
           value: "0.5"
         image: stalidisiti/face_recognition:v2.0-cpu
         name: deepfakes
-        resources: {}
+        resources:
+            requests:
+              cpu: "200m"
+              memory: 512Mi
+            limits:
+              cpu: "400m"
+              memory: 1500Mi
+
+
       restartPolicy: Always
 status: {}

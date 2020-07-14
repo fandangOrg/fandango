@@ -55,6 +55,14 @@ spec:
           value: "11010"
         image: fandangorg/certh_offline_ner_service:v2.0
         name: certh-offline-topics
-        resources: {}
+        resources:
+            requests:
+              cpu: "200m"
+              memory: 256Mi
+            limits:
+              cpu: "300m"
+              memory: 1024Mi
+
+
       restartPolicy: Always
 status: {}

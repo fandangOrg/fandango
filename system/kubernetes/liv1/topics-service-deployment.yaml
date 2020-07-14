@@ -46,6 +46,14 @@ spec:
         ports:
         - containerPort: 11010
           hostIP: 127.0.0.1
-        resources: {}
+        resources:
+            requests:
+              cpu: "200m"
+              memory: 1024Mi
+            limits:
+              cpu: "600m"
+              memory: 2500Mi
+
+
       restartPolicy: Always
 status: {}

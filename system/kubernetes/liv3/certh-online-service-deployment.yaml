@@ -69,6 +69,14 @@ spec:
         name: certh-online-services
         ports:
         - containerPort: 5006
-        resources: {}
+        resources:
+            requests:
+              cpu: "200m"
+              memory: 512Mi
+            limits:
+              cpu: "300m"
+              memory: 1024Mi
+
+
       restartPolicy: Always
 status: {}

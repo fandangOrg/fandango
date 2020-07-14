@@ -41,6 +41,10 @@ spec:
         name: mantranet
         resources:
             requests:
+              cpu: "200m"
               memory: 512Mi
+            limits:
+              cpu: "1500m"
+              memory: 4000Mi
       restartPolicy: Always
 status: {}

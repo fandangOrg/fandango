@@ -115,6 +115,14 @@ spec:
               subPath: application.yml
               name: config
               readOnly: true
+          resources:
+              requests:
+                cpu: "300m"
+                memory: 512Mi
+              limits:
+                cpu: "600m"
+                memory: 1024Mi
+
       volumes:
         - name: config
           configMap:

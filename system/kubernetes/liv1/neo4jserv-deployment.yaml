@@ -29,7 +29,14 @@ spec:
         ports:
         - containerPort: 7474
         - containerPort: 7687
-        resources: {}
+        resources:
+            requests:
+              cpu: "200m"
+              memory: 512Mi
+            limits:
+              cpu: "400m"
+              memory: 1500Mi
+
         volumeMounts:
         - mountPath: /var/lib/neo4j/data/
           name: neo4j-vol

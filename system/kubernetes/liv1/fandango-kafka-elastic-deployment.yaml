@@ -35,13 +35,14 @@ spec:
             - name: KAFKA_PORT
               value: "9092"
             - name: KAFKA_TOPIC
-              value: ANALYZED_ARTICLE
+              value: analyzed_article
+              # value: ANALYZED_ARTICLE
               # value: input_raw
             - name: KAFKA_CONSUMER_GROUP
               value: elastic_group
             - name: INPUT_JSON_ID_FIELD_NAME
-              value: IDENTIFIER
-              # value: identifier
+              value: identifier
+              # value: IDENTIFIER
 
 
             # ELASTICSEARCH PARAMETERS
@@ -67,8 +68,8 @@ spec:
           resources:
             requests:
               cpu: "100m"
-              memory: 0.3Gi
+              memory: 300Mi
             limits:
               cpu: "300m"
-              memory: 0.6Gi
+              memory: 600Mi
 
