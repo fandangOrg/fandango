@@ -17,11 +17,10 @@ spec:
       containers:
         - name: fandango-kafka-elastic
 
-          image: fandangorg/fandango_kafka_elastic:1.0.1
+          image: fandangorg/fandango_kafka_elastic:1.0.3
           
           command: [ "python" ]
           args: [ "fandango_kafka_elastic.py" ]
-          # args: [ "/usr/src/app/fandango_kafka_elastic.py" ]
           
           # alternative: infinite loop to access the pod from the dashboard and run script manually (test purposes)
           # command: [ "/bin/bash", "-c", "--" ]
@@ -40,11 +39,10 @@ spec:
               # value: input_raw
             - name: KAFKA_CONSUMER_GROUP
               value: elastic_group
-            - name: INPUT_JSON_ID_FIELD_NAME
-              value: identifier
-              # value: IDENTIFIER
-
-
+            - name: INPUT_JSON_ID_FIELD_PATH
+              value: data; identifier
+            
+            
             # ELASTICSEARCH PARAMETERS
             - name: ES_HOST
               value: fandangoedge02
@@ -59,17 +57,17 @@ spec:
             # GENERAL PARAMETERS
             - name: LOG_TYPE
               value: BOTH # CONSOLE, FILES, BOTH or NONE
-            - name: CONSOLE_LOG_LEVEL # considered only if LOG_TYPE is set to CONSOLE or BOTH
+            - name: CONSOLE_LOG_LEVEL # will be considered only if LOG_TYPE is set to CONSOLE or BOTH
               value: INFO
-            - name: LOG_EXPIRATION_TIME # time in hours, if the folder log will not be modified for this time, it will be cleaned
+            - name: LOG_EXPIRATION_TIME # time in hours, if the folder log will not be modified for this time, it will be cleaned (check done only during the app starting phase)
               value: "2"
               
               
           resources:
             requests:
               cpu: "100m"
-              memory: 300Mi
+              memory: 0.3Gi
             limits:
               cpu: "300m"
-              memory: 600Mi
+              memory: 0.6Gi
 
