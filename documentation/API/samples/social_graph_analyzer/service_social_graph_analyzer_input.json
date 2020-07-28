@@ -1,4 +1,7 @@
 {
+"status": 200,
+"message": "Successful Operation",
+"data": {
   "identifier": "92ce19eea1e0b639b790e1cf359c90acb8e0c30a999e73f59396c868b8a7bbb055e5071cb70b995a9bd7b62b47f5012f24f9647952262bd5c3c6a91fb616f70a",
   "headline": "Las estadísticas de la Agencia Tributaria permiten trazar un perfil más o menos realista de la realidad económica del país.",
   "author": [
@@ -22,4 +25,4 @@
   "calculatedRatingDetail": "",
   "url": "https://elpais.com/economia/2019/05/23/actualidad/1558638881_652034.html",
   "videos": []
-}
+}}
