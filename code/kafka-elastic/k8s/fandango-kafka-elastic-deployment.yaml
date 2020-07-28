@@ -17,7 +17,7 @@ spec:
       containers:
         - name: fandango-kafka-elastic
 
-          image: fandangorg/fandango_kafka_elastic:1.0.1
+          image: fandangorg/fandango_kafka_elastic:1.0.3
           
           command: [ "python" ]
           args: [ "fandango_kafka_elastic.py" ]
@@ -39,9 +39,8 @@ spec:
               # value: input_raw
             - name: KAFKA_CONSUMER_GROUP
               value: elastic_group
-            - name: INPUT_JSON_ID_FIELD_NAME
-              value: identifier
-              # value: IDENTIFIER
+            - name: INPUT_JSON_ID_FIELD_PATH
+              value: data; identifier
             
             
             # ELASTICSEARCH PARAMETERS
@@ -60,7 +59,7 @@ spec:
               value: BOTH # CONSOLE, FILES, BOTH or NONE
             - name: CONSOLE_LOG_LEVEL # will be considered only if LOG_TYPE is set to CONSOLE or BOTH
               value: INFO
-            - name: LOG_EXPIRATION_TIME # time in hours, if the folder log will not be modified for this time, it will be cleaned
+            - name: LOG_EXPIRATION_TIME # time in hours, if the folder log will not be modified for this time, it will be cleaned (check done only during the app starting phase)
               value: "2"
               
               

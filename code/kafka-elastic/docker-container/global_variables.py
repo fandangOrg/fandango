@@ -10,7 +10,7 @@ CONSOLE_LOG_LEVEL = os.getenv('CONSOLE_LOG_LEVEL', 'DEBUG')
 LOG_EXPIRATION_TIME = os.getenv('LOG_EXPIRATION_TIME', '2') # hours
 
 
-# local script
+# # local script
 # LOG_TYPE = 'BOTH' # CONSOLE, FILES, BOTH or NONE
 # CONSOLE_LOG_LEVEL = 'DEBUG'
 # LOG_EXPIRATION_TIME = '2' # hours
@@ -27,15 +27,15 @@ KAFKA_HOST = os.getenv('KAFKA_HOST', 'localhost')
 KAFKA_PORT = os.getenv('KAFKA_PORT', '9092')
 KAFKA_TOPIC = os.getenv('KAFKA_TOPIC', '')
 KAFKA_CONSUMER_GROUP = os.getenv('KAFKA_CONSUMER_GROUP', '')
-INPUT_JSON_ID_FIELD_NAME = os.getenv('INPUT_JSON_ID_FIELD_NAME', '')
+INPUT_JSON_ID_FIELD_PATH = os.getenv('INPUT_JSON_ID_FIELD_PATH', '')
 
 
-# local script
+# # local script
 # KAFKA_HOST = 'localhost'
 # KAFKA_PORT = '9092'
 # KAFKA_TOPIC = 'input_raw'
 # KAFKA_CONSUMER_GROUP = 'elastic_group'
-# INPUT_JSON_ID_FIELD_NAME = 'identifier'
+# INPUT_JSON_ID_FIELD_PATH = 'identifier'
 
 
 #================================================
@@ -49,7 +49,7 @@ ES_INDEX_NAME = os.getenv('ES_INDEX_NAME', '')
 ES_DOC_TYPE = os.getenv('ES_DOC_TYPE', '')
 
 
-# local script
+# # local script
 # ES_HOST = 'localhost'
 # ES_PORT = '9220'
 # ES_INDEX_NAME = 'test-kafka-es'

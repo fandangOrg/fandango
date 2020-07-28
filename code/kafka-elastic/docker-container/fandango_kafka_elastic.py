@@ -18,11 +18,24 @@ def main():
     # CHECK SOME INPUT PARAMETERS
     if  gv.KAFKA_TOPIC == '' or \
         gv.KAFKA_CONSUMER_GROUP == '' or \
-        gv.INPUT_JSON_ID_FIELD_NAME == '' or \
+        gv.INPUT_JSON_ID_FIELD_PATH == '' or \
         gv.ES_INDEX_NAME == '' or \
         gv.ES_DOC_TYPE == '':
 
         logger.error('Empty input parameters have been found, the program will be closed...')
+        return
+
+    # DEFINING THE FIELDS/SUBFILEDS LIST USED TO FIND THE IDENTIFIER IN THE DATA SCHEMA
+    path_to_id_field = list()
+    for field in gv.INPUT_JSON_ID_FIELD_PATH.split(';'):
+        field_name = field.lstrip().rstrip()
+        if field_name == '':
+            continue
+
+        path_to_id_field.append(field_name)
+
+    if len(path_to_id_field) < 1:
+        logger.error('Schema path to the identifier in the data schema not found {0}, the program will be closed...'.format(path_to_id_field))
         return
 
 
@@ -67,7 +80,7 @@ def main():
     logger.info('GENERAL INFORMATION:')
     logger.info('KAFKA_TOPIC: ' + gv.KAFKA_TOPIC)
     logger.info('KAFKA_CONSUMER_GROUP: ' + gv.KAFKA_CONSUMER_GROUP)
-    logger.info('INPUT_JSON_ID_FIELD_NAME: ' + gv.INPUT_JSON_ID_FIELD_NAME)
+    logger.info('INPUT_JSON_ID_FIELD_PATH: ' + str(path_to_id_field)[1:-1])
     logger.info('ES_INDEX_NAME: ' + gv.ES_INDEX_NAME)
     logger.info('ES_DOC_TYPE: ' + gv.ES_DOC_TYPE)
 
@@ -92,7 +105,8 @@ def main():
                 # GET MESSAGES FROM KAFKA
                 for message in consumer:
 
-                    if message is None:
+                    if message == None or message == '':
+                        consumer.commit()
                         continue
 
                     # GETTING NEXT ENTRY FROM KAFKA
@@ -109,15 +123,25 @@ def main():
                         continue
 
                     # logger.info(entry)
-
+                        
                     # GETTING THE ENTRY IDENTIFIER (TO BE USED AS ELASTICSEARCH ID)
-                    if gv.INPUT_JSON_ID_FIELD_NAME in entry:
-                        es_id = entry[gv.INPUT_JSON_ID_FIELD_NAME]
-                    else:
-                        logger.warning('--> The specified identifier field ({0}) not present in the element, skipping...'.format(gv.INPUT_JSON_ID_FIELD_NAME))
-                        consumer.commit()
+                    skip_element = False
+
+                    for field in path_to_id_field:
+                        if field in entry:
+                            entry = entry[field]
+                        else:
+                            logger.warning('--> The specified identifier field ({0}) not present in the element, skipping...'.format(str(path_to_id_field)[1:-1]))
+                            consumer.commit()
+                            skip_element = True
+                            break
+
+
+                    if skip_element:
                         continue
 
+                    # AT THE END OF THE PREVIOUS FOR CYCLE THE ENTRY WILL BE THE ELASTICSEARCH ID
+                    es_id = entry
 
                     # UPSERT ENTRY IN ES
                     logger.info('Inserting entry in Elasticsearch with identifier: {0}'.format(es_id))
@@ -146,7 +170,7 @@ def main():
     logger.info('GENERAL INFORMATION OF THE EXECUTION:')
     logger.info('KAFKA_TOPIC: ' + gv.KAFKA_TOPIC)
     logger.info('KAFKA_CONSUMER_GROUP: ' + gv.KAFKA_CONSUMER_GROUP)
-    logger.info('INPUT_JSON_ID_FIELD_NAME: ' + gv.INPUT_JSON_ID_FIELD_NAME)
+    logger.info('INPUT_JSON_ID_FIELD_PATH: ' + str(path_to_id_field)[1:-1])
     logger.info('ES_INDEX_NAME: ' + gv.ES_INDEX_NAME)
     logger.info('ES_DOC_TYPE: ' + gv.ES_DOC_TYPE)
 
@@ -178,7 +202,7 @@ def verify_external_connections(kafka_consumer, es, logger):
         kafka_connections_check = True
     else:
         logger.error("No Kafka topics available, the connection to Kafka at \'{0}:{1}\' will be closed".format(gv.KAFKA_HOST, gv.KAFKA_PORT))
-        consumer.close()
+        kafka_consumer.close()
 
 
     if es is not None and es.ping(request_timeout=1):

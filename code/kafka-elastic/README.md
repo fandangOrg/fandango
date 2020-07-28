@@ -26,7 +26,7 @@ KAFKA_HOST : hostname or IP of the Kafka Endpoint <br>
 KAFKA_PORT : port where the Kafka Endpoint is listening for incoming requests <br>
 KAFKA_TOPIC : Kafka topic to subscribe in <br>
 KAFKA_CONSUMER_GROUP : name of the Consumer Group to join (new one or already existing) <br>
-INPUT_JSON_ID_FIELD_NAME : field of the data schema to consider as identifier <br>
+INPUT_JSON_ID_FIELD_PATH : path of subfields to retrieve the identifier (to use during the ES upsert) in the data schema. The subfields must be separated with a ; and WITHOUT ANY SPACE (e.g.: data;identifier) <br>
 ES_HOST : hostname or IP of the Elasticsearch Endpoint <br>
 ES_PORT : port where the Elasticsearch Endpoint is listening for incoming requests <br>
 ES_INDEX_NAME : ES index to use <br>
