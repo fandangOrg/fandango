@@ -1,4 +1,7 @@
 {
+"status": 200,
+"message": "Successful Operation",
+"data": {
   "authors": [
     "Jesús Sérvulo González",
     "Jesús Sérvulo González\nTwitter"
@@ -30,4 +33,4 @@
   "top_image": "https://ep00.epimg.net/economia/imagenes/2018/06/20/actualidad/1529518143_236168_1529519211_rrss_normal.jpg",
   "url": "https://elpais.com/economia/2019/05/23/actualidad/1558638881_652034.html",
   "videos": []
-}
+}}
