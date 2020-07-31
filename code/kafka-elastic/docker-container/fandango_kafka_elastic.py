@@ -26,16 +26,21 @@ def main():
         return
 
     # DEFINING THE FIELDS/SUBFILEDS LIST USED TO FIND THE IDENTIFIER IN THE DATA SCHEMA
-    path_to_id_field = list()
-    for field in gv.INPUT_JSON_ID_FIELD_PATH.split(';'):
-        field_name = field.lstrip().rstrip()
-        if field_name == '':
-            continue
+    try:
+        path_to_id_field = list()
+        for field in gv.INPUT_JSON_ID_FIELD_PATH.split(';'):
+            field_name = field.lstrip().rstrip()
+            if field_name == '':
+                continue
 
-        path_to_id_field.append(field_name)
+            path_to_id_field.append(field_name)
 
-    if len(path_to_id_field) < 1:
-        logger.error('Schema path to the identifier in the data schema not found {0}, the program will be closed...'.format(path_to_id_field))
+        if len(path_to_id_field) < 1:
+            logger.error('Schema path to the identifier in the data schema not found {0}, the program will be closed...'.format(path_to_id_field))
+            return
+
+    except Exception as e:
+        logger.error(e)
         return
 
 
@@ -122,14 +127,15 @@ def main():
                         consumer.commit()
                         continue
 
-                    # logger.info(entry)
+                    logger.debug(entry)
                         
                     # GETTING THE ENTRY IDENTIFIER (TO BE USED AS ELASTICSEARCH ID)
                     skip_element = False
-
+                    es_id = ""
+                    
                     for field in path_to_id_field:
                         if field in entry:
-                            entry = entry[field]
+                            es_id = entry[field]
                         else:
                             logger.warning('--> The specified identifier field ({0}) not present in the element, skipping...'.format(str(path_to_id_field)[1:-1]))
                             consumer.commit()
@@ -137,11 +143,9 @@ def main():
                             break
 
 
-                    if skip_element:
+                    if skip_element or es_id == "" or es_id == None:
                         continue
-
-                    # AT THE END OF THE PREVIOUS FOR CYCLE THE ENTRY WILL BE THE ELASTICSEARCH ID
-                    es_id = entry
+                    
 
                     # UPSERT ENTRY IN ES
                     logger.info('Inserting entry in Elasticsearch with identifier: {0}'.format(es_id))

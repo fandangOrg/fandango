@@ -17,7 +17,7 @@ spec:
       containers:
         - name: fandango-kafka-elastic
 
-          image: fandangorg/fandango_kafka_elastic:1.0.3
+          image: fandangorg/fandango_kafka_elastic:1.0.6
           
           command: [ "python" ]
           args: [ "fandango_kafka_elastic.py" ]
@@ -34,13 +34,14 @@ spec:
             - name: KAFKA_PORT
               value: "9092"
             - name: KAFKA_TOPIC
-              value: analyzed_article
+              value: NEW_analyzed_article
+              # value: analyzed_article
               # value: ANALYZED_ARTICLE
               # value: input_raw
             - name: KAFKA_CONSUMER_GROUP
               value: elastic_group
             - name: INPUT_JSON_ID_FIELD_PATH
-              value: data; identifier
+              value: identifier
             
             
             # ELASTICSEARCH PARAMETERS
