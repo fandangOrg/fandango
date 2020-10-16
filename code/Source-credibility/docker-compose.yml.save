@@ -1,6 +1,5 @@
 version: '3'
-services:
-    graph_analysis:
+services:    graph_analysis:
       image: "fandangorg/fandango_source_credibility:1.0.11"
       #image: "prueba_graph"
       container_name: docker_graph
@@ -20,8 +19,7 @@ services:
         - NEO4J_PROTOCOL=bolt
         - NEO4J_USERNAME=neo4j
         - NEO4J_PASSWORD=fandango
-        - FUSION_SCORE_SERVER=0.0.0.0
-        - FUSION_SCORE_PORT=10003
+        - FUSION_SCORE_BASE_URL=0.0.0.0
         - FUSION_SCORE_ENDPOINT=api/fusion_score
 
 

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
+import coloredlogs, logging
 from queue import Queue
-import warnings
-import os
 from threading import Event
-from helper.custom_log import init_logger
-
+import warnings, os
 warnings.filterwarnings('ignore')
+
+logger = logging.getLogger(__name__)
+coloredlogs.install(level='DEBUG', logger=logger)
+
 
 
 # ====================================================================================
@@ -15,8 +17,7 @@ warnings.filterwarnings('ignore')
 queue_neo4j = None
 event = None
 
-log_file_name: str = os.path.join("app_logs", "app.log")
-logger = init_logger(__name__, testing_mode=False)
+
 service = None
 
 # Pre-processing Params
@@ -42,7 +43,7 @@ else:
 if os.getenv('ELASTICSEARCH_PORT') is not None:
     es_port: str = os.getenv('ELASTICSEARCH_PORT')
 else:
-    es_port: str = "9200"
+    es_port: str = "9220"
 
 if os.getenv('ELASTICSEARCH_INDEX_PER') is not None:
     person_es_index = os.getenv('ELASTICSEARCH_INDEX_PER')
@@ -55,7 +56,7 @@ else:
     org_es_index: str = "fdg-ap-organization"
 
 idf_es_index: str = "crawled-articles"
-art_es_index: str = "fdg-article"
+art_es_index: str = "fdg-textscore"
 
 # ====================================
 # Kafka environment variables
@@ -117,11 +118,15 @@ elif protocol == 'http':
 elif protocol == 'https':
     neo4j_port: str = '7473'
 
-if os.getenv('FUSION_SCORE_BASE_URL') is not None:
-    fusion_score_base_url: str = os.getenv('FUSION_SCORE_BASE_URL')
+if os.getenv('FUSION_SCORE_SERVER') is not None:
+    fusion_score_server: str = os.getenv('FUSION_SCORE_SERVER')
 else:
-    fusion_score_base_url: str = 'localhost:5004'
+    fusion_score_server: str = 'localhost'
 
+if os.getenv('FUSION_SCORE_PORT') is not None:
+    fusion_score_port: str = str(os.getenv('FUSION_SCORE_PORT'))
+else:
+    fusion_score_port: str = '10003'
 
 if os.getenv('FUSION_SCORE_ENDPOINT') is not None:
     fusion_score_endpoint: str = os.getenv('FUSION_SCORE_ENDPOINT')

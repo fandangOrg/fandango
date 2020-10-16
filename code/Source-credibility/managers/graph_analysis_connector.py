@@ -161,14 +161,15 @@ class GraphAnalysis:
                                " at " + (datetime.datetime.now().strftime("%c")) + "\n")
                 
                 # 4. POST Fusion Score
-                gv.logger.info("Updating Fusion Score Service")
+                gv.logger.info("Calling Fusion Score Service")
                 response_fusion_score: dict = self.update_fusion_score(
-                    base_url=gv.fusion_score_base_url,
+                    server=gv.fusion_score_server,
+                    port=gv.fusion_score_port,
                     endpoint=gv.fusion_score_endpoint,
                     article_uuid=neo4j_data.article["identifier"])
 
                 if response_fusion_score["status"] == 200:
-                    gv.logger.info("Done!")
+                    gv.logger.info("Fusion score updated with success!")
 
                 # 5. Clear Element of Queue
                 gv.event.clear()
@@ -182,12 +183,12 @@ class GraphAnalysis:
             gv.logger.error(e)
 
     @staticmethod
-    def update_fusion_score(base_url: str, endpoint: str, article_uuid: str):
+    def update_fusion_score(server: str, port: str, endpoint: str, article_uuid: str):
         response: dict = {"status": 500, "message": gv.http_response_500}
         try:
-            url = base_url + "/" + endpoint
+            url: str = f"http://{server}:{port}/{endpoint}"
             data: dict = {"identifier": article_uuid}
-            response_api = requests.post(url=url, data=data)
+            response_api = requests.post(url=url, json=data, timeout=3)
             response["status"]: int = response_api.status_code
             if response_api.status_code == 200:
                 response["message"]: str = gv.http_response_200

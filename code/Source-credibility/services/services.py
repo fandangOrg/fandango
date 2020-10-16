@@ -26,7 +26,7 @@ class GraphAnalysisService:
                 # ------------ Kafka -----------------------------
                 # Init Kafka object
                 if self.data_manager.kafka_manager is None:
-                    self.data_manager.init_kafka_manager()
+                    self.data_manager.verify_kafka_connection()
 
                 # Verify Kafka Connection
                 if not self.data_manager.kafka_manager.connection:
@@ -108,7 +108,6 @@ class GraphAnalysisService:
                 message: str = gv.http_response_403
                 output_data.update(output.data)
             else:
-
                 # 3.1 Execute Graph Analysis
                 response: GraphAnalyzerOutputDoc = self.data_manager.execute_graph_analysis(
                     document=data)
@@ -150,6 +149,75 @@ class GraphAnalysisService:
             gv.logger.error(e)
             output = self.build_output(task_name=self.service_task, status=400,
                                        message=gv.aborted_msg)
+        return output
+
+    def get_author_object(self, id: str):
+        output: GraphAnalyzerOutputDoc = GraphAnalyzerOutputDoc(
+            message=gv.http_response_500,
+            status=500, data={})
+        try:
+            # 1. Initialise Data Manager
+            self.service_task = "get_authors"
+            data: dict = {}
+            if self.data_manager is None:
+                self.set_up_data_manager(service=self.service_task)
+
+            # 2. Verify Connection
+            connection_error: dict = self.verify_external_server_connections(
+                kafka=False, neo4j=False)
+
+            # 3. Start process
+            if True in list(connection_error.values()):
+                status: int = 403
+                message: str = gv.http_response_403
+
+            else:
+                data: dict = self.data_manager.get_object_from_elasticsearch(
+                    index=gv.person_es_index, identifier=id)
+                status: int = 200
+                message: str = gv.http_response_200
+
+            # 4. Build response
+            output: GraphAnalyzerOutputDoc = GraphAnalyzerOutputDoc(
+                message=message,
+                status=status, data=data)
+
+        except Exception as e:
+            gv.logger.error(e)
+        return output
+
+    def get_publisher_object(self, id: str):
+        output: GraphAnalyzerOutputDoc = GraphAnalyzerOutputDoc(
+            message=gv.http_response_500,
+            status=500, data={})
+        try:
+            # 1. Initialise Data Manager
+            self.service_task = "get_publisher"
+            data: dict = {}
+            if self.data_manager is None:
+                self.set_up_data_manager(service=self.service_task)
+
+            # 2. Verify Connection
+            connection_error: dict = self.verify_external_server_connections(
+                kafka=False, neo4j=False)
+
+            # 3. Start process
+            if True in list(connection_error.values()):
+                status: int = 403
+                message: str = gv.http_response_403
+            else:
+                data: dict = self.data_manager.get_object_from_elasticsearch(
+                    index=gv.org_es_index, identifier=id)
+                status: int = 200
+                message: str = gv.http_response_200
+
+            # 4. Build response
+            output: GraphAnalyzerOutputDoc = GraphAnalyzerOutputDoc(
+                message=message,
+                status=status, data=data)
+
+        except Exception as e:
+            gv.logger.error(e)
         return output
 
     @staticmethod

@@ -6,7 +6,7 @@ services:
       container_name: docker_fandango_pre
       ports:
         - "5001:5001"
-      command : bash -c "python /app/init_services.py & sleep 15 && curl -X POST http://0.0.0.0:5001/preprocessing/offline/start && tail -F /dev/null"
+      command : bash -c "python /app/init_services.py & sleep 15 && curl -X POST http://0.0.0.0:5001/api/preprocessing/offline/start && tail -F /dev/null"
       environment:
         - ELASTICSEARCH_SERVER=0.0.0.0
         - ELASTICSEARCH_PORT=9220

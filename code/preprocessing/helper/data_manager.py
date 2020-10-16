@@ -7,6 +7,7 @@ from helper.kafka_connector import KafkaConnector
 from helper.elasticsearch_manager import ElasticsearchManager
 from preprocessing.data_preprocessing import DataPreprocessing
 from typing import Optional
+from kafka.errors import CommitFailedError
 
 
 class DataManager:
@@ -20,7 +21,6 @@ class DataManager:
         self.group_id: str = gv.group_id
         self.kafka_server: str = gv.kafka_server
         self.enable_auto_commit: bool = False
-        self.timeout: int = 3000
         self.auto_offset_reset: str = "earliest"
         self.kafka_manager: Optional[KafkaConnector] = None
 
@@ -38,13 +38,21 @@ class DataManager:
                     group_id=self.group_id,
                     bootstrap_servers=[self.kafka_server],
                     enable_auto_commit=self.enable_auto_commit,
-                    consumer_timeout_ms=self.timeout,
                     auto_offset_reset=self.auto_offset_reset)
-                self.kafka_manager.init_kafka_consumer()
-                self.kafka_manager.init_kafka_producer()
+        except Exception as e:
+            gv.logger.error(e)
 
-            if not self.kafka_manager.connection:
-                gv.logger.error("Cannot connect to Kafka server at %s", str(self.kafka_server))
+    def verify_kafka_connection(self):
+        try:
+            # 1. Init Manager
+            if self.kafka_manager is None:
+                self.init_kafka_manager()
+            # 2. Verify Connection
+            response_kafka: dict = self.kafka_manager.verify_kafka_connection()
+            #
+            if response_kafka.get("status", 400) != 200:
+                gv.logger.error("Cannot connect to Kafka server at %s",
+                                str(self.kafka_server))
         except Exception as e:
             gv.logger.error(e)
 
@@ -63,7 +71,6 @@ class DataManager:
 
         except Exception as e:
             gv.logger.error(e)
-        return self
 
     def init_preprocessing(self):
         try:
@@ -93,27 +100,37 @@ class DataManager:
         return output
 
     def start_kafka_offline_process(self):
-        done = True
-        while done:
+        run = True
+        while run:
             try:
-                self.kafka_manager.consumer.poll()
+                # 1. Check if the consumer was initialised
+                if self.kafka_manager.consumer is None:
+                    self.kafka_manager.init_kafka_consumer()
+
+                # 1. Check if the consumer was initialised
+                if self.kafka_manager.producer is None:
+                    self.kafka_manager.init_kafka_producer()
+
+                # 2 Start Process
                 for msg in self.kafka_manager.consumer:
                     try:
                         # 1. Load message from Kafka
                         gv.logger.info('Loading Kafka Message')
                         kafka_input_doc: dict = loads(msg.value)
 
-                        # Response is correct
-                        if kafka_input_doc.get("status", False) == 200:
+                        # 2. Make commit
+                        self.kafka_manager.consumer.commit()
 
+                        # 3 Response is correct
+                        if kafka_input_doc.get("status", 400) == 200:
                             gv.logger.info('Executing Preprocessing')
                             data: dict = kafka_input_doc["data"]
 
-                            # 2. Execute Preprocessing
+                            # 4. Execute Preprocessing
                             output: PreprocessingOutputDocument = self.execute_preprocessing(
                                 data=data)
 
-                            # 2.1 Everything was right
+                            # 4.1 Everything was right
                             if output.status == 200:
                                 kafka_output_doc: dict = output.dict_from_class()
                                 if not self.data_preprocessing_manager.filter_news(output.data,
@@ -124,21 +141,35 @@ class DataManager:
                                     self.kafka_manager.put_data_into_topic(data=kafka_output_doc)
                                     gv.logger.info('Done!')
 
-                                self.kafka_manager.consumer.commit()
-
-                            # 2.2 Possible errors
-                            else:
-                                gv.logger.warning("Article not ingested into Kafka.\nMessage: %s \nstatus %s",
-                                                  output.message, output.status)
+                    # Handle Connection Exception
                     except ConnectionError as er:
                         gv.logger.error(er)
-                        sys.exit(141)
+                        sys.exit(1)
+
+                    # Handle CommitFailedError Exception
+                    except CommitFailedError as commitErr:
+                        gv.logger.error("Not able to make a commit ..." + str(commitErr))
+                        # restart kafka elements and go back to while loop
+                        self.kafka_manager.consumer = None
+                        self.kafka_manager.producer = None
+                        # Go out of the for loop
+                        break
+
+                    # Handle any other Exception
                     except Exception as e:
                         gv.logger.error(e)
+                        # Perform commit and continue with next message
+                        self.kafka_manager.consumer.commit()
                         continue
+
+            # Handle While loop exceptions
+            except ConnectionError as er:
+                gv.logger.error(er)
+                sys.exit(1)
             except Exception as e:
                 gv.logger.warning(e)
-                continue
+                self.kafka_manager.consumer = None
+                self.kafka_manager.producer = None
 
     def start_experimental_kafka_process(self):
         done = True

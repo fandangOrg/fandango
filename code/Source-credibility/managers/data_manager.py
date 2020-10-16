@@ -1,3 +1,4 @@
+import sys
 from helper import global_variables as gv
 from models.article import Article
 from json import loads
@@ -7,6 +8,7 @@ from managers.neo4j_connector import NEO4JConnector
 from managers.graph_analysis_connector import GraphAnalysis
 from models.graph_models import GraphAnalyzerOutputDoc
 from typing import Optional
+from kafka.errors import CommitFailedError
 
 
 class DataManager:
@@ -20,7 +22,6 @@ class DataManager:
         self.group_id: str = gv.group_id
         self.kafka_server: str = gv.kafka_server
         self.enable_auto_commit: bool = False
-        self.timeout: int = 3000
         self.auto_offset_reset: str = "earliest"
         self.kafka_manager: Optional[KafkaConnector] = None
 
@@ -45,7 +46,6 @@ class DataManager:
                 group_id=self.group_id,
                 bootstrap_servers=[self.kafka_server],
                 enable_auto_commit=self.enable_auto_commit,
-                consumer_timeout_ms=self.timeout,
                 auto_offset_reset=self.auto_offset_reset)
             self.kafka_manager.init_kafka_consumer()
             self.kafka_manager.init_kafka_producer()
@@ -53,6 +53,20 @@ class DataManager:
             if not self.kafka_manager.connection:
                 gv.logger.error("Cannot connect to Kafka server at %s", str(self.kafka_server))
 
+        except Exception as e:
+            gv.logger.error(e)
+
+    def verify_kafka_connection(self):
+        try:
+            # 1. Init Manager
+            if self.kafka_manager is None:
+                self.init_kafka_manager()
+            # 2. Verify Connection
+            response_kafka: dict = self.kafka_manager.verify_kafka_connection()
+            #
+            if response_kafka.get("status", 400) != 200:
+                gv.logger.error("Cannot connect to Kafka server at %s",
+                                str(self.kafka_server))
         except Exception as e:
             gv.logger.error(e)
 
@@ -113,6 +127,7 @@ class DataManager:
                 # 2. Convert Dictionary to Article Document
                 art_doc: Article = Article()
                 input_doc: dict = document["data"]
+
                 art_doc_obj: Article = art_doc.article_from_dict(data=input_doc)
 
                 # 3. Apply Asynchronous Graph Analysis
@@ -142,11 +157,26 @@ class DataManager:
             gv.logger.error(e)
         return response
 
+    def get_object_from_elasticsearch(self, index: str, identifier: id):
+        response: dict = {}
+        try:
+            response: dict = self.elasticsearch_manager.retrieve_data_from_index_by_id(
+                index=index, uuid=identifier)
+        except Exception as e:
+            gv.logger.error(e)
+        return response
+
     def start_kafka_offline_process(self):
-        done: bool = True
-        while done:
+        run: bool = True
+        while run:
             try:
-                self.kafka_manager.consumer.poll()
+                # 1. Check if the consumer was initialised
+                if self.kafka_manager.consumer is None:
+                    self.kafka_manager.init_kafka_consumer()
+
+                # 1. Check if the producer was initialised
+                if self.kafka_manager.producer is None:
+                    self.kafka_manager.init_kafka_producer()
 
                 # 1. Read messages from Kafka
                 for msg in self.kafka_manager.consumer:
@@ -154,39 +184,52 @@ class DataManager:
                         # 2. Process message
                         gv.logger.info('Loading Kafka Message')
                         document: dict = loads(msg.value)
-                        gv.logger.info('Executing Graph Analysis')
 
-                        # 3. Execute Analysis
-                        response: GraphAnalyzerOutputDoc = self.execute_graph_analysis(
-                            document=document)
+                        # 3. Commit document
+                        self.kafka_manager.consumer.commit()
 
-                        # 4. Check response
-                        output_doc: dict = response.dict_from_class()
-                        # 4. Everything was fine
-                        if response.status == 200:
-                            output_doc: dict = response.dict_from_class()
-                            gv.logger.info('Putting authors/publisher scores into Kafka')
-                            self.kafka_manager.put_data_into_topic(data=output_doc)
-                            self.kafka_manager.consumer.commit()
-                            gv.logger.info('Done!')
+                        # 4. Execute Analysis
+                        if document.get("status", 400) == 200:
+                            gv.logger.info('Executing Source credibility')
+                            response: GraphAnalyzerOutputDoc = self.execute_graph_analysis(
+                                document=document)
 
-                        # 4.2 Client Error
-                        elif response.status == 400:
-                            gv.logger.warning('The article input is not correct!')
-                            self.kafka_manager.put_data_into_topic(data=output_doc)
-                            self.kafka_manager.consumer.commit()
+                            # 4.1 Everything was fine
+                            if response.status == 200:
+                                output_doc: dict = response.dict_from_class()
+                                gv.logger.info('Putting authors/publisher scores into Kafka')
+                                self.kafka_manager.put_data_into_topic(data=output_doc)
+                                gv.logger.info('Done!')
 
-                        # 4.3 Server Error (do not commit the article)
-                        else:
-                            gv.logger.error('Server Internal Error')
+                    # Handle Connection Exception
                     except ConnectionError as er:
                         gv.logger.error(er)
+                        sys.exit(1)
+
+                    # Handle CommitFailedError Exception
+                    except CommitFailedError as commitErr:
+                        gv.logger.error("Not able to make a commit ..." + str(commitErr))
+                        # restart kafka elements and go back to while loop
+                        self.kafka_manager.consumer = None
+                        self.kafka_manager.producer = None
+                        # Go out of the for loop
+                        break
+
+                    # Handle any other Exception
                     except Exception as e:
                         gv.logger.error(e)
+                        # Perform commit and continue with next message
+                        self.kafka_manager.consumer.commit()
                         continue
+
+            # Handle While loop exceptions
+            except ConnectionError as er:
+                gv.logger.error(er)
+                sys.exit(1)
             except Exception as e:
                 gv.logger.warning(e)
-                continue
+                self.kafka_manager.consumer = None
+                self.kafka_manager.producer = None
 
     def execute_source_domain_analysis(self, full_domain):
         response = {}

@@ -107,7 +107,7 @@ class SourceCredibility:
             # 4. Compute Author Trustworthiness
             total_authors_df[self.score_name], total_authors_df["relevance"] = total_authors_df.apply(
                 self.compute_trustworthiness, args=(self.neo4j_connector.graph,
-                                                    "author"),
+                                                    "authors"),
                 axis=1, result_type='expand').T.values
 
             # 5.Generate output
@@ -170,6 +170,7 @@ class SourceCredibility:
 
             # Add status
             data_dct["status"]: int = gv.status_in_progress
+            data_dct["processed_timestamp"] = get_current_timestamp()
 
         except Exception as e:
             gv.logger.error(e)
@@ -177,7 +178,7 @@ class SourceCredibility:
 
     @staticmethod
     def retrieve_all_authors_from_publisher(graph: Graph, label_a: str, label_b: str,
-                                            relationship:str, publisher_uuid: str,
+                                            relationship: str, publisher_uuid: str,
                                             authors_done: list = None, columns: list = None):
         remain_authors: list = []
         try:
@@ -245,6 +246,8 @@ class SourceCredibility:
 
             # 2.2 Author Analysis
             else:
+                # Update entity to be singular
+                entity: str = "Author"
                 scores_data, non_importances = self.get_scores_importances_from_author(
                     graph, data)
                 response_twitter["analyse"] = False
@@ -257,7 +260,7 @@ class SourceCredibility:
             # Get score values and retrieve non-normalize trustworthiness
             scores = self.get_scores_values(scores_data)
             importances = self.normalize_importances(non_importances)
-            gv.logger.info("Computing Trustworthiness!")
+            gv.logger.info("Computing Multimodal Trustworthiness and relevance!")
             non_trustworthiness: float = self.calculate_multimodal_score(scores, importances)
 
             # Normalize trustworthiness
@@ -267,7 +270,7 @@ class SourceCredibility:
             # Update property in Neo4j
             if update_neo4j:
                 final_data = {"trustworthiness": trustworthiness,
-                              "status": data["status"],
+                              "status": 200,
                               "relevance": relevance}
                 if entity == self.neo4j_queries_manager.publisher_node_label.lower() and response_twitter["analyse"]:
                     final_data.update({"processed_timestamp": data["processed_timestamp"]})
@@ -343,6 +346,7 @@ class SourceCredibility:
             scores.update({"suffix_rank": suffix_score["importance_weight"]})
 
             # 4. Centrality rank
+            gv.logger.info("Computing Article Rank!")
             article_rank = compute_article_rank(
                 graph, label_a=self.neo4j_queries_manager.article_node_label,
                 label_b=self.neo4j_queries_manager.publisher_node_label,
@@ -383,9 +387,9 @@ class SourceCredibility:
         non_importances = np.array([])
         try:
             # Page rank || Twitter || Suffix || Text || Media Type
-            non_importances = np.array([stats.norm.pdf(0.5), stats.norm.pdf(0),
+            non_importances = np.array([stats.norm.pdf(0.25), stats.norm.pdf(0),
                                         stats.norm.pdf(2), stats.norm.pdf(1),
-                                        stats.norm.pdf(0.5)
+                                        stats.norm.pdf(0.75)
                                     ])
         except Exception as e:
             gv.logger.error(e)
@@ -400,7 +404,7 @@ class SourceCredibility:
         non_importances = np.array([])
         try:
             # Text Features || Publisher score
-            non_importances = np.array([stats.norm.pdf(2), stats.norm.pdf(0)])
+            non_importances = np.array([stats.norm.pdf(1), stats.norm.pdf(0)])
         except Exception as e:
             gv.logger.error(e)
         return non_importances

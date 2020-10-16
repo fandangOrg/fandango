@@ -12,6 +12,7 @@ class ElasticsearchManager:
         self.port = port
         self.es = None
         self.connection = False
+        self.indexes: list = []
 
     def connect(self):
         try:
@@ -108,11 +109,11 @@ class ElasticsearchManager:
 
     @staticmethod
     def retrieve_doc_from_index_by_id(es, index, uuid):
-        response = {}
+        response: dict = {}
         try:
             results = es.get(index=index, doc_type="doc", id=uuid)
             # Check results from generator
-            response = results['_source']
+            response: dict = results.get('_source', {})
         except Exception as e:
             gv.logger.warning(e)
         return response
@@ -123,9 +124,11 @@ class ElasticsearchManager:
         try:
             query = {"query": {"match": {search_key: {"query": search_value, "fuzziness": "0"}}}}
             results = self.es.search(body=query, index=index, request_timeout=request_timeout)
-            if results['hits']['total'] > 0:
+            total_docs: int = results['hits']['total']['value']
+            if total_docs > 0:
                 res_name = results['hits']['hits'][0]['_source'][search_key]
-                distance = fuzz.ratio(res_name.replace(' ', '').lower(), search_value.replace(' ', '').lower())
+                distance = fuzz.ratio(res_name.replace(' ', '').lower(),
+                                      search_value.replace(' ', '').lower())
                 if distance >= fuzzy_threshold:
                     response = {"source": results['hits']['hits'][0]['_source'],
                                 "id": results['hits']['hits'][0]["_id"]}

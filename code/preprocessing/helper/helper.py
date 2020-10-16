@@ -692,7 +692,7 @@ def extract_domain_from_url(url):
 def retrieve_image_by_url(url):
     img = None
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=1)
         img = Image.open(BytesIO(response.content))
     except Exception as e:
         gv.logger.error(e)

@@ -1,6 +1,6 @@
 import json
 import os
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from services.services import GraphAnalysisService
 from helper import global_variables as gv
@@ -19,7 +19,7 @@ serv: GraphAnalysisService = GraphAnalysisService()
 # ======================================================================================================================
 # ----------------------------------------------- GRAPH ANALYSIS SERVICES ----------------------------------------------
 # ======================================================================================================================
-@app.route('/search/<search_string>', methods=['GET'])
+@app.route('/api/search/<search_string>', methods=['GET'])
 def search(search_string):
     return app.send_static_file('index.html')
 
@@ -29,7 +29,7 @@ def root():
     return app.send_static_file('index.html')
 
 
-@app.route('/graph_analysis/offline/start', methods=['POST'])
+@app.route('/api/graph_analysis/offline/start', methods=['POST'])
 def graph_analysis_offline_service():
     output: GraphAnalyzerOutputDoc = serv.offline_service()
     if output.status == 200:
@@ -41,15 +41,34 @@ def graph_analysis_offline_service():
         os._exit(0)
 
 
-@app.route('/graph_analysis/online/analyse_article', methods=['POST'])
+@app.route('/api/graph_analysis/online/analyse_article', methods=['POST'])
 def graph_analysis_online_service():
-    data: dict = request.get_json(force=True)
+    data: dict = {}
+    try:
+        data: dict = request.json
+    except Exception as e:
+        pass
+
     output: GraphAnalyzerOutputDoc = serv.online_service(data=data)
     output: dict = output.dict_from_class()
     return json.dumps(output)
 
 
-@app.route('/graph_analysis/ui/domain_analysis', methods=['POST'])
+@app.route('/api/graph_analysis/author/<id>', methods=['GET'])
+def get_author_object(id: str):
+    output: GraphAnalyzerOutputDoc = serv.get_author_object(id=id)
+    response: dict = output.data
+    return json.dumps(response)
+
+
+@app.route('/api/graph_analysis/publisher/<id>', methods=['GET'])
+def get_publisher_object(id :str):
+    output: GraphAnalyzerOutputDoc = serv.get_publisher_object(id=id)
+    response: dict = output.data
+    return json.dumps(response)
+
+
+@app.route('/api/graph_analysis/ui/domain_analysis', methods=['POST'])
 def source_domain_analysis():
     # TODO: POST TO GET
     # 40.114.234.51:5000?publishername=elpais.com

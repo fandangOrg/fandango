@@ -121,7 +121,7 @@ class DataPreprocessing:
         # INPUT:
         #       - text: text
         # OUTPUT:
-        #       - lang: Language code detected
+        #       - lang: Language status detected
         # =================================================
         lang = None
         try:
@@ -168,7 +168,7 @@ class DataPreprocessing:
         # INPUT:
         #       - text: text
         # OUTPUT:
-        #       - lang: Language code detected
+        #       - lang: Language status detected
         # =================================================
         author_name_cleaned = None
         try:
@@ -186,7 +186,7 @@ class DataPreprocessing:
         # INPUT:
         #       - text: text
         # OUTPUT:
-        #       - lang: Language code detected
+        #       - lang: Language status detected
         # =================================================
         publisher_info = None
         try:
@@ -228,7 +228,10 @@ class DataPreprocessing:
     def filter_news(data, threshold=10, col_key="articleBody"):
         filter = False
         try:
-            if len(data[col_key]) < threshold:
+            if data is not None:
+                if len(data[col_key]) < threshold:
+                    filter = True
+            else:
                 filter = True
         except Exception as e:
             gv.logger.error(e)
@@ -236,13 +239,16 @@ class DataPreprocessing:
 
     @staticmethod
     def filter_image_by_url(img_url):
-        filter = False
+        filter = True
         try:
             img = retrieve_image_by_url(img_url)
-            filter_size = filter_by_size(img)
-            filter_ar = filter_by_apect_ratio(img)
-            if filter_size or filter_ar:
-                filter = True
+            if img is not None:
+                filter_size = filter_by_size(img)
+                filter_ar = filter_by_apect_ratio(img)
+                if filter_size or filter_ar:
+                    filter = True
+                else:
+                    filter = False
         except Exception as e:
             gv.logger.error(e)
         return filter
@@ -253,6 +259,10 @@ class DataPreprocessing:
         try:
             # Check input structure
             if isinstance(data, dict):
+
+                if "data" in data.keys():
+                    data: dict = data["data"]
+
                 features = self.required_cols(manual_annot=manual_annot)
                 # All the required features are available
                 if set(list(data.keys())).issuperset(features):
@@ -285,20 +295,20 @@ class DataPreprocessing:
                     if not manual_annot:
                         data["images"] = self.remove_banner_images(images=data["images"])
 
-                    code: int = 200
+                    status: int = 200
                     message: str = gv.http_response_200
                 else:
-                    code: int = 422
+                    status: int = 422
                     message: str = gv.http_response_422
                     data: dict = {}
             else:
-                code: int = 400
+                status: int = 400
                 message: str = gv.http_response_400
                 data: dict = {}
 
             # Generate output
             output: PreprocessingOutputDocument = PreprocessingOutputDocument(message=message,
-                                                                              status=code,
+                                                                              status=status,
                                                                               data=data)
         except Exception as e:
             gv.logger.error(e)

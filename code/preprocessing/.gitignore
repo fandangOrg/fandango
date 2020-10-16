@@ -16,3 +16,5 @@ test/kafka_topics.py
 test/
 
 media_data.csv
+
+test_functionalities/

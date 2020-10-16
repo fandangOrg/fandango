@@ -35,6 +35,7 @@ class NEO4JConnector:
             # Verify connection by running a query
             self.graph.run("Match () Return 1 Limit 1")
             self.connection = True
+            gv.logger.info(f"Connected to Neo4j at {self.host}:{self.port}")
 
         except ConnectionError as ce:
             gv.logger.error(ce)
@@ -80,6 +81,7 @@ class NEO4JConnector:
             query = self.neo4j_queries_manager.create_relationship(
                 label_a=self.neo4j_queries_manager.article_node_label,
                 label_b=self.neo4j_queries_manager.author_node_label,
+                unwind="authors",
                 relationship=self.neo4j_queries_manager.article_author_relationship)
             self.run_query(graph=self.graph, query=query)
 
@@ -120,7 +122,7 @@ class NEO4JConnector:
             dict_art: dict = data.article
 
             # 2. Add identifiers
-            dict_art["author"] = data.authors["identifier"]
+            dict_art["authors"] = data.authors["identifier"]
             dict_art["publisher"] = data.publisher["identifier"]
 
             transformed_dict_aut = join_dict_from_nested_list(nested_dict=dict_aut,
@@ -161,12 +163,10 @@ class NEO4JConnector:
                     parameters = dict(row)
                     tx.evaluate(query, parameters=parameters)
                 except Exception as e:
-                    gv.logger.warning(e)
                     continue
             # Commit the process
             tx.commit()
         except Exception as e:
-            gv.logger.warning(e)
             response = {"status": 400, "error": str(e)}
         return response
 

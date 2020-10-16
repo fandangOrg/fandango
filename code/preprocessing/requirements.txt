@@ -2,7 +2,7 @@ kafka-python
 elasticsearch
 pandas
 numpy
-colorlog
+coloredlogs
 spacy
 bs4
 requests

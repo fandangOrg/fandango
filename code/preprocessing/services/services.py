@@ -25,7 +25,7 @@ class PreprocessingServices:
                 # ------------ Kafka -----------------------------
                 # Init Kafka object
                 if self.data_manager.kafka_manager is None:
-                    self.data_manager.init_kafka_manager()
+                    self.data_manager.verify_kafka_connection()
 
                 # Verify Kafka Connection
                 if not self.data_manager.kafka_manager.connection:

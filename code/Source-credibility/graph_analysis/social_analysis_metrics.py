@@ -97,8 +97,7 @@ def get_average_tweets_per_day(created_date, statuses_count):
 def compute_social_popularity(followers_count, friends_count):
     social_pop = -1
     try:
-        if (followers_count > 0) and (friends_count > 0):
-            social_pop = round(np.log(followers_count) - np.log(friends_count), 2)
+        social_pop = round(np.log(followers_count + 1) - np.log(friends_count + 1), 2)
     except Exception as e:
         gv.logger.error(e)
     return social_pop
@@ -191,6 +190,7 @@ def generate_twitter_scorer(minval=0, maxval=100):
         gv.logger.error(e)
     return score_func
 
+
 def compute_twitter_score(api, username, score_func):
     score = -1
     try:
@@ -205,6 +205,7 @@ def compute_twitter_score(api, username, score_func):
         gv.logger.error(e)
     return score
 
+
 def get_open_page_rank(source_domain):
     data = None
     try:
@@ -218,6 +219,7 @@ def get_open_page_rank(source_domain):
         gv.logger.error(e)
     return data
 
+
 def compute_openrank_score(source_domain, label="page_rank_decimal"):
     score = -1
     try:
@@ -230,6 +232,7 @@ def compute_openrank_score(source_domain, label="page_rank_decimal"):
     except Exception as e:
         gv.logger.error(e)
     return score
+
 
 def compute_suffix_score(domain, sheet_names, filepath, key="importance_weight"):
     suffix_vector = {"suffix": "", key: get_default_importance(), "additional_data": {}}
@@ -277,7 +280,7 @@ def compute_suffix_score(domain, sheet_names, filepath, key="importance_weight")
 
 
 def get_publisher_score(graph, uuid, label_a, label_b, relationship):
-    publisher_score = -1
+    publisher_score = 0.01
     try:
         query = Neo4jQueries.get_nodes_by_relationship(label_a, label_b, relationship,
                                                        uuid, uuid_label="identifier")
@@ -294,43 +297,47 @@ def get_publisher_score(graph, uuid, label_a, label_b, relationship):
         gv.logger.error(e)
     return publisher_score
 
+
 def compute_text_score(es, graph, uuid, label_a, label_b, relationship, art_index, relevance, alpha=.20):
     text_score = -1
     try:
         query = Neo4jQueries.get_nodes_ids_by_relationship(label_a, label_b, relationship,
-                                                            uuid, uuid_label="identifier")
-        response = NEO4JConnector.get_data_from_query(graph=graph, query=query)
+                                                           uuid, uuid_label="identifier")
+        response: list = NEO4JConnector.get_data_from_query(graph=graph, query=query)
 
         # It retrieves several articles
         text_trust = []
-        if len(response)>0:
+        if len(response) > 0:
             for res in response:
                 art_uuid = res["Identifiers"]
                 # Retrieve article from Elasticsearch
-                art_obj = es.retrieve_data_from_index_by_searching(
-                    index=art_index, search_key="identifier", search_value=art_uuid,
-                    fuzzy_threshold=99, request_timeout=30)
-                # Append Trustworthiness
-                text_trust.append(check_text_score(art_obj, relevance, alpha))
+                art_obj = es.retrieve_doc_from_index_by_id(es.es,
+                                                           index=art_index,
+                                                           uuid=art_uuid)
+                if art_obj:
+                    # Append Trustworthiness
+                    text_trust.append(check_text_score(art_obj, relevance, alpha))
         if text_trust:
             text_score = np.median(text_trust).tolist()
         else:
-            text_score = float(0)
+            text_score = 0.1
         # Normalize score
         text_score = round(text_score, 2)
     except Exception as e:
         gv.logger.error(e)
     return text_score
 
+
 def check_text_score(art_obj, relevance, alpha=.20):
     norm_relevance = 0.5
+    text_score = 50 * norm_relevance
     try:
         norm_relevance = relevance_mapping(x=relevance, alpha=alpha)
-        text_score = (100*float(art_obj["source"]["calculatedRatingDetail"]["textRating"]))*norm_relevance
+        text_score = (100*float(art_obj.get("textScore")))*norm_relevance
     except Exception as e:
         gv.logger.warning("TextRating not available yet!")
-        text_score = 50*norm_relevance
     return text_score
+
 
 def compute_centrality_rank(graph, label, uuid, uuid_label, relationship, default_controller=0.63):
     centrality_rank = -1
@@ -402,14 +409,14 @@ def check_twitter_analysis_date(graph, label, property_label, property):
 
 
 def compute_article_rank(graph, label_a, label_b, uuid, relationship, uuid_label="identifier"):
-    article_rank = -1
+    article_rank = 0
     try:
         query_total = Neo4jQueries.get_total_nodes_by_relationship(label_a=label_a,
                                                                    label_b=label_b,
                                                                    relationship=relationship,
                                                                    uuid=uuid,
                                                                    uuid_label=uuid_label)
-        response = NEO4JConnector.get_data_from_query(graph=graph, query=query_total)
+        response: list = NEO4JConnector.get_data_from_query(graph=graph, query=query_total)
         if response is not None and len(response) > 0:
             article_rank = response[0]["Total"]
 

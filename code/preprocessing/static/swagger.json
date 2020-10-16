@@ -29,7 +29,7 @@
     "http"
   ],
   "paths": {
-    "/preprocessing/offline/start": {
+    "/api/preprocessing/offline/start": {
       "post": {
         "tags": [
           "preprocessingService"
@@ -54,15 +54,21 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
+            "description": "Successful Operation",
             "schema": {
-              "$ref": "#/definitions/ApiResponse"
+              "$ref": "#/definitions/PreprocessingOfflineResponse"
             }
           },
           "405": {
             "description": "Invalid input",
             "schema": {
-              "$ref": "#/definitions/ApiResponse"
+              "$ref": "#/definitions/PreprocessingOfflineResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/PreprocessingOfflineResponse"
             }
           }
         },
@@ -73,7 +79,7 @@
         ]
       }
     },
-    "/preprocessing/online/preprocess_article": {
+    "/api/preprocessing/online/preprocess_article": {
       "post": {
         "tags": [
           "preprocessingService"
@@ -100,27 +106,27 @@
             "description": "Preprocess an article introduced in the UI.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/CrawlerInput"
+              "$ref": "#/definitions/OnlineInput"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Article preprocessed",
+            "description": "Succesful Operation",
             "schema": {
-              "$ref": "#/definitions/PreprocessingOutput"
+              "$ref": "#/definitions/OnlineOutput"
             }
           },
           "400": {
             "description": "Invalid ID supplied",
             "schema": {
-              "$ref": "#/definitions/ApiResponse"
+              "$ref": "#/definitions/PreprocessingOfflineResponse"
             }
           },
-          "405": {
-            "description": "Validation exception",
+          "500": {
+            "description": "Internal Server Error",
             "schema": {
-              "$ref": "#/definitions/ApiResponse"
+              "$ref": "#/definitions/PreprocessingOfflineResponse"
             }
           }
         },
@@ -131,7 +137,7 @@
         ]
       }
     },
-    "/preprocessing/manual_annotation/preprocess_annotation": {
+    "/api/preprocessing/manual_annotation/preprocess_annotation": {
       "post": {
         "tags": [
           "preprocessingService"
@@ -166,19 +172,19 @@
           "200": {
             "description": "Article preprocessed",
             "schema": {
-              "$ref": "#/definitions/PreprocessingOutput"
+              "$ref": "#/definitions/OnlineOutput"
             }
           },
           "400": {
             "description": "Invalid ID supplied",
             "schema": {
-              "$ref": "#/definitions/ApiResponse"
+              "$ref": "#/definitions/PreprocessingOfflineResponse"
             }
           },
           "405": {
             "description": "Validation exception",
             "schema": {
-              "$ref": "#/definitions/ApiResponse"
+              "$ref": "#/definitions/PreprocessingOfflineResponse"
             }
           }
         },
@@ -198,6 +204,52 @@
     }
   },
   "definitions": {
+    "OnlineInput": {
+      "type": "object",
+      "required": [
+        "status",
+        "message",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer",
+          "description": "status code",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "description": "Informative message response",
+          "example": "Successful Operation"
+        },
+        "data": {
+          "$ref": "#/definitions/CrawlerInput"
+        }
+      }
+    },
+    "OnlineOutput": {
+      "type": "object",
+      "required": [
+        "status",
+        "message",
+        "data"
+      ],
+      "properties": {
+        "status": {
+          "type": "integer",
+          "description": "status code",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "description": "Informative message response",
+          "example": "Successful Operation"
+        },
+        "data": {
+          "$ref": "#/definitions/PreprocessingOutput"
+        }
+      }
+    },
     "ManualAnnotationInput": {
       "type": "object",
       "required": [
@@ -513,23 +565,25 @@
         "name": "CrawlerInput"
       }
     },
-    "ApiResponse": {
+    "PreprocessingOfflineResponse": {
       "type": "object",
+      "required": [
+        "status",
+        "message",
+        "data"
+      ],
       "properties": {
-        "task": {
-          "type": "string",
-          "example": "Offline process"
-        },
         "status": {
           "type": "integer",
-          "format": "int32",
-          "example": 500
+          "description": "status code",
+          "example": 200
         },
         "message": {
           "type": "string",
-          "example": "This is a sample of information regarding preprocessing"
+          "description": "Informative message response",
+          "example": "Successful Operation"
         },
-        "output": {
+        "data": {
           "type": "object"
         }
       }

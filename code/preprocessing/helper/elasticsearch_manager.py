@@ -13,7 +13,7 @@ class ElasticsearchManager:
         self.es = None
         self.connection = False
         if gv.logger is None:
-            gv.init_logger_object()
+            gv.init_logging_obj()
 
     def connect(self):
         try:

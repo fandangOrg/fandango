@@ -79,7 +79,7 @@ class Article:
                       "language": self.language, "images": self.images,
                       "videos": self.videos, "dateCreated": self.dateCreated,
                       "dateModified": self.dateModified, "datePublished": self.datePublished,
-                      "publishDateEstimated": self.publish_date_estimated, "author": self.authors,
+                      "publishDateEstimated": self.publish_date_estimated, "authors": self.authors,
                       "publisher": self.publisher, "sourceDomain": self.sourceDomain, "country": self.country,
                       "nationality": self.nationality, "calculatedRating": self.calculatedRating,
                       "calculatedRatingDetail": self.calculatedRatingDetail}

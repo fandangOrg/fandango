@@ -29,7 +29,7 @@
     "http"
   ],
   "paths": {
-    "/graph_analysis/offline/start": {
+    "/api/graph_analysis/offline/start": {
       "post": {
         "tags": [
           "graphAnalysisService"
@@ -79,7 +79,7 @@
         ]
       }
     },
-    "/graph_analysis/online/analyse_article": {
+    "/api/graph_analysis/online/analyse_article": {
       "post": {
         "tags": [
           "graphAnalysisService"
@@ -137,7 +137,7 @@
         ]
       }
     },
-    "/graph_analysis/ui/domain_analysis": {
+    "/api/graph_analysis/ui/domain_analysis": {
       "post": {
         "tags": [
           "graphAnalysisService"

@@ -24,7 +24,7 @@ app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
 # ======================================================================================================================
 
 
-@app.route('/preprocessing/offline/start', methods=['POST'])
+@app.route('/api/preprocessing/offline/start', methods=['POST'])
 def preprocessing_offline_service():
     serv: PreprocessingServices = PreprocessingServices()
     output: PreprocessingOutputDocument = serv.offline_service()
@@ -37,7 +37,7 @@ def preprocessing_offline_service():
         os._exit(0)
 
 
-@app.route('/preprocessing/offline/stop', methods=['POST'])
+@app.route('/api/preprocessing/offline/stop', methods=['POST'])
 def stop_preprocessing_offline_service():
     serv: PreprocessingServices = PreprocessingServices()
     output: PreprocessingOutputDocument = serv.stop_service(service_name=gv.offline_service_name)
@@ -50,7 +50,7 @@ def stop_preprocessing_offline_service():
         os._exit(0)
 
 
-@app.route('/preprocessing/online/preprocess_article', methods=['POST'])
+@app.route('/api/preprocessing/online/preprocess_article', methods=['POST'])
 def preprocessing_online_service():
     data = request.get_json(force=True)
     serv: PreprocessingServices = PreprocessingServices()
@@ -59,7 +59,7 @@ def preprocessing_online_service():
     return json.dumps(output)
 
 
-@app.route('/preprocessing/manual_annotation/preprocess_annotation', methods=['POST'])
+@app.route('/api/preprocessing/manual_annotation/preprocess_annotation', methods=['POST'])
 def preprocessing_online_manual_service():
     serv: PreprocessingServices = PreprocessingServices()
     data = request.get_json(force=True)
@@ -68,7 +68,7 @@ def preprocessing_online_manual_service():
     return json.dumps(output)
 
 
-@app.route('/preprocessing/experimental_offline/start', methods=['POST'])
+@app.route('/api/preprocessing/experimental_offline/start', methods=['POST'])
 def start_experimental_offline_service():
     serv: PreprocessingServices = PreprocessingServices()
     output: PreprocessingOutputDocument = serv.experimental_offline_service()
@@ -82,7 +82,7 @@ def start_experimental_offline_service():
         os._exit(0)
 
 
-@app.route('/preprocessing/experimental_offline/stop', methods=['POST'])
+@app.route('/api/preprocessing/experimental_offline/stop', methods=['POST'])
 def stop_experimental_offline_service():
     serv: PreprocessingServices = PreprocessingServices()
     output: PreprocessingOutputDocument = serv.stop_service(
@@ -102,6 +102,5 @@ def stop_experimental_offline_service():
 
 if __name__ == '__main__':
     gv.init_threads()
-    gv.init_logging_obj()
     app.run(debug=False, host=gv.host, port=gv.port, threaded=True)
 

@@ -648,6 +648,7 @@ def get_current_timestamp():
         gv.logger.error(e)
     return timestamp
 
+
 def compare_timestamps(t1:{float}, t2:{float}):
     dt_diff = -1
     try:

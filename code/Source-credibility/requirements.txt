@@ -1,5 +1,5 @@
 python-Levenshtein
-colorlog
+coloredlogs
 requests
 fuzzywuzzy
 kafka-python

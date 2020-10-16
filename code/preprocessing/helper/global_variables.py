@@ -3,17 +3,15 @@
 # ====================================================================================
 # ------------------------- GLOBAL VARIABLES PREPROCESSING ---------------------------
 # ====================================================================================
-
-import os
-from helper.custom_log import init_logger
+import coloredlogs, logging
+import warnings, os
 from helper.country_information import country_domains
 
-import warnings
 warnings.filterwarnings('ignore')
 
+logger = logging.getLogger(__name__)
+coloredlogs.install(level='DEBUG', logger=logger)
 
-log_file_name = os.path.join("app_logs", "app.log")
-logger = None
 thread = None
 service = None
 offline_threads: list = []
@@ -42,7 +40,7 @@ else:
 if os.getenv('ELASTICSEARCH_PORT') is not None:
     es_port = str(os.getenv('ELASTICSEARCH_PORT'))
 else:
-    es_port = "9220"
+    es_port = "9200"
 
 if os.getenv('ELASTICSEARCH_INDEX_ANNOT') is not None:
     temp_es_index = str(os.getenv('ELASTICSEARCH_INDEX_ANNOT'))
@@ -63,7 +61,7 @@ else:
 if os.getenv('KAFKA_TOPIC_CONSUMER') is not None:
     topic_consumer = str(os.getenv('KAFKA_TOPIC_CONSUMER'))
 else:
-    topic_consumer = 'input_raw_2'
+    topic_consumer = 'input_raw'
 
 if os.getenv('KAFKA_TOPIC_PRODUCER') is not None:
     topic_producer = str(os.getenv('KAFKA_TOPIC_PRODUCER'))
@@ -101,7 +99,3 @@ def init_threads():
     global offline_threads
     offline_threads = []
 
-
-def init_logging_obj():
-    global logger
-    logger = init_logger(__name__, testing_mode=False)

@@ -37,7 +37,7 @@ class Article:
         self.calculatedRatingDetail = calculate_rating_detail
         self.fakeness = fakeness
 
-    def article_from_dict(self, data):
+    def article_from_dict(self, data: dict):
         # Main fields
         self.identifier = data["identifier"]
         self.headline = data["headline"]
@@ -50,7 +50,7 @@ class Article:
         self.dateModified = data['dateModified']
         self.datePublished = data['datePublished']
         self.publishDateEstimated = data['publishDateEstimated']
-        self.authors = data['author']
+        self.authors = data['authors']
 
         # TODO: Remove list from publisher
         if not isinstance(data['publisher'], list):
@@ -107,7 +107,7 @@ class Article:
                       "language": self.language, "images": self.images,
                       "videos": self.videos, "dateCreated": self.dateCreated,
                       "dateModified": self.dateModified, "datePublished": self.datePublished,
-                      "publishDateEstimated": self.publishDateEstimated, "author": self.authors,
+                      "publishDateEstimated": self.publishDateEstimated, "authors": self.authors,
                       "publisher": self.publisher, "sourceDomain": self.sourceDomain, "country": self.country,
                       "nationality": self.nationality, "calculatedRating": self.calculatedRating,
                       "calculatedRatingDetail": self.calculatedRatingDetail}
@@ -123,6 +123,6 @@ class Article:
     def get_required_properties():
         properties = ["identifier", "headline", "articleBody", 'url', "language",
                       "images", "videos", "dateCreated", "dateModified", "datePublished",
-                      "publishDateEstimated", "author", "publisher", "sourceDomain", "country",
+                      "publishDateEstimated", "authors", "publisher", "sourceDomain", "country",
                       "nationality", "calculatedRating", "calculatedRatingDetail"]
         return properties

@@ -18,11 +18,11 @@ def kill_streaming_thread(streaming_thread: StreamingThread):
 
 
 def start_offline_process(thread_name: str, target_func):
-    response: dict = {"message": gv.http_response_500, "code": 500}
+    response: dict = {"message": gv.http_response_500, "status": 500}
     try:
         add_thread = True
         message: str = gv.http_response_200
-        code: int = 200
+        status: int = 200
         # If the list of threads is not empty
         if gv.offline_threads:
             # Check if there is a thread with the same name running
@@ -35,7 +35,7 @@ def start_offline_process(thread_name: str, target_func):
                 if gv.offline_threads[thread_idx].is_alive():
                     add_thread = False
                     message: str = gv.http_response_400
-                    code: int = 400
+                    status: int = 400
                 else:
                     # remove old thread from list
                     gv.offline_threads.pop(thread_idx)
@@ -47,7 +47,7 @@ def start_offline_process(thread_name: str, target_func):
             gv.offline_threads.append(streaming_thread)
 
         response["message"] = message
-        response["code"] = code
+        response["status"] = status
 
     except Exception as e:
         gv.logger.error(e)

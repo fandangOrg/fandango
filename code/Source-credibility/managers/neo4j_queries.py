@@ -16,14 +16,19 @@ class Neo4jQueries:
 
     def get_publisher_node_label(self):
         return self.publisher_node_label
+
     def get_article_node_label(self):
         return self.article_node_label
+
     def get_author_node_label(self):
         return self.author_node_label
+
     def get_article_author_relationship(self):
         return self.article_author_relationship
+
     def get_article_publisher_relationship(self):
         return self.article_publisher_relationship
+
     def get_author_publisher_relationship(self):
         return self.author_publisher_relationship
 
@@ -46,7 +51,7 @@ class Neo4jQueries:
             pub_keys = list(Publisher().publisher_to_dict().keys())
             pub_values = ["$" + k for k in pub_keys]
             params = json.dumps(dict(zip(pub_keys, pub_values))).replace(": ", ":"). replace('\"', "")
-            query = """MERGE (a:LABEL PARAMS)""".replace("PARAMS", str(params)).replace("LABEL",label)
+            query = """MERGE (a:LABEL PARAMS)""".replace("PARAMS", str(params)).replace("LABEL", label)
         except Exception as e:
             gv.logger.error(e)
         return query
@@ -75,7 +80,7 @@ class Neo4jQueries:
         return query
 
     @staticmethod
-    def create_relationship(label_a, label_b, relationship, unwind="author", uuid="identifier"):
+    def create_relationship(label_a, label_b, relationship, unwind="authors", uuid="identifier"):
         query = None
         try:
             query = """MATCH(i:LABEL_A) UNWIND i.UNWIND_PARAM as param MATCH(a:LABEL_B) WHERE param = a.UUID MERGE (i)-[:RELATIONSHIP]-(a)""".replace(
@@ -85,7 +90,7 @@ class Neo4jQueries:
         return query
 
     @staticmethod
-    def create_undirect_relationship(label_a, label_b, label_c, relationship, unwind_b="publisher", unwind_c="author", uuid="identifier"):
+    def create_undirect_relationship(label_a, label_b, label_c, relationship, unwind_b="publisher", unwind_c="authors", uuid="identifier"):
         query = None
         try:
             query_doc = """MATCH(i:LABEL_A) WITH i UNWIND i.UNWIND_PARAMS_B as param_b UNWIND i.UNWIND_PARAMS_C as param_c MATCH(o:LABEL_B) MATCH(a:LABEL_C) WHERE param_c = a.UUID AND param_b =o.UUID MERGE (a)-[:RELATIONSHIP]-(o)"""
