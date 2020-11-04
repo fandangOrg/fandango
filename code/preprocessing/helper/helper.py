@@ -13,7 +13,7 @@ import hashlib
 import tldextract
 import pandas as pd
 from helper import global_variables as gv
-from difflib import SequenceMatcher
+from flair.models import SequenceTagger
 from restcountries import RestCountryApiV2 as rapi
 from urllib.parse import urlparse
 from PIL import Image
@@ -288,13 +288,12 @@ def check_organization_data(organization, organizations_list, threshold=90):
         else:
             done = True
     except Exception as e:
-        gv.logger.warning(e)
         country = 'Not Specified'
         parent_org = 'Not Specified'
         final_org = 'Unknown'
         w = {'domain_name': None}
         done = True
-
+    
     if done:
         # If there is no sub-domain
         if (sub_domain is None or w['domain_name'] is None ) and "blogspot" not in domain:
@@ -449,7 +448,7 @@ def extract_country_from_code(country_code):
         else:
             country = gv.country_domains[country_code.lower()]
     except Exception as e:
-        gv.logger.warning(e)
+        pass
     return country
 
 def extract_publisher_info(source_domain, list_of_websites=None, threshold=95):
@@ -586,11 +585,13 @@ def check_name_publisher(publisher_name, organizations_list, threshold=95):
     return publisher_name_cleaned
 
 
-def remove_duplicate_strings_from_list(str_lst, min_char=3, fuzzy=False, fuzzy_threshold=.8):
-    unique_str_lst = str_lst
+def remove_duplicate_strings_from_list(str_lst: list, min_char=3, fuzzy=False, fuzzy_threshold=80):
+    unique_str_lst: list = str_lst
     try:
         if len(str_lst) > 0:
-            str_lst = [i for i in str_lst if i is not None and len(i) >= min_char]
+            # Constraints
+            str_lst: list = [i for i in str_lst if i is not None and
+                             len(i) >= min_char and len(i.split(" ")) > 1]
             if len(str_lst) > 0:
                 if not fuzzy:
                     unique_str_lst = list(set(str_lst))
@@ -605,28 +606,25 @@ def remove_duplicate_strings_from_list(str_lst, min_char=3, fuzzy=False, fuzzy_t
     return unique_str_lst
 
 
-def fuzzy_similarity_search(data, threshold=.8):
+def fuzzy_similarity_search(data: list, threshold: float = 80):
     new_data = []
     try:
-        for i, val in enumerate(data):
-            # First iteration
-            if i == 0:
-                new_data.append(val)
-            else:
-                index_ls = []
-                for j, val_new in enumerate(new_data):
-                    dist = SequenceMatcher(None, val, val_new).ratio()
-                    if dist >= threshold:
-                        insert = False
-                    else:
-                        insert = True
-                    index_ls.append(insert)
+        for i, element in enumerate(data):
+            if not new_data:
+                new_data.append(element)
 
-                if False not in index_ls:
-                    new_data.append(val)
+            for j, new_element in enumerate(data):
+                dist = fuzz.ratio(element, new_element)
 
+                # They are not equals
+                if dist < threshold:
+                    if new_element not in new_data:
+                        res_dist = [fuzz.ratio(new_element, existing_element) for existing_element in new_data]
+                        if all(x < threshold for x in res_dist):
+                            new_data.append(new_element)
     except Exception as e:
-        gv.logger.error(e)
+        pass
+        # gv.logger.error(e)
     return new_data
 
 
@@ -710,7 +708,7 @@ def filter_by_size(img):
         gv.logger.error(e)
     return filter
 
-def filter_by_apect_ratio(img):
+def filter_by_aspect_ratio(img):
     filter = False
     try:
 
@@ -730,3 +728,12 @@ def filter_by_apect_ratio(img):
     except Exception as e:
         gv.logger.error(e)
     return filter
+
+
+def download_ner_models():
+    supported_languages: dict = {"en": "ner-fast", "fr": "fr-ner",
+                                 "de": "de-ner", "nl": "nl-ner-rnn",
+                                 "xx": "ner-multi-fast"}
+    for lang, model_name in supported_languages.items():
+        gv.logger.info(f"Downloading model for language {lang}")
+        tagger = SequenceTagger.load(model_name)

@@ -1,7 +1,7 @@
 version: '3'
 services:
     preprocessing :   
-      image: "fandangorg/fandango_preprocessing:1.0.11"
+      image: "fandangorg/fandango_preprocessing:1.0.15"
       #image: "test_preproc_img"
       container_name: docker_fandango_pre
       ports:

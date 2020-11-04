@@ -6,6 +6,8 @@
 import coloredlogs, logging
 import warnings, os
 from helper.country_information import country_domains
+from helper.helper import download_ner_models
+
 
 warnings.filterwarnings('ignore')
 
@@ -98,4 +100,14 @@ http_response_403: str = "HTTP Connection Error"
 def init_threads():
     global offline_threads
     offline_threads = []
+
+
+def download_ner_models_background():
+    if ner_library == "flair":
+        logger.info("Downloading NER models for Flair ... ")
+        download_ner_models()
+
+
+
+
 

@@ -8,7 +8,7 @@ from flair.models import SequenceTagger
 from flair.data import Sentence
 from helper.helper import (extract_publisher_info, create_websites_db,
                            retrieve_image_by_url, filter_by_size,
-                           filter_by_apect_ratio)
+                           filter_by_aspect_ratio)
 from models.preprocessing_models import PreprocessingOutputDocument
 
 
@@ -116,7 +116,7 @@ class DataPreprocessing:
         return ner_model
 
     @staticmethod
-    def detect_language(data, key):
+    def detect_language(data, key, min_char: int = 5):
         # ================================================
         # INPUT:
         #       - text: text
@@ -125,7 +125,7 @@ class DataPreprocessing:
         # =================================================
         lang = None
         try:
-            if len(data[key])>5 and data[key] != '':
+            if len(data[key]) > min_char and data[key] != '':
                 lang = detect(data[key])
         except Exception as e:
             gv.logger.error(e)
@@ -145,7 +145,7 @@ class DataPreprocessing:
                 sentence = Sentence(text.title())
                 ner_model.predict(sentence)
                 for ent in sentence.get_spans("ner"):
-                    if ent.tag == 'PER':
+                    if ent.tag == 'PER' and ent.score >= 0.80:
                         ner_analysis_data = ent.text
             else:
                 gv.logger.warning("Unvalid NER library.")
@@ -162,8 +162,7 @@ class DataPreprocessing:
             gv.logger.error(e)
         return preprocessed_text
 
-    def preprocess_author_name(self, author_name, ner_library="spacy", ner_model=None,
-                               min_char=2):
+    def preprocess_author_name(self, author_name, ner_library="spacy", ner_model=None):
         # ================================================
         # INPUT:
         #       - text: text
@@ -212,7 +211,7 @@ class DataPreprocessing:
         return filter_images
 
     @staticmethod
-    def get_unique_values(data, fuzzy=True, fuzzy_threshold=.8):
+    def get_unique_values(data, fuzzy: bool = True, fuzzy_threshold: float = 80):
         unique_data = []
         try:
             if isinstance(data, list):
@@ -244,13 +243,13 @@ class DataPreprocessing:
             img = retrieve_image_by_url(img_url)
             if img is not None:
                 filter_size = filter_by_size(img)
-                filter_ar = filter_by_apect_ratio(img)
+                filter_ar = filter_by_aspect_ratio(img)
                 if filter_size or filter_ar:
                     filter = True
                 else:
                     filter = False
         except Exception as e:
-            gv.logger.error(e)
+            pass
         return filter
 
     def apply_preprocessing(self, data: dict, manual_annot=False):
@@ -278,8 +277,8 @@ class DataPreprocessing:
                     cleaned_authors = [self.preprocess_author_name(author_name=i,
                                                                    ner_library=self.ner_library,
                                                                    ner_model=self.ner_model) for i in data["authors"]]
-                    data["authors"] = self.get_unique_values(data=cleaned_authors, fuzzy=False,
-                                                             fuzzy_threshold=.8)
+                    data["authors"] = self.get_unique_values(data=cleaned_authors, fuzzy=True,
+                                                             fuzzy_threshold=80)
                     # 4) Retrieving publisher name
                     if self.websites_list is None:
                         self.websites_list = pd.read_csv(self.csv_filepath, index_col=0)

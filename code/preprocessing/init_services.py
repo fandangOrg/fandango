@@ -102,5 +102,6 @@ def stop_experimental_offline_service():
 
 if __name__ == '__main__':
     gv.init_threads()
+    gv.download_ner_models_background()
     app.run(debug=False, host=gv.host, port=gv.port, threaded=True)
 
