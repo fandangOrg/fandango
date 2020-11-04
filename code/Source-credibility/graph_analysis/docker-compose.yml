@@ -1,0 +1,27 @@
+version: '3'
+services:
+    graph_analysis:
+      image: "fandangorg/fandango_source_credibility:1.0.11"
+      #image: "prueba_graph"
+      container_name: docker_graph
+      ports:
+        - "5000:5000"
+      command : bash -c "python3 /app/init_service.py & sleep 15 && curl -X POST  http://0.0.0.0:5000/api/graph_analysis/offline/start && tail -F /dev/null"
+      environment:
+        - ELASTICSEARCH_SERVER=0.0.0.0
+        - ELASTICSEARCH_PORT=9220
+        - ELASTICSEARCH_INDEX_PER=fdg-ap-person
+        - ELASTICSEARCH_INDEX_ORG=fdg-ap-organization
+        - KAFKA_SERVER=0.0.0.0
+        - KAFKA_PORT=9092
+        - KAFKA_TOPIC_CONSUMER=input_preprocessed
+        - KAFKA_TOPIC_PRODUCER=analyzed_auth_org
+        - NEO4J_HOST=0.0.0.0
+        - NEO4J_PROTOCOL=bolt
+        - NEO4J_USERNAME=neo4j
+        - NEO4J_PASSWORD=fandango
+        - FUSION_SCORE_SERVER=0.0.0.0
+        - FUSION_SCORE_PORT=10003
+        - FUSION_SCORE_ENDPOINT=api/fusion_score
+
+

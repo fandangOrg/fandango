@@ -1,0 +1,18 @@
+version: '3'
+services:
+    neo4jserv:
+      image: "neo4j:4.0.0"
+      #image: "prueba-graph"
+      container_name: docker_neo4j
+      volumes:
+        - neo4j_vol:/var/lib/neo4j/data/
+      ports:
+        - "7474:7474"
+        - "7687:7687"
+      
+      environment:
+        - NEO4J_AUTH=neo4j/fandango
+        - NEO4J_dbms_default__listen__address=0.0.0.0
+        - NEO4JLABS_PLUGINS=["apoc"]
+volumes:
+  neo4j_vol:
