@@ -57,7 +57,7 @@ function createFactResponse(info, json){
   resultPayload.topics = info.topics || null;
   resultPayload.results = [];
 
-  if (json.hits.total > 0){
+  if (json.hits.total.value > 0){
     json.hits.hits.forEach(function(fact){
       var result = {};
       result.identifier = fact._source.identifier || null;
@@ -101,7 +101,7 @@ exports.findSimilarArticles = function(info) {
     es.query.match.identifier = info.identifier;
 
 
-    var url = "http://localhost:9220/fdg-article/_search";
+    var url = "http://localhost:9220/fdg-article-backup-nov/_search";
     
     fetch(url,
         {
@@ -117,8 +117,12 @@ exports.findSimilarArticles = function(info) {
         })
         .then(
             function(json){
+              console.log("n1")
+              console.log(json)
           
-            if (json.hits.total > 0){
+            if (json.hits.total.value > 0){
+              console.log("n2")
+
               var moreLikeThis = {};
               moreLikeThis.size = 5;
               moreLikeThis.query = {};
@@ -130,11 +134,11 @@ exports.findSimilarArticles = function(info) {
               moreLikeThis.query.more_like_this.fields.push("topic");
               moreLikeThis.query.more_like_this.fields.push("headline");
               moreLikeThis.query.more_like_this.like = {};
-              moreLikeThis.query.more_like_this.like._index = "fdg-article";
-              moreLikeThis.query.more_like_this.like._type = "doc";
+              moreLikeThis.query.more_like_this.like._index = "fdg-article-backup-nov";
+              // moreLikeThis.query.more_like_this.like._type = "doc";
               moreLikeThis.query.more_like_this.like._id = json.hits.hits[0]._id;
 
-              //console.log(JSON.stringify(moreLikeThis))
+              console.log(JSON.stringify(moreLikeThis))
 
 
               fetch(url,
@@ -150,12 +154,20 @@ exports.findSimilarArticles = function(info) {
                     return result.json();
                 })
                 .then(function(json){
+                  console.log("n3")
+
+                  console.log(json)
                   
                   var articles = json.hits.hits;
+                  // console.log(articles)
                   var articlePromises = [];
 
                   articles.forEach(function(article){
-                    article._source.author.forEach(function(author){
+                    console.log("art")
+                    console.log(article)
+                    article._source.authors.forEach(function(author){
+                      console.log("auth")
+                      console.log(author)
                       var articleAuthorPromise = new Promise(function(resolve, reject) {
                         resolve(getAuthors(article._id, author));
                       });
@@ -177,7 +189,7 @@ exports.findSimilarArticles = function(info) {
 
                    return Promise.all(articlePromises)
                    .then(function(results){
-                     //console.log(results)
+                     console.log(results)
                      
                      resolve (createArticleResponse(info.identifier, articles, results));
                    })
@@ -438,8 +450,8 @@ exports.findSimilarClaims = function(info) {
         es.query.more_like_this.like = [info.text, info.topics.toString()];
       }
    }
-   
-   //console.log(JSON.stringify(es))
+   console.log("asdasdsd")
+   console.log(JSON.stringify(es))
 
    var url = "http://localhost:9220/fdg-claim/doc/_search";
    
@@ -453,16 +465,18 @@ exports.findSimilarClaims = function(info) {
        })
        .then(function(result){
           //  console.log(result.json())
+          console.log("returned")
            return result.json();
        })
        .then(function(json){
+         console.log(json.hits.total.value)
 
-        if (json.hits.total > 0){
-         //console.log("hererer")
+        if (json.hits.total.value > 0){
+         console.log("hererer")
          
              if (!info.identifier){
-            //   console.log("topics")
-               // 
+              console.log("topics")
+               
                var claims = json.hits.hits;
                    var claimPromises = [];
 
@@ -483,7 +497,7 @@ exports.findSimilarClaims = function(info) {
              }
              else{
                
-             //   console.log("id")
+               console.log("id")
                 var moreLikeThis = {};
                 moreLikeThis.size = 5;
                 moreLikeThis.query = {};
@@ -494,10 +508,10 @@ exports.findSimilarClaims = function(info) {
                // moreLikeThis.query.more_like_this.fields.push("text");
                 moreLikeThis.query.more_like_this.like = {};
                 moreLikeThis.query.more_like_this.like._index = "fdg-claim";
-                moreLikeThis.query.more_like_this.like._type = "doc";
+                // moreLikeThis.query.more_like_this.like._type = "doc";
                 moreLikeThis.query.more_like_this.like._id = json.hits.hits[0]._id;
  
-             //   console.log(JSON.stringify(moreLikeThis))
+               console.log(JSON.stringify(moreLikeThis))
  
                 fetch(url,
                   {
@@ -513,7 +527,7 @@ exports.findSimilarClaims = function(info) {
                   .then(function(json){
                     // For Each claim we get in result set, fetch associated claim reviews
 
-                    if (json.hits.total > 0){
+                    if (json.hits.total.value > 0){
 
                     var claims = json.hits.hits;
                     var claimPromises = [];
@@ -584,7 +598,8 @@ exports.findSimilarClaims = function(info) {
 
     function getAuthors(articleID, author){
       // console.log(claim)
-     //  console.log(author)
+      console.log("author")
+      console.log(author)
        var authorQuery = {};
        authorQuery.query = {};
        authorQuery.query.match = {};
@@ -616,7 +631,8 @@ exports.findSimilarClaims = function(info) {
 
      function getPublishers(articleID, publisher){
       // console.log(claim)
-      // console.log(publisher)
+      console.log("pub")
+      console.log(publisher)
        var publisherQuery = {};
        publisherQuery.query = {};
        publisherQuery.query.match = {};
