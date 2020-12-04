@@ -1,6 +1,6 @@
 from helper import global_variables as gv
 from helper.data_manager import DataManager
-from helper.helper import generate_uuid_from_string, extract_domain_from_url
+from helper.helper import generate_uuid_from_string, extract_domain_from_url, verify_article
 from helper.thread_utils import kill_streaming_thread, start_offline_process
 from models.preprocessing_models import PreprocessingOutputDocument
 from typing import Optional
@@ -89,7 +89,13 @@ class PreprocessingServices:
 
             self.service_task = gv.online_service_name
             self.set_up_data_manager(service=self.service_task)
-            output: PreprocessingOutputDocument = self.data_manager.execute_preprocessing(data=input_data)
+            if verify_article(data=input_data):
+                output: PreprocessingOutputDocument = self.data_manager.execute_preprocessing(
+                    data=input_data)
+            else:
+                output: PreprocessingOutputDocument = self.build_output_object(
+                    message=gv.http_response_400,
+                    status=400)
 
         except Exception as e:
             gv.logger.error(e)

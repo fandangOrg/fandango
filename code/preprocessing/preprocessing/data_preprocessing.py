@@ -8,7 +8,7 @@ from flair.models import SequenceTagger
 from flair.data import Sentence
 from helper.helper import (extract_publisher_info, create_websites_db,
                            retrieve_image_by_url, filter_by_size,
-                           filter_by_aspect_ratio)
+                           filter_by_aspect_ratio, remove_non_alphabetical_symbols)
 from models.preprocessing_models import PreprocessingOutputDocument
 
 
@@ -85,18 +85,16 @@ class DataPreprocessing:
         model_name = None
         try:
             if lang_model == 'en':
-                model_name = 'ner'
+                model_name = 'ner-fast'
             elif lang_model == 'de':
                 model_name = 'de-ner'
             elif lang_model == 'nl':
-                model_name = 'nl-ner'
+                model_name = 'nl-ner-rnn'
             elif lang_model == 'fr':
                 model_name = 'fr-ner'
-            elif lang_model == 'xx':
-                model_name = 'ner-multi'
             else:
-                gv.logger.warning("Unable language in Flair Package. Multilanguage model will be used")
-                model_name = 'ner-multi'
+                gv.logger.warning("Unable language in Flair Package. Multilingual model will be used")
+                model_name = 'ner-fast'
         except Exception as e:
             gv.logger.error(e)
         return model_name
@@ -110,7 +108,7 @@ class DataPreprocessing:
             elif ner_library == "flair":
                 ner_model = SequenceTagger.load(ner_model_name)
             else:
-                gv.logger.warning("Unvalid Spacy Model")
+                gv.logger.warning("Invalid Model")
         except Exception as e:
             gv.logger.error(e)
         return ner_model
@@ -135,14 +133,17 @@ class DataPreprocessing:
     def ner_analysis(ner_library, ner_model, text):
         ner_analysis_data = None
         try:
+            # Preprocess text
+            text_filtered: str = remove_non_alphabetical_symbols(text=text)
+
             if ner_library == "spacy":
-                ner_data = ner_model(text.title())
+                ner_data = ner_model(text_filtered)
                 if len(ner_data.ents) > 0:
                     for ent in ner_data.ents:
                         if ent.label_ == 'PER' or ent.label_ == 'PERSON':
                             ner_analysis_data = str(ent)
             elif ner_library == "flair":
-                sentence = Sentence(text.title())
+                sentence = Sentence(text_filtered)
                 ner_model.predict(sentence)
                 for ent in sentence.get_spans("ner"):
                     if ent.tag == 'PER' and ent.score >= 0.80:
@@ -194,6 +195,19 @@ class DataPreprocessing:
         except Exception as e:
             gv.logger.error(e)
         return publisher_info
+
+    """"@staticmethod
+    def retrieve_publisher_information(source_rank, url: str, language: str) -> dict:
+        publisher_info: CategoryAnalysisDoc = object.__new__(CategoryAnalysisDoc)
+        try:
+            # 1. Retrieve information about source
+            res_parser = source_rank.process_url(url=url)
+            publisher_info: CategoryAnalysisDoc = source_rank.get_category_analysis(
+                url=res_parser.domain, language=language)
+
+        except Exception as e:
+            gv.logger.error(e)
+        return publisher_info.__dict__"""
 
     @staticmethod
     def remove_banner_images(images):
@@ -274,9 +288,10 @@ class DataPreprocessing:
                     self.init_ner_models(lang_model=data["language"])
 
                     # 3) Cleaning authors
-                    cleaned_authors = [self.preprocess_author_name(author_name=i,
-                                                                   ner_library=self.ner_library,
-                                                                   ner_model=self.ner_model) for i in data["authors"]]
+                    cleaned_authors = [self.preprocess_author_name(
+                        author_name=i,
+                        ner_library=self.ner_library,
+                        ner_model=self.ner_model) for i in data["authors"]]
                     data["authors"] = self.get_unique_values(data=cleaned_authors, fuzzy=True,
                                                              fuzzy_threshold=80)
                     # 4) Retrieving publisher name
@@ -286,9 +301,10 @@ class DataPreprocessing:
                     publisher_info = self.extract_publisher_information(source_domain=data["source_domain"],
                                                                         list_of_websites=self.websites_list,
                                                                         threshold=82)
-                    data["publisher"] = publisher_info["name"]
-                    data["country"] = publisher_info["country"]
-                    data["nationality"] = publisher_info["nationality"]
+
+                    data["publisher"] = publisher_info.get("name", data["source_domain"])
+                    data["country"] = publisher_info.get("country", "N/A")
+                    data["nationality"] = publisher_info.get("nationality", "N/A")
 
                     # Filter images by url
                     if not manual_annot:

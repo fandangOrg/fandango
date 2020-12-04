@@ -2,6 +2,7 @@ import sys
 from models.article import Article
 from json import loads
 from helper import global_variables as gv
+from helper.helper import verify_article
 from models.preprocessing_models import PreprocessingOutputDocument
 from helper.kafka_connector import KafkaConnector
 from helper.elasticsearch_manager import ElasticsearchManager
@@ -126,20 +127,20 @@ class DataManager:
                             gv.logger.info('Executing Preprocessing')
                             data: dict = kafka_input_doc["data"]
 
-                            # 4. Execute Preprocessing
-                            output: PreprocessingOutputDocument = self.execute_preprocessing(
-                                data=data)
+                            if verify_article(data=data):
+                                # 4. Execute Preprocessing
+                                output: PreprocessingOutputDocument = self.execute_preprocessing(
+                                    data=data)
 
-                            # 4.1 Everything was right
-                            if output.status == 200:
-                                kafka_output_doc: dict = output.dict_from_class()
-                                if not self.data_preprocessing_manager.filter_news(output.data,
-                                                                                   threshold=10,
-                                                                                   col_key="articleBody"):
+                                # 4.1 Everything was right
+                                if output.status == 200:
+                                    kafka_output_doc: dict = output.dict_from_class()
 
                                     gv.logger.info('Putting article into Kafka')
                                     self.kafka_manager.put_data_into_topic(data=kafka_output_doc)
                                     gv.logger.info('Done!')
+                            else:
+                                gv.logger.info("Article filtered by date!")
 
                     # Handle Connection Exception
                     except ConnectionError as er:

@@ -3,7 +3,7 @@ from fuzzywuzzy import fuzz
 import numpy as np
 from datetime import datetime
 import time
-import os
+import os, re, string
 import pytz
 import json
 import pycountry
@@ -11,6 +11,8 @@ import whois
 import tld
 import hashlib
 import tldextract
+from tldextract import TLDExtract
+from tldextract.tldextract import ExtractResult
 import pandas as pd
 from helper import global_variables as gv
 from flair.models import SequenceTagger
@@ -19,6 +21,7 @@ from urllib.parse import urlparse
 from PIL import Image
 import requests
 from io import BytesIO
+from sourceRank.helper.country_domain_list import top_level_country_domains
 
 
 def get_stop_words():
@@ -326,7 +329,6 @@ def check_organization_data(organization, organizations_list, threshold=90):
     return org_data
 
 
-
 def check_authorname_org(authorName, organizations_list, threshold=90):
     try:
         similarity = []
@@ -451,6 +453,7 @@ def extract_country_from_code(country_code):
         pass
     return country
 
+
 def extract_publisher_info(source_domain, list_of_websites=None, threshold=95):
     source_domain_data = None
     required_fields = {"domain_name", "creation_date", "expiration_date", "status", "name", "org",
@@ -517,7 +520,11 @@ def extract_publisher_info(source_domain, list_of_websites=None, threshold=95):
                     source_domain_data[i] = gv.org_default_field
 
             # 6) Extract source domain information
-            ttd = tldextract.extract(source_domain)
+            # ttd = tldextract.extract(source_domain)
+            tld_extract_obj: TLDExtract = TLDExtract(
+                include_psl_private_domains=True)
+            ttd: ExtractResult = tld_extract_obj(
+                url=source_domain, include_psl_private_domains=True)
             if source_domain_data["domain_name"] is None:
                 # tldExtractor
                 source_domain_data["domain_name"] = ttd.registered_domain
@@ -534,30 +541,19 @@ def extract_publisher_info(source_domain, list_of_websites=None, threshold=95):
             source_domain_data["suffix"] = ttd.suffix
 
             # 7) Country and nationality
-            if 'country' in source_domain_data.keys() and source_domain_data['country'] is not None:
-                country_code = source_domain_data['country']
-                country_data = extract_country_from_code(country_code)
-                source_domain_data['whois_country'] = str(country_data)
-            else:
-                source_domain_data['whois_country'] = gv.org_default_field
+            country_name: str = top_level_country_domains.get(ttd.suffix, "")
+            country_list: list = rapi.get_countries_by_name(country_name)
 
-            # Analyse country via suffix
-            country_code = source_domain.split('.')[-1]
-            country_data = extract_country_from_code(country_code)
-            if country_data is None:
-                if source_domain_data["whois_country"] != gv.org_default_field:
-                    source_domain_data['country'] = source_domain_data["whois_country"]
-                else:
-                    source_domain_data['country'] = gv.org_default_field
+            if country_list:
+                source_domain_data["country"] = country_list[0].name
+                source_domain_data["nationality"] = country_list[0].demonym
             else:
-                source_domain_data['country'] = str(country_data)
-        try:
-            source_domain_data["nationality"] = rapi.get_countries_by_name(source_domain_data["country"])[0].demonym
-        except Exception as e:
-            source_domain_data["nationality"] = gv.org_default_field
+                source_domain_data["country"] = gv.org_default_field
+                source_domain_data["nationality"] = gv.org_default_field
 
         # Only keep the required keys
-        source_domain_data = dict((key,value) for key, value in source_domain_data.items() if key in list(required_fields))
+        source_domain_data = dict((key,value) for key, value in
+                                  source_domain_data.items() if key in list(required_fields))
     except Exception as e:
         gv.logger.error(e)
     return source_domain_data
@@ -693,7 +689,7 @@ def retrieve_image_by_url(url):
         response = requests.get(url, timeout=1)
         img = Image.open(BytesIO(response.content))
     except Exception as e:
-        gv.logger.error(e)
+        pass
     return img
 
 def filter_by_size(img):
@@ -705,7 +701,7 @@ def filter_by_size(img):
         if image_size <= filter_size:
             filter = True
     except Exception as e:
-        gv.logger.error(e)
+        pass
     return filter
 
 def filter_by_aspect_ratio(img):
@@ -737,3 +733,38 @@ def download_ner_models():
     for lang, model_name in supported_languages.items():
         gv.logger.info(f"Downloading model for language {lang}")
         tagger = SequenceTagger.load(model_name)
+
+
+def verify_article_belongs_to_time_period(original_date: str, from_year: int = 2019) -> bool:
+    belongs_to_year: bool = True
+    try:
+        original_date_datetime: datetime = datetime.strptime(original_date,
+                                                             "%Y-%m-%dT%H:%M:%SZ")
+
+        if original_date_datetime.year < from_year:
+            belongs_to_year: bool = False
+
+    except Exception as e:
+        gv.logger.error(e)
+    return belongs_to_year
+
+
+def verify_article(data: dict, min_char: int = 10) -> bool:
+    process_article: bool = False
+    try:
+        if verify_article_belongs_to_time_period(original_date=data.get("date_published", "")) and \
+                data.get("publish_date_estimated") == "no" and data.get("text", None) is not None and \
+                len(data.get("text", "")) > min_char and data.get("title", None) is not None and \
+                len(data.get("title", "")) > min_char:
+            process_article: bool = True
+    except Exception as e:
+        gv.logger.error(e)
+    return process_article
+
+
+def remove_non_alphabetical_symbols(text: str) -> str:
+    # Filter numbers
+    s1_filtered: str = re.sub(r'\b\d+\b', '', text)
+    text_filtered: str = s1_filtered.translate(
+        str.maketrans('', '', string.punctuation))
+    return text_filtered
