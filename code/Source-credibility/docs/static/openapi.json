@@ -1,0 +1,403 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a micro-service developed within the FANDANGO EU project. The service is used to score the reliability of both domains and authors based on graph analytics.",
+    "version": "1.0.0",
+    "title": "Source Credibility Service",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "dmz@gatv.ssr.upm.es"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "0.0.0.0:5000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "sourceCredibility",
+      "description": "Measuring credibility of publishers and authors",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://fandango-project.eu/"
+      }
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/graph_analysis/offline/start": {
+      "post": {
+        "tags": [
+          "sourceCredibility"
+        ],
+        "summary": "Start the offline service",
+        "description": "",
+        "operationId": "offlineService",
+        "consumes": [
+          "application/json",
+          "text/plain"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/OfflineResponse"
+            }
+          },
+          "405": {
+            "description": "Invalid input",
+            "schema": {
+              "$ref": "#/definitions/OfflineResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/OfflineResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/api/graph_analysis/online/analyse_article": {
+      "post": {
+        "tags": [
+          "sourceCredibility"
+        ],
+        "summary": "Ranking authors and publishers from an article by HTTP",
+        "description": "",
+        "operationId": "onlineService",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "api_key",
+            "in": "header",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Document object that needs to be added.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GraphAnalysisInput"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Article analysed",
+            "schema": {
+              "$ref": "#/definitions/GraphOnlineResponse"
+            }
+          },
+          "400": {
+            "description": "Invalid input format",
+            "schema": {
+              "$ref": "#/definitions/OfflineResponse"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/OfflineResponse"
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "api_key",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "OfflineResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "message",
+        "data"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "status code",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "description": "informative response message",
+          "example": "Successful Operation"
+        },
+        "data": {
+          "type": "object"
+        }
+      }
+    },
+    "GraphAnalysisInput": {
+      "type": "object",
+      "required": [
+        "status",
+        "message",
+        "data"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "status code",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "description": "informative response message",
+          "example": "Successful Operation"
+        },
+        "data": {
+          "$ref": "#/definitions/ArticleInput"
+        }
+      }
+    },
+    "ArticleInput": {
+      "type": "object",
+      "required": [
+        "identifier",
+        "headline",
+        "articleBody",
+        "url",
+        "language",
+        "images",
+        "videos",
+        "dateCreated",
+        "dateModified",
+        "datePublished",
+        "publishDateEstimated",
+        "authors",
+        "publisher",
+        "sourceDomain",
+        "country",
+        "nationality",
+        "calculatedRating",
+        "calculatedRatingDetail"
+      ],
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "128 char identifier",
+          "example": "92ce19eea1e0b639b790e1cf359c90acb8e0c30a999e73f59396c868b8a7bbb055e5071cb70b995a9bd7b62b47f5012f24f9647952262bd5c3c6a91fb616f70a"
+        },
+        "headline": {
+          "type": "string",
+          "description": "Article title",
+          "example": "Las estadísticas de la Agencia Tributaria permiten trazar un perfil más o menos realista de la realidad económica del país."
+        },
+        "authors": {
+          "type": "array",
+          "description": "authors of the article",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "Jesús Sérvulo González"
+          ]
+        },
+        "dateCreated": {
+          "type": "string",
+          "example": "2019-11-05T13:45:35Z",
+          "description": "Article date created (UTC)"
+        },
+        "dateModified": {
+          "type": "string",
+          "description": "Article date modified (UTC)",
+          "example": "2019-11-05T13:45:35Z"
+        },
+        "datePublished": {
+          "type": "string",
+          "description": "Article date published (UTC)",
+          "example": "2019-11-04T00:00:00Z"
+        },
+        "publishDateEstimated": {
+          "type": "string",
+          "description": "Estimated published date flag",
+          "example": "no"
+        },
+        "publisher": {
+          "type": "string",
+          "description": "Publisher of the article",
+          "example": "EL País"
+        },
+        "images": {
+          "type": "array",
+          "description": "Images of the article",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "https://ep00.epimg.net/economia/imagenes/2018/06/20/actualidad/1529518143_236168_1529519211_rrss_normal.jpg",
+            "https://ep00.epimg.net/t.gif"
+          ]
+        },
+        "country": {
+          "type": "string",
+          "description": "Country of the publisher",
+          "example": "Kingdom of Spain"
+        },
+        "nationality": {
+          "type": "string",
+          "description": "Nationality of the publisher",
+          "example": "Kingdom of Spain"
+        },
+        "language": {
+          "type": "string",
+          "description": "Article language",
+          "example": "es"
+        },
+        "sourceDomain": {
+          "type": "string",
+          "description": "Source domain",
+          "example": "elpais.com"
+        },
+        "articleBody": {
+          "type": "string",
+          "description": "Article content",
+          "example": "Las estadísticas de la Agencia Tributaria permiten trazar un perfil más o menos realista de la realidad económica del país. Una de las recientes remesas de datos de Hacienda, sobre los Rendimientos de Actividades Económicas del IRPF de 2016, sirven para ilustrar como la mayoría de los 2,1 millones de profesionales y autónomos del país se declaran mileuristas, pese a que la economía avanza a todo trapo y las empresas cada vez ganan más. Lorenzo Amor, presidente de la patronal ATA, precisa que en las cifras difundidas por Hacienda no se incluyen las cotizaciones a la Seguridad Social, unos 3.300 euros al año. Es decir, pueden no declarar al fisco todos sus ingresos."
+        },
+        "calculatedRating": {
+          "type": "number",
+          "description": "Rating of the article",
+          "example": 45.65
+        },
+        "calculatedRatingDetail": {
+          "type": "string",
+          "description": "Detail of the rating",
+          "example": ""
+        },
+        "url": {
+          "type": "string",
+          "description": "Article url",
+          "example": "https://elpais.com/economia/2019/05/23/actualidad/1558638881_652034.html"
+        },
+        "videos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": []
+        }
+      },
+      "xml": {
+        "name": "GraphAnalysisInput"
+      }
+    },
+    "GraphOnlineResponse": {
+      "type": "object",
+      "required": [
+        "status",
+        "message",
+        "data"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "description": "status code",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "description": "informative response message",
+          "example": "Successful Operation"
+        },
+        "data": {
+          "$ref": "#/definitions/GraphAnalysisOutput"
+        }
+      }
+    },
+    "GraphAnalysisOutput": {
+      "type": "object",
+      "required": [
+        "identifier",
+        "authors",
+        "publisher",
+        "authorRating",
+        "publisherRating"
+      ],
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "128 char identifier",
+          "example": "92ce19eea1e0b639b790e1cf359c90acb8e0c30a999e73f59396c868b8a7bbb055e5071cb70b995a9bd7b62b47f5012f24f9647952262bd5c3c6a91fb616f70a"
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "7428993498469512227c084ed4cc4426851804b270faeeef0ad19baa18bc5620a749c74a9f31e6adf397fd65e30e4f82931bd552cd638b8a3433edeb6d7a53a8"
+          ]
+        },
+        "publisher": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": [
+            "0ff1b7ae57505236c67111d46cc4a66755108db5067187466974feae894c98a351d65a712ef686a7d16727ad170180bd3250b94dd6c2336eea14a36bbfc2bfe0"
+          ]
+        },
+        "authorRating": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "example": 94.45
+          }
+        },
+        "publisherRating": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "example": 74.45
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

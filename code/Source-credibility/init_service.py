@@ -1,42 +1,34 @@
 import json
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, render_template
 from flask_cors import CORS
-from services.services import GraphAnalysisService
-from helper import global_variables as gv
-from helper.helper import json_serial
-from flask_swagger_ui import get_swaggerui_blueprint
-from models.graph_models import GraphAnalyzerOutputDoc
+from services.services import SourceCredibilityService
+from helper.settings import (logger, host, port, static_folder,
+                             templates_folder, swagger_template_file)
+from fandango_models.source_credibility_models import GraphAnalyzerOutputDoc
 
-app = Flask(__name__,
-            static_folder=os.path.join(os.getcwd(), 'www'),
-            template_folder=os.path.join(os.getcwd(), 'www'))
+
+app: Flask = Flask(__name__,
+                   static_folder=static_folder,
+                   template_folder=templates_folder)
 CORS(app)
 
 
-serv: GraphAnalysisService = GraphAnalysisService()
+source_credibility_service: SourceCredibilityService = SourceCredibilityService()
 
 # ======================================================================================================================
 # ----------------------------------------------- GRAPH ANALYSIS SERVICES ----------------------------------------------
 # ======================================================================================================================
-@app.route('/api/search/<search_string>', methods=['GET'])
-def search(search_string):
-    return app.send_static_file('index.html')
-
-
-@app.route('/', methods=['GET'])
-def root():
-    return app.send_static_file('index.html')
 
 
 @app.route('/api/graph_analysis/offline/start', methods=['POST'])
 def graph_analysis_offline_service():
-    output: GraphAnalyzerOutputDoc = serv.offline_service()
+    output: GraphAnalyzerOutputDoc = source_credibility_service.offline_service()
     if output.status == 200:
-        output: dict = output.dict_from_class()
+        output: dict = output.__dict__
         return json.dumps(output)
     else:
-        gv.logger.error("\nStatus status: %s \nMessage: %s ", output.status, output.message)
+        logger.error(f"\nStatus status: {output.status} \nMessage: {output.message}")
         # Kill the process
         os._exit(0)
 
@@ -48,46 +40,32 @@ def graph_analysis_online_service():
         data: dict = request.json
     except Exception as e:
         pass
-
-    output: GraphAnalyzerOutputDoc = serv.online_service(data=data)
-    output: dict = output.dict_from_class()
+    output: GraphAnalyzerOutputDoc = source_credibility_service.online_service(
+        data=data)
+    output: dict = output.__dict__
     return json.dumps(output)
 
 
 @app.route('/api/graph_analysis/author/<id>', methods=['GET'])
 def get_author_object(id: str):
-    output: GraphAnalyzerOutputDoc = serv.get_author_object(id=id)
+    output: GraphAnalyzerOutputDoc = source_credibility_service.get_author_object(
+        id=id)
     response: dict = output.data
     return json.dumps(response)
 
 
 @app.route('/api/graph_analysis/publisher/<id>', methods=['GET'])
-def get_publisher_object(id :str):
-    output: GraphAnalyzerOutputDoc = serv.get_publisher_object(id=id)
+def get_publisher_object(id: str):
+    output: GraphAnalyzerOutputDoc = source_credibility_service.get_publisher_object(
+        id=id)
     response: dict = output.data
     return json.dumps(response)
 
 
-@app.route('/api/graph_analysis/ui/domain_analysis', methods=['POST'])
-def source_domain_analysis():
-    # TODO: POST TO GET
-    # 40.114.234.51:5000?publishername=elpais.com
-    data = request.get_json(force=True)
-    output = serv.source_domain_analysis(domain=data["domain"])
-    return json.dumps(output, default=json_serial)
-
-
-SWAGGER_URL = '/docs'
-API_URL = '/www/swagger/swagger.json'
-
-SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
-    SWAGGER_URL,
-    API_URL,
-    config={'app_name': "FANDANGO Graph Service"})
-
-app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+@app.route('/api/graph_analysis/docs')
+def get_docs():
+    return render_template(swagger_template_file)
 
 
 if __name__ == '__main__':
-    gv.init()
-    app.run(debug=False, host=gv.host, port=gv.port, threaded=True)
+    app.run(debug=False, host=host, port=port, threaded=True)
