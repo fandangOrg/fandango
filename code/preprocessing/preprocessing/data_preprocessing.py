@@ -336,7 +336,7 @@ class DataPreprocessing:
             if not manual_annot:
                 features = {"authors", "date_created", "date_modified", "date_published", "description","identifier",
                             "images", "keywords", "language", "publish_date_estimated", "source_domain", "summary",
-                            "text", "texthash", "title", "top_image", "url", "videos"}
+                            "text", "texthash", "title", "top_image", "url", "videos", "keywords"}
             else:
                 features = {"authors", "title", "text", "url"}
         except Exception as e:

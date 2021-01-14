@@ -10,8 +10,9 @@ class Article:
         self.articleBody = data['text']
         self.url = data['url']
         self.sourceDomain = data['source_domain']
-        self.authors = data['authors']
-        self.language = data["language"]
+        self.authors: list = data['authors']
+        self.language: str = data["language"]
+        self.keywords: list = data.get("keywords", [])
 
         if "date_created" in data.keys():
             self.dateCreated = data['date_created']
@@ -77,7 +78,8 @@ class Article:
             output = {"identifier": self.identifier, "headline": self.headline,
                       "articleBody": self.articleBody, 'url': self.url,
                       "language": self.language, "images": self.images,
-                      "videos": self.videos, "dateCreated": self.dateCreated,
+                      "keywords": self.keywords, "videos": self.videos,
+                      "dateCreated": self.dateCreated,
                       "dateModified": self.dateModified, "datePublished": self.datePublished,
                       "publishDateEstimated": self.publish_date_estimated, "authors": self.authors,
                       "publisher": self.publisher, "sourceDomain": self.sourceDomain, "country": self.country,
