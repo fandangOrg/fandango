@@ -1,28 +1,53 @@
 {
-"status": 200,
-"message": "Successful Operation",
-"data": {
-  "identifier": "92ce19eea1e0b639b790e1cf359c90acb8e0c30a999e73f59396c868b8a7bbb055e5071cb70b995a9bd7b62b47f5012f24f9647952262bd5c3c6a91fb616f70a",
-  "headline": "Las estadísticas de la Agencia Tributaria permiten trazar un perfil más o menos realista de la realidad económica del país.",
-  "author": [
-    "Jesús Sérvulo González"
-  ],
-  "dateCreated": "2019-11-05T13:45:35Z",
-  "dateModified": "2019-11-05T13:45:35Z",
-  "datePublished": "2019-11-04T00:00:00Z",
-  "publishDateEstimated": "no",
-  "publisher": "EL País",
-  "images": [
-    "https://ep00.epimg.net/economia/imagenes/2018/06/20/actualidad/1529518143_236168_1529519211_rrss_normal.jpg",
-    "https://ep00.epimg.net/t.gif"
-  ],
-  "country": "Kingdom of Spain",
-  "nationality": "Kingdom of Spain",
-  "language": "es",
-  "sourceDomain": "elpais.com",
-  "articleBody": "Las estadísticas de la Agencia Tributaria permiten trazar un perfil más o menos realista de la realidad económica del país. Una de las recientes remesas de datos de Hacienda, sobre los Rendimientos de Actividades Económicas del IRPF de 2016, sirven para ilustrar como la mayoría de los 2,1 millones de profesionales y autónomos del país se declaran mileuristas, pese a que la economía avanza a todo trapo y las empresas cada vez ganan más. Lorenzo Amor, presidente de la patronal ATA, precisa que en las cifras difundidas por Hacienda no se incluyen las cotizaciones a la Seguridad Social, unos 3.300 euros al año.  Aún así, los ingresos netos declarados por estos emprendedores son muy inferiores a los que confiesan los asalariados al fisco. Los 16,2 millones de trabajadores por cuenta ajena que presentaron la declaración del IRPF en 2016 confesaron al fisco percibir unos ingresos medios de 20.558 euros, 2.158 euros más que en 2007. La diferencia entre las rentas declaradas por los autónomos que se acogen al régimen de módulos y los asalariados (10.484 euros) es la mayor desde, al menos, 2007, cuando la crisis financiera comenzó a mostrar sus colmillos.  Notarios y registradores, los que más tributan  Escarbando en las fuentes tributarias se vislumbra que los notarios y registradores son los profesionales que más tributan por el IRPF en España, casi un 40% de sus rentas netas. Los auditores de cuentas y los entrenadores y jugadores de fútbol completan el podio de los profesionales que más pagan al fisco en su declaración de la renta.  En el extremo opuesto, sobresalen los autónomos que tributan en el régimen de módulos, conocidos como moduleros. A diferencia de los anteriores que pagan por estimación directa —el fisco les aplica un gravamen en función de sus ingresos reales—, los autónomos que tributan el IRPF por estimación objetiva o módulos pagan al fisco en función de unos coeficientes relacionados con los metros cuadrados de su local, el número de empleados o el consumo eléctrico, entre otros indicadores. La estadística de Hacienda dice que apenas pagan un 7,27% de sus ingresos.  Entre todos ellos, destacan los empresarios de transporte de viajeros (taxistas) y mercancías por carretera, que solo tributan un 2%. Aún menos contribuyen los emprendedores del sector de servicios prestados a las empresas —gestorías, las pequeñas empresas de seguridad...— que únicamente pagan al fisco el 1,82% de sus rentas. Aunque la explicación podría ser que al generar pocos ingresos pagan pocos impuestos, estos autónomos son uno de los colectivos que carga con el sambenito de cometer más fraude fiscal.  Limitar el régimen de módulos  Son frecuentes los casos en los que algunos de estos profesionales de sectores concretos preguntan \"¿Sin factura o con factura?\". \"Estos contribuyentes tienen más opciones que los asalariados para rebajar de forma legal su factura fiscal, pero también es conocido que en este colectivo hay algunas bolsas de fraude\", reconoce Leandro Sequeiros, experto fiscalista y socio de Lean Abogados. \"Mientras que toda la información fiscal de un asalariado está en su nómina, un autónomo puede obtener rentas de las que Hacienda no tiene conocimiento si no las declara él mismo\", agrega. Es decir, pueden no declarar al fisco todos sus ingresos.",
-  "calculatedRating": 45.65,
-  "calculatedRatingDetail": "",
-  "url": "https://elpais.com/economia/2019/05/23/actualidad/1558638881_652034.html",
-  "videos": []
-}}
+    "message": "Successful Operation",
+    "status": 200,
+    "data": {
+        "identifier": "5c03fbd2cdd66f1c306416f19895aab5f48d0faf7b2447c4dc0290b35da15542e2c97f94c715ddd6db3a5cacb122ae75322d765969a82f7dba2e8e1bab6c7aae",
+        "headline": "Karrewiet brengt de Amerikaanse verkiezingen op kindermaat",
+        "articleBody": "In het nieuwe De Kemping starten negen jongeren samen met Tijs Vanneste vanuit het niets een camping op en baten ze die uit. Samen met Tijs zetten de jongeren zich twee maanden lang in en trotseren ze hittegolven, stortbuien én COVID-19. Elk van deze jongeren raakt moeilijk aan werk of kan moeilijk werk houden. De oorzaken en persoonlijke verhalen zijn divers: schooluitval, gedragsstoornis, een beperking, verslavingsprobleem, migratie-achtergrond, armoede of bijzondere jeugdzorg.",
+        "url": "https://www.vrt.be/nl/over-de-vrt/nieuws/2020/10/26/karrewiet-brengt-de-amerikaanse-verkiezingen-op-kindermaat/",
+        "language": "nl",
+        "images": [
+            "https://i.guim.co.uk/img/media/1cdbc98a66ce4007ff70c6099d29a1e1e45e4e0d/0_507_4712_2827/master/4712.jpg?width=300&quality=85&auto=format&fit=max&s=28462bca9963575d0ca347126b0f2778",
+            "https://i.guim.co.uk/img/media/aef1b0521d0a5501b771b9461cf1b2859d5a0446/0_126_3500_2100/master/3500.jpg?width=1200&height=630&quality=85&auto=format&fit=crop&overlay-align=bottom%2Cleft&overlay-width=100p&overlay-base64=L2ltZy9zdGF0aWMvb3ZlcmxheXMvdGctZGVmYXVsdC5wbmc&enable=upscale&s=fd1818acff65da22c7b899488dc6c2db",
+            "https://i.guim.co.uk/img/media/a8199fef69432f43b78a4eba0f54c488feb0799e/0_117_3500_2100/master/3500.jpg?width=300&quality=85&auto=format&fit=max&s=e0e1445b7489d5706731f53974dfff70",
+            "https://i.guim.co.uk/img/media/f8fcdd0065027e67d0a6b1a9e8e80db1f2d5be37/101_67_1296_777/master/1296.jpg?width=300&quality=85&auto=format&fit=max&s=e9e96a412c9987abc44c7bfa251c21c3"
+        ],
+        "keywords": [
+            "bars",
+            "told",
+            "town",
+            "spokesman",
+            "killed",
+            "suspect",
+            "hanau",
+            "kills",
+            "shooting",
+            "scene",
+            "shisha",
+            "attack",
+            "germany",
+            "bar",
+            "gunman"
+        ],
+        "videos": [],
+        "dateCreated": "2020-02-20T11:14:11Z",
+        "dateModified": "2020-02-20T11:14:11Z",
+        "datePublished": "2020-02-19T00:00:00Z",
+        "publishDateEstimated": "no",
+        "authors": [
+            "Philip Oltermann",
+            "David Griffin",
+            "Dr Martin",
+            "Kate Connolly"
+        ],
+        "publisher": [
+            "VRT"
+        ],
+        "sourceDomain": "https://www.vrt.be/nl",
+        "country": "Belgium",
+        "nationality": "Belgian",
+        "calculatedRating": -99,
+        "calculatedRatingDetail": ""
+    }
+}
