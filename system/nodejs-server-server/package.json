@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prestart": "npm install",
-    "start": "node index.js"
+    "start": "node -r esm index.js"
   },
   "keywords": [
     "swagger"
@@ -14,8 +14,11 @@
   "private": true,
   "dependencies": {
     "connect": "^3.2.0",
+    "esm": "^3.2.25",
     "js-yaml": "^3.3.0",
     "node-fetch": "^2.6.0",
+    "rake-js": "^0.1.1",
+    "schenkerian": "^0.17.2",
     "swagger-tools": "0.10.1"
   }
 }
