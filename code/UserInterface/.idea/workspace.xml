@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b61767e8-0cb7-4f99-a5f9-9f0546abdc71" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Crawlers/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/common.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/items.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/middlewares.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/pipelines.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/spiders/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/spiders/eu_open_data_portal.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/spiders/eurobarometer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/spiders/european_data_portal.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/spiders/newsexplorer_eu_rss.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/spiders/newsroom_rss.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/dscrawler/standalone/eurostatdb.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/dscrawler/scrapy.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/environment.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/es_query.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/extend_nifi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/extract_proper_urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/custom.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/dynamic.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/article.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/common.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/items.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/middlewares.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/pipelines.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/be_deraaskalderij.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/be_hetbelegvanantwerpen.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/be_nordpresse.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/be_rechtzetting.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/cy_riknews.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/el_ksipnistere.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/el_real.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/el_stargr.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/el_tokoulouri.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_abc.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_elconfidencial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_eldiario.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_elespanol.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_eljueves.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_elmundotoday.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_elpais.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_erradodearagon.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_fakeame.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_haynoticia.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_larazon.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/es_lavanguardia.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/it_ilfattoquotidaino.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/it_ilsapereepotere2.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/european/it_romafaschifo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/factcheckers/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/factcheckers/correctiv.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/factcheckers/fullfact.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/general_dynamic_spider.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/general_static_spider.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/conservativerefocus.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/conspiracyplanet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/dailydiscord.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/donttreadonme.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/gellerreport.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/mediamass.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/newscorpse.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/newsmutiny.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/nomorefakenews.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/oftwominds.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/onepoliticalplaza.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/pollhype.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/satirewire.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/thetruthaboutcancer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/thetruthseeker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/fncrawler/spiders/us_based/wikispooks.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/scrapy.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/static.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/conservativerefocus.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/correctiv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/correctiv.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/fullfact.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/common.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/conservativerefocus.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/conspiracyplanet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/correctiv.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/dailydiscord.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/donttreadonme.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/fullfact.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/gellerreport.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/general_dynamic_spider.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/general_static_spider.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/mediamass.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/newscorpse.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/newsmutiny.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/nomorefakenews.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/oftwominds.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/onepoliticalplaza.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/pollhype.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/satirewire.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/thetruthaboutcancer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/thetruthseeker.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/tokoulouri.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/fncrawler/tmp/spiders/wikispooks.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/get_articles_from_opensources.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/get_webpages_status.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/parse_url.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/search_elastic.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/temp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/test_nipy.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/testing.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/migrations/0002_auto_20180614_1113.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/migrations/0003_gettwitter_short_name.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/migrations/0004_auto_20180614_1142.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/migrations/0005_auto_20180614_1143.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/migrations/0006_auto_20180614_1148.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/migrations/0007_gettwitter_terms.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/migrations/0008_auto_20180614_1631.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/migrations/0009_auto_20180614_1637.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/flows/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/locale/el/LC_MESSAGES/django.mo" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/locale/el/LC_MESSAGES/django.po" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/migrations/0002_auto_20180614_1631.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/migrations/0003_auto_20181113_1051.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/migrations/0004_auto_20181113_1057.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/migrations/0005_auto_20181113_1110.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/migrations/0006_crawler_display.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/migrations/0007_auto_20181113_1215.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/sources/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/500.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/actions.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/app_index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/auth/user/add_form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/auth/user/change_password.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/base.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/base_site.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/change_form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/change_list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/change_list_results.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/date_hierarchy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/delete_confirmation.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/delete_selected_confirmation.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/edit_inline/stacked.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/edit_inline/tabular.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/filter.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/includes/fieldset.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/includes/object_delete_summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/invalid_setup.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/object_history.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/pagination.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/popup_response.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/prepopulated_fields_js.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/related_widget_wrapper.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/search_form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/submit_line.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/widgets/clearable_file_input.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/widgets/foreign_key_raw_id.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/widgets/many_to_many_raw_id.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/widgets/radio.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/widgets/related_widget_wrapper.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/widgets/split_datetime.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/templates/admin/widgets/url.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/website/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/website/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/website/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Crawlers/website/website/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/autoencoder.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/classification.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/create_datasets.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/extract_faces.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/hackernoon.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/run_as_service.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FaceRecognition/video_prediction.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/SRM_Kernels.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/baseline.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/color_to_gray.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/configs/NC2016.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/configs/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/configs/filtered.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/configs/nimble.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/datasets/NC2016.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/datasets/NC2017_NC2016.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/datasets/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/datasets/casia.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/datasets/combined.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/datasets/nimble.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/experiment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/extract_dct_coefficients.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/extract_masks_to_file.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/filtered.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/mrcnn/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/mrcnn/config.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/mrcnn/model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/mrcnn/parallel_model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/mrcnn/utils.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/mrcnn/visualize.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/run_as_service.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/balloon/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/balloon/balloon.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/balloon/inspect_balloon_data.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/balloon/inspect_balloon_model.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/coco/coco.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/coco/inspect_data.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/coco/inspect_model.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/coco/inspect_weights.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/demo.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/nucleus/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/nucleus/inspect_nucleus_data.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/nucleus/inspect_nucleus_model.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/nucleus/nucleus.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/shapes/shapes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/samples/shapes/train_shapes.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/serve_forever.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/squeezenet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/test_input_image_convolve.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/test_srm_kernels.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/train_casia2_val_casia1.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/train_for_dublin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/train_nc2017_val_nc2016.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FakeDetector/validate.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/audio_module.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/desktop_frames_flow_audio.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/desktop_version_experiment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/desktop_version_frames_and_flow.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/elastic_kibana_fetch_translation_to_be.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/i3d.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/loupe.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/model.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/resnet152.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/run_as_service.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/testonlyflow.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/vggish_input.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/vggish_params.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/vggish_postprocess.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/vggish_slim.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../OutOfContext/web_service.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Offline-media/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Offline-media/requirements.txt" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1fRXoATaV3ztnPo2V7f8BVDvqIN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Rebuild" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
+  </component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b61767e8-0cb7-4f99-a5f9-9f0546abdc71" name="Default Changelist" comment="" />
+      <created>1596182050778</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1596182050778</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
