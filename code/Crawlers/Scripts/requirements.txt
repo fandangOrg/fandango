@@ -1,0 +1,17 @@
+Scrapy
+##Pillow>=3.3.0
+##lxml>=3.6.0
+#django
+#nipyapi
+#wget
+#dateutil
+#extruct
+#git+https://github.com/codelucas/newspaper.git@python-2-head
+scrapy-splash
+scrapy-crawl-once
+adblockparser
+newspaper3k
+elasticsearch
+kafka
+flask
+requests
